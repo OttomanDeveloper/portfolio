@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { GrainOverlay } from "@/components/ui/GrainOverlay";
 import { FloatingNav } from "@/components/ui/FloatingNav";
 import { cn } from "@/lib/utils";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,6 +32,7 @@ export default function RootLayout({
           
           <FloatingNav />
           <GrainOverlay />
+          <SpeedInsights />
           
           <main className="relative z-10">
             {children}
