@@ -4,7 +4,11 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SectionHeading } from '../ui/SectionHeading'
 import { ProjectCard } from '../ui/ProjectCard'
-import { CaseStudyModal } from '../ui/CaseStudyModal'
+import dynamic from 'next/dynamic'
+
+const CaseStudyModal = dynamic(() => import('../ui/CaseStudyModal').then((mod) => mod.CaseStudyModal), {
+  ssr: false
+})
 import { GitHubRepo } from '@/lib/github'
 import { Smartphone, Globe, Layers, Code2, Rocket, Zap, Shield, Cpu } from 'lucide-react'
 import { curatedProjects } from '@/data/projects'

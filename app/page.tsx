@@ -1,10 +1,12 @@
 import { fetchGitHubProfile, fetchGitHubRepos } from "@/lib/github";
-import { Hero } from "@/components/sections/Hero";
-import { About } from "@/components/sections/About";
-import { Experience } from "@/components/sections/Experience";
-import { Projects } from "@/components/sections/Projects";
-import { Contact } from "@/components/sections/Contact";
+import dynamic from "next/dynamic";
 import { Suspense } from "react";
+import { Hero } from "@/components/sections/Hero";
+
+const About = dynamic(() => import("@/components/sections/About").then((mod) => mod.About));
+const Experience = dynamic(() => import("@/components/sections/Experience").then((mod) => mod.Experience));
+const Projects = dynamic(() => import("@/components/sections/Projects").then((mod) => mod.Projects));
+const Contact = dynamic(() => import("@/components/sections/Contact").then((mod) => mod.Contact));
 
 export default async function Home() {
   const profile = await fetchGitHubProfile();
