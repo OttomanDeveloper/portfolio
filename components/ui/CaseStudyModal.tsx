@@ -44,18 +44,19 @@ export function CaseStudyModal({ isOpen, onClose, project }: CaseStudyModalProps
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 30 }}
             transition={{ type: 'spring', damping: 30, stiffness: 400 }}
-            className="relative w-full max-w-5xl max-h-[90vh] overflow-hidden rounded-3xl bg-surface border border-border shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)] flex flex-col md:flex-row"
+            className="relative w-full max-w-5xl max-h-[92vh] md:max-h-[90vh] overflow-hidden rounded-2xl md:rounded-3xl bg-surface border border-border shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)] flex flex-col md:flex-row"
           >
             <button 
               onClick={onClose}
-              className="absolute top-4 right-4 z-50 p-2 rounded-full bg-background/50 hover:bg-surface transition-colors"
+              className="absolute top-4 right-4 z-50 p-2.5 rounded-full bg-background/80 md:bg-background/50 backdrop-blur-md hover:bg-surface transition-colors shadow-lg border border-border/20"
             >
-              <X size={20} />
+              <X size={18} />
             </button>
 
             {/* Left Column: Phone Mockup */}
-            <div className="w-full md:w-2/5 p-8 flex items-center justify-center bg-gradient-to-b from-surface to-background/50 overflow-y-auto md:overflow-hidden">
-              <IPhoneMockup>
+            <div className="w-full md:w-2/5 p-6 md:p-8 flex items-center justify-center bg-gradient-to-b from-surface to-background/50 overflow-hidden shrink-0 border-b md:border-b-0 md:border-r border-border/5">
+              <div className="scale-90 sm:scale-100 transition-transform origin-center">
+                <IPhoneMockup>
                 <div className="flex flex-col h-full">
                   <div className="flex flex-col items-center gap-4 pt-10 pb-8 relative">
                     {/* Background Glow */}
@@ -105,18 +106,19 @@ export function CaseStudyModal({ isOpen, onClose, project }: CaseStudyModalProps
                   </div>
                 </div>
               </IPhoneMockup>
+              </div>
             </div>
 
             {/* Right Column: Details */}
-            <div className="w-full md:w-3/5 p-8 md:p-14 overflow-y-auto bg-[#0a0a0a] text-white">
-              <div className="max-w-xl mx-auto md:mx-0 space-y-10">
+            <div className="w-full md:w-3/5 p-6 sm:p-10 md:p-14 overflow-y-auto bg-surface dark:bg-[#0a0a0a] text-text-primary dark:text-white">
+              <div className="max-w-xl mx-auto md:mx-0 space-y-8 md:space-y-10">
                 <div className="space-y-4">
                   <div className="space-y-1">
-                    <span className="block text-[10px] font-bold uppercase tracking-[0.3em] text-text-secondary/60 dark:text-white/40">PRODUCT LAUNCH</span>
-                    <h2 className="text-4xl md:text-5xl font-black tracking-tight text-text-primary dark:text-white">
+                    <span className="block text-[10px] font-bold uppercase tracking-[0.3em] text-accent/60 dark:text-white/40">PRODUCT LAUNCH</span>
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-text-primary dark:text-white leading-tight">
                         {project.name}
                     </h2>
-                    <p className="text-xl font-medium" style={{ color: project.vibrantColor }}>
+                    <p className="text-lg md:text-xl font-medium" style={{ color: project.vibrantColor }}>
                         {project.description}
                     </p>
                     <div className="flex items-center gap-2 text-text-secondary/40 dark:text-white/20 text-xs font-medium pt-1">

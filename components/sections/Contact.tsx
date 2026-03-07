@@ -93,11 +93,11 @@ export function Contact() {
                   rel="noopener noreferrer"
                   className="flex items-center gap-4 group"
                 >
-                  <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-surface border border-border group-hover:border-accent group-hover:bg-accent/10 transition-all shadow-sm group-hover:shadow-md">
+                  <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-surface border border-border group-hover:border-accent group-hover:bg-accent/5 transition-all shadow-sm group-hover:shadow-md">
                     <item.icon className="text-accent" size={20} />
                   </div>
                   <div>
-                    <p className="text-xs font-bold uppercase tracking-widest text-text-secondary/60">{item.label}</p>
+                    <p className="text-xs font-bold uppercase tracking-widest text-text-secondary/40">{item.label}</p>
                     <p className="text-lg font-bold text-text-primary group-hover:text-accent transition-colors">{item.value}</p>
                   </div>
                 </a>
@@ -131,8 +131,8 @@ export function Contact() {
                     id="name"
                     placeholder="John Doe"
                     className={`w-full px-4 py-3 rounded-xl bg-background border ${
-                      errors.name ? 'border-red-500' : 'border-border dark:border-white/10'
-                    } focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent transition-all dark:bg-white/5`}
+                      errors.name ? 'border-red-500' : 'border-border'
+                    } focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent transition-all dark:bg-white/[0.03] placeholder:text-text-secondary/40 dark:placeholder:text-text-secondary/30`}
                   />
                   {errors.name && <p className="text-xs text-red-500 font-medium">{errors.name.message}</p>}
                 </div>
@@ -148,8 +148,8 @@ export function Contact() {
                     id="email"
                     placeholder="john@example.com"
                     className={`w-full px-4 py-3 rounded-xl bg-background border ${
-                      errors.email ? 'border-red-500' : 'border-border dark:border-white/10'
-                    } focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent transition-all dark:bg-white/5`}
+                      errors.email ? 'border-red-500' : 'border-border'
+                    } focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent transition-all dark:bg-white/[0.03] placeholder:text-text-secondary/40 dark:placeholder:text-text-secondary/30`}
                   />
                   {errors.email && <p className="text-xs text-red-500 font-medium">{errors.email.message}</p>}
                 </div>
@@ -165,8 +165,8 @@ export function Contact() {
                     rows={4}
                     placeholder="How can I help you?"
                     className={`w-full px-4 py-3 rounded-xl bg-background border ${
-                      errors.message ? 'border-red-500' : 'border-border dark:border-white/10'
-                    } focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent transition-all resize-none dark:bg-white/5`}
+                      errors.message ? 'border-red-500' : 'border-border'
+                    } focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent transition-all resize-none dark:bg-white/[0.03] placeholder:text-text-secondary/40 dark:placeholder:text-text-secondary/30`}
                   />
                   {errors.message && <p className="text-xs text-red-500 font-medium">{errors.message.message}</p>}
                 </div>

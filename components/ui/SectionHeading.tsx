@@ -27,7 +27,7 @@ export const SectionHeading = ({
         className
       )}
     >
-      <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-text-primary">
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tighter text-text-primary">
         {title}<span className="text-accent">.</span>
       </h2>
       {subtitle && (

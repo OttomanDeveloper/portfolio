@@ -16,7 +16,7 @@ export function Experience() {
           subtitle="A journey through my professional career and the companies I've helped grow."
         />
 
-        <div className="relative mt-12 space-y-8 before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-border before:to-transparent">
+        <div className="relative mt-12 space-y-8 before:absolute before:inset-0 before:ml-5 md:before:mx-auto before:-translate-x-px md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-border dark:before:via-white/10 before:to-transparent">
           <motion.div
             variants={staggerContainer}
             initial="initial"
@@ -27,7 +27,7 @@ export function Experience() {
             {experiences.map((exp, index) => (
               <div key={exp.id} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
                 {/* Dot */}
-                <div className="flex items-center justify-center w-10 h-10 rounded-full border border-border bg-background shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 transition-colors group-hover:border-accent group-hover:bg-accent/5">
+                <div className="flex items-center justify-center w-10 h-10 rounded-full border border-border bg-background shadow shrink-0 z-10 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 transition-colors group-hover:border-accent group-hover:bg-accent/5">
                   <Briefcase className="w-5 h-5 text-accent" />
                 </div>
 

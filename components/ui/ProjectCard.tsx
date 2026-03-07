@@ -78,7 +78,7 @@ export function ProjectCard({
       }}
       className="group relative h-full perspective-1000"
     >
-      <Card className="h-full flex flex-col p-0 overflow-hidden border-border/50 dark:border-white/5 bg-surface/80 dark:bg-surface/40 backdrop-blur-md shadow-xl dark:shadow-2xl group-hover:border-accent/40 transition-all duration-500 relative">
+      <Card className="group relative h-full overflow-hidden border-border bg-surface dark:bg-surface/10 transition-all duration-500 hover:shadow-2xl hover:border-accent/20 relative">
         {/* Cursor Spotlight */}
         <motion.div
           className="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -108,7 +108,7 @@ export function ProjectCard({
           </div>
 
           <div className="mb-6">
-            <h3 className="text-2xl font-black text-text-primary tracking-tight mb-2 group-hover:translate-x-1 transition-transform dark:text-white">{name}</h3>
+            <h3 className="text-xl sm:text-2xl font-black text-text-primary tracking-tight mb-2 group-hover:translate-x-1 transition-transform dark:text-white">{name}</h3>
             <p className="text-sm text-text-secondary leading-relaxed line-clamp-2 opacity-80 dark:opacity-70">
               {description}
             </p>
@@ -128,7 +128,7 @@ export function ProjectCard({
               {platforms.map((platform) => (
                 <span 
                   key={platform} 
-                  className="px-3 py-1 rounded-full text-[9px] font-bold bg-accent/5 text-accent border border-accent/20 uppercase tracking-widest"
+                  className="px-3 py-1 rounded-full text-[9px] font-bold bg-accent/5 dark:bg-accent/10 text-accent border border-accent/10 dark:border-accent/20 uppercase tracking-widest"
                 >
                   {platform}
                 </span>

@@ -21,7 +21,7 @@ export function Hero({ profile }: HeroProps) {
   }
 
   return (
-    <section id="home" className="relative flex min-h-screen items-center justify-center overflow-hidden py-32 px-4">
+    <section id="home" className="relative flex min-h-screen items-center justify-center overflow-hidden py-20 md:py-32 px-4">
       <div className="container mx-auto max-w-6xl relative z-10">
         <motion.div
           variants={staggerContainer}
@@ -52,26 +52,26 @@ export function Hero({ profile }: HeroProps) {
           {/* Text Content - High Impact */}
           <div className="space-y-8 max-w-4xl">
             <motion.div variants={fadeInUp} className="space-y-6">
-              <h2 className="text-sm font-bold text-accent uppercase tracking-[0.4em] opacity-80">
+              <h2 className="text-[10px] sm:text-xs md:text-sm font-bold text-accent uppercase tracking-[0.2em] sm:tracking-[0.4em] opacity-80">
                 Architecting Seamless Digital Ecosystems
               </h2>
-              <h1 className="text-6xl font-black tracking-tighter text-text-primary md:text-8xl lg:text-9xl leading-[0.9]">
+              <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter text-text-primary leading-[0.95] sm:leading-[0.9]">
                 I build <span className="text-transparent bg-clip-text bg-gradient-to-br from-text-primary via-accent to-accent-secondary">Apps</span> that users love.
               </h1>
-              <p className="text-xl text-text-secondary md:text-2xl max-w-2xl mx-auto leading-relaxed opacity-70">
+              <p className="text-lg md:text-xl lg:text-2xl text-text-secondary max-w-2xl mx-auto leading-relaxed opacity-70">
                 Hi, I&apos;m <span className="text-text-primary font-bold">{profile.name}</span>. A specialized developer pushing the boundaries of <span className="text-text-primary">Mobile & Web</span> architecture.
               </p>
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="flex flex-wrap gap-6 justify-center pt-4">
-              <Button onClick={scrollToProjects} className="px-8 py-6 rounded-2xl text-lg font-bold shadow-2xl bg-accent hover:bg-accent-secondary transition-all">
+            <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row flex-wrap gap-4 md:gap-6 justify-center pt-4">
+              <Button onClick={scrollToProjects} className="px-6 sm:px-8 py-4 sm:py-6 rounded-2xl text-base sm:text-lg font-bold shadow-2xl bg-accent hover:bg-accent-secondary transition-all w-full sm:w-auto">
                 The Lab
                 <ArrowRight className="ml-3 h-5 w-5" />
               </Button>
-              <Button variant="outline" onClick={scrollToContact} className="px-8 py-6 rounded-2xl text-lg font-medium border-border hover:bg-surface/50 dark:border-white/10 dark:hover:bg-white/5 transition-all shadow-sm">
+              <Button variant="outline" onClick={scrollToContact} className="px-6 sm:px-8 py-4 sm:py-6 rounded-2xl text-base sm:text-lg font-medium border-border hover:bg-surface/50 dark:border-white/10 dark:hover:bg-white/5 transition-all shadow-sm w-full sm:w-auto">
                 Start a Conversation
               </Button>
-              <Button variant="outline" className="px-8 py-6 rounded-2xl text-lg font-medium border-border hover:bg-surface/50 dark:border-white/10 dark:hover:bg-white/5 transition-all shadow-sm flex items-center gap-2 group/cv">
+              <Button variant="outline" className="px-6 sm:px-8 py-4 sm:py-6 rounded-2xl text-base sm:text-lg font-medium border-border hover:bg-surface/50 dark:border-white/10 dark:hover:bg-white/5 transition-all shadow-sm flex items-center justify-center gap-2 group/cv w-full sm:w-auto">
                 <Download size={18} className="group-hover/cv:translate-y-0.5 transition-transform" />
                 Resume / CV
               </Button>
