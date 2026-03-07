@@ -1,0 +1,105 @@
+'use client'
+
+import React, { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Home, User, Briefcase, Mail, Github, Twitter, Linkedin, Menu, X } from 'lucide-react'
+import { ThemeToggle } from './ThemeToggle'
+import { cn } from '@/lib/utils'
+
+export function FloatingNav() {
+  const [isExpanded, setIsExpanded] = useState(false)
+
+  const navItems = [
+    { name: 'Home', href: '#home', icon: <Home size={20} /> },
+    { name: 'About', href: '#about', icon: <User size={20} /> },
+    { name: 'Projects', href: '#projects', icon: <Briefcase size={20} /> },
+    { name: 'Contact', href: '#contact', icon: <Mail size={20} /> },
+  ]
+
+  const socials = [
+    { icon: <Github size={18} />, url: 'https://github.com' },
+    { icon: <Twitter size={18} />, url: 'https://twitter.com' },
+    { icon: <Linkedin size={18} />, url: 'https://linkedin.com' },
+  ]
+
+  return (
+    <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[100]">
+      {/* Desktop Nav - Floating Dock */}
+      <motion.nav 
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        className="hidden md:flex items-center gap-2 p-2 rounded-3xl bg-surface/40 backdrop-blur-2xl border border-white/10 shadow-2xl"
+      >
+        <div className="flex items-center gap-1 px-2 border-r border-white/5">
+          {navItems.map((item) => (
+            <a
+              key={item.name}
+              href={item.href}
+              className="p-3 rounded-2xl text-text-secondary hover:text-accent hover:bg-white/5 transition-all relative group"
+            >
+              {item.icon}
+              <span className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 rounded-md bg-surface border border-border text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                {item.name}
+              </span>
+            </a>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-1 px-2 border-r border-white/5">
+           {socials.map((social, i) => (
+             <a
+               key={i}
+               href={social.url}
+               target="_blank"
+               rel="noopener noreferrer"
+               className="p-3 rounded-2xl text-text-secondary hover:text-accent hover:bg-white/5 transition-all"
+             >
+               {social.icon}
+             </a>
+           ))}
+        </div>
+
+        <div className="px-2">
+           <ThemeToggle />
+        </div>
+      </motion.nav>
+
+      {/* Mobile Nav - Expandable FAB */}
+      <div className="md:hidden flex flex-col items-center gap-4">
+        <AnimatePresence>
+          {isExpanded && (
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.8, opacity: 0, y: 20 }}
+              className="flex flex-col gap-2 p-2 rounded-3xl bg-surface/60 backdrop-blur-3xl border border-white/10 shadow-2xl"
+            >
+              {navItems.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => setIsExpanded(false)}
+                  className="p-4 rounded-2xl flex items-center gap-4 text-text-secondary hover:text-accent hover:bg-white/5"
+                >
+                  {item.icon}
+                  <span className="text-sm font-bold uppercase tracking-widest">{item.name}</span>
+                </a>
+              ))}
+              <div className="h-px bg-white/5 my-2 mx-4" />
+              <div className="flex justify-center p-2">
+                 <ThemeToggle />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="p-5 rounded-full bg-accent text-white shadow-2xl hover:scale-110 active:scale-95 transition-all"
+        >
+          {isExpanded ? <X /> : <Menu />}
+        </button>
+      </div>
+    </div>
+  )
+}
