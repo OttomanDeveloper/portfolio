@@ -29,7 +29,7 @@ export function CaseStudyModal({ isOpen, onClose, project }: CaseStudyModalProps
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center md:p-4">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -44,7 +44,7 @@ export function CaseStudyModal({ isOpen, onClose, project }: CaseStudyModalProps
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 30 }}
             transition={{ type: 'spring', damping: 30, stiffness: 400 }}
-            className="relative w-full max-w-5xl max-h-[92vh] md:max-h-[90vh] overflow-hidden rounded-2xl md:rounded-3xl bg-surface border border-border shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)] flex flex-col md:flex-row"
+            className="relative w-full max-w-5xl h-full md:h-auto max-h-[100vh] md:max-h-[90vh] overflow-hidden rounded-none md:rounded-3xl bg-surface border-0 md:border border-border shadow-2xl flex flex-col md:flex-row"
           >
             <button 
               onClick={onClose}
@@ -54,8 +54,8 @@ export function CaseStudyModal({ isOpen, onClose, project }: CaseStudyModalProps
             </button>
 
             {/* Left Column: Phone Mockup */}
-            <div className="w-full md:w-2/5 p-6 md:p-8 flex items-center justify-center bg-gradient-to-b from-surface to-background/50 overflow-hidden shrink-0 border-b md:border-b-0 md:border-r border-border/5">
-              <div className="scale-90 sm:scale-100 transition-transform origin-center">
+            <div className="w-full md:w-2/5 p-8 md:p-8 flex items-center justify-center bg-gradient-to-b from-surface to-background/50 overflow-hidden shrink-0 border-b md:border-b-0 md:border-r border-border/10">
+              <div className="scale-[0.85] sm:scale-100 transition-transform origin-center py-4">
                 <IPhoneMockup>
                 <div className="flex flex-col h-full">
                   <div className="flex flex-col items-center gap-4 pt-10 pb-8 relative">
@@ -70,8 +70,8 @@ export function CaseStudyModal({ isOpen, onClose, project }: CaseStudyModalProps
                     </div>
                     
                     <div className="relative z-10 text-center space-y-2 mt-2">
-                        <h4 className="text-2xl font-black text-text-primary tracking-tight dark:text-white">{project.name}</h4>
-                        <p className="text-[12px] text-text-secondary dark:text-white/60 px-6 leading-relaxed opacity-80">
+                        <h4 className="text-2xl font-black text-text-primary tracking-tight">{project.name}</h4>
+                        <p className="text-[12px] text-text-secondary px-6 leading-relaxed opacity-80">
                         {project.description}
                         </p>
                     </div>
@@ -79,18 +79,18 @@ export function CaseStudyModal({ isOpen, onClose, project }: CaseStudyModalProps
 
                   <div className="flex-1 space-y-2.5 px-2">
                     {project.bullets?.map((bullet, i) => (
-                      <div key={i} className="py-2.5 px-5 rounded-full border border-transparent hover:border-border/40 bg-white/5 text-[11px] font-medium leading-none flex items-center gap-3 transition-all cursor-default">
+                      <div key={i} className="py-2.5 px-5 rounded-full border border-border/80 bg-surface/50 text-[11px] font-medium leading-none flex items-center gap-3 transition-all cursor-default shadow-sm hover:border-accent/40">
                          <div 
                           className="w-1.5 h-1.5 rounded-full shadow-[0_0_8px_rgba(0,0,0,0.1)]" 
                           style={{ backgroundColor: project.vibrantColor }}
                         />
-                         <span className="opacity-90 dark:text-white/80">{bullet}</span>
+                         <span className="opacity-90">{bullet}</span>
                       </div>
                     ))}
                   </div>
 
                   {/* Stats Row */}
-                  <div className="pt-8 pb-4 flex justify-between px-4 border-t border-white/5 mt-auto">
+                  <div className="pt-8 pb-4 flex justify-between px-4 border-t border-border/10 mt-auto">
                      <div className="text-center">
                         <span className="block text-[13px] font-bold text-text-primary">1M+</span>
                         <span className="block text-[9px] text-text-secondary uppercase tracking-widest opacity-60">Downloads</span>
@@ -110,18 +110,18 @@ export function CaseStudyModal({ isOpen, onClose, project }: CaseStudyModalProps
             </div>
 
             {/* Right Column: Details */}
-            <div className="w-full md:w-3/5 p-6 sm:p-10 md:p-14 overflow-y-auto bg-surface dark:bg-[#0a0a0a] text-text-primary dark:text-white">
+            <div className="w-full md:w-3/5 p-8 sm:p-10 md:p-14 overflow-y-auto bg-surface text-text-primary scrollbar-hide">
               <div className="max-w-xl mx-auto md:mx-0 space-y-8 md:space-y-10">
                 <div className="space-y-4">
                   <div className="space-y-1">
-                    <span className="block text-[10px] font-bold uppercase tracking-[0.3em] text-accent/60 dark:text-white/40">PRODUCT LAUNCH</span>
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-text-primary dark:text-white leading-tight">
+                    <span className="block text-[10px] font-bold uppercase tracking-[0.3em] text-accent">PRODUCT LAUNCH</span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-text-primary leading-tight">
                         {project.name}
                     </h2>
                     <p className="text-lg md:text-xl font-medium" style={{ color: project.vibrantColor }}>
                         {project.description}
                     </p>
-                    <div className="flex items-center gap-2 text-text-secondary/40 dark:text-white/20 text-xs font-medium pt-1">
+                    <div className="flex items-center gap-2 text-text-secondary text-xs font-medium pt-1">
                         {project.languages.map((lang, i) => (
                             <div key={lang} className="flex items-center gap-2">
                                 <span>{lang}</span>
@@ -132,13 +132,13 @@ export function CaseStudyModal({ isOpen, onClose, project }: CaseStudyModalProps
                   </div>
                   
                   <div className="pt-6 space-y-8">
-                    <p className="text-lg text-text-secondary dark:text-white/70 leading-relaxed font-normal opacity-90">
+                    <p className="text-lg text-text-secondary leading-relaxed font-normal opacity-90">
                       {project.fullDescription || `Tailored digital solution built with ${project.languages[0]}. Focused on seamless performance and user-centric architecture.`}
                     </p>
 
                     <div className="flex flex-wrap gap-3">
                         {project.platforms.map(p => (
-                            <span key={p} className="px-4 py-1.5 rounded-full border border-black/5 dark:border-white/10 bg-black/[0.03] dark:bg-white/5 text-[10px] font-bold uppercase tracking-widest text-text-secondary/80 dark:text-white/60">
+                             <span key={p} className="px-4 py-1.5 rounded-full border border-border bg-surface text-[10px] font-bold uppercase tracking-widest text-text-secondary/80">
                             {p}
                             </span>
                         ))}

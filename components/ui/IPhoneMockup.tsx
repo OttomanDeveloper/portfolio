@@ -10,7 +10,7 @@ interface IPhoneMockupProps {
 
 export function IPhoneMockup({ children, className }: IPhoneMockupProps) {
   return (
-    <div className={cn("relative mx-auto border-gray-900 bg-gray-900 border-[8px] rounded-[3rem] h-[640px] w-[320px] shadow-2xl overflow-hidden", className)}>
+    <div className={cn("relative mx-auto border-slate-950 dark:border-black bg-slate-950 dark:bg-black border-[8px] rounded-[3rem] h-[640px] w-[320px] shadow-2xl overflow-hidden shadow-black/20", className)}>
       {/* Side buttons - very subtle */}
       <div className="h-[24px] w-[2px] bg-gray-800 absolute -left-[8px] top-[100px] rounded-l-sm opacity-50"></div>
       <div className="h-[40px] w-[2px] bg-gray-800 absolute -left-[8px] top-[150px] rounded-l-sm opacity-50"></div>
@@ -35,7 +35,7 @@ export function IPhoneMockup({ children, className }: IPhoneMockupProps) {
         </div>
 
         {/* Home Indicator */}
-        <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-28 h-1 bg-white/20 rounded-full z-20" />
+        <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-28 h-1 bg-text-primary/20 rounded-full z-20" />
       </div>
     </div>
   )

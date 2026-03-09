@@ -2,24 +2,32 @@
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Home, User, Briefcase, Mail, Github, Twitter, Linkedin, Menu, X } from 'lucide-react'
+import { Home, User, Briefcase, Mail, Github, Twitter, Linkedin, Menu, X, Instagram, Youtube, MessageSquare } from 'lucide-react'
 import { ThemeToggle } from './ThemeToggle'
 import { cn } from '@/lib/utils'
 
-export function FloatingNav() {
+interface FloatingNavProps {
+  dbProfile?: any
+}
+
+export function FloatingNav({ dbProfile }: FloatingNavProps) {
   const [isExpanded, setIsExpanded] = useState(false)
 
   const navItems = [
     { name: 'Home', href: '#home', icon: <Home size={20} /> },
-    { name: 'About', href: '#about', icon: <User size={20} /> },
     { name: 'Projects', href: '#projects', icon: <Briefcase size={20} /> },
+    { name: 'About', href: '#about', icon: <User size={20} /> },
+    { name: 'Reviews', href: '#reviews', icon: <MessageSquare size={20} /> },
     { name: 'Contact', href: '#contact', icon: <Mail size={20} /> },
   ]
 
+  const socialData = dbProfile?.social_links || dbProfile?.socialLinks || {}
   const socials = [
-    { icon: <Github size={18} />, url: 'https://github.com' },
-    { icon: <Twitter size={18} />, url: 'https://twitter.com' },
-    { icon: <Linkedin size={18} />, url: 'https://linkedin.com' },
+    ...(socialData.github ? [{ icon: <Github size={18} />, url: socialData.github }] : []),
+    ...(socialData.linkedin ? [{ icon: <Linkedin size={18} />, url: socialData.linkedin }] : []),
+    ...(socialData.twitter ? [{ icon: <Twitter size={18} />, url: socialData.twitter }] : []),
+    ...(socialData.instagram ? [{ icon: <Instagram size={18} />, url: socialData.instagram }] : []),
+    ...(dbProfile?.youtube_url || socialData.youtube ? [{ icon: <Youtube size={18} />, url: dbProfile?.youtube_url || socialData.youtube }] : []),
   ]
 
   return (
@@ -28,14 +36,14 @@ export function FloatingNav() {
       <motion.nav 
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="hidden md:flex items-center gap-2 p-2 rounded-3xl bg-surface/40 backdrop-blur-2xl border border-white/10 shadow-2xl"
+        className="hidden md:flex items-center gap-2 p-2 rounded-3xl bg-surface/40 backdrop-blur-2xl border border-border shadow-2xl"
       >
-        <div className="flex items-center gap-1 px-2 border-r border-white/5">
+        <div className="flex items-center gap-1 px-2 border-r border-border/10">
           {navItems.map((item) => (
             <a
               key={item.name}
               href={item.href}
-              className="p-3 rounded-2xl text-text-secondary hover:text-accent hover:bg-white/5 transition-all relative group"
+              className="p-3 rounded-2xl text-text-secondary hover:text-accent hover:bg-accent/5 transition-all relative group"
             >
               {item.icon}
               <span className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 rounded-md bg-surface border border-border text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
@@ -45,7 +53,7 @@ export function FloatingNav() {
           ))}
         </div>
 
-        <div className="flex items-center gap-1 px-2 border-r border-white/5">
+        <div className="flex items-center gap-1 px-2 border-r border-border/10">
            {socials.map((social, i) => (
              <a
                key={i}
@@ -72,7 +80,7 @@ export function FloatingNav() {
               initial={{ scale: 0.8, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.8, opacity: 0, y: 20 }}
-              className="flex flex-col gap-2 p-2 rounded-3xl bg-surface/60 backdrop-blur-3xl border border-white/10 shadow-2xl"
+              className="flex flex-col gap-2 p-2 rounded-3xl bg-surface/60 backdrop-blur-3xl border border-border shadow-2xl"
             >
               {navItems.map((item) => (
                 <a
@@ -85,7 +93,7 @@ export function FloatingNav() {
                   <span className="text-sm font-bold uppercase tracking-widest">{item.name}</span>
                 </a>
               ))}
-              <div className="h-px bg-white/5 my-2 mx-4" />
+              <div className="h-px bg-border/10 my-2 mx-4" />
               <div className="flex justify-center p-2">
                  <ThemeToggle />
               </div>

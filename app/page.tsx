@@ -1,32 +1,67 @@
-import { fetchGitHubProfile, fetchGitHubRepos } from "@/lib/github";
-import dynamic from "next/dynamic";
-import { Suspense } from "react";
-import { Hero } from "@/components/sections/Hero";
+import { Suspense } from 'react';
+import { Hero } from '@/components/sections/Hero';
+import { About } from '@/components/sections/About';
+import { Experience } from '@/components/sections/Experience';
+import { Projects } from '@/components/sections/Projects';
+import { Contact } from '@/components/sections/Contact';
+import { fetchGitHubProfile, fetchGitHubRepos } from '@/lib/github';
+import { getProjects, getExperiences, getProfile, getReviews } from '@/lib/api-server';
+import { FloatingNav } from '@/components/ui/FloatingNav';
+import { ConnectivityError } from '@/components/ui/ConnectivityError';
+import { Reviews } from '@/components/sections/Reviews';
 
-const About = dynamic(() => import("@/components/sections/About").then((mod) => mod.About));
-const Experience = dynamic(() => import("@/components/sections/Experience").then((mod) => mod.Experience));
-const Projects = dynamic(() => import("@/components/sections/Projects").then((mod) => mod.Projects));
-const Contact = dynamic(() => import("@/components/sections/Contact").then((mod) => mod.Contact));
+export const dynamic = 'force-dynamic';
 
 export default async function Home() {
-  const profile = await fetchGitHubProfile();
-  const repos = await fetchGitHubRepos();
+  // Parallel data fetching for performance
+  const [
+    githubProfile,
+    repos,
+    dbProjects,
+    dbExperiences,
+    dbProfile,
+    initialReviews
+  ] = await Promise.all([
+    fetchGitHubProfile(),
+    fetchGitHubRepos(),
+    getProjects(),
+    getExperiences(),
+    getProfile(),
+    getReviews(6, 0)
+  ]);
+  
+  // Premium Connection Fallback
+  if (!dbProfile) {
+    return <ConnectivityError />;
+  }
+  
+  // Use DB profile or fallback to GitHub
+  const avatarUrl = dbProfile?.avatarUrl || githubProfile?.avatar_url;
+  const bio = dbProfile?.bio || githubProfile?.bio;
 
   return (
     <div className="flex flex-col w-full">
+      <FloatingNav dbProfile={dbProfile} />
       <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
-        <Hero profile={profile} />
+        <Hero 
+            dbProfile={dbProfile} 
+        />
       </Suspense>
-      
-      <About />
-      
-      <Experience />
-      
+
       <Suspense fallback={<div className="py-20 text-center">Loading projects...</div>}>
-        <Projects repos={repos} />
+        <Projects repos={repos} dbProjects={dbProjects} dbProfile={dbProfile} />
       </Suspense>
       
-      <Contact />
+      <About 
+          dbProfile={dbProfile}
+          bio={bio}
+      />
+      
+      <Experience experiences={dbExperiences} />
+      
+      <Reviews initialReviews={initialReviews} />
+      
+      <Contact dbProfile={dbProfile} />
     </div>
   );
 }

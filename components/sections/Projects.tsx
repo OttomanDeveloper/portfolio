@@ -11,11 +11,7 @@ const CaseStudyModal = dynamic(() => import('../ui/CaseStudyModal').then((mod) =
 })
 import { GitHubRepo } from '@/lib/github'
 import { Smartphone, Globe, Layers, Code2, Rocket, Zap, Shield, Cpu } from 'lucide-react'
-import { curatedProjects } from '@/data/projects'
-
-interface ProjectsProps {
-  repos: GitHubRepo[]
-}
+import { ProjectData } from '@/data/projects'
 
 const VIBRANT_COLORS = [
   '#818cf8', // Indigo
@@ -26,44 +22,27 @@ const VIBRANT_COLORS = [
   '#fbbf24', // Amber
 ]
 
-const TEMP_ICONS = [
-  <Rocket key="rocket" size={24} />,
-  <Zap key="zap" size={24} />,
-  <Shield key="shield" size={24} />,
-  <Cpu key="cpu" size={24} />,
-  <Layers key="layers" size={24} />,
-  <Code2 key="code" size={24} />,
-]
+interface ProjectsProps {
+  repos: GitHubRepo[]
+  dbProjects?: ProjectData[]
+  dbProfile?: any
+}
 
-export function Projects({ repos }: ProjectsProps) {
+// ... icons ...
+
+export function Projects({ repos, dbProjects = [], dbProfile }: ProjectsProps) {
   const [filter, setFilter] = useState('All')
   const [selectedProject, setSelectedProject] = useState<any>(null)
 
   const categories = ['All', 'Mobile', 'Web', 'Open Source']
   
-  // Mix curated projects with github repos as fallback/extra
-  const allProjects = [
-    ...curatedProjects.map((p, i) => ({
-      ...p,
-      icon: TEMP_ICONS[i % TEMP_ICONS.length],
-      isCurated: true,
-      category: p.languages.includes('Flutter') || p.languages.includes('React Native') ? 'Mobile' : 'Web'
-    })),
-    ...repos.slice(0, 6).map((repo, i) => ({
-      id: `repo-${repo.id}`,
-      name: repo.name.replace(/-/g, ' '),
-      description: repo.description || 'Open source contribution and technical exploration.',
-      fullDescription: repo.description || 'A technical deep-dive into this specific repository, exploring modern patterns and efficient implementation.',
-      languages: repo.language ? [repo.language] : repo.topics.slice(0, 2),
-      platforms: ['Web'],
-      githubUrl: repo.html_url,
-      vibrantColor: VIBRANT_COLORS[(i + curatedProjects.length) % VIBRANT_COLORS.length],
-      bullets: ['Clean architecture', 'Modern tech stack', 'Continuous integration'],
-      icon: <Layers size={24} />,
-      isCurated: false,
-      category: 'Open Source'
-    }))
-  ]
+  // Use only dynamic projects from database as requested
+  const allProjects = dbProjects.map((p, i) => ({
+    ...p,
+    icon: <Layers size={24} />,
+    isCurated: true,
+    category: p.languages?.includes('Flutter') || p.languages?.includes('React Native') ? 'Mobile' : 'Web'
+  }))
 
   const filteredProjects = allProjects.filter(p => {
     if (filter === 'All') return true
@@ -75,7 +54,7 @@ export function Projects({ repos }: ProjectsProps) {
       <div className="container mx-auto max-w-6xl">
         <SectionHeading 
           title="Projects" 
-          subtitle="A curated selection of my recent works, ranging from mobile applications to complex web systems."
+          subtitle={dbProfile?.projectsTagline || "A curated selection of my recent works, ranging from mobile applications to complex web systems."}
         />
 
         {/* Filter Tabs */}
@@ -87,7 +66,7 @@ export function Projects({ repos }: ProjectsProps) {
               className={`px-6 py-2.5 rounded-2xl text-xs font-bold uppercase tracking-widest transition-all ${
                 filter === cat
                   ? 'bg-accent text-white shadow-xl scale-105'
-                  : 'bg-surface/50 text-text-secondary hover:text-text-primary border border-white/5 backdrop-blur-sm'
+                  : 'bg-surface/50 text-text-secondary hover:text-text-primary border border-border backdrop-blur-sm'
               }`}
             >
               {cat}

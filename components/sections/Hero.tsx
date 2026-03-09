@@ -1,101 +1,157 @@
 'use client'
 
+import { getGithubAvatarUrl } from '@/lib/github-utils'
 import { motion } from 'framer-motion'
 import { Button } from '../ui/Button'
 import { fadeInUp, staggerContainer } from '@/lib/animations'
-import { GitHubProfile } from '@/lib/github'
-import { Github, Linkedin, Twitter, ArrowRight, Download } from 'lucide-react'
 import Image from 'next/image'
+import { Download, Github, Linkedin, Twitter, Instagram, Zap } from 'lucide-react'
 
 interface HeroProps {
-  profile: GitHubProfile
+  dbProfile?: any
 }
 
-export function Hero({ profile }: HeroProps) {
+export function Hero({ dbProfile }: HeroProps) {
   const scrollToContact = () => {
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
-  }
-
-  const scrollToProjects = () => {
-    document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })
+    const contact = document.getElementById('contact')
+    if (contact) contact.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
-    <section id="home" className="relative flex min-h-screen items-center justify-center overflow-hidden py-20 md:py-32 px-4">
-      <div className="container mx-auto max-w-6xl relative z-10">
-        <motion.div
-          variants={staggerContainer}
-          initial="initial"
-          animate="animate"
-          className="flex flex-col items-center text-center space-y-12"
-        >
-          {/* Profile Image - Smaller & Elite */}
+    <section id="home" className="relative min-h-screen flex items-center justify-center py-24 overflow-hidden bg-background">
+      {/* Premium Background Elements */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-accent/20 rounded-full blur-[120px] animate-pulse pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-accent-secondary/10 rounded-full blur-[120px] pointer-events-none" />
+      </div>
+
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-24">
+          {/* Left Content */}
           <motion.div 
-            variants={fadeInUp}
-            className="relative"
+            initial="initial"
+            animate="animate"
+            variants={staggerContainer}
+            className="flex-1 text-center lg:text-left space-y-10"
           >
-            <div className="relative h-32 w-32 md:h-40 md:w-40 overflow-hidden rounded-3xl border border-white/10 shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-500 bg-surface">
-              <Image
-                src={profile.avatar_url}
-                alt={profile.name}
-                fill
-                priority
-                className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
-              />
+            <motion.div variants={fadeInUp} className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 backdrop-blur-md shadow-sm">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-500">Status: Available for Work</span>
+            </motion.div>
+
+            <div className="space-y-6">
+              <motion.h1 
+                variants={fadeInUp}
+                className="text-6xl sm:text-7xl lg:text-9xl font-black text-text-primary tracking-tighter leading-[0.85] filter drop-shadow-sm"
+              >
+                {dbProfile?.name?.split(' ')[0] || "Creative"}<br />
+                <span className="text-accent inline-block mt-2">{dbProfile?.name?.split(' ').slice(1).join(' ') || "Developer"}</span>
+              </motion.h1>
+              
+              <motion.div variants={fadeInUp} className="space-y-4">
+                <p className="text-xl md:text-2xl text-text-secondary max-w-2xl font-medium leading-relaxed">
+                  {dbProfile?.tagline || "Architecting premium digital ecosystems through code and strategic design."}
+                </p>
+                <div className="w-20 h-1 bg-accent/20 rounded-full mx-auto lg:mx-0" />
+                <p className="text-[10px] sm:text-xs text-text-secondary/40 font-black tracking-[0.4em] uppercase">
+                  {dbProfile?.tagline || "Specializing in High-Performance Modern Solutions"}
+                </p>
+              </motion.div>
             </div>
-            <div 
-              className="absolute -inset-4 -z-10 rounded-full blur-2xl opacity-20" 
-              style={{ backgroundColor: 'var(--accent)' }}
-            />
-          </motion.div>
 
-          {/* Text Content - High Impact */}
-          <div className="space-y-8 max-w-4xl">
-            <motion.div variants={fadeInUp} className="space-y-6">
-              <h2 className="text-[10px] sm:text-xs md:text-sm font-bold text-accent uppercase tracking-[0.2em] sm:tracking-[0.4em] opacity-80">
-                Architecting Seamless Digital Ecosystems
-              </h2>
-              <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter text-text-primary leading-[0.95] sm:leading-[0.9]">
-                I build <span className="text-transparent bg-clip-text bg-gradient-to-br from-text-primary via-accent to-accent-secondary">Apps</span> that users love.
-              </h1>
-              <p className="text-lg md:text-xl lg:text-2xl text-text-secondary max-w-2xl mx-auto leading-relaxed opacity-70">
-                Hi, I&apos;m <span className="text-text-primary font-bold">{profile.name}</span>. A specialized developer pushing the boundaries of <span className="text-text-primary">Mobile & Web</span> architecture.
-              </p>
-            </motion.div>
-
-            <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row flex-wrap gap-4 md:gap-6 justify-center pt-4">
-              <Button onClick={scrollToProjects} className="px-6 sm:px-8 py-4 sm:py-6 rounded-2xl text-base sm:text-lg font-bold shadow-2xl bg-accent hover:bg-accent-secondary transition-all w-full sm:w-auto">
-                The Lab
-                <ArrowRight className="ml-3 h-5 w-5" />
+            <motion.div variants={fadeInUp} className="flex flex-wrap items-center justify-center lg:justify-start gap-5">
+              <Button onClick={scrollToContact} className="px-10 py-5 text-sm uppercase tracking-widest bg-accent hover:bg-accent/90 text-white rounded-[2rem] shadow-2xl shadow-accent/20 transition-all hover:scale-105 active:scale-95 font-black">
+                Start Conversation
               </Button>
-              <Button variant="outline" onClick={scrollToContact} className="px-6 sm:px-8 py-4 sm:py-6 rounded-2xl text-base sm:text-lg font-medium border-border hover:bg-surface/50 dark:border-white/10 dark:hover:bg-white/5 transition-all shadow-sm w-full sm:w-auto">
-                Start a Conversation
-              </Button>
-              <Button variant="outline" className="px-6 sm:px-8 py-4 sm:py-6 rounded-2xl text-base sm:text-lg font-medium border-border hover:bg-surface/50 dark:border-white/10 dark:hover:bg-white/5 transition-all shadow-sm flex items-center justify-center gap-2 group/cv w-full sm:w-auto">
-                <Download size={18} className="group-hover/cv:translate-y-0.5 transition-transform" />
-                Resume / CV
-              </Button>
-            </motion.div>
-
-            <motion.div variants={fadeInUp} className="flex items-center gap-8 justify-center pt-8">
-              {[
-                { icon: <Github size={22} />, url: profile.html_url },
-                { icon: <Linkedin size={22} />, url: "https://linkedin.com" },
-                { icon: <Twitter size={22} />, url: "https://twitter.com" },
-              ].map((social, i) => (
+              {dbProfile?.resume_url && (
                 <a 
-                  key={i}
+                  href={dbProfile.resume_url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="px-10 py-5 text-sm uppercase tracking-widest bg-surface/50 backdrop-blur-md border border-border hover:border-accent/40 text-text-primary rounded-[2rem] shadow-lg transition-all hover:scale-105 active:scale-95 font-black flex items-center gap-2"
+                >
+                  <Download size={18} />
+                  Resume.pdf
+                </a>
+              )}
+            </motion.div>
+
+            {/* Social Links */}
+            <motion.div variants={fadeInUp} className="flex items-center justify-center lg:justify-start gap-4">
+              {[
+                { icon: <Github size={20} />, url: dbProfile?.social_links?.github },
+                { icon: <Linkedin size={20} />, url: dbProfile?.social_links?.linkedin },
+                { icon: <Twitter size={20} />, url: dbProfile?.social_links?.twitter },
+                { icon: <Instagram size={20} />, url: dbProfile?.social_links?.instagram },
+              ].map((social, i) => social.url && (
+                <a 
+                  key={i} 
                   href={social.url} 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="p-3 rounded-full border border-white/5 bg-white/5 text-text-secondary hover:text-accent hover:border-accent/40 transition-all"
+                  className="p-4 bg-surface/40 hover:bg-surface border border-border rounded-2xl text-text-secondary hover:text-accent hover:border-accent/40 transition-all hover:-translate-y-1 shadow-sm backdrop-blur-sm"
                 >
                   {social.icon}
                 </a>
               ))}
             </motion.div>
-          </div>
-        </motion.div>
+          </motion.div>
+
+          {/* Right Image / Visualization */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="flex-1 relative group"
+          >
+            <div className="relative w-72 h-72 sm:w-96 sm:h-96 lg:w-[32rem] lg:h-[32rem] mx-auto">
+              {/* Complex decorative layers */}
+              <div className="absolute inset-0 bg-accent/30 rounded-[3rem] rotate-6 group-hover:rotate-0 transition-all duration-1000 blur-3xl opacity-50" />
+              <div className="absolute -inset-8 border border-accent/5 rounded-[4rem] animate-[spin_30s_linear_infinite]" />
+              <div className="absolute -inset-16 border border-accent/5 rounded-[5rem] animate-[spin_45s_linear_infinite_reverse]" />
+              
+              <div className="relative w-full h-full rounded-[3rem] overflow-hidden bg-surface-secondary/30 backdrop-blur-md border border-border group-hover:border-accent/40 transition-all duration-700 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] dark:shadow-[0_32px_64px_-16px_rgba(0,0,0,0.7)] p-2">
+                <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden">
+                  <Image
+                    src={getGithubAvatarUrl(dbProfile?.avatar_url) || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop"}
+                    alt={dbProfile?.name || "Owner"}
+                    fill
+                    sizes="(max-width: 768px) 300px, 600px"
+                    className="object-cover transition-all duration-1000 group-hover:scale-105"
+                    priority
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                </div>
+              </div>
+
+              {/* Floaties */}
+              <motion.div 
+                animate={{ y: [0, -20, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -top-6 -right-6 p-4 rounded-3xl bg-surface/80 backdrop-blur-xl border border-border shadow-2xl z-20"
+              >
+                <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center text-accent">
+                    <Zap size={16} />
+                </div>
+              </motion.div>
+              
+              <motion.div 
+                animate={{ y: [0, 20, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                className="absolute -bottom-10 -left-10 p-5 rounded-3xl bg-surface/80 backdrop-blur-xl border border-border shadow-2xl z-20"
+              >
+                <div className="flex flex-col gap-1">
+                    <span className="text-[8px] font-black text-text-secondary uppercase tracking-widest">Global Reach</span>
+                    <span className="text-sm font-black text-text-primary">100% Remote</span>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   )

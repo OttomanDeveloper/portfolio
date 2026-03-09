@@ -5,9 +5,13 @@ import { SectionHeading } from '../ui/SectionHeading'
 import { Card } from '../ui/Card'
 import { staggerContainer } from '@/lib/animations'
 import { Briefcase, Calendar, MapPin } from 'lucide-react'
-import { experiences } from '@/data/experience'
+import { experiences as staticExperiences, Experience as ExperienceType } from '@/data/experience'
 
-export function Experience() {
+interface ExperienceProps {
+  experiences?: ExperienceType[]
+}
+
+export function Experience({ experiences = staticExperiences }: ExperienceProps) {
   return (
     <section id="experience" className="py-16 px-4">
       <div className="container mx-auto max-w-6xl">
@@ -16,7 +20,7 @@ export function Experience() {
           subtitle="A journey through my professional career and the companies I've helped grow."
         />
 
-        <div className="relative mt-12 space-y-8 before:absolute before:inset-0 before:ml-5 md:before:mx-auto before:-translate-x-px md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-border dark:before:via-white/10 before:to-transparent">
+        <div className="relative mt-12 space-y-8 before:absolute before:inset-0 before:ml-5 md:before:mx-auto before:-translate-x-px md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-border before:to-transparent">
           <motion.div
             variants={staggerContainer}
             initial="initial"
