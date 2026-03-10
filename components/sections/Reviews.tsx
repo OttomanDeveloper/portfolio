@@ -68,7 +68,7 @@ export function Reviews({ initialReviews }: ReviewsProps) {
                 key={review.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "100px 0px", amount: 0.1 }}
+                viewport={{ once: true, margin: "200px 0px", amount: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.05 }}
                 className="h-full"
               >

@@ -20,7 +20,7 @@ export const SectionHeading = ({
       variants={fadeInUp}
       initial="initial"
       whileInView="animate"
-      viewport={{ once: true }}
+      viewport={{ once: true, margin: "200px 0px", amount: 0 }}
       className={cn(
         'mb-12 space-y-2',
         centered && 'text-center mx-auto',

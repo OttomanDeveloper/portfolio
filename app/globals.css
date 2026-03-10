@@ -68,14 +68,24 @@
   pointer-events: none;
 }
 
+@media (max-width: 768px) {
+  .mesh-gradient {
+    filter: blur(40px); /* Lower blur on mobile for GPU perf */
+  }
+}
+
 .site-grid {
   position: fixed;
   inset: 0;
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(128, 128, 128, 0.07) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(128, 128, 128, 0.07) 1px, transparent 1px);
   background-size: 40px 40px;
-  mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, #000 70%, transparent 100%);
+  mask-image: radial-gradient(
+    ellipse 60% 50% at 50% 50%,
+    #000 70%,
+    transparent 100%
+  );
   pointer-events: none;
   z-index: 0;
   opacity: 0.5;
@@ -86,6 +96,14 @@
   border-radius: 50%;
   filter: blur(40px);
   animation: mesh-move 20s infinite alternate cubic-bezier(0.45, 0, 0.55, 1);
+  will-change: transform; /* Hint GPU acceleration */
+}
+
+@media (max-width: 768px) {
+  .mesh-ball {
+    animation: none; /* Disable expensive animation on mobile */
+    filter: blur(20px);
+  }
 }
 
 @keyframes mesh-move {

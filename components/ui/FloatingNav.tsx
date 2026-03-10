@@ -84,8 +84,8 @@ export function FloatingNav({ dbProfile }: FloatingNavProps) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.2 }}
-              className="flex flex-col gap-2 p-2 rounded-3xl bg-surface/70 backdrop-blur-xl border border-border shadow-2xl"
+              transition={{ duration: 0.15, ease: "circOut" }}
+              className="flex flex-col gap-2 p-2 rounded-3xl bg-surface/95 backdrop-blur-md border border-border shadow-2xl"
             >
               {navItems.map((item) => (
                  <a
@@ -93,7 +93,7 @@ export function FloatingNav({ dbProfile }: FloatingNavProps) {
                    href={item.href}
                    aria-label={`Scroll to ${item.name}`}
                    onClick={() => setIsExpanded(false)}
-                   className="p-4 rounded-2xl flex items-center gap-4 text-text-secondary hover:text-accent hover:bg-white/5"
+                   className="p-4 rounded-2xl flex items-center gap-4 text-text-secondary hover:text-accent hover:bg-white/5 active:bg-white/5 transition-colors"
                  >
                    {item.icon}
                    <span className="text-sm font-bold uppercase tracking-widest">{item.name}</span>

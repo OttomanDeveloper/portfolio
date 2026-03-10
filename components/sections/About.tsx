@@ -81,7 +81,7 @@ export function About({ dbProfile }: AboutProps) {
             variants={staggerContainer}
             initial="initial"
             whileInView="animate"
-            viewport={{ once: true, margin: "100px 0px", amount: 0.1 }}
+            viewport={{ once: true, margin: "200px 0px", amount: 0 }}
             className="lg:col-span-12 space-y-10"
           >
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

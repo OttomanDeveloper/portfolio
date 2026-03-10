@@ -89,7 +89,7 @@ export function Contact({ dbProfile }: ContactProps) {
             variants={fadeInUp}
             initial="initial"
             whileInView="animate"
-            viewport={{ once: true, margin: "100px 0px", amount: 0.1 }}
+            viewport={{ once: true, margin: "200px 0px", amount: 0 }}
             className="space-y-8"
           >
             <div className="space-y-4">
@@ -135,7 +135,7 @@ export function Contact({ dbProfile }: ContactProps) {
             variants={fadeInUp}
             initial="initial"
             whileInView="animate"
-            viewport={{ once: true, margin: "100px 0px", amount: 0.1 }}
+            viewport={{ once: true, margin: "200px 0px", amount: 0 }}
           >
             <Card className="p-8">
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
