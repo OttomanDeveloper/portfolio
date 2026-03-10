@@ -24,9 +24,9 @@ export function Hero({ dbProfile }: HeroProps) {
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center py-24 overflow-hidden">
       {/* Premium Background Elements */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-accent/20 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-accent-secondary/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <div className={`absolute top-0 left-1/4 w-[500px] h-[500px] bg-accent/20 rounded-full ${isMobile ? 'blur-[80px]' : 'blur-[120px]'} pointer-events-none`} />
+        {!isMobile && <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-accent-secondary/10 rounded-full blur-[120px] pointer-events-none" />}
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
@@ -38,9 +38,9 @@ export function Hero({ dbProfile }: HeroProps) {
             variants={staggerContainer}
             className="flex-1 text-center lg:text-left space-y-10"
           >
-            <motion.div variants={fadeInUp} className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 backdrop-blur-md shadow-sm">
+            <motion.div variants={fadeInUp} className={`inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 shadow-sm ${!isMobile && 'backdrop-blur-md'}`}>
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+                {!isMobile && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>}
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-500">Status: Available for Work</span>
@@ -75,7 +75,7 @@ export function Hero({ dbProfile }: HeroProps) {
                   href={dbProfile.resume_url} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="px-10 py-5 text-sm uppercase tracking-widest bg-surface/50 backdrop-blur-md border border-border hover:border-accent/40 text-text-primary rounded-[2rem] shadow-lg transition-all hover:scale-105 active:scale-95 font-black flex items-center gap-2"
+                  className={`px-10 py-5 text-sm uppercase tracking-widest bg-surface/50 border border-border hover:border-accent/40 text-text-primary rounded-[2rem] shadow-lg transition-all hover:scale-105 active:scale-95 font-black flex items-center gap-2 ${!isMobile && 'backdrop-blur-md'}`}
                 >
                   <Download size={18} />
                   Resume.pdf
@@ -96,7 +96,7 @@ export function Hero({ dbProfile }: HeroProps) {
                   href={social.url} 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="p-4 bg-surface/40 hover:bg-surface border border-border rounded-2xl text-text-secondary hover:text-accent hover:border-accent/40 transition-all hover:-translate-y-1 shadow-sm backdrop-blur-sm"
+                  className={`p-4 bg-surface/40 hover:bg-surface border border-border rounded-2xl text-text-secondary hover:text-accent hover:border-accent/40 transition-all hover:-translate-y-1 shadow-sm ${!isMobile && 'backdrop-blur-sm'}`}
                 >
                   {social.icon}
                 </a>
@@ -112,12 +112,12 @@ export function Hero({ dbProfile }: HeroProps) {
             className="flex-1 relative group"
           >
             <div className="relative w-72 h-72 sm:w-96 sm:h-96 lg:w-[32rem] lg:h-[32rem] mx-auto">
-              {/* Complex decorative layers */}
-              <div className="absolute inset-0 bg-accent/30 rounded-[3rem] rotate-6 group-hover:rotate-0 transition-all duration-1000 blur-3xl opacity-50" />
-              <div className="absolute -inset-8 border border-accent/5 rounded-4xl" />
-              <div className="absolute -inset-16 border border-accent/5 rounded-5xl" />
+              {/* Complex decorative layers - simplified for mobile */}
+              {!isMobile && <div className="absolute inset-0 bg-accent/30 rounded-[3rem] rotate-6 group-hover:rotate-0 transition-all duration-1000 blur-3xl opacity-50" />}
+              {!isMobile && <div className="absolute -inset-8 border border-accent/5 rounded-4xl" />}
+              {!isMobile && <div className="absolute -inset-16 border border-accent/5 rounded-5xl" />}
               
-              <div className="relative w-full h-full rounded-[3rem] overflow-hidden bg-surface-secondary/30 backdrop-blur-md border border-border group-hover:border-accent/40 transition-all duration-700 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] dark:shadow-[0_32px_64px_-16px_rgba(0,0,0,0.7)] p-2">
+              <div className={`relative w-full h-full rounded-[3rem] overflow-hidden bg-surface-secondary/30 border border-border group-hover:border-accent/40 transition-all duration-700 p-2 ${!isMobile && 'backdrop-blur-md shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] dark:shadow-[0_32px_64px_-16px_rgba(0,0,0,0.7)]'}`}>
                 <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden">
                   <Image
                     src={getGithubAvatarUrl(dbProfile?.avatar_url) || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop"}
@@ -131,14 +131,14 @@ export function Hero({ dbProfile }: HeroProps) {
                 </div>
               </div>
 
-              {/* Floaties */}
-              <div className="absolute -top-6 -right-6 p-4 rounded-3xl bg-surface/80 backdrop-blur-xl border border-border shadow-2xl z-20">
+              {/* Floaties simplified */}
+              <div className={`absolute -top-6 -right-6 p-4 rounded-3xl bg-surface/80 border border-border shadow-2xl z-20 ${!isMobile && 'backdrop-blur-xl'}`}>
                 <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center text-accent">
                     <Zap size={16} />
                 </div>
               </div>
               
-              <div className="absolute -bottom-10 -left-10 p-5 rounded-3xl bg-surface/80 backdrop-blur-xl border border-border shadow-2xl z-20">
+              <div className={`absolute -bottom-10 -left-10 p-5 rounded-3xl bg-surface/80 border border-border shadow-2xl z-20 ${!isMobile && 'backdrop-blur-xl'}`}>
                 <div className="flex flex-col gap-1">
                     <span className="text-[8px] font-black text-text-secondary uppercase tracking-widest">Global Reach</span>
                     <span className="text-sm font-black text-text-primary">100% Remote</span>

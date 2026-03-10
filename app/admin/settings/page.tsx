@@ -154,7 +154,7 @@ export default function SettingsAdmin() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Communication & Social */}
-        <Card className={`p-8 border-border bg-surface/50 space-y-8 ${!isMobile && 'backdrop-blur-xl'}`}>
+        <Card className={`p-8 border-border bg-surface/50 space-y-8 ${!isMobile ? 'backdrop-blur-xl' : 'shadow-md'}`}>
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-xl bg-accent/10 text-accent">
                 <Globe size={20} />
@@ -231,7 +231,7 @@ export default function SettingsAdmin() {
 
         <div className="space-y-8">
             {/* Security Section */}
-            <Card className={`p-8 border-border bg-surface/50 animate-in fade-in slide-in-from-bottom-4 duration-500 ${!isMobile && 'backdrop-blur-xl'}`}>
+            <Card className={`p-8 border-border bg-surface/50 ${!isMobile ? 'backdrop-blur-xl animate-in fade-in slide-in-from-bottom-4 duration-500' : 'shadow-md'}`}>
                 <div className="flex items-center gap-3 mb-6">
                     <div className="p-2 rounded-xl bg-rose-500/10 text-rose-500">
                         <Shield size={20} />
@@ -280,7 +280,7 @@ export default function SettingsAdmin() {
             </Card>
 
             {/* Asset Management */}
-            <Card className={`p-8 border-border bg-surface/50 space-y-6 ${!isMobile && 'backdrop-blur-xl'}`}>
+            <Card className={`p-8 border-border bg-surface/50 space-y-6 ${!isMobile ? 'backdrop-blur-xl' : 'shadow-md'}`}>
                 <div className="flex items-center gap-3">
                     <div className="p-2 rounded-xl bg-accent/10 text-accent">
                         <FileText size={20} />
@@ -322,7 +322,7 @@ export default function SettingsAdmin() {
             </Card>
 
             {/* System Health */}
-            <Card className={`p-8 border-border bg-surface/50 space-y-8 ${!isMobile && 'backdrop-blur-xl'}`}>
+            <Card className={`p-8 border-border bg-surface/50 space-y-8 ${!isMobile ? 'backdrop-blur-xl' : 'shadow-md'}`}>
                 <div className="flex items-center gap-3">
                     <div className="p-2 rounded-xl bg-accent/10 text-accent">
                         <Activity size={20} />
