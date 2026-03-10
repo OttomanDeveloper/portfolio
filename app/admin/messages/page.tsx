@@ -16,6 +16,7 @@ import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { motion, AnimatePresence } from 'framer-motion'
 import { toast } from 'sonner'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 interface Message {
   id: string
@@ -34,6 +35,7 @@ export default function MessagesPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [filter, setFilter] = useState<'all' | 'unread' | 'read'>('all')
   const [mounted, setMounted] = useState(false)
+  const isMobile = useIsMobile()
 
   const fetchMessages = async () => {
     setLoading(true)
@@ -123,7 +125,7 @@ export default function MessagesPage() {
           <Button 
             onClick={fetchMessages}
             variant="outline"
-            className="rounded-xl border-border bg-surface/50 backdrop-blur-sm hover:border-accent/40 font-bold flex items-center gap-2"
+            className={`rounded-xl border-border bg-surface/50 hover:border-accent/40 font-bold flex items-center gap-2 ${!isMobile && 'backdrop-blur-sm'}`}
           >
             <RefreshCcw size={16} className={loading ? 'animate-spin' : ''} />
             Refresh
@@ -133,7 +135,7 @@ export default function MessagesPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 min-h-[600px]">
         {/* Sidebar: Message List */}
-        <Card className="lg:col-span-5 border-border bg-surface/50 backdrop-blur-xl h-full flex flex-col overflow-hidden shadow-sm">
+        <Card className={`lg:col-span-5 border-border bg-surface/50 h-full flex flex-col overflow-hidden shadow-sm ${!isMobile && 'backdrop-blur-xl'}`}>
           <div className="p-4 border-b border-border space-y-4 bg-surface/30">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary/50" size={16} />
@@ -220,11 +222,11 @@ export default function MessagesPage() {
             {selectedMessage ? (
               <motion.div
                 key={selectedMessage.id}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
+                initial={isMobile ? false : { opacity: 0, x: 20 }}
+                animate={isMobile ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
+                exit={isMobile ? { opacity: 0 } : { opacity: 0, x: -20 }}
               >
-                <Card className="border-border bg-surface/50 backdrop-blur-xl h-full flex flex-col shadow-sm">
+                <Card className={`border-border bg-surface/50 h-full flex flex-col shadow-sm ${!isMobile && 'backdrop-blur-xl'}`}>
                   <div className="p-8 border-b border-border flex items-start justify-between bg-surface/30">
                     <div className="flex gap-4">
                       <div className="p-4 rounded-2xl bg-accent/10 text-accent h-fit">

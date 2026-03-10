@@ -164,7 +164,7 @@ export function About({ dbProfile }: AboutProps) {
           {/* Philosophy Statement */}
           <div className="lg:col-span-12 mt-10 p-0.5 md:p-1 bg-gradient-to-r from-accent/20 via-accent-secondary/20 to-accent/20 rounded-[1.5rem] md:rounded-[2.5rem]">
              <div className="rounded-[1.4rem] md:rounded-[2.4rem] bg-background dark:bg-surface p-8 md:p-12 text-center space-y-6 md:space-y-8 relative overflow-hidden">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-accent/5 blur-[100px] rounded-full" />
+                {!isMobile && <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-accent/5 blur-[100px] rounded-full" />}
                 <h4 className="text-xl sm:text-3xl md:text-5xl font-black text-text-primary tracking-tighter max-w-3xl mx-auto leading-tight sm:leading-none relative z-10">
                    {dbProfile?.philosophy || ""}
                 </h4>

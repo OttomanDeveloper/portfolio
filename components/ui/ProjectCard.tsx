@@ -47,7 +47,7 @@ export function ProjectCard({
   const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-5, 5]), { damping: 25, stiffness: 150 })
 
   function handleMouseMove(event: React.MouseEvent<HTMLDivElement>) {
-    if (!cardRef.current) return
+    if (!cardRef.current || isMobile) return
     const rect = cardRef.current.getBoundingClientRect()
     const relX = event.clientX - rect.left
     const relY = event.clientY - rect.top
@@ -73,7 +73,7 @@ export function ProjectCard({
       viewport={{ once: true }}
       className="group relative h-full"
     >
-      <Card className="h-full overflow-hidden border-[var(--card-border)] bg-[var(--card-bg)] backdrop-blur-[40px] backdrop-saturate-[180%] transition-all duration-500 hover:border-accent/30 p-6 sm:p-8 flex flex-col relative shadow-[var(--card-shadow)]">
+      <Card className={`h-full overflow-hidden border-[var(--card-border)] bg-[var(--card-bg)] transition-all duration-500 hover:border-accent/30 p-6 sm:p-8 flex flex-col relative ${!isMobile ? 'backdrop-blur-[40px] backdrop-saturate-[180%] shadow-[var(--card-shadow)]' : 'shadow-sm'}`}>
         
         {/* Glass Edge Highlight (Simulating iOS depth) */}
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none opacity-50 dark:opacity-20" />

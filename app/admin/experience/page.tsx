@@ -6,6 +6,7 @@ import { Plus, Edit2, Trash2, X, Loader2, Save, Calendar, MapPin, Briefcase } fr
 import { getExperiences } from '@/lib/api'
 import { adminSaveExperience, adminDeleteExperience } from '../actions'
 import { Experience } from '@/lib/types'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 interface ExperienceForm extends Partial<Experience> {
   technologiesStr?: string;
@@ -20,6 +21,7 @@ export default function ExperienceAdmin() {
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<string | null>(null)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     fetchExperiences()
@@ -135,11 +137,11 @@ export default function ExperienceAdmin() {
             {experiences.map((exp) => (
               <motion.div
                 key={exp.id}
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                className="bg-surface/50 border border-border rounded-2xl p-6 hover:border-accent/40 transition-all group relative shadow-sm hover:shadow-md"
+                layout={!isMobile}
+                initial={isMobile ? false : { opacity: 0, y: 20 }}
+                animate={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+                exit={isMobile ? { opacity: 0 } : { opacity: 0, scale: 0.95 }}
+                className={`bg-surface/50 border border-border rounded-2xl p-6 hover:border-accent/40 transition-all group relative shadow-sm hover:shadow-md ${!isMobile && 'backdrop-blur-xl'}`}
               >
                 <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
                   <div className="flex gap-4">
@@ -204,13 +206,13 @@ export default function ExperienceAdmin() {
       <AnimatePresence>
         {isEditing && editingExp && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-black/80 backdrop-blur-sm"
-              onClick={() => setIsEditing(false)}
-            />
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className={`absolute inset-0 bg-black/80 ${!isMobile && 'backdrop-blur-sm'}`}
+                onClick={() => setIsEditing(false)}
+              />
             <motion.div 
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -358,7 +360,7 @@ export default function ExperienceAdmin() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+              className={`absolute inset-0 bg-black/60 ${!isMobile && 'backdrop-blur-sm'}`}
               onClick={() => setShowDeleteConfirm(null)}
             />
             <motion.div 

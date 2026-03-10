@@ -95,7 +95,7 @@ export function Projects({ repos, dbProjects = [], dbProfile }: ProjectsProps) {
               className={`px-6 py-2.5 rounded-2xl text-xs font-bold uppercase tracking-widest transition-all ${
                 filter === cat
                   ? 'bg-accent text-white shadow-xl scale-105'
-                  : 'bg-surface/50 text-text-secondary hover:text-text-primary border border-border backdrop-blur-sm'
+                  : `bg-surface/50 text-text-secondary hover:text-text-primary border border-border ${!isMobile && 'backdrop-blur-sm'}`
               }`}
             >
               {cat}

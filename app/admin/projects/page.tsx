@@ -6,6 +6,7 @@ import { Plus, Search, Edit2, Trash2, X, Loader2, Save } from 'lucide-react'
 import { getProjects } from '@/lib/api'
 import { adminSaveProject, adminDeleteProject } from '../actions'
 import { Project } from '@/lib/types'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 interface ProjectForm extends Partial<Project> {
   languagesStr?: string;
@@ -22,6 +23,7 @@ export default function ProjectsAdmin() {
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<string | null>(null)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     fetchProjects()
@@ -163,11 +165,11 @@ export default function ProjectsAdmin() {
             {filteredProjects.map((project) => (
               <motion.div
                 key={project.id}
-                layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                className="bg-surface/50 border border-border rounded-2xl overflow-hidden hover:border-accent/40 transition-all p-5 flex flex-col sm:flex-row gap-5 group shadow-sm hover:shadow-md"
+                layout={!isMobile}
+                initial={isMobile ? false : { opacity: 0, scale: 0.95 }}
+                animate={isMobile ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1 }}
+                exit={isMobile ? { opacity: 0 } : { opacity: 0, scale: 0.95 }}
+                className={`bg-surface/50 border border-border rounded-2xl overflow-hidden hover:border-accent/40 transition-all p-5 flex flex-col sm:flex-row gap-5 group shadow-sm hover:shadow-md ${!isMobile && 'backdrop-blur-xl'}`}
               >
                 <div 
                   className="w-full sm:w-40 h-32 rounded-xl shrink-0 flex items-center justify-center relative overflow-hidden"
@@ -220,13 +222,13 @@ export default function ProjectsAdmin() {
       <AnimatePresence>
         {isEditing && editingProject && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-black/80 backdrop-blur-sm"
-              onClick={() => setIsEditing(false)}
-            />
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className={`absolute inset-0 bg-black/80 ${!isMobile && 'backdrop-blur-sm'}`}
+                onClick={() => setIsEditing(false)}
+              />
             <motion.div 
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -402,7 +404,7 @@ export default function ProjectsAdmin() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+              className={`absolute inset-0 bg-black/60 ${!isMobile && 'backdrop-blur-sm'}`}
               onClick={() => setShowDeleteConfirm(null)}
             />
             <motion.div 

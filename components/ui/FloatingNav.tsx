@@ -38,7 +38,7 @@ export function FloatingNav({ dbProfile }: FloatingNavProps) {
       <motion.nav 
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="hidden md:flex items-center gap-2 p-2 rounded-3xl bg-surface/40 backdrop-blur-2xl border border-border shadow-2xl"
+        className="hidden md:flex items-center gap-2 p-2 rounded-3xl bg-surface/40 backdrop-blur-md border border-border shadow-2xl"
       >
         <div className="flex items-center gap-1 px-2 border-r border-border/10">
           {navItems.map((item) => (

@@ -10,6 +10,7 @@ import { createClient } from '@/lib/supabase/client'
 import { uploadAsset, deleteAsset, BUCKETS } from '@/lib/supabase/storage'
 import { saveAdminProfile, updateFavicon } from './actions'
 import { Profile } from '@/lib/types'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 type AvatarMode = 'github' | 'upload'
 
@@ -22,6 +23,7 @@ export default function AboutAdmin() {
   const [githubAvatarUrl, setGithubAvatarUrl] = useState('')
   const [uploadProgress, setUploadProgress] = useState(false)
   const [saveSuccess, setSaveSuccess] = useState(false)
+  const isMobile = useIsMobile()
 
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -283,7 +285,7 @@ export default function AboutAdmin() {
           <AnimatePresence>
             {saveSuccess && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={isMobile ? false : { opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
                 className="flex items-center gap-2 text-emerald-400 text-sm font-bold"
@@ -306,7 +308,7 @@ export default function AboutAdmin() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
           {/* Professional Narrative */}
-          <Card className="p-8 border-border bg-surface/50 backdrop-blur-xl shadow-sm space-y-6">
+          <Card className={`p-8 border-border bg-surface/50 shadow-sm space-y-6 ${!isMobile && 'backdrop-blur-xl'}`}>
             <div className="flex items-center gap-3">
               <div className="p-2 rounded-xl bg-accent/10 text-accent">
                 <User size={20} />
@@ -368,7 +370,7 @@ export default function AboutAdmin() {
           </Card>
 
           {/* Search & Branding */}
-          <Card className="p-8 border-border bg-surface/50 backdrop-blur-xl shadow-sm space-y-6">
+          <Card className={`p-8 border-border bg-surface/50 shadow-sm space-y-6 ${!isMobile && 'backdrop-blur-xl'}`}>
             <div className="flex items-center gap-3">
               <div className="p-2 rounded-xl bg-accent/10 text-accent">
                 <Globe size={20} />
@@ -421,7 +423,7 @@ export default function AboutAdmin() {
           </Card>
 
           {/* Stats & Growth */}
-          <Card className="p-8 border-border bg-surface/50 backdrop-blur-xl shadow-sm space-y-6">
+          <Card className={`p-8 border-border bg-surface/50 shadow-sm space-y-6 ${!isMobile && 'backdrop-blur-xl'}`}>
             <div className="flex items-center gap-3">
               <div className="p-2 rounded-xl bg-accent/10 text-accent">
                 <Target size={20} />
@@ -476,7 +478,7 @@ export default function AboutAdmin() {
           </Card>
 
           {/* Technical Ecosystem */}
-          <Card className="p-8 border-border bg-surface/50 backdrop-blur-xl shadow-sm space-y-8">
+          <Card className={`p-8 border-border bg-surface/50 shadow-sm space-y-8 ${!isMobile && 'backdrop-blur-xl'}`}>
             <div className="flex items-center gap-3">
               <div className="p-2 rounded-xl bg-accent/10 text-accent">
                 <Cpu size={20} />
@@ -510,7 +512,7 @@ export default function AboutAdmin() {
 
         {/* Action Sidebar */}
         <div className="space-y-6">
-          <Card className="p-8 border-border bg-surface/50 backdrop-blur-xl shadow-sm sticky top-8 space-y-8">
+          <Card className={`p-8 border-border bg-surface/50 shadow-sm sticky top-8 space-y-8 ${!isMobile && 'backdrop-blur-xl'}`}>
             {/* Avatar Section */}
             <div>
               <h3 className="text-xs font-black uppercase tracking-widest text-text-secondary/60 mb-6">Profile Avatar</h3>
@@ -567,7 +569,7 @@ export default function AboutAdmin() {
                 {avatarMode === 'github' && (
                   <motion.div
                     key="github"
-                    initial={{ opacity: 0, scale: 0.95 }}
+                    initial={isMobile ? false : { opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     className="space-y-4"
@@ -595,7 +597,7 @@ export default function AboutAdmin() {
                 {avatarMode === 'upload' && (
                   <motion.div
                     key="upload"
-                    initial={{ opacity: 0, scale: 0.95 }}
+                    initial={isMobile ? false : { opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     className="space-y-4"

@@ -8,12 +8,14 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
 import { useState } from 'react'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const pathname = usePathname()
   const supabase = createClient()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const isMobile = useIsMobile()
 
   if (pathname === '/admin/login') return children
 
@@ -35,7 +37,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <div className="flex min-h-screen bg-background text-text-primary">
       {/* Mobile Header */}
-      <header className="fixed top-0 left-0 right-0 h-16 border-b border-border bg-surface/80 backdrop-blur-xl z-[60] flex items-center justify-between px-6 md:hidden">
+      <header className={`fixed top-0 left-0 right-0 h-16 border-b border-border bg-surface/80 z-[60] flex items-center justify-between px-6 md:hidden ${!isMobile && 'backdrop-blur-xl'}`}>
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center text-white font-black text-xs">A</div>
           <span className="font-black tracking-tighter text-lg">Command</span>
@@ -100,7 +102,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       </AnimatePresence>
 
       {/* Sidebar (Desktop) */}
-      <aside className="w-64 border-r border-border bg-surface/30 backdrop-blur-xl hidden md:flex flex-col p-6 fixed inset-y-0 z-50">
+      <aside className={`w-64 border-r border-border bg-surface/30 hidden md:flex flex-col p-6 fixed inset-y-0 z-50 ${!isMobile && 'backdrop-blur-xl'}`}>
         <div className="flex items-center gap-3 mb-12 px-2">
           <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center text-white font-black text-xs">A</div>
           <span className="font-black tracking-tighter text-xl">Command</span>
@@ -146,9 +148,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 md:ml-64 p-6 pt-24 md:p-12 relative">
+      <main className="flex-1 lg:ml-64 p-6 pt-24 md:p-12 relative">
          {/* Background Decorative Element */}
-         <div className="fixed top-0 right-0 w-[500px] h-[500px] bg-accent/5 blur-[120px] rounded-full -z-10 pointer-events-none" />
+         {!isMobile && <div className="fixed top-0 right-0 w-[500px] h-[500px] bg-accent/5 blur-[120px] rounded-full -z-10 pointer-events-none" />}
          
          <div className="container mx-auto max-w-5xl">
             {children}

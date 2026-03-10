@@ -6,6 +6,7 @@ import { Button } from '../ui/Button'
 import { fadeInUp, staggerContainer } from '@/lib/animations'
 import Image from 'next/image'
 import { Download, Github, Linkedin, Twitter, Instagram, Zap } from 'lucide-react'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 import { Profile } from '@/lib/types'
 
@@ -14,6 +15,7 @@ interface HeroProps {
 }
 
 export function Hero({ dbProfile }: HeroProps) {
+  const isMobile = useIsMobile()
   const scrollToContact = () => {
     const contact = document.getElementById('contact')
     if (contact) contact.scrollIntoView({ behavior: 'smooth' })
@@ -23,7 +25,7 @@ export function Hero({ dbProfile }: HeroProps) {
     <section id="home" className="relative min-h-screen flex items-center justify-center py-24 overflow-hidden">
       {/* Premium Background Elements */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-accent/20 rounded-full blur-[120px] animate-pulse pointer-events-none" />
+        <div className={`absolute top-0 left-1/4 w-[500px] h-[500px] bg-accent/20 rounded-full blur-[120px] pointer-events-none ${!isMobile && 'animate-pulse'}`} />
         <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-accent-secondary/10 rounded-full blur-[120px] pointer-events-none" />
       </div>
 
@@ -31,8 +33,8 @@ export function Hero({ dbProfile }: HeroProps) {
         <div className="flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-24">
           {/* Left Content */}
           <motion.div 
-            initial="initial"
-            animate="animate"
+            initial={isMobile ? false : "initial"}
+            animate={isMobile ? "animate" : "animate"}
             variants={staggerContainer}
             className="flex-1 text-center lg:text-left space-y-10"
           >
@@ -104,7 +106,7 @@ export function Hero({ dbProfile }: HeroProps) {
 
           {/* Right Image / Visualization */}
           <motion.div 
-            initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
+            initial={isMobile ? false : { opacity: 0, scale: 0.9, rotate: 2 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="flex-1 relative group"
@@ -112,8 +114,8 @@ export function Hero({ dbProfile }: HeroProps) {
             <div className="relative w-72 h-72 sm:w-96 sm:h-96 lg:w-[32rem] lg:h-[32rem] mx-auto">
               {/* Complex decorative layers */}
               <div className="absolute inset-0 bg-accent/30 rounded-[3rem] rotate-6 group-hover:rotate-0 transition-all duration-1000 blur-3xl opacity-50" />
-              <div className="absolute -inset-8 border border-accent/5 rounded-[4rem] animate-[spin_30s_linear_infinite]" />
-              <div className="absolute -inset-16 border border-accent/5 rounded-[5rem] animate-[spin_45s_linear_infinite_reverse]" />
+              <div className={`absolute -inset-8 border border-accent/5 rounded-4xl ${!isMobile && 'animate-[spin_30s_linear_infinite]'}`} />
+              <div className={`absolute -inset-16 border border-accent/5 rounded-5xl ${!isMobile && 'animate-[spin_45s_linear_infinite_reverse]'}`} />
               
               <div className="relative w-full h-full rounded-[3rem] overflow-hidden bg-surface-secondary/30 backdrop-blur-md border border-border group-hover:border-accent/40 transition-all duration-700 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] dark:shadow-[0_32px_64px_-16px_rgba(0,0,0,0.7)] p-2">
                 <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden">

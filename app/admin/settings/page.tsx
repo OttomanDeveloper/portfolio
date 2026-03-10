@@ -8,6 +8,7 @@ import { getSystemHealth } from '@/lib/api-client'
 import { createClient } from '@/lib/supabase/client'
 import { uploadAsset, deleteAsset, BUCKETS } from '@/lib/supabase/storage'
 import { getGithubAvatarUrl } from '@/lib/github-utils'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 import { Profile } from '@/lib/types'
 
@@ -17,6 +18,7 @@ export default function SettingsAdmin() {
   const [securitySaving, setSecuritySaving] = useState(false)
   const [health, setHealth] = useState({ status: 'checking', latency: 0 })
   const [profile, setProfile] = useState<Profile | null>(null)
+  const isMobile = useIsMobile()
   
   // Security State
   const [password, setPassword] = useState('')
@@ -152,7 +154,7 @@ export default function SettingsAdmin() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Communication & Social */}
-        <Card className="p-8 border-border bg-surface/50 backdrop-blur-xl space-y-8">
+        <Card className={`p-8 border-border bg-surface/50 space-y-8 ${!isMobile && 'backdrop-blur-xl'}`}>
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-xl bg-accent/10 text-accent">
                 <Globe size={20} />
@@ -229,7 +231,7 @@ export default function SettingsAdmin() {
 
         <div className="space-y-8">
             {/* Security Section */}
-            <Card className="p-8 border-border bg-surface/50 backdrop-blur-xl animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <Card className={`p-8 border-border bg-surface/50 animate-in fade-in slide-in-from-bottom-4 duration-500 ${!isMobile && 'backdrop-blur-xl'}`}>
                 <div className="flex items-center gap-3 mb-6">
                     <div className="p-2 rounded-xl bg-rose-500/10 text-rose-500">
                         <Shield size={20} />
@@ -278,7 +280,7 @@ export default function SettingsAdmin() {
             </Card>
 
             {/* Asset Management */}
-            <Card className="p-8 border-border bg-surface/50 backdrop-blur-xl space-y-6">
+            <Card className={`p-8 border-border bg-surface/50 space-y-6 ${!isMobile && 'backdrop-blur-xl'}`}>
                 <div className="flex items-center gap-3">
                     <div className="p-2 rounded-xl bg-accent/10 text-accent">
                         <FileText size={20} />
@@ -320,7 +322,7 @@ export default function SettingsAdmin() {
             </Card>
 
             {/* System Health */}
-            <Card className="p-8 border-border bg-surface/50 backdrop-blur-xl space-y-8">
+            <Card className={`p-8 border-border bg-surface/50 space-y-8 ${!isMobile && 'backdrop-blur-xl'}`}>
                 <div className="flex items-center gap-3">
                     <div className="p-2 rounded-xl bg-accent/10 text-accent">
                         <Activity size={20} />

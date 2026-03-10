@@ -42,7 +42,7 @@ export function Reviews({ initialReviews }: ReviewsProps) {
   return (
     <section id="reviews" className="py-32 px-4 relative overflow-hidden">
       {/* Decorative Background */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[120px] -z-10 translate-x-1/2 -translate-y-1/2" />
+      {!isMobile && <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[120px] -z-10 translate-x-1/2 -translate-y-1/2" />}
       
       <div className="container mx-auto max-w-6xl">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
@@ -75,7 +75,7 @@ export function Reviews({ initialReviews }: ReviewsProps) {
                 transition={{ duration: 0.5, delay: index * 0.05 }}
                 className="h-full"
               >
-                <Card className="h-full p-8 flex flex-col bg-surface/40 backdrop-blur-lg md:backdrop-blur-xl border-border hover:border-accent/30 transition-all group shadow-sm hover:shadow-xl hover:shadow-accent/5">
+                <Card className={`h-full p-8 flex flex-col bg-surface/40 border-border hover:border-accent/30 transition-all group shadow-sm hover:shadow-xl hover:shadow-accent/5 ${!isMobile && 'backdrop-blur-lg md:backdrop-blur-xl'}`}>
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex gap-1 text-accent">
                       {[...Array(5)].map((_, i) => (

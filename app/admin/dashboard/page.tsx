@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button'
 import { motion } from 'framer-motion'
 import { FolderKanban, Zap, MessageSquare, Loader2, TrendingUp, Star, Clock } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import { useIsMobile } from '@/hooks/use-mobile'
 import { Project, Message, Review } from '@/lib/types'
 
 export const dynamic = 'force-dynamic'
@@ -16,6 +17,7 @@ export default function AdminDashboard() {
   const [recentProjects, setRecentProjects] = useState<Project[]>([])
   const [recentMessages, setRecentMessages] = useState<Message[]>([])
   const [recentReviews, setRecentReviews] = useState<Review[]>([])
+  const isMobile = useIsMobile()
 
   const fetchDashboardData = async () => {
     const supabase = createClient()
@@ -79,11 +81,11 @@ export default function AdminDashboard() {
         {stats.map((stat, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={isMobile ? false : { opacity: 0, y: 20 }}
+            animate={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
           >
-            <Card className="p-6 border-border bg-surface/50 backdrop-blur-xl relative overflow-hidden group hover:border-accent/30 transition-all shadow-sm">
+            <Card className={`p-6 border-border bg-surface/50 relative overflow-hidden group hover:border-accent/30 transition-all shadow-sm ${!isMobile && 'backdrop-blur-xl'}`}>
               <div className="absolute -top-12 -right-12 w-24 h-24 blur-3xl opacity-10 group-hover:opacity-20 transition-opacity" style={{ backgroundColor: stat.color }} />
               
               <div className="flex flex-col gap-4 relative z-10">
@@ -105,7 +107,7 @@ export default function AdminDashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Activity Feed */}
-        <Card className="lg:col-span-2 p-8 border-border bg-surface/50 backdrop-blur-xl space-y-8 shadow-sm">
+        <Card className={`lg:col-span-2 p-8 border-border bg-surface/50 space-y-8 shadow-sm ${!isMobile && 'backdrop-blur-xl'}`}>
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-black text-text-primary">Recent Ecosystem Updates</h2>
             <TrendingUp size={20} className="text-accent" />
@@ -136,7 +138,7 @@ export default function AdminDashboard() {
         </Card>
 
         {/* Review Queue */}
-        <Card className="p-8 border-border bg-surface/50 backdrop-blur-xl space-y-8 shadow-sm">
+        <Card className={`p-8 border-border bg-surface/50 space-y-8 shadow-sm ${!isMobile && 'backdrop-blur-xl'}`}>
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-black text-text-primary">Review Queue</h2>
             <Star size={20} className="text-amber-500" />
@@ -170,7 +172,7 @@ export default function AdminDashboard() {
 
       {/* Inquiries Snapshot */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <Card className="lg:col-span-2 p-8 border-border bg-surface/50 backdrop-blur-xl shadow-sm">
+        <Card className={`lg:col-span-2 p-8 border-border bg-surface/50 shadow-sm ${!isMobile && 'backdrop-blur-xl'}`}>
            <div className="flex items-center justify-between mb-8">
             <h2 className="text-xl font-black text-text-primary">Recent Inquiries</h2>
             <MessageSquare size={20} className="text-rose-500" />
