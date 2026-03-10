@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SectionHeading } from '../ui/SectionHeading'
 import { ProjectCard } from '../ui/ProjectCard'
+import { useIsMobile } from '@/hooks/use-mobile'
 import dynamic from 'next/dynamic'
 
 const CaseStudyModal = dynamic(() => import('../ui/CaseStudyModal').then((mod) => mod.CaseStudyModal), {
@@ -52,6 +53,7 @@ interface DisplayProject {
 }
 
 export function Projects({ repos, dbProjects = [], dbProfile }: ProjectsProps) {
+  const isMobile = useIsMobile()
   const [filter, setFilter] = useState('All')
   const [selectedProject, setSelectedProject] = useState<DisplayProject | null>(null)
 
@@ -103,12 +105,13 @@ export function Projects({ repos, dbProjects = [], dbProfile }: ProjectsProps) {
 
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          <AnimatePresence mode="popLayout">
+          <AnimatePresence mode={isMobile ? "wait" : "popLayout"}>
             {filteredProjects.map((project, index) => (
               <motion.div
                 key={project.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={isMobile ? false : { opacity: 0, y: 20 }}
+                animate={isMobile ? { opacity: 1, y: 0 } : undefined}
+                whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "200px 0px", amount: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.05 }}
               >

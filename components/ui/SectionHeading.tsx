@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils'
 import { motion } from 'framer-motion'
 import { fadeInUp } from '@/lib/animations'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 interface SectionHeadingProps {
   title: string
@@ -15,11 +16,14 @@ export const SectionHeading = ({
   centered = false, 
   className 
 }: SectionHeadingProps) => {
+  const isMobile = useIsMobile()
+
   return (
     <motion.div
       variants={fadeInUp}
-      initial="initial"
-      whileInView="animate"
+      initial={isMobile ? false : "initial"}
+      whileInView={isMobile ? undefined : "animate"}
+      animate={isMobile ? { opacity: 1, y: 0 } : undefined}
       viewport={{ once: true, margin: "200px 0px", amount: 0 }}
       className={cn(
         'mb-12 space-y-2',

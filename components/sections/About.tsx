@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { SectionHeading } from '../ui/SectionHeading'
 import { staggerContainer } from '@/lib/animations'
 import { Profile } from '@/lib/types'
+import { useIsMobile } from '@/hooks/use-mobile'
 import { 
   Rocket, 
   Target, 
@@ -22,6 +23,7 @@ interface AboutProps {
 }
 
 export function About({ dbProfile }: AboutProps) {
+  const isMobile = useIsMobile()
   const yearsExp = calculateExperienceYears(
     dbProfile?.experience_start_date || dbProfile?.experienceStartDate || '', 
     dbProfile?.manual_years_experience || dbProfile?.manualYearsExperience || 0
@@ -79,8 +81,9 @@ export function About({ dbProfile }: AboutProps) {
           {/* Narrative Column */}
           <motion.div 
             variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
+            initial={isMobile ? false : "initial"}
+            whileInView={isMobile ? undefined : "animate"}
+            animate={isMobile ? { opacity: 1, y: 0 } : undefined}
             viewport={{ once: true, margin: "200px 0px", amount: 0 }}
             className="lg:col-span-12 space-y-10"
           >
@@ -117,7 +120,7 @@ export function About({ dbProfile }: AboutProps) {
 
           {/* Skill Clusters */}
           <div className="lg:col-span-12 mt-10">
-             <div className="rounded-[1.5rem] md:rounded-[2.5rem] p-6 md:p-10 bg-surface dark:bg-surface/10 border border-border backdrop-blur-xl">
+             <div className="rounded-[1.5rem] md:rounded-[2.5rem] p-6 md:p-10 bg-surface dark:bg-surface/10 border border-border">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
                    <div>
                       <h3 className="text-2xl font-black tracking-tight text-text-primary mb-2">Technological Arsenal</h3>

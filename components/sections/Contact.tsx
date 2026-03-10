@@ -9,6 +9,7 @@ import { Button } from '../ui/Button'
 import { Card } from '../ui/Card'
 import { fadeInUp } from '@/lib/animations'
 import { Mail, MessageSquare, User, Send, CheckCircle2, AlertCircle, Phone, Youtube, Loader2 } from 'lucide-react'
+import { useIsMobile } from '@/hooks/use-mobile'
 import { useState } from 'react'
 import { submitMessage } from '@/lib/api'
 import { Profile } from '@/lib/types'
@@ -26,6 +27,7 @@ interface ContactProps {
 }
 
 export function Contact({ dbProfile }: ContactProps) {
+  const isMobile = useIsMobile()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -87,8 +89,9 @@ export function Contact({ dbProfile }: ContactProps) {
           {/* Info */}
           <motion.div
             variants={fadeInUp}
-            initial="initial"
-            whileInView="animate"
+            initial={isMobile ? false : "initial"}
+            whileInView={isMobile ? undefined : "animate"}
+            animate={isMobile ? { opacity: 1, y: 0 } : undefined}
             viewport={{ once: true, margin: "200px 0px", amount: 0 }}
             className="space-y-8"
           >
@@ -133,8 +136,9 @@ export function Contact({ dbProfile }: ContactProps) {
           {/* Form */}
           <motion.div
             variants={fadeInUp}
-            initial="initial"
-            whileInView="animate"
+            initial={isMobile ? false : "initial"}
+            whileInView={isMobile ? undefined : "animate"}
+            animate={isMobile ? { opacity: 1, y: 0 } : undefined}
             viewport={{ once: true, margin: "200px 0px", amount: 0 }}
           >
             <Card className="p-8">

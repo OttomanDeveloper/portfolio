@@ -5,6 +5,7 @@ import { SectionHeading } from '../ui/SectionHeading'
 import { Card } from '../ui/Card'
 import { staggerContainer } from '@/lib/animations'
 import { Briefcase, Calendar, MapPin } from 'lucide-react'
+import { useIsMobile } from '@/hooks/use-mobile'
 import { experiences as staticExperiences, Experience as ExperienceType } from '@/data/experience'
 
 interface ExperienceProps {
@@ -12,6 +13,8 @@ interface ExperienceProps {
 }
 
 export function Experience({ experiences = staticExperiences }: ExperienceProps) {
+  const isMobile = useIsMobile()
+
   return (
     <section id="experience" className="py-16 px-4">
       <div className="container mx-auto max-w-6xl">
@@ -23,8 +26,9 @@ export function Experience({ experiences = staticExperiences }: ExperienceProps)
         <div className="relative mt-12 space-y-8 before:absolute before:inset-0 before:ml-5 md:before:mx-auto before:-translate-x-px md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-border before:to-transparent">
           <motion.div
             variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
+            initial={isMobile ? false : "initial"}
+            whileInView={isMobile ? undefined : "animate"}
+            animate={isMobile ? { opacity: 1, y: 0 } : undefined}
             viewport={{ once: true, margin: "200px 0px", amount: 0 }}
             className="space-y-8"
           >

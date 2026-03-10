@@ -84,8 +84,8 @@ export function FloatingNav({ dbProfile }: FloatingNavProps) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.15, ease: "circOut" }}
-              className="flex flex-col gap-2 p-2 rounded-3xl bg-surface/95 backdrop-blur-md border border-border shadow-2xl"
+              transition={{ duration: 0.1, ease: "linear" }}
+              className="flex flex-col gap-2 p-2 rounded-3xl bg-surface border border-border shadow-2xl"
             >
               {navItems.map((item) => (
                  <a

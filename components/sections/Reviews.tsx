@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SectionHeading } from '../ui/SectionHeading'
+import { useIsMobile } from '@/hooks/use-mobile'
 import { Review, Profile } from '@/lib/types'
 import { Card } from '../ui/Card'
 import { Star, Quote, ChevronDown, Plus, ShieldCheck, User } from 'lucide-react'
@@ -16,6 +17,7 @@ interface ReviewsProps {
 }
 
 export function Reviews({ initialReviews }: ReviewsProps) {
+  const isMobile = useIsMobile()
   const [reviews, setReviews] = useState(initialReviews)
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(initialReviews.length === 6)
@@ -62,12 +64,13 @@ export function Reviews({ initialReviews }: ReviewsProps) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <AnimatePresence mode="popLayout">
+          <AnimatePresence mode={isMobile ? "wait" : "popLayout"}>
             {reviews.map((review, index) => (
               <motion.div
                 key={review.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={isMobile ? false : { opacity: 0, y: 20 }}
+                animate={isMobile ? { opacity: 1, y: 0 } : undefined}
+                whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "200px 0px", amount: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.05 }}
                 className="h-full"

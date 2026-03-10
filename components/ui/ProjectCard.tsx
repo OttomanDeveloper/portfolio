@@ -6,6 +6,7 @@ import { Button } from './Button'
 import { Card } from './Card'
 import { Github, ExternalLink, Smartphone, Globe, Layers, Code2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 interface ProjectCardProps {
   name: string
@@ -32,6 +33,7 @@ export function ProjectCard({
   stats = [],
   onViewCaseStudy
 }: ProjectCardProps) {
+  const isMobile = useIsMobile()
   const cardRef = useRef<HTMLDivElement>(null)
   
   // Tilt values
@@ -65,8 +67,9 @@ export function ProjectCard({
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={isMobile ? false : { opacity: 0, y: 20 }}
+      animate={isMobile ? { opacity: 1, y: 0 } : undefined}
+      whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true }}
       className="group relative h-full"
     >
