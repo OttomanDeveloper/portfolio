@@ -214,9 +214,10 @@ export default function ExperienceAdmin() {
                 onClick={() => setIsEditing(false)}
               />
             <motion.div 
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            initial={isMobile ? { opacity: 0 } : { opacity: 0, scale: 0.9, y: 20 }}
+            animate={isMobile ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
+            exit={isMobile ? { opacity: 0 } : { opacity: 0, scale: 0.9, y: 20 }}
+            transition={isMobile ? { duration: 0.2, ease: 'easeOut' } : { type: 'spring', damping: 30, stiffness: 400 }}
               className="relative w-full max-w-4xl bg-surface border border-border rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
             >
               <div className="flex items-center justify-between p-4 border-b border-border bg-surface-secondary/30">

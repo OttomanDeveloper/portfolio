@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { X, ExternalLink, Check } from 'lucide-react'
 import { Button } from './Button'
 import { IPhoneMockup } from './IPhoneMockup'
+import { useIsMobile } from '@/hooks/use-mobile'
 import { cn } from '@/lib/utils'
 import ReactMarkdown from 'react-markdown'
 
@@ -25,6 +26,7 @@ interface CaseStudyModalProps {
 }
 
 export function CaseStudyModal({ isOpen, onClose, project }: CaseStudyModalProps) {
+  const isMobile = useIsMobile()
   if (!project) return null
 
   return (
@@ -35,16 +37,16 @@ export function CaseStudyModal({ isOpen, onClose, project }: CaseStudyModalProps
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.2 }}
             onClick={onClose}
-            className="absolute inset-0 bg-background/90 backdrop-blur-2xl"
+            className={`absolute inset-0 bg-background/95 ${!isMobile && 'backdrop-blur-xl'}`}
           />
           
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 30 }}
-            transition={{ type: 'spring', damping: 30, stiffness: 400 }}
+            initial={isMobile ? { opacity: 0 } : { opacity: 0, scale: 0.95, y: 30 }}
+            animate={isMobile ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
+            exit={isMobile ? { opacity: 0 } : { opacity: 0, scale: 0.95, y: 30 }}
+            transition={isMobile ? { duration: 0.2, ease: 'easeOut' } : { type: 'spring', damping: 30, stiffness: 400 }}
             className="relative w-full max-w-5xl h-full md:h-auto max-h-[100vh] md:max-h-[90vh] overflow-y-auto md:overflow-hidden rounded-none md:rounded-3xl bg-surface border-0 md:border border-border shadow-2xl flex flex-col md:flex-row scrollbar-hide"
           >
             <button 

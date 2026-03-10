@@ -41,6 +41,12 @@
 }
 
 @layer base {
+  @media (max-width: 1024px) {
+    * {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+  }
   body:has(.admin-modal-overlay) .admin-header-mobile {
     display: none !important;
   }

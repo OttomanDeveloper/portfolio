@@ -302,8 +302,14 @@ export default function ReviewsAdmin() {
       <AnimatePresence>
         {showCreateModal && (
           <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setShowCreateModal(false)} className={`absolute inset-0 bg-background/80 ${!isMobile && 'backdrop-blur-md'}`} />
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="relative w-full max-w-lg bg-surface border border-border rounded-[2rem] p-8 shadow-2xl overflow-y-auto max-h-[90vh]">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setShowCreateModal(false)} className={`absolute inset-0 bg-background/80 admin-modal-overlay ${!isMobile && 'backdrop-blur-md'}`} />
+            <motion.div 
+              initial={isMobile ? { opacity: 0 } : { scale: 0.9, opacity: 0 }} 
+              animate={isMobile ? { opacity: 1 } : { scale: 1, opacity: 1 }} 
+              exit={isMobile ? { opacity: 0 } : { scale: 0.9, opacity: 0 }}
+              transition={isMobile ? { duration: 0.2 } : {}}
+              className="relative w-full max-w-lg bg-surface border border-border rounded-[2rem] p-8 shadow-2xl overflow-y-auto max-h-[90vh]"
+            >
               <h2 className="text-xl font-bold text-text-primary mb-6">Create New Review</h2>
               
               <div className="space-y-6">
@@ -397,8 +403,14 @@ export default function ReviewsAdmin() {
       <AnimatePresence>
         {editingReview && (
           <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setEditingReview(null)} className={`absolute inset-0 bg-background/80 ${!isMobile && 'backdrop-blur-md'}`} />
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="relative w-full max-w-lg bg-surface border border-border rounded-[2rem] p-8 shadow-2xl">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setEditingReview(null)} className={`absolute inset-0 bg-background/80 admin-modal-overlay ${!isMobile && 'backdrop-blur-md'}`} />
+            <motion.div 
+              initial={isMobile ? { opacity: 0 } : { scale: 0.9, opacity: 0 }} 
+              animate={isMobile ? { opacity: 1 } : { scale: 1, opacity: 1 }} 
+              exit={isMobile ? { opacity: 0 } : { scale: 0.9, opacity: 0 }}
+              transition={isMobile ? { duration: 0.2 } : {}}
+              className="relative w-full max-w-lg bg-surface border border-border rounded-[2rem] p-8 shadow-2xl"
+            >
               <h2 className="text-xl font-bold text-text-primary mb-6">Edit Review Content</h2>
               
               <div className="space-y-6">
@@ -456,8 +468,14 @@ export default function ReviewsAdmin() {
       <AnimatePresence>
         {showDeleteConfirm && (
           <div className="fixed inset-0 z-[120] flex items-center justify-center p-4">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setShowDeleteConfirm(null)} className={`absolute inset-0 bg-background/80 ${!isMobile && 'backdrop-blur-md'}`} />
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="relative w-full max-w-sm bg-surface border border-border rounded-[2rem] p-8 text-center shadow-2xl">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setShowDeleteConfirm(null)} className={`absolute inset-0 bg-background/80 admin-modal-overlay ${!isMobile && 'backdrop-blur-md'}`} />
+            <motion.div 
+              initial={isMobile ? { opacity: 0 } : { scale: 0.9, opacity: 0 }} 
+              animate={isMobile ? { opacity: 1 } : { scale: 1, opacity: 1 }} 
+              exit={isMobile ? { opacity: 0 } : { scale: 0.9, opacity: 0 }}
+              transition={isMobile ? { duration: 0.2 } : {}}
+              className="relative w-full max-w-sm bg-surface border border-border rounded-[2rem] p-8 text-center shadow-2xl"
+            >
               <div className="w-16 h-16 bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
                 <ShieldAlert size={32} />
               </div>

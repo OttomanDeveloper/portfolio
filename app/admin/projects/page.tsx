@@ -230,9 +230,10 @@ export default function ProjectsAdmin() {
                 onClick={() => setIsEditing(false)}
               />
             <motion.div 
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            initial={isMobile ? { opacity: 0 } : { opacity: 0, scale: 0.9, y: 20 }}
+            animate={isMobile ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
+            exit={isMobile ? { opacity: 0 } : { opacity: 0, scale: 0.9, y: 20 }}
+            transition={isMobile ? { duration: 0.2, ease: 'easeOut' } : { type: 'spring', damping: 30, stiffness: 400 }}
               className="relative w-full max-w-4xl bg-surface border border-border rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
             >
               <div className="flex items-center justify-between p-4 border-b border-border bg-surface-secondary/30">
@@ -408,9 +409,10 @@ export default function ProjectsAdmin() {
               onClick={() => setShowDeleteConfirm(null)}
             />
             <motion.div 
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
+            initial={isMobile ? { opacity: 0 } : { scale: 0.9, opacity: 0 }}
+            animate={isMobile ? { opacity: 1 } : { scale: 1, opacity: 1 }}
+            exit={isMobile ? { opacity: 0 } : { scale: 0.9, opacity: 0 }}
+            transition={isMobile ? { duration: 0.2 } : {}}
               className="relative bg-surface border border-border p-8 rounded-[2rem] max-w-sm w-full text-center shadow-2xl"
             >
               <div className="w-20 h-20 bg-rose-500/10 text-rose-500 rounded-3xl flex items-center justify-center mx-auto mb-6">
