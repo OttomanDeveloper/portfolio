@@ -80,10 +80,11 @@ export function FloatingNav({ dbProfile }: FloatingNavProps) {
         <AnimatePresence>
           {isExpanded && (
             <motion.div
-              initial={{ scale: 0.8, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.8, opacity: 0, y: 20 }}
-              className="flex flex-col gap-2 p-2 rounded-3xl bg-surface/60 backdrop-blur-3xl border border-border shadow-2xl"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ duration: 0.2 }}
+              className="flex flex-col gap-2 p-2 rounded-3xl bg-surface/70 backdrop-blur-xl border border-border shadow-2xl"
             >
               {navItems.map((item) => (
                  <a

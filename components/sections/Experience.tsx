@@ -25,7 +25,7 @@ export function Experience({ experiences = staticExperiences }: ExperienceProps)
             variants={staggerContainer}
             initial="initial"
             whileInView="animate"
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "100px 0px", amount: 0.1 }}
             className="space-y-8"
           >
             {experiences.map((exp, index) => (
