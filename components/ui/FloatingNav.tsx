@@ -5,9 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Home, User, Briefcase, Mail, Github, Twitter, Linkedin, Menu, X, Instagram, Youtube, MessageSquare, Cpu } from 'lucide-react'
 import { ThemeToggle } from './ThemeToggle'
 import { cn } from '@/lib/utils'
+import { Profile } from '@/lib/types'
 
 interface FloatingNavProps {
-  dbProfile?: any
+  dbProfile?: Profile
 }
 
 export function FloatingNav({ dbProfile }: FloatingNavProps) {
@@ -22,13 +23,13 @@ export function FloatingNav({ dbProfile }: FloatingNavProps) {
     { name: 'Contact', href: '#contact', icon: <Mail size={20} /> },
   ]
 
-  const socialData = dbProfile?.social_links || dbProfile?.socialLinks || {}
+  const socialData = dbProfile?.social_links || {}
   const socials = [
     ...(socialData.github ? [{ icon: <Github size={18} />, url: socialData.github }] : []),
     ...(socialData.linkedin ? [{ icon: <Linkedin size={18} />, url: socialData.linkedin }] : []),
     ...(socialData.twitter ? [{ icon: <Twitter size={18} />, url: socialData.twitter }] : []),
     ...(socialData.instagram ? [{ icon: <Instagram size={18} />, url: socialData.instagram }] : []),
-    ...(dbProfile?.youtube_url || socialData.youtube ? [{ icon: <Youtube size={18} />, url: dbProfile?.youtube_url || socialData.youtube }] : []),
+    ...(dbProfile?.social_links?.youtube ? [{ icon: <Youtube size={18} />, url: dbProfile.social_links.youtube }] : []),
   ]
 
   return (

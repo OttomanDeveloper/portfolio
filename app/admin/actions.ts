@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@supabase/supabase-js'
+import { Project, Experience } from '@/lib/types'
 
 // Helper to get service role client directly on the server
 function getAdminSupabase() {
@@ -10,7 +11,7 @@ function getAdminSupabase() {
   )
 }
 
-export async function adminSaveProject(project: any) {
+export async function adminSaveProject(project: Partial<Project> & { fullDescription?: string; vibrantColor?: string; githubUrl?: string; liveUrl?: string }) {
   const supabase = getAdminSupabase()
   
   const projectData = {
@@ -41,7 +42,7 @@ export async function adminDeleteProject(id: string) {
   return { error: error ? error.message : null }
 }
 
-export async function adminSaveExperience(experience: any) {
+export async function adminSaveExperience(experience: Partial<Experience> & { startDate?: string; endDate?: string }) {
   const supabase = getAdminSupabase()
 
   const expData = {

@@ -2,15 +2,23 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Plus, Search, Filter, Edit2, Trash2, X, Github, ExternalLink, Loader2, Save } from 'lucide-react'
+import { Plus, Search, Edit2, Trash2, X, Loader2, Save } from 'lucide-react'
 import { getProjects } from '@/lib/api'
 import { adminSaveProject, adminDeleteProject } from '../actions'
+import { Project } from '@/lib/types'
+
+interface ProjectForm extends Partial<Project> {
+  languagesStr?: string;
+  platformsStr?: string;
+  bulletsStr?: string;
+  statsStr?: string;
+}
 
 export default function ProjectsAdmin() {
-  const [projects, setProjects] = useState<any[]>([])
+  const [projects, setProjects] = useState<Project[]>([])
   const [searchQuery, setSearchQuery] = useState('')
   const [isEditing, setIsEditing] = useState(false)
-  const [editingProject, setEditingProject] = useState<any>(null)
+  const [editingProject, setEditingProject] = useState<ProjectForm | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<string | null>(null)
@@ -31,7 +39,7 @@ export default function ProjectsAdmin() {
     }
   }
 
-  const handleEdit = (project: any) => {
+  const handleEdit = (project: Project) => {
     setEditingProject({ 
         ...project,
         languagesStr: project.languages?.join(', ') || '',
@@ -80,25 +88,24 @@ export default function ProjectsAdmin() {
     setIsSaving(true)
     try {
       let parsedStats = []
-      try { parsedStats = JSON.parse(editingProject.statsStr || '[]') } catch(e) {}
+      try { parsedStats = JSON.parse(editingProject.statsStr || '[]') } catch { /* ignore */ }
       
-      const { 
-        languagesStr,
-        platformsStr,
-        bulletsStr,
-        statsStr,
-        ...projectDataWithoutStrings
-      } = editingProject;
-
       const payload = {
-          ...projectDataWithoutStrings,
+          ...editingProject,
           languages: editingProject.languagesStr?.split(',').map((s: string) => s.trim()).filter(Boolean) || [],
           platforms: editingProject.platformsStr?.split(',').map((s: string) => s.trim()).filter(Boolean) || [],
           bullets: editingProject.bulletsStr?.split('\n').filter(Boolean) || [],
           stats: parsedStats
       }
 
-      const { data, error } = await adminSaveProject(payload)
+      // Remove temporary string fields
+      const finalPayload = { ...payload };
+      delete finalPayload.languagesStr;
+      delete finalPayload.platformsStr;
+      delete finalPayload.bulletsStr;
+      delete finalPayload.statsStr;
+
+      const { error } = await adminSaveProject(finalPayload as Project)
       if (error) throw new Error(error)
       
       await fetchProjects()
@@ -228,7 +235,7 @@ export default function ProjectsAdmin() {
             >
               <div className="flex items-center justify-between p-4 border-b border-border bg-surface-secondary/30">
                 <h2 className="text-xl font-bold text-text-primary">
-                  {editingProject.id.toString().startsWith('new-') ? 'Add New Project' : 'Edit Project'}
+                  {editingProject.id?.toString().startsWith('new-') ? 'Add New Project' : 'Edit Project'}
                 </h2>
                 <button onClick={() => setIsEditing(false)} className="text-text-secondary hover:text-text-primary transition-colors">
                   <X size={24} />

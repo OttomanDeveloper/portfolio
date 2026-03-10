@@ -11,7 +11,9 @@ export function ThemeToggle() {
 
   // Avoid hydration mismatch
   useEffect(() => {
-    setMounted(true)
+    requestAnimationFrame(() => {
+      setMounted(true)
+    })
   }, [])
 
   if (!mounted) return <div className="p-2 w-9 h-9" />

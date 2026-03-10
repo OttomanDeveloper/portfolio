@@ -1,24 +1,25 @@
 import { createClient } from './supabase/client'
 import { curatedProjects } from '../data/projects'
 import { experiences } from '../data/experience'
+import { Project, Experience, Profile, Review } from './types'
 
 /**
  * CLIENT-SIDE API FUNCTIONS
  * These use the standard Supabase client and are safe for Client Components.
  */
 
-export async function getProjects() {
+export async function getProjects(): Promise<Project[]> {
   const supabase = createClient()
-  if (!supabase) return curatedProjects
+  if (!supabase) return curatedProjects as unknown as Project[]
 
   const { data, error } = await supabase.from('projects').select('*').order('created_at', { ascending: true })
   
   if (error) {
     console.error('Error fetching projects from Supabase (Client):', error)
-    return curatedProjects
+    return curatedProjects as unknown as Project[]
   }
   
-  return data.map((p: any) => ({
+  return (data as Project[]).map((p) => ({
     ...p,
     fullDescription: p.full_description,
     vibrantColor: p.vibrant_color,
@@ -27,17 +28,17 @@ export async function getProjects() {
   }))
 }
 
-export async function saveProject(project: any) {
+export async function saveProject(project: Partial<Project> & { fullDescription?: string; vibrantColor?: string; githubUrl?: string; liveUrl?: string }) {
   const supabase = createClient()
   if (!supabase) return { error: 'Database connection failed' }
 
   const projectData = {
     name: project.name,
     description: project.description,
-    full_description: project.fullDescription,
-    vibrant_color: project.vibrantColor,
-    github_url: project.githubUrl,
-    live_url: project.liveUrl,
+    full_description: project.full_description || project.fullDescription,
+    vibrant_color: project.vibrant_color || project.vibrantColor,
+    github_url: project.github_url || project.githubUrl,
+    live_url: project.live_url || project.liveUrl,
     languages: project.languages || [],
     platforms: project.platforms || [],
     bullets: project.bullets || [],
@@ -60,18 +61,18 @@ export async function deleteProject(id: string) {
   return { error }
 }
 
-export async function getExperiences() {
+export async function getExperiences(): Promise<Experience[]> {
   const supabase = createClient()
-  if (!supabase) return experiences
+  if (!supabase) return experiences as unknown as Experience[]
 
   const { data, error } = await supabase.from('experience').select('*').order('created_at', { ascending: false })
   
   if (error) {
     console.error('Error fetching experience from Supabase (Client):', error)
-    return experiences
+    return experiences as unknown as Experience[]
   }
   
-  return data.map((e: any) => ({
+  return (data as Experience[]).map((e) => ({
     ...e,
     startDate: e.start_date,
     endDate: e.end_date,
@@ -79,7 +80,7 @@ export async function getExperiences() {
   }))
 }
 
-export async function saveExperience(experience: any) {
+export async function saveExperience(experience: Partial<Experience> & { startDate?: string; endDate?: string }) {
   const supabase = createClient()
   if (!supabase) return { error: 'Database connection failed' }
 
@@ -87,8 +88,8 @@ export async function saveExperience(experience: any) {
     company: experience.company,
     position: experience.position,
     location: experience.location,
-    start_date: experience.startDate,
-    end_date: experience.endDate,
+    start_date: experience.start_date || experience.startDate,
+    end_date: experience.end_date || experience.endDate,
     description: experience.description,
     achievements: experience.achievements || [],
     technologies: experience.technologies || []
@@ -110,7 +111,7 @@ export async function deleteExperience(id: string | number) {
   return { error }
 }
 
-export async function getProfile() {
+export async function getProfile(): Promise<Profile | null> {
   const supabase = createClient()
   if (!supabase) return null
 
@@ -172,7 +173,7 @@ export async function getSystemHealth() {
   if (error) return { status: 'error', latency }
   return { status: 'healthy', latency }
 }
-export async function getReviews(limit = 6, offset = 0) {
+export async function getReviews(limit = 6, offset = 0): Promise<Review[]> {
   const supabase = createClient()
   if (!supabase) return []
 
@@ -195,7 +196,7 @@ export async function getReviews(limit = 6, offset = 0) {
   return data
 }
 
-export async function submitReview(review: any, photoFile?: File) {
+export async function submitReview(review: { customerName: string; reviewText: string }, photoFile?: File) {
   const supabase = createClient()
   if (!supabase) return { error: 'Database connection failed' }
 
@@ -230,7 +231,7 @@ export async function submitReview(review: any, photoFile?: File) {
   return { data, error }
 }
 
-export async function getAllReviewsAdmin() {
+export async function getAllReviewsAdmin(): Promise<Review[]> {
   const supabase = createClient()
   if (!supabase) return []
 
@@ -247,7 +248,7 @@ export async function getAllReviewsAdmin() {
   return data
 }
 
-export async function updateReview(id: string, updates: any) {
+export async function updateReview(id: string, updates: Partial<Review>) {
   const supabase = createClient()
   if (!supabase) return { error: 'Database connection failed' }
 
@@ -278,7 +279,7 @@ export async function deleteReview(id: string, photoUrl?: string) {
   return { error }
 }
 
-export async function adminCreateReview(review: any, photoFile?: File) {
+export async function adminCreateReview(review: Partial<Review> & { customer_name?: string; review_text?: string }, photoFile?: File) {
   const supabase = createClient()
   if (!supabase) return { error: 'Database connection failed' }
 

@@ -12,6 +12,7 @@ const CaseStudyModal = dynamic(() => import('../ui/CaseStudyModal').then((mod) =
 import { GitHubRepo } from '@/lib/github'
 import { Layers } from 'lucide-react'
 import { ProjectData } from '@/data/projects'
+import { Profile } from '@/lib/types'
 
 const VIBRANT_COLORS = [
   '#818cf8', // Indigo
@@ -25,20 +26,46 @@ const VIBRANT_COLORS = [
 interface ProjectsProps {
   repos: GitHubRepo[]
   dbProjects?: ProjectData[]
-  dbProfile?: any
+  dbProfile?: Profile
 }
 
 // ... icons ...
 
+interface DisplayProject {
+  id: string
+  name: string
+  description: string
+  fullDescription?: string
+  bullets?: string[]
+  vibrantColor: string
+  image_url?: string
+  imageUrl?: string
+  live_url?: string
+  liveUrl?: string
+  github_url?: string
+  githubUrl: string
+  languages: string[]
+  platforms: string[]
+  icon: React.ReactNode
+  isCurated: boolean
+  category: string
+}
+
 export function Projects({ repos, dbProjects = [], dbProfile }: ProjectsProps) {
   const [filter, setFilter] = useState('All')
-  const [selectedProject, setSelectedProject] = useState<any>(null)
+  const [selectedProject, setSelectedProject] = useState<DisplayProject | null>(null)
 
   const categories = ['All', 'Mobile', 'Web', 'Open Source']
   
   // Use only dynamic projects from database as requested
-  const allProjects = dbProjects.map((p, i) => ({
+  const allProjects: DisplayProject[] = dbProjects.map((p, index) => ({
     ...p,
+    name: p.name || 'Untitled Project',
+    description: p.description || '',
+    githubUrl: p.githubUrl || '',
+    languages: p.languages || [],
+    platforms: p.platforms || [],
+    vibrantColor: p.vibrantColor || VIBRANT_COLORS[index % VIBRANT_COLORS.length],
     icon: <Layers size={24} />,
     isCurated: true,
     category: p.languages?.includes('Flutter') || p.languages?.includes('React Native') ? 'Mobile' : 'Web'
@@ -86,7 +113,7 @@ export function Projects({ repos, dbProjects = [], dbProfile }: ProjectsProps) {
                 transition={{ duration: 0.5, delay: index * 0.05 }}
               >
                 <ProjectCard 
-                  {...project} 
+                  {...project}
                   onViewCaseStudy={() => setSelectedProject(project)}
                 />
               </motion.div>

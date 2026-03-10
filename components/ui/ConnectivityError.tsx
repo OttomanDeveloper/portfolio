@@ -22,7 +22,7 @@ export function ConnectivityError() {
         
         <h2 className="text-3xl font-black text-text-primary mb-4 tracking-tight">Sync Interrupted</h2>
         <p className="text-text-secondary font-medium leading-relaxed mb-8">
-          We're having trouble connecting to the professional ecosystem. Please check your connectivity or try refreshing the experience.
+          We&apos;re having trouble connecting to the professional ecosystem. Please check your connectivity or try refreshing the experience.
         </p>
         
         <Button 

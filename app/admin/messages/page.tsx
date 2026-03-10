@@ -6,13 +6,9 @@ import {
   Mail, 
   User, 
   Clock, 
-  CheckCircle2, 
-  Circle, 
   Trash2, 
   Loader2, 
-  ChevronRight,
   Search,
-  Filter,
   RefreshCcw,
   ExternalLink
 } from 'lucide-react'
@@ -21,18 +17,23 @@ import { Button } from '@/components/ui/Button'
 import { motion, AnimatePresence } from 'framer-motion'
 import { toast } from 'sonner'
 
+interface Message {
+  id: string
+  name: string
+  email: string
+  subject: string
+  message: string
+  is_read: boolean
+  created_at: string
+}
+
 export default function MessagesPage() {
-  const [messages, setMessages] = useState<any[]>([])
+  const [messages, setMessages] = useState<Message[]>([])
   const [loading, setLoading] = useState(true)
-  const [selectedMessage, setSelectedMessage] = useState<any>(null)
+  const [selectedMessage, setSelectedMessage] = useState<Message | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [filter, setFilter] = useState<'all' | 'unread' | 'read'>('all')
   const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-    fetchMessages()
-  }, [])
 
   const fetchMessages = async () => {
     setLoading(true)
@@ -49,6 +50,13 @@ export default function MessagesPage() {
     }
     setLoading(false)
   }
+
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      setMounted(true)
+      fetchMessages()
+    })
+  }, [])
 
   const markAsRead = async (id: string) => {
     const supabase = createClient()

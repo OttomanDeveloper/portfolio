@@ -3,7 +3,9 @@
 import { createClient } from '@supabase/supabase-js'
 import { revalidatePath } from 'next/cache'
 
-export async function saveAdminProfile(profileData: any, settingsData: any) {
+import { Profile } from '@/lib/types'
+
+export async function saveAdminProfile(profileData: Partial<Profile>, settingsData: Record<string, string | number | boolean | null | undefined>) {
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!

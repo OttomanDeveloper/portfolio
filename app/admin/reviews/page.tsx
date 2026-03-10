@@ -3,25 +3,27 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
-  Plus, Search, Filter, Edit2, Trash2, X, 
+  Plus, Search, Filter, Edit2, Trash2, 
   CheckCircle, Clock, AlertCircle, Loader2, 
-  Save, Star, User, ShieldCheck, ShieldAlert,
-  MessageSquare, Trash
+  Save, User, ShieldCheck, ShieldAlert,
+  Trash
 } from 'lucide-react'
+import Image from 'next/image'
 import { getAllReviewsAdmin, updateReview, deleteReview, adminCreateReview } from '@/lib/api'
+import { Review } from '@/lib/types'
 import { toast } from 'sonner'
 
 export default function ReviewsAdmin() {
-  const [reviews, setReviews] = useState<any[]>([])
+  const [reviews, setReviews] = useState<Review[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
-  const [activeTab, setActiveTab] = useState<'pending' | 'published' | 'archived'>('pending')
-  const [editingReview, setEditingReview] = useState<any>(null)
+  const [activeTab, setActiveTab] = useState<Review['status']>('pending')
+  const [editingReview, setEditingReview] = useState<Review | null>(null)
   const [showCreateModal, setShowCreateModal] = useState(false)
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState<any>(null)
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState<Review | null>(null)
   const [isSaving, setIsSaving] = useState(false)
 
-  const [newReview, setNewReview] = useState({
+  const [newReview, setNewReview] = useState<Partial<Review>>({
     customer_name: '',
     review_text: '',
     status: 'published',
@@ -47,7 +49,7 @@ export default function ReviewsAdmin() {
     }
   }
 
-  const handleStatusChange = async (id: string, status: string) => {
+  const handleStatusChange = async (id: string, status: Review['status']) => {
     try {
       const { error } = await updateReview(id, { status })
       if (error) throw error
@@ -58,9 +60,9 @@ export default function ReviewsAdmin() {
     }
   }
 
-  const handleDelete = async (review: any) => {
+  const handleDelete = async (review: Review) => {
     try {
-      const { error } = await deleteReview(review.id, review.customer_photo)
+      const { error } = await deleteReview(review.id, review.customer_photo || undefined)
       if (error) throw error
       toast.success('Review deleted permanently')
       setReviews(reviews.filter(r => r.id !== review.id))
@@ -157,7 +159,7 @@ export default function ReviewsAdmin() {
         ].map(tab => (
           <button
             key={tab.id}
-            onClick={() => setActiveTab(tab.id as any)}
+            onClick={() => setActiveTab(tab.id as Review['status'])}
             className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm transition-all ${
               activeTab === tab.id 
                 ? 'bg-surface border border-border shadow-lg shadow-black/5 text-text-primary' 
@@ -210,7 +212,7 @@ export default function ReviewsAdmin() {
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 rounded-xl border border-border bg-surface-secondary overflow-hidden flex items-center justify-center">
                       {review.customer_photo ? (
-                        <img src={review.customer_photo} alt="" className="w-full h-full object-cover" />
+                        <Image src={review.customer_photo} alt="" width={48} height={48} className="w-full h-full object-cover" />
                       ) : (
                         <User size={20} className="text-text-secondary/20" />
                       )}
@@ -219,7 +221,7 @@ export default function ReviewsAdmin() {
                       <h3 className="font-black text-text-primary text-sm uppercase tracking-tight">{review.customer_name}</h3>
                       <div className="flex items-center gap-1.5 text-text-secondary/40 text-[10px] font-bold">
                         <Clock size={10} />
-                        {new Date(review.created_at).toLocaleDateString()}
+                        {review.created_at ? new Date(review.created_at).toLocaleDateString() : 'Just now'}
                       </div>
                     </div>
                   </div>
@@ -240,7 +242,7 @@ export default function ReviewsAdmin() {
                 </div>
 
                 <div className="p-4 rounded-2xl bg-surface-secondary/50 border border-border/50 text-sm text-text-secondary leading-relaxed flex-1">
-                  "{review.review_text}"
+                  &quot;{review.review_text}&quot;
                 </div>
 
                 <div className="flex items-center justify-between pt-2">
@@ -336,8 +338,8 @@ export default function ReviewsAdmin() {
                       <input type="file" onChange={handlePhotoChange} className="hidden" accept="image/*" />
                     </label>
                     {photoPreview && (
-                      <div className="w-14 h-14 rounded-xl border border-border overflow-hidden shrink-0">
-                        <img src={photoPreview} alt="" className="w-full h-full object-cover" />
+                      <div className="w-14 h-14 rounded-xl border border-border overflow-hidden shrink-0 relative">
+                        <Image src={photoPreview} alt="" fill className="object-cover" />
                       </div>
                     )}
                   </div>
@@ -348,7 +350,7 @@ export default function ReviewsAdmin() {
                     <label className="text-[10px] font-black text-text-secondary uppercase tracking-widest">Status</label>
                     <select 
                       value={newReview.status}
-                      onChange={(e) => setNewReview({ ...newReview, status: e.target.value })}
+                      onChange={(e) => setNewReview({ ...newReview, status: e.target.value as Review['status'] })}
                       className="w-full p-4 rounded-xl bg-surface-secondary border border-border text-text-primary font-bold text-sm outline-none focus:border-accent appearance-none"
                     >
                       <option value="published">Published</option>
@@ -459,7 +461,7 @@ export default function ReviewsAdmin() {
               </div>
               <h2 className="text-xl font-bold text-text-primary mb-2">Permanent Deletion?</h2>
               <p className="text-text-secondary text-sm mb-8 leading-relaxed">
-                This will remove the review and the customer's photo from both the database and storage. This action cannot be undone.
+                This will remove the review and the customer&apos;s photo from both the database and storage. This action cannot be undone.
               </p>
               <div className="flex flex-col gap-3">
                 <button onClick={() => handleDelete(showDeleteConfirm)} className="w-full py-4 rounded-xl bg-red-500 hover:bg-red-600 text-white font-black text-xs uppercase flex items-center justify-center gap-2">

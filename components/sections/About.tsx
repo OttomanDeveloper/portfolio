@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion'
 import { SectionHeading } from '../ui/SectionHeading'
-import { fadeInUp, staggerContainer } from '@/lib/animations'
+import { staggerContainer } from '@/lib/animations'
+import { Profile } from '@/lib/types'
 import { 
   Rocket, 
   Target, 
@@ -17,20 +18,20 @@ import { Card } from '../ui/Card'
 import { calculateExperienceYears } from '@/lib/utils/experience'
 
 interface AboutProps {
-  dbProfile?: any
+  dbProfile?: Profile
 }
 
 export function About({ dbProfile }: AboutProps) {
   const yearsExp = calculateExperienceYears(
-    dbProfile?.experience_start_date, 
-    dbProfile?.manual_years_experience
+    dbProfile?.experience_start_date || dbProfile?.experienceStartDate || '', 
+    dbProfile?.manual_years_experience || dbProfile?.manualYearsExperience || 0
   )
   
   const stats = [
-    { label: 'Apps Delivered', value: dbProfile?.appsDelivered || dbProfile?.apps_delivered || '—', icon: Rocket },
+    { label: 'Apps Delivered', value: dbProfile?.apps_delivered || dbProfile?.apps_delivered || '—', icon: Rocket },
     { label: 'Years Experience', value: `${yearsExp}+`, icon: Zap },
-    { label: 'Happy Clients', value: dbProfile?.happyClients || dbProfile?.happy_clients || '—', icon: Users },
-    { label: 'Tech Stack', value: (Object.values(dbProfile?.techStacks || dbProfile?.tech_stacks || {}).flat() as string[]).length || '—', icon: Cpu },
+    { label: 'Happy Clients', value: dbProfile?.happy_clients || dbProfile?.happy_clients || '—', icon: Users },
+    { label: 'Tech Stack', value: Object.values(dbProfile?.tech_stacks || {}).flat().length || '—', icon: Cpu },
   ]
 
   const coreValues = [
@@ -70,7 +71,7 @@ export function About({ dbProfile }: AboutProps) {
       <div className="container mx-auto max-w-6xl">
         <SectionHeading 
           title="Narrative & Expertise" 
-          subtitle={dbProfile?.narrativeTagline || "A specialized window into the vision, metrics, and technological foundation I bring to every project."}
+          subtitle={dbProfile?.narrativeTagline || dbProfile?.tagline || "A specialized window into the vision, metrics, and technological foundation I bring to every project."}
         />
 
         <div className="mt-12 md:mt-20 grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10">

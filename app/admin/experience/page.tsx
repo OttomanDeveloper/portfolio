@@ -2,14 +2,21 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Plus, Search, Edit2, Trash2, X, Loader2, Save, Calendar, MapPin, Briefcase } from 'lucide-react'
+import { Plus, Edit2, Trash2, X, Loader2, Save, Calendar, MapPin, Briefcase } from 'lucide-react'
 import { getExperiences } from '@/lib/api'
 import { adminSaveExperience, adminDeleteExperience } from '../actions'
+import { Experience } from '@/lib/types'
+
+interface ExperienceForm extends Partial<Experience> {
+  technologiesStr?: string;
+  descriptionStr?: string;
+  achievementsStr?: string;
+}
 
 export default function ExperienceAdmin() {
-  const [experiences, setExperiences] = useState<any[]>([])
+  const [experiences, setExperiences] = useState<Experience[]>([])
   const [isEditing, setIsEditing] = useState(false)
-  const [editingExp, setEditingExp] = useState<any>(null)
+  const [editingExp, setEditingExp] = useState<ExperienceForm | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<string | null>(null)
@@ -30,12 +37,12 @@ export default function ExperienceAdmin() {
     }
   }
 
-  const handleEdit = (exp: any) => {
+  const handleEdit = (exp: Experience) => {
     setEditingExp({ 
       ...exp,
-      technologiesStr: exp.technologies?.join(', ') || '',
-      descriptionStr: exp.description?.join('\n') || '',
-      achievementsStr: exp.achievements?.join('\n') || ''
+      technologiesStr: Array.isArray(exp.technologies) ? exp.technologies.join(', ') : '',
+      descriptionStr: Array.isArray(exp.description) ? exp.description.join('\n') : '',
+      achievementsStr: Array.isArray(exp.achievements) ? exp.achievements.join('\n') : ''
     })
     setIsEditing(true)
   }
@@ -75,20 +82,20 @@ export default function ExperienceAdmin() {
     }
     setIsSaving(true)
     try {
-      const {
-        technologiesStr,
-        descriptionStr,
-        achievementsStr,
-        ...expDataWithoutStrings
-      } = editingExp;
-
       const payload = {
-          ...expDataWithoutStrings,
+          ...editingExp,
           technologies: editingExp.technologiesStr?.split(',').map((s: string) => s.trim()).filter(Boolean) || [],
           description: editingExp.descriptionStr?.split('\n').filter(Boolean) || [],
           achievements: editingExp.achievementsStr?.split('\n').filter(Boolean) || []
       }
-      const { data, error } = await adminSaveExperience(payload)
+      
+      // Remove temporary string fields from payload
+      const finalPayload = { ...payload };
+      delete finalPayload.technologiesStr;
+      delete finalPayload.descriptionStr;
+      delete finalPayload.achievementsStr;
+
+      const { error } = await adminSaveExperience(finalPayload as Experience)
       if (error) throw new Error(error)
       
       await fetchExperiences()
@@ -163,7 +170,7 @@ export default function ExperienceAdmin() {
                       <Edit2 size={20} />
                     </button>
                     <button 
-                      onClick={() => setShowDeleteConfirm(exp.id)}
+                      onClick={() => setShowDeleteConfirm(exp.id.toString())}
                       className="p-2 text-text-secondary hover:text-rose-500 hover:bg-rose-500/10 rounded-lg transition-all"
                     >
                       <Trash2 size={20} />
@@ -212,7 +219,7 @@ export default function ExperienceAdmin() {
             >
               <div className="flex items-center justify-between p-4 border-b border-border bg-surface-secondary/30">
                 <h2 className="text-xl font-bold text-text-primary">
-                  {editingExp.id.toString().startsWith('new-') ? 'Add New Experience' : 'Edit Experience'}
+                  {editingExp.id?.toString().startsWith('new-') ? 'Add New Experience' : 'Edit Experience'}
                 </h2>
                 <button onClick={() => setIsEditing(false)} className="text-text-secondary hover:text-text-primary transition-colors">
                   <X size={24} />

@@ -1,8 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SectionHeading } from '../ui/SectionHeading'
+import { Review, Profile } from '@/lib/types'
 import { Card } from '../ui/Card'
 import { Star, Quote, ChevronDown, Plus, ShieldCheck, User } from 'lucide-react'
 import { getReviews } from '@/lib/api'
@@ -10,7 +12,7 @@ import { ReviewForm } from '../ui/ReviewForm'
 import { Button } from '../ui/Button'
 
 interface ReviewsProps {
-  initialReviews: any[]
+  initialReviews: Review[]
 }
 
 export function Reviews({ initialReviews }: ReviewsProps) {
@@ -81,17 +83,20 @@ export function Reviews({ initialReviews }: ReviewsProps) {
                   </div>
 
                   <p className="text-text-secondary text-sm leading-relaxed mb-8 flex-1 italic">
-                    "{review.review_text}"
+                    &quot;{review.review_text}&quot;
                   </p>
 
                   <div className="flex items-center gap-4 pt-6 border-t border-border/50">
                     <div className="w-12 h-12 rounded-2xl overflow-hidden bg-surface-secondary border border-border shrink-0 flex items-center justify-center">
                       {review.customer_photo ? (
-                        <img 
-                          src={review.customer_photo} 
-                          alt={review.customer_name} 
-                          className="w-full h-full object-cover"
-                        />
+                        <div className="relative w-full h-full">
+                          <Image 
+                            src={review.customer_photo} 
+                            alt={review.customer_name} 
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
                       ) : (
                         <User className="text-text-secondary/40" size={20} />
                       )}

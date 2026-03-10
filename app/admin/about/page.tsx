@@ -4,17 +4,19 @@ import { useState, useEffect, useRef } from 'react'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { motion, AnimatePresence } from 'framer-motion'
-import { User, Target, Cpu, Save, Loader2, Plus, Layout, Smartphone, Database, Wrench, Image as ImageIcon, Globe, Calendar, Github, Upload, Trash2, CheckCircle2 } from 'lucide-react'
+import { User, Target, Cpu, Save, Loader2, Layout, Smartphone, Database, Wrench, Image as ImageIcon, Globe, Calendar, Github, Upload, CheckCircle2 } from 'lucide-react'
+import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
-import { uploadAsset, deleteAsset, BUCKETS, getPathFromUrl } from '@/lib/supabase/storage'
+import { uploadAsset, deleteAsset, BUCKETS } from '@/lib/supabase/storage'
 import { saveAdminProfile, updateFavicon } from './actions'
+import { Profile } from '@/lib/types'
 
 type AvatarMode = 'github' | 'upload'
 
 export default function AboutAdmin() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
-  const [profile, setProfile] = useState<any>(null)
+  const [profile, setProfile] = useState<Profile | null>(null)
   const [techStacksStr, setTechStacksStr] = useState<Record<string, string>>({})
   const [avatarMode, setAvatarMode] = useState<AvatarMode>('github')
   const [githubAvatarUrl, setGithubAvatarUrl] = useState('')
@@ -29,7 +31,7 @@ export default function AboutAdmin() {
 
   const fetchProfile = async () => {
     const supabase = createClient()
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from('profile')
       .select('*')
       .order('updated_at', { ascending: false })
@@ -44,8 +46,8 @@ export default function AboutAdmin() {
       setProfile({
         ...data,
         contact_description: content.contact_description || data.contact_description,
-        projects_tagline: content.projects_tagline,
-        narrative_tagline: content.narrative_tagline
+        projects_tagline: content.projects_tagline || data.projects_tagline,
+        narrative_tagline: content.narrative_tagline || data.narrative_tagline
       })
       setTechStacksStr(
         Object.keys(data.tech_stacks || {}).reduce((acc, key) => ({
@@ -69,8 +71,10 @@ export default function AboutAdmin() {
   const handleSave = async () => {
     setSaving(true)
     
-    // Save to profile table
-    const profileUpdate = {
+    // Cast profile to any for dynamic access if needed, or use specific properties
+    if (!profile) return
+
+    const profileUpdate: Partial<Profile> = {
         id: profile.id,
         bio: profile.bio,
         core_values: profile.core_values,
@@ -78,7 +82,7 @@ export default function AboutAdmin() {
         philosophy: profile.philosophy,
         apps_delivered: profile.apps_delivered,
         happy_clients: profile.happy_clients,
-        tech_stacks: Object.keys(techStacksStr).reduce((acc, key) => ({
+        tech_stacks: Object.keys(techStacksStr).reduce((acc: Record<string, string[]>, key) => ({
           ...acc,
           [key]: techStacksStr[key]?.split(',').map((s: string) => s.trim()).filter(Boolean) || []
         }), {}),
@@ -86,12 +90,11 @@ export default function AboutAdmin() {
         manual_years_experience: profile.manual_years_experience,
         site_title: profile.site_title || profile.siteTitle,
         favicon_url: profile.favicon_url || profile.faviconUrl,
-        name: profile.full_name || profile.name, // The DB column is 'name'
+        name: profile.full_name || profile.name,
         tagline: profile.tagline,
         updated_at: new Date().toISOString()
     }
 
-    // Save to settings table for fields not in profile schema
     const settingsUpdate = {
         contact_description: profile.contact_description || profile.contactDescription,
         projects_tagline: profile.projects_tagline || profile.projectsTagline,
@@ -202,7 +205,7 @@ export default function AboutAdmin() {
 
     // Recommended: Square aspect ratio
     const isSquare = await new Promise<boolean>((resolve) => {
-      const img = new Image();
+      const img = new globalThis.Image();
       img.onload = () => resolve(img.width === img.height);
       img.onerror = () => resolve(false);
       img.src = URL.createObjectURL(file);
@@ -388,8 +391,8 @@ export default function AboutAdmin() {
                 <label className="text-[10px] font-black uppercase tracking-widest text-text-secondary/60 ml-1">Site Favicon</label>
                 <div className="flex items-center gap-4">
                    <div className="w-12 h-12 rounded-lg border border-border bg-surface/50 flex items-center justify-center overflow-hidden">
-                     {(profile.favicon_url || profile.faviconUrl) ? (
-                       <img src={profile.favicon_url || profile.faviconUrl} alt="Favicon" className="w-8 h-8 object-contain" />
+                       {(profile.favicon_url || profile.faviconUrl) ? (
+                        <Image src={(profile.favicon_url || profile.faviconUrl) as string} alt="Favicon" width={32} height={32} className="w-8 h-8 object-contain" />
                      ) : (
                        <Globe size={20} className="text-text-secondary/30" />
                      )}
@@ -399,7 +402,12 @@ export default function AboutAdmin() {
                        const input = document.createElement('input')
                        input.type = 'file'
                        input.accept = 'image/*'
-                       input.onchange = (e: any) => handleFaviconUpload(e)
+                       input.onchange = (e: Event) => {
+                         const target = e.target as HTMLInputElement
+                         if (target.files?.[0]) {
+                           handleFaviconUpload(e as unknown as React.ChangeEvent<HTMLInputElement>)
+                         }
+                       }
                        input.click()
                      }}
                      className="px-4 py-2 rounded-lg bg-surface-secondary hover:bg-surface-secondary/80 text-text-primary text-[10px] font-black uppercase tracking-widest transition-all"
@@ -446,7 +454,7 @@ export default function AboutAdmin() {
                 <input
                   type="number"
                   value={profile.manual_years_experience || ''}
-                  onChange={(e) => setProfile({ ...profile, manual_years_experience: e.target.value ? parseInt(e.target.value) : null })}
+                  onChange={(e) => setProfile({ ...profile, manual_years_experience: e.target.value ? parseInt(e.target.value) : 0 })}
                   className="w-full p-4 rounded-xl bg-surface/30 border border-border focus:border-accent/40 outline-none text-text-primary text-sm font-bold"
                   placeholder="Leave empty for auto-calculate"
                 />
@@ -513,9 +521,11 @@ export default function AboutAdmin() {
                   <div className="absolute inset-0 bg-accent/20 rounded-full blur-2xl group-hover:bg-accent/30 transition-all" />
                   <div className="relative w-full h-full rounded-full border-2 border-border overflow-hidden bg-surface-secondary/50">
                     {getPreviewAvatar() ? (
-                      <img 
+                      <Image 
                         src={getPreviewAvatar()!} 
                         alt="Avatar Preview" 
+                        width={112}
+                        height={112}
                         className="w-full h-full object-cover transition-opacity" 
                         onError={(e) => {
                           (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop";

@@ -18,6 +18,11 @@ const nextConfig: NextConfig = {
         hostname: 'ihgqokupcmnasykaspns.supabase.co',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '/**',
+      },
     ],
   },
 };

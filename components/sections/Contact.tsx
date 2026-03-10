@@ -11,6 +11,7 @@ import { fadeInUp } from '@/lib/animations'
 import { Mail, MessageSquare, User, Send, CheckCircle2, AlertCircle, Phone, Youtube, Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { submitMessage } from '@/lib/api'
+import { Profile } from '@/lib/types'
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -21,7 +22,7 @@ const contactSchema = z.object({
 type ContactFormData = z.infer<typeof contactSchema>
 
 interface ContactProps {
-  dbProfile?: any
+  dbProfile?: Profile
 }
 
 export function Contact({ dbProfile }: ContactProps) {
@@ -55,8 +56,9 @@ export function Contact({ dbProfile }: ContactProps) {
       setIsSuccess(true)
       reset()
       setTimeout(() => setIsSuccess(false), 5000)
-    } catch (err: any) {
-      setError(err.message || 'Something went wrong. Please try again later.')
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : 'Something went wrong. Please try again later.'
+      setError(errorMsg)
     } finally {
       setIsSubmitting(false)
     }

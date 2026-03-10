@@ -7,8 +7,10 @@ import { fadeInUp, staggerContainer } from '@/lib/animations'
 import Image from 'next/image'
 import { Download, Github, Linkedin, Twitter, Instagram, Zap } from 'lucide-react'
 
+import { Profile } from '@/lib/types'
+
 interface HeroProps {
-  dbProfile?: any
+  dbProfile?: Profile
 }
 
 export function Hero({ dbProfile }: HeroProps) {

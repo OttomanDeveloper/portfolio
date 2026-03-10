@@ -1,6 +1,7 @@
 import { createClient } from './supabase/server'
-import { curatedProjects } from '../data/projects'
+import { curatedProjects, ProjectData } from '../data/projects'
 import { experiences } from '../data/experience'
+import { Project, Experience, Profile, Review } from './types'
 
 /**
  * SERVER-ONLY API FUNCTIONS
@@ -21,14 +22,17 @@ export async function getProjects() {
     return curatedProjects
   }
   
-  return data.map((p: any) => ({
-    ...p,
-    fullDescription: p.full_description,
-    vibrantColor: p.vibrant_color,
+  return data.map((p: Project): ProjectData => ({
+    id: String(p.id),
+    name: p.name,
+    description: p.description || '',
+    fullDescription: p.full_description || p.description || '',
+    vibrantColor: p.vibrant_color || '#818cf8',
     githubUrl: p.github_url,
     liveUrl: p.live_url,
     languages: p.languages || [],
-    platforms: p.platforms || []
+    platforms: p.platforms || [],
+    bullets: []
   }))
 }
 
@@ -46,10 +50,13 @@ export async function getExperiences() {
     return experiences
   }
   
-  return data.map((e: any) => ({
-    ...e,
+  return data.map((e: Experience) => ({
+    id: String(e.id),
+    company: e.company,
+    position: e.position,
+    location: e.location,
     startDate: e.start_date,
-    endDate: e.end_date,
+    endDate: e.end_date || 'Present',
     description: e.description || [],
     technologies: e.technologies || [],
     achievements: e.achievements || []
@@ -101,7 +108,7 @@ export async function getProfile() {
   }
 }
 
-export async function getReviews(limit = 6, offset = 0) {
+export async function getReviews(limit = 6, offset = 0): Promise<Review[]> {
   const supabase = await createClient()
   if (!supabase) return []
 

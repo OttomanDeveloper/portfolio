@@ -4,21 +4,18 @@ import { useState, useEffect } from 'react'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { motion } from 'framer-motion'
-import { FolderKanban, Briefcase, Zap, MessageSquare, Loader2, TrendingUp, Star, Clock } from 'lucide-react'
+import { FolderKanban, Zap, MessageSquare, Loader2, TrendingUp, Star, Clock } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import { Project, Message, Review } from '@/lib/types'
 
 export const dynamic = 'force-dynamic'
 
 export default function AdminDashboard() {
   const [loading, setLoading] = useState(true)
-  const [stats, setStats] = useState<any[]>([])
-  const [recentProjects, setRecentProjects] = useState<any[]>([])
-  const [recentMessages, setRecentMessages] = useState<any[]>([])
-  const [recentReviews, setRecentReviews] = useState<any[]>([])
-
-  useEffect(() => {
-    fetchDashboardData()
-  }, [])
+  const [stats, setStats] = useState<{ label: string; value: number; icon: React.ReactNode; color: string }[]>([])
+  const [recentProjects, setRecentProjects] = useState<Project[]>([])
+  const [recentMessages, setRecentMessages] = useState<Message[]>([])
+  const [recentReviews, setRecentReviews] = useState<Review[]>([])
 
   const fetchDashboardData = async () => {
     const supabase = createClient()
@@ -29,41 +26,21 @@ export default function AdminDashboard() {
       .select('*', { count: 'exact' })
       .order('created_at', { ascending: false })
 
-    // Fetch profile for years calculation
-    const { data: profile } = await supabase
-      .from('profile')
-      .select('experience_start_date, manual_years_experience')
-      .limit(1)
-      .maybeSingle()
-
     // Fetch message stats
     const { data: messages, count: totalMessages } = await supabase
       .from('messages')
       .select('*', { count: 'exact' })
       .order('created_at', { ascending: false })
 
-    const unreadCount = messages?.filter((m: any) => !m.is_read).length || 0
+    const unreadCount = messages?.filter((m: Message) => !m.is_read).length || 0
 
     // Fetch review stats
-    const { data: reviews, count: totalReviews } = await supabase
+    const { data: reviews } = await supabase
       .from('reviews')
       .select('*', { count: 'exact' })
       .order('created_at', { ascending: false })
 
-    const pendingReviews = reviews?.filter((r: any) => r.status === 'pending').length || 0
-
-    // Calculate years of experience
-    let yearsOfExp = '0'
-    if (profile) {
-      if (profile.manual_years_experience) {
-        yearsOfExp = profile.manual_years_experience
-      } else if (profile.experience_start_date) {
-        const start = new Date(profile.experience_start_date)
-        const now = new Date()
-        const diff = now.getFullYear() - start.getFullYear()
-        yearsOfExp = diff.toString()
-      }
-    }
+    const pendingReviews = reviews?.filter((r: Review) => r.status === 'pending').length || 0
 
     setStats([
       { label: 'Total Projects', value: projectCount || 0, icon: <FolderKanban size={24} />, color: '#818cf8' },
@@ -72,11 +49,17 @@ export default function AdminDashboard() {
       { label: 'Total Inquiries', value: totalMessages || 0, icon: <Zap size={24} />, color: '#2dd4bf' },
     ])
 
-    setRecentProjects((projects || []).slice(0, 3))
-    setRecentMessages((messages || []).slice(0, 3))
-    setRecentReviews((reviews || []).filter((r: any) => r.status === 'pending').slice(0, 3))
+    setRecentProjects((projects || []).slice(0, 3) as Project[])
+    setRecentMessages((messages || []).slice(0, 3) as Message[])
+    setRecentReviews((reviews || []).filter((r: Review) => r.status === 'pending').slice(0, 3) as Review[])
     setLoading(false)
   }
+
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      fetchDashboardData()
+    })
+  }, [])
 
   if (loading) return (
     <div className="flex items-center justify-center min-h-[400px]">
@@ -166,7 +149,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="font-bold text-text-primary text-xs truncate uppercase tracking-tight">{review.customer_name}</h4>
-                  <p className="text-[10px] text-text-secondary truncate mt-0.5 tracking-tighter italic">"{review.review_text}"</p>
+                  <p className="text-[10px] text-text-secondary truncate mt-0.5 tracking-tighter italic">&quot;{review.review_text}&quot;</p>
                 </div>
               </div>
             )) : (
@@ -203,7 +186,7 @@ export default function AdminDashboard() {
                 </div>
                 <p className="text-xs text-text-secondary/80 line-clamp-1 mb-4 font-medium">{msg.subject || 'No Subject'}</p>
                 <div className="flex items-center justify-between pt-2 border-t border-border/50">
-                   <span className="text-[9px] text-text-secondary/40 font-bold">{new Date(msg.created_at).toLocaleDateString()}</span>
+                   <span className="text-[9px] text-text-secondary/40 font-bold">{msg.created_at ? new Date(msg.created_at).toLocaleDateString() : 'N/A'}</span>
                    <button onClick={() => window.location.href = '/admin/messages'} className="text-[9px] font-black uppercase tracking-widest text-accent hover:underline">Open Portal</button>
                 </div>
               </div>

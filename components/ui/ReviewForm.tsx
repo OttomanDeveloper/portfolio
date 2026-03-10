@@ -2,7 +2,8 @@
 
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, User, MessageSquare, Camera, Check, Loader2, Star, ShieldCheck, Rocket } from 'lucide-react'
+import { X, User, MessageSquare, Camera, Check, Loader2, ShieldCheck, Rocket } from 'lucide-react'
+import Image from 'next/image'
 import { submitReview } from '@/lib/api'
 import { toast } from 'sonner'
 
@@ -117,7 +118,7 @@ export function ReviewForm({ isOpen, onClose }: ReviewFormProps) {
                       className="relative w-24 h-24 rounded-3xl bg-surface-secondary flex items-center justify-center cursor-pointer group overflow-hidden border-2 border-dashed border-border hover:border-accent transition-all"
                     >
                       {photoPreview ? (
-                        <img src={photoPreview} alt="Preview" className="w-full h-full object-cover" />
+                        <Image src={photoPreview} alt="Preview" fill className="object-cover" />
                       ) : (
                         <Camera className="text-text-secondary group-hover:text-accent transition-colors" size={32} />
                       )}

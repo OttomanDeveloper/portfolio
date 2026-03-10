@@ -9,12 +9,14 @@ import { createClient } from '@/lib/supabase/client'
 import { uploadAsset, deleteAsset, BUCKETS } from '@/lib/supabase/storage'
 import { getGithubAvatarUrl } from '@/lib/github-utils'
 
+import { Profile } from '@/lib/types'
+
 export default function SettingsAdmin() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [securitySaving, setSecuritySaving] = useState(false)
   const [health, setHealth] = useState({ status: 'checking', latency: 0 })
-  const [profile, setProfile] = useState<any>(null)
+  const [profile, setProfile] = useState<Profile | null>(null)
   
   // Security State
   const [password, setPassword] = useState('')
@@ -165,8 +167,8 @@ export default function SettingsAdmin() {
                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary/60" size={16} />
                     <input 
                         type="email" 
-                        value={profile.contact_email || ''}
-                        onChange={(e) => setProfile({ ...profile, contact_email: e.target.value })}
+                        value={profile?.contact_email || ''}
+                        onChange={(e) => profile && setProfile({ ...profile, contact_email: e.target.value })}
                         className="w-full pl-12 pr-4 py-4 rounded-xl bg-surface border border-border focus:border-accent/40 outline-none text-text-primary text-sm font-bold shadow-sm"
                         placeholder="you@example.com"
                     />
@@ -180,8 +182,8 @@ export default function SettingsAdmin() {
                         <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary/60" size={16} />
                         <input 
                             type="text" 
-                            value={profile.whatsapp_number || ''}
-                            onChange={(e) => setProfile({ ...profile, whatsapp_number: e.target.value })}
+                            value={profile?.whatsapp_number || ''}
+                            onChange={(e) => profile && setProfile({ ...profile, whatsapp_number: e.target.value })}
                             className="w-full pl-12 pr-4 py-4 rounded-xl bg-surface border border-border focus:border-accent/40 outline-none text-text-primary text-sm font-bold shadow-sm"
                             placeholder="+123456789"
                         />
@@ -193,8 +195,8 @@ export default function SettingsAdmin() {
                         <Youtube className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary/60" size={16} />
                         <input 
                             type="text" 
-                            value={profile.youtube_url || ''}
-                            onChange={(e) => setProfile({ ...profile, youtube_url: e.target.value })}
+                            value={profile?.youtube_url || ''}
+                            onChange={(e) => profile && setProfile({ ...profile, youtube_url: e.target.value })}
                             className="w-full pl-12 pr-4 py-4 rounded-xl bg-surface border border-border focus:border-accent/40 outline-none text-text-primary text-sm font-bold shadow-sm"
                             placeholder="youtube.com/@c/..."
                         />
@@ -209,8 +211,9 @@ export default function SettingsAdmin() {
                         <Link2 className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary/60" size={16} />
                         <input 
                             type="text" 
-                            value={profile.social_links?.[key] || ''}
+                            value={profile?.social_links?.[key] || ''}
                             onChange={(e) => {
+                                if (!profile) return
                                 const socials = { ...(profile.social_links || {}) }
                                 socials[key] = e.target.value
                                 setProfile({ ...profile, social_links: socials })
@@ -290,11 +293,11 @@ export default function SettingsAdmin() {
                         </div>
                         <div className="min-w-0">
                             <p className="text-sm font-bold text-text-primary truncate">Professional CV / Resume</p>
-                            <p className="text-[10px] text-text-secondary font-medium">{profile.resume_url ? 'Active & Synced' : 'No file uploaded'}</p>
+                            <p className="text-[10px] text-text-secondary font-medium">{profile?.resume_url ? 'Active & Synced' : 'No file uploaded'}</p>
                         </div>
                     </div>
                     <div className="flex gap-2">
-                        {profile.resume_url && (
+                        {profile?.resume_url && (
                              <a href={profile.resume_url} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-surface border border-border text-text-secondary hover:text-accent transition-all">
                                 <ExternalLink size={16} />
                             </a>
