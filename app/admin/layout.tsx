@@ -5,12 +5,11 @@ import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { motion } from 'framer-motion'
-import { LayoutDashboard, FolderKanban, User, Briefcase, Settings, LogOut, ExternalLink, MessageSquare, Mail } from 'lucide-react'
+import { LayoutDashboard, FolderKanban, User, Briefcase, Settings, LogOut, ExternalLink, MessageSquare, Mail, Menu, X } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
 import { useState } from 'react'
-import { Menu, X } from 'lucide-react'
 import { AnimatePresence } from 'framer-motion'
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

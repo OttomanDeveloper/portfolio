@@ -4,7 +4,6 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { GrainOverlay } from "@/components/ui/GrainOverlay";
 import { FloatingNav } from "@/components/ui/FloatingNav";
-import { ParticleBackground } from "@/components/ui/ParticleBackground";
 import { cn } from "@/lib/utils";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -78,8 +77,7 @@ export default function RootLayout({
             <div className="mesh-ball w-[500px] h-[500px] bg-accent-secondary/10 top-1/2 -right-24" />
             <div className="mesh-ball w-[400px] h-[400px] bg-accent/10 bottom-0 left-1/4" />
           </div>
-          <ParticleBackground />
-          
+          <div className="site-grid" />
           <GrainOverlay />
           <SpeedInsights />
           

@@ -10,7 +10,7 @@ const CaseStudyModal = dynamic(() => import('../ui/CaseStudyModal').then((mod) =
   ssr: false
 })
 import { GitHubRepo } from '@/lib/github'
-import { Smartphone, Globe, Layers, Code2, Rocket, Zap, Shield, Cpu } from 'lucide-react'
+import { Layers } from 'lucide-react'
 import { ProjectData } from '@/data/projects'
 
 const VIBRANT_COLORS = [
