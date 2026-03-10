@@ -1,13 +1,13 @@
 -- ============================================================
 -- OTTOMAN PORTFOLIO — COMPLETE DATABASE SCHEMA
 -- Supabase / PostgreSQL
--- Updated: 2026-03-10
+-- Updated: March 2026
 -- ============================================================
 -- HOW TO IMPORT:
 --   1. Log into your Supabase project → open SQL Editor
 --   2. Paste this entire file and click "Run"
 --   OR
---   3. Use psql: psql -h <host> -U postgres -d postgres -f database-schema.sql
+--   3. Use psql: psql -h <host> -U postgres -d postgres -f schema.sql
 -- ============================================================
 
 -- Enable UUID extension (Supabase enables this by default)

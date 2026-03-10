@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ottoman Portfolio
 
-## Getting Started
+A full-stack, production-grade developer portfolio built with **Next.js 16**, **Supabase**, **Tailwind CSS v4**, and **Framer Motion**. 
+Designed to be fast, beautiful, and fully manageable without touching a single line of code.
 
-First, run the development server:
+## ✨ Features
+
+- 🎨 **Premium visitor site** — animated Hero, Projects grid, Experience timeline, Reviews carousel, Contact form
+- 🔧 **Full Admin Panel** at `/admin/` — manage all content in real time without code changes
+- 📱 **Fully responsive** — optimized for desktop, tablet, and mobile
+- ⚡ **Performance first** — mobile-optimized animations, no unnecessary backdrop-blur, buttery smooth UI
+- 🗄️ **Supabase-powered** — PostgreSQL database, file storage, and optional authentication
+- 🔍 **SEO ready** — dynamic `<title>`, meta descriptions, Open Graph, JSON-LD Person schema, sitemap, robots.txt — all driven from the database
+- 🖼️ **Dynamic branding** — change the browser tab title and favicon directly from the Admin Panel
+- 📝 **Markdown case studies** — write rich project deep-dives with GitHub Flavored Markdown
+- 🔒 **Secure by design** — Row Level Security on all tables, service role key server-side only
+
+## 🚀 Quick Start
 
 ```bash
+# 1. Install dependencies
+npm install
+
+# 2. Configure environment
+copy .env.example .env.local    # Windows
+cp .env.example .env.local      # Mac/Linux
+# Fill in your Supabase credentials (see deployment guide)
+
+# 3. Import the database schema
+# Open deployment_guide/schema.sql -> paste into Supabase SQL Editor -> Run
+
+# 4. Seed with demo data
+npm run seed
+
+# 5. Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Visitor Site**: http://localhost:3000
+- **Admin Panel**: http://localhost:3000/admin/dashboard
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📖 Full Deployment Guide
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+All setup, deployment, and maintenance instructions are in a single file:
 
-## Learn More
+**[deployment_guide/DEPLOYMENT_GUIDE.md](./deployment_guide/DEPLOYMENT_GUIDE.md)**
 
-To learn more about Next.js, take a look at the following resources:
+Covers everything:
+- Prerequisites & step-by-step installation
+- Supabase database setup (schema, storage, RLS)
+- Environment variable configuration
+- Deploying to Vercel, Netlify, VPS, or Docker
+- SEO, branding, and Markdown case studies
+- Troubleshooting, security, and maintenance
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| Language | TypeScript 5 |
+| Styling | Tailwind CSS v4 |
+| Animations | Framer Motion |
+| Database & Storage | Supabase (PostgreSQL) |
+| Forms | React Hook Form + Zod |
+| Icons | Lucide React |
+| Toasts | Sonner |
+| Analytics | @vercel/speed-insights |
+| Deployment | Vercel (recommended) |
 
-## Deploy on Vercel
+## 📜 NPM Scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Command | Description |
+|---|---|
+| `npm run dev` | Start development server on port 3000 |
+| `npm run build` | Build for production |
+| `npm start` | Start production server |
+| `npm run lint` | Run ESLint |
+| `npm run seed` | Import demo data into Supabase |
+| `npm run seed:reset` | Clear all database content |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📁 Key Files
+
+| File | Purpose |
+|---|---|
+| `deployment_guide/DEPLOYMENT_GUIDE.md` | Complete setup & deployment guide |
+| `deployment_guide/schema.sql` | Full PostgreSQL database schema |
+| `deployment_guide/seeds_import.sql` | SQL seed data (alternative to npm run seed) |
+| `.env.example` | Template for required environment variables |

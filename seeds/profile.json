@@ -1,55 +1,79 @@
 {
-    "_comment": "Developer profile seed data. Import via: npm run seed",
-    "name": "Alex Ottoman",
+    "full_name": "Alex Ottoman",
     "tagline": "Architecting Premium Digital Ecosystems Through Code & Strategic Design",
-    "bio": "I am a full-stack software engineer with over 6 years of experience building scalable web and mobile applications. Specializing in modern JavaScript ecosystems — React, Next.js, and Node.js — I bridge the gap between clean, performant code and polished, user-centered design. I have delivered solutions for startups, scale-ups, and enterprise clients across fintech, social, and productivity verticals.",
-    "philosophy": "Great software is not just functional — it is fast, accessible, and beautiful.",
-    "contact_email": "alex@ottomandev.com",
-    "whatsapp_number": "+1 (555) 012-3456",
-    "youtube_url": "",
+    "bio": "I'm a lead full-stack engineer with 7+ years of experience shipping high-performing web and mobile products for startups, agencies, and enterprise clients. I specialize in Next.js, React Native, and Supabase — building systems that are fast, beautiful, and built to last.\n\nI believe that exceptional software is the intersection of engineering precision and design intentionality. I don't just write code — I craft experiences that make users say 'wow' and codebases that make developers say 'finally'.",
+    "philosophy": "Code is communication. Every function, component, and architecture decision is a message to the next developer who reads it — and that developer is often me at 2am. Write with clarity, build with intention.",
     "avatar_url": "https://api.dicebear.com/7.x/notionists/svg?seed=ottoman&backgroundColor=6366f1",
     "resume_url": "",
-    "apps_delivered": 47,
-    "happy_clients": 38,
-    "experience_start_date": "2018-01-01",
-    "manual_years_experience": null,
-    "site_title": "Alex Ottoman | Full-Stack Engineer",
-    "favicon_url": "",
-    "narrativeTagline": "A specialized window into the vision, metrics, and technological foundation behind every project.",
+    "contact_email": "alex@example.com",
+    "whatsapp_number": "+1 (555) 000-0000",
+    "youtube_url": "",
     "social_links": {
         "github": "https://github.com",
         "linkedin": "https://linkedin.com",
         "twitter": "https://twitter.com",
-        "instagram": ""
+        "instagram": "https://instagram.com"
     },
     "tech_stacks": {
-        "mobile": [
+        "Mobile": [
             "React Native",
             "Expo",
             "Flutter"
         ],
-        "frontend": [
+        "Frontend": [
             "Next.js",
             "React",
             "TypeScript",
             "Tailwind CSS",
             "Framer Motion"
         ],
-        "backend": [
+        "Backend": [
             "Node.js",
             "Express",
-            "Supabase",
+            "FastAPI",
+            "Python",
             "PostgreSQL",
-            "REST",
-            "GraphQL"
+            "Supabase",
+            "Redis"
         ],
-        "tools": [
-            "Git",
+        "DevOps & Tools": [
             "Docker",
-            "Figma",
-            "Vercel",
             "GitHub Actions",
-            "Postman"
+            "Vercel",
+            "AWS",
+            "Figma",
+            "Stripe"
         ]
-    }
+    },
+    "apps_delivered": 42,
+    "happy_clients": 28,
+    "experience_start_date": "2018",
+    "manual_years_experience": null,
+    "narrativeTagline": "A specialized window into the vision, metrics, and technological foundation I bring to every project.",
+    "site_title": "Alex Ottoman — Lead Full-Stack Engineer",
+    "favicon_url": "",
+    "core_values": [
+        "Precision",
+        "Performance",
+        "Design Excellence",
+        "Developer Experience"
+    ],
+    "metrics": [
+        {
+            "label": "Apps Delivered",
+            "value": "42+"
+        },
+        {
+            "label": "Happy Clients",
+            "value": "28"
+        },
+        {
+            "label": "Years Experience",
+            "value": "7+"
+        },
+        {
+            "label": "Open Source Stars",
+            "value": "1.2K"
+        }
+    ]
 }

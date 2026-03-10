@@ -2,26 +2,27 @@
     {
         "name": "Zenith Banking",
         "description": "Next-generation digital banking platform with real-time transactions and AI-driven insights.",
-        "full_description": "Zenith Banking is a full-stack fintech platform designed for modern consumers who need visibility and control over their finances. Built with Next.js App Router and Supabase, it provides real-time account balances, transaction history, AI-powered spending analysis, and multi-currency support. The UI is crafted with premium design principles to elevate trust and reduce cognitive load for users.",
+        "full_description": "# Zenith Banking\n\nZenith Banking is a full-stack fintech platform designed for modern consumers who need complete visibility and control over their finances.\n\n## The Problem\n\nExisting banking apps were slow, cluttered, and gave users almost no intelligence about their own money. Zenith was built to change that.\n\n## What Was Built\n\nA production-grade banking dashboard built with **Next.js App Router** and **Supabase**, featuring:\n- Real-time account balances with optimistic UI updates\n- AI-powered spending categorization using OpenAI API\n- Multi-currency support with live exchange rates via Frankfurter API\n- End-to-end Stripe payment integration (deposits, transfers, payouts)\n- WCAG 2.1 AA accessibility compliance\n\n## Technical Highlights\n\n```typescript\n// Real-time transaction subscription\nconst channel = supabase\n  .channel('transactions')\n  .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'transactions' }, \n    (payload) => updateBalance(payload.new)\n  )\n  .subscribe()\n```\n\n## Results\n\n| Metric | Value |\n|---|---|\n| Users Onboarded | 12,000+ |\n| Transactions/Day | 50,000 |\n| Uptime | 99.97% |\n| Avg Response Time | 180ms |",
         "languages": [
             "TypeScript",
             "Next.js",
             "Tailwind CSS",
             "Supabase",
-            "Stripe"
+            "Stripe",
+            "OpenAI API"
         ],
         "platforms": [
             "Web"
         ],
         "github_url": "https://github.com",
-        "live_url": "https://zenith-banking.demo.com",
+        "live_url": "https://example.com",
         "vibrant_color": "#6366f1",
         "bullets": [
             "Real-time transaction processing with optimistic UI updates",
-            "AI spending categorization using OpenAI API",
+            "AI spending categorization using OpenAI GPT-4",
             "Multi-currency support with live exchange rates",
-            "End-to-end Stripe payment integration",
-            "WCAG 2.1 AA accessibility compliant"
+            "End-to-end Stripe payment and payout integration",
+            "WCAG 2.1 AA accessibility compliant throughout"
         ],
         "stats": [
             {
@@ -34,33 +35,39 @@
             },
             {
                 "label": "Uptime",
-                "value": "99.9%"
+                "value": "99.97%"
+            },
+            {
+                "label": "Avg Response",
+                "value": "180ms"
             }
         ]
     },
     {
         "name": "Nebula AI Platform",
-        "description": "AI-powered content generation SaaS — text, images, and code in one workspace.",
-        "full_description": "Nebula is a multi-modal AI SaaS application enabling creators, marketers, and developers to generate high-quality content at scale. Powered by GPT-4 and Stable Diffusion, it offers a unified workspace for writing, image synthesis, and code completion. The platform features team collaboration, version history, usage analytics, and a credit-based billing model integrated with Stripe.",
+        "description": "AI-powered content generation SaaS — text, images, and code in one unified workspace.",
+        "full_description": "# Nebula AI Platform\n\nNebula is a multi-modal AI SaaS application enabling creators, marketers, and developers to generate high-quality content at scale.\n\n## The Problem\n\nTeams were juggling 4–5 separate AI tools. Nebula unified them into one seamless workspace with shared context, billing, and collaboration.\n\n## What Was Built\n\nPowered by **GPT-4** and **Stable Diffusion**, Nebula provides:\n- Unified workspace for text, image, and code generation\n- Team collaboration with real-time co-editing\n- Version history and prompt library\n- Usage analytics dashboard\n- Stripe subscription and credit-based billing\n\n## Architecture\n\n```\nFrontend (Next.js) → API Routes → OpenAI / Stability AI\n                  ↓\n           PostgreSQL (usage tracking)\n                  ↓\n           Stripe (billing & credits)\n```\n\n## Results\n\n| Metric | Value |\n|---|---|\n| Prompts Processed | 2M+ |\n| Active Teams | 800 |\n| Avg AI Response | 1.2s |\n| MRR | $28,000 |",
         "languages": [
             "TypeScript",
             "React",
             "Node.js",
             "OpenAI API",
-            "PostgreSQL"
+            "Stable Diffusion",
+            "PostgreSQL",
+            "Stripe"
         ],
         "platforms": [
             "Web"
         ],
         "github_url": "https://github.com",
-        "live_url": "https://nebula-ai.demo.com",
+        "live_url": "https://example.com",
         "vibrant_color": "#8b5cf6",
         "bullets": [
-            "Multi-modal AI: text, images, and code generation",
+            "Multi-modal AI: text, images, and code generation in one workspace",
             "Team workspaces with role-based access control",
-            "Real-time collaboration on documents",
-            "Usage analytics dashboard for admins",
-            "Stripe subscription and credit billing"
+            "Real-time collaboration and version history",
+            "Usage analytics dashboard for admins and team leads",
+            "Stripe subscription and credit billing system"
         ],
         "stats": [
             {
@@ -72,21 +79,26 @@
                 "value": "800"
             },
             {
-                "label": "Avg Response",
+                "label": "Avg AI Response",
                 "value": "1.2s"
+            },
+            {
+                "label": "Monthly Revenue",
+                "value": "$28K"
             }
         ]
     },
     {
         "name": "Aether Social",
-        "description": "Decentralized social network with on-chain identity and creator monetization.",
-        "full_description": "Aether Social is a Web3-native social platform that gives users full ownership of their identity and content via Ethereum-based smart contracts. Creators can gate premium posts behind token requirements, receive direct crypto tips, and grow verified on-chain audiences. The mobile apps are built in React Native with a vibrant, expressive UI system inspired by Farcaster and Lens Protocol.",
+        "description": "Decentralized social network with on-chain identity and direct creator monetization.",
+        "full_description": "# Aether Social\n\nAether Social is a Web3-native social platform giving users full ownership of their identity and content via Ethereum smart contracts.\n\n## The Problem\n\nCentralized platforms collect and monetize user data. Aether flips the model — users own their content, creators get paid directly, and no algorithm decides what you see.\n\n## What Was Built\n\n- On-chain identity via ENS and user-controlled wallets\n- Token-gated posts — creators set minimum token balance for access\n- Direct crypto tips (ETH and ERC-20 tokens)\n- Content stored on IPFS — censorship resistant\n- Cross-platform: iOS, Android, and Web PWA\n\n## Smart Contract Architecture\n\n```solidity\ncontract AetherProfile {\n    mapping(address => Profile) public profiles;\n    mapping(address => Post[]) public posts;\n    \n    function createPost(string memory _ipfsHash, uint256 _minTokens) \n        external returns (uint256 postId) {\n        // posts stored on-chain, content on IPFS\n    }\n}\n```\n\n## Results\n\n| Metric | Value |\n|---|---|\n| Monthly Active Users | 28,000 |\n| Posts Created | 140,000+ |\n| Creator Revenue | $180,000 |\n| Chain Transactions | 320,000 |",
         "languages": [
             "React Native",
             "Solidity",
             "Ethers.js",
             "TypeScript",
-            "IPFS"
+            "IPFS",
+            "Expo"
         ],
         "platforms": [
             "iOS",
@@ -94,14 +106,14 @@
             "Web"
         ],
         "github_url": "https://github.com",
-        "live_url": "https://aether-social.demo.com",
+        "live_url": "https://example.com",
         "vibrant_color": "#f59e0b",
         "bullets": [
-            "On-chain identity via ENS & user-controlled wallets",
-            "Creator monetization: token-gated posts and NFT tips",
+            "On-chain identity via ENS and user-controlled wallets",
+            "Token-gated posts with creator-set access conditions",
             "Decentralized content storage on IPFS",
-            "Cross-platform: iOS, Android, and web PWA",
-            "Gas-optimized Solidity smart contracts"
+            "Direct crypto tips — ETH and ERC-20 token support",
+            "Cross-platform: native iOS, Android, and web PWA"
         ],
         "stats": [
             {
@@ -115,58 +127,68 @@
             {
                 "label": "Creator Revenue",
                 "value": "$180K"
+            },
+            {
+                "label": "Chain Txns",
+                "value": "320K"
             }
         ]
     },
     {
         "name": "Catalyst CRM",
-        "description": "Lightweight CRM built for growing agencies — pipelines, contacts, and email automation.",
-        "full_description": "Catalyst CRM is a modern sales pipeline and customer relationship management tool designed specifically for small-to-mid agencies. It features drag-and-drop Kanban pipelines, automated follow-up email sequences, client health scoring, and a live dashboard with conversion metrics. The backend is entirely Supabase with real-time subscriptions powering the live board updates.",
+        "description": "Lightweight CRM for growing agencies — pipelines, contacts, and automated follow-up sequences.",
+        "full_description": "# Catalyst CRM\n\nCatalyst is a modern sales pipeline and customer relationship tool designed for small-to-mid agencies who find tools like Salesforce overwhelming and Notion too manual.\n\n## The Problem\n\nMost CRMs are built for enterprises. Agencies need something fast, visual, and connected to their email. Catalyst delivers exactly that.\n\n## What Was Built\n\n- Drag-and-drop Kanban sales pipelines\n- Automated follow-up email sequences via Resend\n- Client health score based on activity and engagement signals\n- Real-time board updates with Supabase Realtime subscriptions\n- CSV import/export for bulk contact management\n\n## Sequence Automation\n\n```typescript\n// Automated follow-up after deal moves to 'Proposal Sent'\nconst onDealMoved = async (deal: Deal, newStage: Stage) => {\n  if (newStage.name === 'Proposal Sent') {\n    await scheduleSequence(deal.contactEmail, 'proposal-followup', {\n      delayDays: [3, 7, 14]\n    })\n  }\n}\n```\n\n## Results\n\n| Metric | Value |\n|---|---|\n| Agencies Using | 120+ |\n| Deals Closed | 3,200 |\n| Emails Sent | 890,000 |\n| Avg Deal Time Saved | 4.2 hrs/wk |",
         "languages": [
             "Next.js",
             "TypeScript",
             "Supabase",
             "Resend",
-            "Tailwind CSS"
+            "Tailwind CSS",
+            "Framer Motion"
         ],
         "platforms": [
             "Web"
         ],
         "github_url": "https://github.com",
-        "live_url": "https://catalyst-crm.demo.com",
+        "live_url": "https://example.com",
         "vibrant_color": "#10b981",
         "bullets": [
-            "Drag-and-drop Kanban sales pipeline",
-            "Automated email sequences via Resend",
+            "Drag-and-drop Kanban pipeline with real-time board sync",
+            "Automated email follow-up sequences via Resend",
             "Client health score based on activity signals",
-            "Real-time board updates with Supabase subscriptions",
-            "CSV import/export for bulk contact management"
+            "CSV import/export for bulk contact management",
+            "Role-based access — account managers see only their clients"
         ],
         "stats": [
-            {
-                "label": "Deals Closed",
-                "value": "3.2K"
-            },
             {
                 "label": "Agencies Using",
                 "value": "120+"
             },
             {
+                "label": "Deals Closed",
+                "value": "3,200"
+            },
+            {
                 "label": "Emails Sent",
                 "value": "890K"
+            },
+            {
+                "label": "Time Saved/Wk",
+                "value": "4.2 hrs"
             }
         ]
     },
     {
         "name": "Momentum Fitness",
-        "description": "AI-powered personal trainer app that adapts workouts to your progress and goals.",
-        "full_description": "Momentum is a cross-platform fitness application that uses machine learning to create personalized workout plans. It adapts training intensity, rest periods, and exercise selection based on user performance data captured after each session. The app integrates with Apple Health and Google Fit for biometric data, and features a gamified progression system to maximize user retention.",
+        "description": "AI-powered personal trainer app that adapts workouts to your real performance and goals.",
+        "full_description": "# Momentum Fitness\n\nMomentum is a cross-platform fitness application that uses on-device machine learning to create personalized workout plans that actually adapt over time.\n\n## The Problem\n\nMost fitness apps give you a static plan. Real fitness requires adaptation — adjusting intensity, rest periods, and exercises based on your actual performance. Momentum does this automatically.\n\n## What Was Built\n\n- On-device AI personalization using TensorFlow Lite\n- Apple Health and Google Fit biometric sync\n- Gamified streak and achievement system\n- Video exercise demonstrations with rep counting\n- Social challenges and friend leaderboards\n\n## ML Pipeline\n\n```python\n# Adaptive training model\nclass WorkoutAdaptationModel:\n    def predict_next_session(self, user_history: UserHistory) -> WorkoutPlan:\n        fatigue_score = self.calculate_fatigue(user_history.recent_sessions)\n        readiness = self.hrv_analysis(user_history.biometrics)\n        return self.generate_plan(fatigue_score, readiness, user_history.goals)\n```\n\n## Results\n\n| Metric | Value |\n|---|---|\n| App Downloads | 45,000 |\n| Workouts Logged | 320,000 |\n| App Store Rating | 4.8 ★ |\n| Day-30 Retention | +22% vs static plans |",
         "languages": [
             "React Native",
             "Expo",
             "FastAPI",
             "Python",
-            "TensorFlow Lite"
+            "TensorFlow Lite",
+            "TypeScript"
         ],
         "platforms": [
             "iOS",
@@ -176,11 +198,11 @@
         "live_url": "",
         "vibrant_color": "#ef4444",
         "bullets": [
-            "AI workout personalization using on-device TensorFlow Lite",
-            "Apple Health and Google Fit biometric sync",
+            "On-device AI workout personalization with TensorFlow Lite",
+            "Apple Health and Google Fit biometric data sync",
             "Gamified streak and achievement system",
-            "Video exercise demonstrations with rep counting",
-            "Social challenges and leaderboards"
+            "Video exercise demos with rep counting via camera",
+            "Social challenges and friend leaderboards"
         ],
         "stats": [
             {
@@ -192,8 +214,12 @@
                 "value": "320K"
             },
             {
-                "label": "Avg Rating",
-                "value": "4.8★"
+                "label": "App Store Rating",
+                "value": "4.8 ★"
+            },
+            {
+                "label": "Day-30 Retention",
+                "value": "+22%"
             }
         ]
     }

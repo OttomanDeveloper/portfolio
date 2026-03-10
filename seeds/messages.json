@@ -1,37 +1,37 @@
 [
     {
-        "name": "Jordan Lee",
-        "email": "jordan.lee@techstartup.io",
-        "subject": "Full-Stack Engineer Needed for MVP",
-        "message": "Hi Alex, I found your portfolio through a Dribbble search and I'm incredibly impressed by the Zenith Banking project. We're building a fintech MVP and need a senior engineer who understands both product and code. Would love to jump on a call this week to discuss scope and timeline. Our budget is flexible for the right person.",
-        "status": "unread"
-    },
-    {
-        "name": "Natasha Rivera",
-        "email": "natasha@creativeco.agency",
-        "subject": "React Native App for a Luxury Brand",
-        "message": "Hey! We're a design agency working with a luxury fashion brand on a mobile loyalty app. We need an engineer who can translate our Figma prototypes into pixel-perfect React Native code. The project is approximately 10 weeks. Have you worked with animations and custom gestures in RN? Your Momentum project looks promising!",
-        "status": "read"
-    },
-    {
-        "name": "Ben Okafor",
-        "email": "ben.okafor@ventures.com",
-        "subject": "Series A Startup - CTO Possible Role?",
-        "message": "Alex, I'm the founder of a Series A-backed B2B SaaS company. We're scaling fast and looking for a strong engineering lead who can own our technical roadmap. I saw your Catalyst CRM case study and the architecture decisions there are exactly the kind of thinking we need. Open to a fractional CTO arrangement or full-time. Would love to talk.",
+        "name": "Sarah Mitchell",
+        "email": "sarah.mitchell@apexfintech.io",
+        "subject": "Banking Dashboard Project — Collaboration Inquiry",
+        "message": "Hi Alex, I came across your portfolio and I'm genuinely impressed by the Zenith Banking case study. We're building a similar product for a Series A fintech startup — a multi-currency expense management tool for SMEs. We'd love to discuss a 3-month engagement starting next quarter. Are you available for a discovery call this week?",
         "status": "replied"
     },
     {
-        "name": "Mei Lin",
-        "email": "mei.lin@edtech.co",
-        "subject": "EdTech Platform Development",
-        "message": "Hello Alex, I'm building an online learning platform for professional upskilling. We need someone who can build the course delivery engine, progress tracking, and admin dashboard. The tech stack is Next.js + Supabase, which I see you're very comfortable with. Timeline is 16 weeks. Are you available starting April?",
+        "name": "Marcus Webb",
+        "email": "marcus@growthloop.co",
+        "subject": "React Native App — Urgent Timeline",
+        "message": "Hey Alex — we have a mobile MVP that needs to be done in 8 weeks. I know that's tight but we have a trade show commitment we can't move. The app is a B2B field sales tool — offline-first, with CRM sync and barcode scanning. Budget is flexible for the right developer. Can we jump on a call today or tomorrow?",
+        "status": "read"
+    },
+    {
+        "name": "Yuki Tanaka",
+        "email": "yuki.tanaka@designsync.jp",
+        "subject": "Next.js Performance Audit",
+        "message": "Hello, I found you through a recommendation on Twitter/X. Our Next.js e-commerce platform has serious performance issues — Largest Contentful Paint is over 6 seconds on mobile. We're losing customers at checkout. I'd love to bring you on for a performance audit and remediation sprint. Our team can handle implementation if you can identify the issues.",
         "status": "unread"
     },
     {
-        "name": "Stefan Bauer",
-        "email": "stefan@bauer-design.de",
-        "subject": "Agency Collaboration",
-        "message": "Guten Tag Alex! I run a design agency in Berlin and frequently need a reliable development partner for our clients' web projects. I liked how your portfolio site itself is built — very clean technically. Would you be open to a retainer or per-project partnership arrangement? Our typical projects are medium-complexity Next.js builds.",
-        "status": "unread"
+        "name": "Fatima Al-Rashidi",
+        "email": "fatima@cloudnovatech.ae",
+        "subject": "Full-Stack Developer for SaaS MVP",
+        "message": "Hi Alex, we're a Dubai-based tech consultancy building a SaaS product for the real estate industry — an AI-driven property valuation and market analytics platform. We're looking for a lead developer to own the technical architecture and build the first version. Remote-friendly, 6-month contract. Is this something you'd be interested in exploring?",
+        "status": "read"
+    },
+    {
+        "name": "Thomas Brennan",
+        "email": "thomas@brennanagency.ie",
+        "subject": "Just wanted to say — brilliant portfolio!",
+        "message": "Alex, I'm not reaching out for a project right now — I just spent 20 minutes going through your portfolio site and it's genuinely one of the best developer portfolios I've ever seen. The case study modals, the smooth animations, the clean layout. Really well done. Keep doing what you're doing. — Tom",
+        "status": "read"
     }
 ]

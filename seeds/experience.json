@@ -7,10 +7,10 @@
         "location": "Remote (USA)",
         "description": [
             "Architected and delivered a multi-tenant SaaS CRM used by 120+ agencies, reducing client onboarding time by 40%",
-            "Led a cross-functional team of 5 engineers, conducting weekly code reviews and enforcing architectural standards",
-            "Migrated a legacy PHP monolith to a Next.js + Supabase microservice architecture, improving page load speed by 65%",
-            "Implemented CI/CD pipelines with GitHub Actions, reducing deployment time from 45 minutes to under 8 minutes",
-            "Established a comprehensive component library in Storybook, adopted across 3 product lines"
+            "Led a cross-functional team of 5 engineers — weekly code reviews, architectural standards, and sprint planning",
+            "Migrated a legacy PHP monolith to a Next.js + Supabase microservice architecture, improving page load by 65%",
+            "Implemented CI/CD pipelines with GitHub Actions, cutting deployment time from 45 minutes to under 8 minutes",
+            "Established a shared component library in Storybook adopted across 3 product lines"
         ],
         "technologies": [
             "Next.js",
@@ -24,7 +24,7 @@
         ],
         "achievements": [
             "Promoted to Lead Engineer after 6 months for exceptional delivery velocity",
-            "Reduced production incidents by 72% through systematic testing and observability improvements",
+            "Reduced production incidents by 72% through systematic testing and observability",
             "Received company 'Engineer of the Year' recognition for Q1 2024"
         ]
     },
@@ -35,10 +35,10 @@
         "end_date": "Feb 2023",
         "location": "Remote (EU)",
         "description": [
-            "Developed and maintained 8+ client web applications using React and Node.js with end-to-end test coverage",
-            "Collaborated closely with UI/UX designers to implement pixel-perfect, performant interfaces from Figma prototypes",
+            "Developed and maintained 8+ client web applications using React and Node.js with full test coverage",
+            "Collaborated with UI/UX designers to implement pixel-perfect, performant interfaces from Figma prototypes",
             "Built a custom e-commerce engine integrated with Stripe handling $2M+ in annual transaction volume",
-            "Optimized React bundle sizes by 38% through code splitting, lazy loading, and dependency auditing",
+            "Optimised React bundle sizes by 38% through code splitting, lazy loading, and dependency auditing",
             "Mentored 2 junior developers on modern JavaScript patterns and clean code practices"
         ],
         "technologies": [
@@ -66,7 +66,7 @@
         "description": [
             "Built RESTful APIs in Express.js for internal tooling used by 200+ employees across 4 departments",
             "Contributed to a React Native cross-platform mobile app shipped to 15,000+ users on iOS and Android",
-            "Implemented automated testing suites achieving 85% code coverage using Jest and React Testing Library",
+            "Implemented automated testing suites achieving 85% code coverage with Jest and React Testing Library",
             "Participated in Agile sprints, standups, and retrospectives in a team of 12 engineers",
             "Integrated third-party APIs including Google Maps, Twilio SMS, and SendGrid email services"
         ],
@@ -82,8 +82,8 @@
         ],
         "achievements": [
             "Graduated from junior to mid-level role within 18 months",
-            "Won internal hackathon with an AI-powered meeting summarizer tool",
-            "Published 2 internal packages used across 5+ company projects"
+            "Won internal hackathon with an AI-powered meeting summariser tool",
+            "Published 2 internal npm packages used across 5+ company projects"
         ]
     }
 ]

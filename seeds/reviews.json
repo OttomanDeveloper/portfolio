@@ -43,16 +43,16 @@
     },
     {
         "customer_name": "Aisha Nwosu",
-        "review_text": "Working with Alex was a masterclass in how modern software should be built. His attention to accessibility, performance, and SEO was outstanding — our Lighthouse scores went from the 50s to consistent 90+s. Our organic search traffic grew 140% within 2 months of the relaunch.",
+        "review_text": "Working with Alex was a masterclass in how modern software should be built. His attention to accessibility, performance, and SEO was outstanding — our Lighthouse scores went from the 50s to consistent 95+. Our organic search traffic grew 140% within 2 months of the relaunch.",
         "customer_photo": "https://api.dicebear.com/7.x/notionists/svg?seed=aisha&backgroundColor=f97316",
-        "is_verified": false,
+        "is_verified": true,
         "status": "published"
     },
     {
         "customer_name": "Tom Harrington",
-        "review_text": "Alex is the kind of developer who makes everyone around him better. His code is self-documenting, his PR descriptions are thorough, and he always has time to explain his architectural choices. Our whole team leveled up just from reviewing his work. An absolute asset on any project.",
+        "review_text": "Alex is the kind of developer who makes everyone around him better. His code is self-documenting, his PR descriptions are thorough, and he always has time to explain his architectural choices. Our whole team leveled up just from reviewing his work. An absolute asset on any collaborative project.",
         "customer_photo": "https://api.dicebear.com/7.x/notionists/svg?seed=tom&backgroundColor=a855f7",
-        "is_verified": false,
+        "is_verified": true,
         "status": "published"
     }
 ]

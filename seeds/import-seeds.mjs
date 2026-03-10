@@ -118,9 +118,10 @@ async function run() {
     console.log('    Visit http://localhost:3000 to see your portfolio.\n')
   } catch (err) {
     console.error('\n❌  Seed import failed:', err.message)
-    console.error('    Tip: Make sure you ran database-schema.sql first.\n')
+    console.error('    Tip: Make sure you ran deployment_guide/schema.sql first.\n')
     process.exit(1)
   }
 }
+
 
 run()
