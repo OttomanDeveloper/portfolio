@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { User, Target, Cpu, Save, Loader2, Plus, Layout, Smartphone, Database, Wrench, Image as ImageIcon, Globe, Calendar, Github, Upload, Trash2, CheckCircle2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { uploadAsset, deleteAsset, BUCKETS, getPathFromUrl } from '@/lib/supabase/storage'
-import { saveAdminProfile } from './actions'
+import { saveAdminProfile, updateFavicon } from './actions'
 
 type AvatarMode = 'github' | 'upload'
 
@@ -84,6 +84,8 @@ export default function AboutAdmin() {
         }), {}),
         experience_start_date: profile.experience_start_date,
         manual_years_experience: profile.manual_years_experience,
+        site_title: profile.site_title || profile.siteTitle,
+        favicon_url: profile.favicon_url || profile.faviconUrl,
         name: profile.full_name || profile.name, // The DB column is 'name'
         tagline: profile.tagline,
         updated_at: new Date().toISOString()
@@ -180,6 +182,57 @@ export default function AboutAdmin() {
       setTimeout(() => setSaveSuccess(false), 3000)
     } catch (err) {
       console.error('Failed to save GitHub avatar:', err)
+    } finally {
+      setUploadProgress(false)
+    }
+  }
+
+  /**
+   * Handles favicon file upload.
+   */
+  const handleFaviconUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file || !profile) return
+
+    // 1MB Size Limit
+    if (file.size > 1024 * 1024) {
+      alert("File is too large. Favicons must be under 1MB.");
+      return;
+    }
+
+    // Recommended: Square aspect ratio
+    const isSquare = await new Promise<boolean>((resolve) => {
+      const img = new Image();
+      img.onload = () => resolve(img.width === img.height);
+      img.onerror = () => resolve(false);
+      img.src = URL.createObjectURL(file);
+    });
+
+    if (!isSquare) {
+      if (!confirm("The selected image is not square. Favicons look best when square (e.g., 32x32). Continue?")) {
+        return;
+      }
+    }
+
+    try {
+      setUploadProgress(true)
+      // Force .png extension for favicons in the path
+      const path = `favicon-${profile.id}-${Date.now()}.png`
+      
+      const url = await uploadAsset(BUCKETS.AVATARS, file, path)
+
+      const result = await updateFavicon(profile.id, url)
+
+      if (result.success) {
+        setProfile({ ...profile, favicon_url: url, faviconUrl: url })
+        setSaveSuccess(true)
+        setTimeout(() => setSaveSuccess(false), 3000)
+      } else {
+        throw new Error(result.error || 'Server update failed')
+      }
+    } catch (err) {
+      console.error('Favicon upload failed:', err)
+      alert('Favicon upload failed.')
     } finally {
       setUploadProgress(false)
     }
@@ -308,6 +361,54 @@ export default function AboutAdmin() {
                 placeholder="Have a project in mind or just want to say hi? Feel free to reach out!"
               />
               <p className="text-[10px] text-text-secondary/50 ml-1">Shown as the subtitle on the Contact section of the homepage.</p>
+            </div>
+          </Card>
+
+          {/* Search & Branding */}
+          <Card className="p-8 border-border bg-surface/50 backdrop-blur-xl shadow-sm space-y-6">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-accent/10 text-accent">
+                <Globe size={20} />
+              </div>
+              <h2 className="text-xl font-black text-text-primary">Search & Branding</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase tracking-widest text-text-secondary/60 ml-1">Browser Tab Title</label>
+                <input
+                  type="text"
+                  value={profile.site_title || profile.siteTitle || ''}
+                  onChange={(e) => setProfile({ ...profile, site_title: e.target.value, siteTitle: e.target.value })}
+                  className="w-full p-4 rounded-xl bg-surface/30 border border-border focus:border-accent/40 outline-none text-text-primary text-sm font-bold"
+                  placeholder="e.g. John Doe | Digital Architect"
+                />
+                <p className="text-[10px] text-text-secondary/50 ml-1">The title displayed on the browser tab and search results.</p>
+              </div>
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase tracking-widest text-text-secondary/60 ml-1">Site Favicon</label>
+                <div className="flex items-center gap-4">
+                   <div className="w-12 h-12 rounded-lg border border-border bg-surface/50 flex items-center justify-center overflow-hidden">
+                     {(profile.favicon_url || profile.faviconUrl) ? (
+                       <img src={profile.favicon_url || profile.faviconUrl} alt="Favicon" className="w-8 h-8 object-contain" />
+                     ) : (
+                       <Globe size={20} className="text-text-secondary/30" />
+                     )}
+                   </div>
+                   <Button
+                     onClick={() => {
+                       const input = document.createElement('input')
+                       input.type = 'file'
+                       input.accept = 'image/*'
+                       input.onchange = (e: any) => handleFaviconUpload(e)
+                       input.click()
+                     }}
+                     className="px-4 py-2 rounded-lg bg-surface-secondary hover:bg-surface-secondary/80 text-text-primary text-[10px] font-black uppercase tracking-widest transition-all"
+                   >
+                     {uploadProgress ? <Loader2 className="animate-spin" size={14} /> : 'Change Icon'}
+                   </Button>
+                </div>
+                <p className="text-[10px] text-text-secondary/50 ml-1">Upload a small square image (PNG/ICO) for the browser tab icon.</p>
+              </div>
             </div>
           </Card>
 

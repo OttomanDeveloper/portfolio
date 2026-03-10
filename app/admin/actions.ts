@@ -19,6 +19,7 @@ export async function adminSaveProject(project: any) {
     full_description: project.fullDescription,
     vibrant_color: project.vibrantColor,
     github_url: project.githubUrl,
+    live_url: project.liveUrl,
     languages: project.languages || [],
     platforms: project.platforms || [],
     bullets: project.bullets || [],

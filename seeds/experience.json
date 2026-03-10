@@ -1,0 +1,89 @@
+[
+    {
+        "company": "Apex Digital Studio",
+        "position": "Lead Full-Stack Engineer",
+        "start_date": "Mar 2023",
+        "end_date": "Present",
+        "location": "Remote (USA)",
+        "description": [
+            "Architected and delivered a multi-tenant SaaS CRM used by 120+ agencies, reducing client onboarding time by 40%",
+            "Led a cross-functional team of 5 engineers, conducting weekly code reviews and enforcing architectural standards",
+            "Migrated a legacy PHP monolith to a Next.js + Supabase microservice architecture, improving page load speed by 65%",
+            "Implemented CI/CD pipelines with GitHub Actions, reducing deployment time from 45 minutes to under 8 minutes",
+            "Established a comprehensive component library in Storybook, adopted across 3 product lines"
+        ],
+        "technologies": [
+            "Next.js",
+            "TypeScript",
+            "Supabase",
+            "PostgreSQL",
+            "Docker",
+            "GitHub Actions",
+            "Resend",
+            "Tailwind CSS"
+        ],
+        "achievements": [
+            "Promoted to Lead Engineer after 6 months for exceptional delivery velocity",
+            "Reduced production incidents by 72% through systematic testing and observability improvements",
+            "Received company 'Engineer of the Year' recognition for Q1 2024"
+        ]
+    },
+    {
+        "company": "Pixel Perfect Studio",
+        "position": "Mid-Level Full-Stack Developer",
+        "start_date": "Jun 2021",
+        "end_date": "Feb 2023",
+        "location": "Remote (EU)",
+        "description": [
+            "Developed and maintained 8+ client web applications using React and Node.js with end-to-end test coverage",
+            "Collaborated closely with UI/UX designers to implement pixel-perfect, performant interfaces from Figma prototypes",
+            "Built a custom e-commerce engine integrated with Stripe handling $2M+ in annual transaction volume",
+            "Optimized React bundle sizes by 38% through code splitting, lazy loading, and dependency auditing",
+            "Mentored 2 junior developers on modern JavaScript patterns and clean code practices"
+        ],
+        "technologies": [
+            "React",
+            "Node.js",
+            "Express",
+            "MongoDB",
+            "Stripe",
+            "Figma",
+            "Jest",
+            "AWS S3"
+        ],
+        "achievements": [
+            "Delivered the flagship e-commerce platform 2 weeks ahead of schedule",
+            "Zero critical production incidents over 18 months of ownership",
+            "Client satisfaction rating of 9.6/10 across all delivered projects"
+        ]
+    },
+    {
+        "company": "InnovateTech Labs",
+        "position": "Junior Software Engineer",
+        "start_date": "Jan 2018",
+        "end_date": "May 2021",
+        "location": "New York, NY (Hybrid)",
+        "description": [
+            "Built RESTful APIs in Express.js for internal tooling used by 200+ employees across 4 departments",
+            "Contributed to a React Native cross-platform mobile app shipped to 15,000+ users on iOS and Android",
+            "Implemented automated testing suites achieving 85% code coverage using Jest and React Testing Library",
+            "Participated in Agile sprints, standups, and retrospectives in a team of 12 engineers",
+            "Integrated third-party APIs including Google Maps, Twilio SMS, and SendGrid email services"
+        ],
+        "technologies": [
+            "JavaScript",
+            "React",
+            "React Native",
+            "Node.js",
+            "Express",
+            "MySQL",
+            "Jest",
+            "Git"
+        ],
+        "achievements": [
+            "Graduated from junior to mid-level role within 18 months",
+            "Won internal hackathon with an AI-powered meeting summarizer tool",
+            "Published 2 internal packages used across 5+ company projects"
+        ]
+    }
+]

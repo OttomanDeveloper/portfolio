@@ -64,13 +64,13 @@ export function Reviews({ initialReviews }: ReviewsProps) {
             {reviews.map((review, index) => (
               <motion.div
                 key={review.id}
-                layout
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
                 className="h-full"
               >
-                <Card className="h-full p-8 flex flex-col bg-surface/40 backdrop-blur-xl border-border hover:border-accent/30 transition-all group shadow-sm hover:shadow-xl hover:shadow-accent/5">
+                <Card className="h-full p-8 flex flex-col bg-surface/40 backdrop-blur-lg md:backdrop-blur-xl border-border hover:border-accent/30 transition-all group shadow-sm hover:shadow-xl hover:shadow-accent/5">
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex gap-1 text-accent">
                       {[...Array(5)].map((_, i) => (

@@ -1,0 +1,55 @@
+{
+    "_comment": "Developer profile seed data. Import via: npm run seed",
+    "name": "Alex Ottoman",
+    "tagline": "Architecting Premium Digital Ecosystems Through Code & Strategic Design",
+    "bio": "I am a full-stack software engineer with over 6 years of experience building scalable web and mobile applications. Specializing in modern JavaScript ecosystems — React, Next.js, and Node.js — I bridge the gap between clean, performant code and polished, user-centered design. I have delivered solutions for startups, scale-ups, and enterprise clients across fintech, social, and productivity verticals.",
+    "philosophy": "Great software is not just functional — it is fast, accessible, and beautiful.",
+    "contact_email": "alex@ottomandev.com",
+    "whatsapp_number": "+1 (555) 012-3456",
+    "youtube_url": "",
+    "avatar_url": "https://api.dicebear.com/7.x/notionists/svg?seed=ottoman&backgroundColor=6366f1",
+    "resume_url": "",
+    "apps_delivered": 47,
+    "happy_clients": 38,
+    "experience_start_date": "2018-01-01",
+    "manual_years_experience": null,
+    "site_title": "Alex Ottoman | Full-Stack Engineer",
+    "favicon_url": "",
+    "narrativeTagline": "A specialized window into the vision, metrics, and technological foundation behind every project.",
+    "social_links": {
+        "github": "https://github.com",
+        "linkedin": "https://linkedin.com",
+        "twitter": "https://twitter.com",
+        "instagram": ""
+    },
+    "tech_stacks": {
+        "mobile": [
+            "React Native",
+            "Expo",
+            "Flutter"
+        ],
+        "frontend": [
+            "Next.js",
+            "React",
+            "TypeScript",
+            "Tailwind CSS",
+            "Framer Motion"
+        ],
+        "backend": [
+            "Node.js",
+            "Express",
+            "Supabase",
+            "PostgreSQL",
+            "REST",
+            "GraphQL"
+        ],
+        "tools": [
+            "Git",
+            "Docker",
+            "Figma",
+            "Vercel",
+            "GitHub Actions",
+            "Postman"
+        ]
+    }
+}

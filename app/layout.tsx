@@ -10,10 +10,58 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Portfolio | Digital Architect",
-  description: "Bespoke digital experiences crafted with precision.",
-};
+import { getProfile } from "@/lib/api-server";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const profile = await getProfile();
+  const siteTitle = profile?.siteTitle || "Portfolio | Digital Architect";
+  const description = profile?.tagline || "Bespoke digital experiences crafted with precision.";
+  const favicon = profile?.faviconUrl || "/favicon.ico";
+
+  return {
+    title: siteTitle,
+    description: description,
+    icons: {
+      icon: favicon ? `${favicon}${favicon.includes('?') ? '&' : '?'}v=${Date.now()}` : "/favicon.ico",
+    },
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
+    alternates: {
+      canonical: "./",
+    },
+    openGraph: {
+      title: siteTitle,
+      description: description,
+      url: "./",
+      siteName: siteTitle,
+      images: [
+        {
+          url: profile?.avatarUrl || "/og-image.png",
+          width: 1200,
+          height: 630,
+        },
+      ],
+      locale: "en_US",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: siteTitle,
+      description: description,
+      images: [profile?.avatarUrl || "/og-image.png"],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+  };
+}
 
 export default function RootLayout({
   children,

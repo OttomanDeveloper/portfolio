@@ -140,9 +140,10 @@ export async function getProfile() {
     manualYearsExperience: data.manual_years_experience,
     // Taglines and dynamic content merged from settings
     contactDescription: content.contact_description || data.contact_description,
-    tagline: data.tagline, // Exists in DB
+    tagline: data.tagline,
     projectsTagline: content.projects_tagline,
     narrativeTagline: content.narrative_tagline,
+    fullName: data.name, // Mapping 'name' to 'fullName' for UI consistency if needed
   }
 }
 
@@ -151,7 +152,7 @@ export async function submitMessage(messageData: { fullName: string; email: stri
   if (!supabase) return { error: 'Database connection failed' }
 
   const { error } = await supabase.from('messages').insert({
-    full_name: messageData.fullName,
+    name: messageData.fullName,
     email: messageData.email,
     subject: messageData.subject,
     message: messageData.message

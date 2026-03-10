@@ -49,6 +49,7 @@ export default function ProjectsAdmin() {
       description: '',
       fullDescription: '',
       githubUrl: '',
+      liveUrl: '',
       vibrantColor: '#818cf8',
       languagesStr: '',
       platformsStr: '',
@@ -287,7 +288,16 @@ export default function ProjectsAdmin() {
                         placeholder="https://github.com/..."
                       />
                     </div>
-
+                    <div>
+                      <label className="block text-[10px] font-black uppercase tracking-widest text-text-secondary/60 mb-1 ml-1">Live URL</label>
+                      <input 
+                        type="text"
+                        value={editingProject.liveUrl || ''}
+                        onChange={(e) => setEditingProject({ ...editingProject, liveUrl: e.target.value })}
+                        className="w-full px-4 py-3 bg-surface-secondary/50 border border-border rounded-xl text-text-primary focus:ring-2 focus:ring-accent/40 outline-none transition-all"
+                        placeholder="https://yourapp.link"
+                      />
+                    </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="block text-[10px] font-black uppercase tracking-widest text-text-secondary/60 mb-1 ml-1">Languages (csv)</label>

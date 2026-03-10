@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 @import "tailwindcss";
 
 @theme {
@@ -45,7 +45,7 @@
     @apply border-[var(--border)];
   }
   body {
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
     background: var(--background);
     color: var(--text-primary);
     overflow-x: hidden;
@@ -75,8 +75,12 @@
 }
 
 @keyframes mesh-move {
-  0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(30%, 20%) scale(1.2); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(30%, 20%) scale(1.2);
+  }
 }
 
 .scrollbar-hide::-webkit-scrollbar {
@@ -118,4 +122,59 @@ html {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Markdown Content Styles */
+.markdown-content {
+  @apply text-text-secondary leading-relaxed;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3 {
+  @apply text-text-primary font-black tracking-tight mt-8 mb-4;
+}
+
+.markdown-content h1 {
+  @apply text-3xl;
+}
+.markdown-content h2 {
+  @apply text-2xl;
+}
+.markdown-content h3 {
+  @apply text-xl;
+}
+
+.markdown-content p {
+  @apply mb-4 opacity-90;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  @apply mb-6 space-y-2;
+}
+
+.markdown-content ul {
+  @apply list-none;
+}
+
+.markdown-content ul li {
+  @apply flex gap-3 items-start;
+}
+
+.markdown-content ul li::before {
+  content: "•";
+  @apply text-accent font-bold flex-shrink-0;
+}
+
+.markdown-content strong {
+  @apply text-text-primary font-bold;
+}
+
+.markdown-content code {
+  @apply px-1.5 py-0.5 rounded-md bg-surface border border-border font-mono text-xs text-accent;
+}
+
+.markdown-content blockquote {
+  @apply pl-4 border-l-4 border-accent/30 italic text-text-secondary/80 my-6;
 }

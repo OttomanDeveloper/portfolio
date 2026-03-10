@@ -1,0 +1,200 @@
+[
+    {
+        "name": "Zenith Banking",
+        "description": "Next-generation digital banking platform with real-time transactions and AI-driven insights.",
+        "full_description": "Zenith Banking is a full-stack fintech platform designed for modern consumers who need visibility and control over their finances. Built with Next.js App Router and Supabase, it provides real-time account balances, transaction history, AI-powered spending analysis, and multi-currency support. The UI is crafted with premium design principles to elevate trust and reduce cognitive load for users.",
+        "languages": [
+            "TypeScript",
+            "Next.js",
+            "Tailwind CSS",
+            "Supabase",
+            "Stripe"
+        ],
+        "platforms": [
+            "Web"
+        ],
+        "github_url": "https://github.com",
+        "live_url": "https://zenith-banking.demo.com",
+        "vibrant_color": "#6366f1",
+        "bullets": [
+            "Real-time transaction processing with optimistic UI updates",
+            "AI spending categorization using OpenAI API",
+            "Multi-currency support with live exchange rates",
+            "End-to-end Stripe payment integration",
+            "WCAG 2.1 AA accessibility compliant"
+        ],
+        "stats": [
+            {
+                "label": "Users Onboarded",
+                "value": "12K+"
+            },
+            {
+                "label": "Transactions/Day",
+                "value": "50K"
+            },
+            {
+                "label": "Uptime",
+                "value": "99.9%"
+            }
+        ]
+    },
+    {
+        "name": "Nebula AI Platform",
+        "description": "AI-powered content generation SaaS — text, images, and code in one workspace.",
+        "full_description": "Nebula is a multi-modal AI SaaS application enabling creators, marketers, and developers to generate high-quality content at scale. Powered by GPT-4 and Stable Diffusion, it offers a unified workspace for writing, image synthesis, and code completion. The platform features team collaboration, version history, usage analytics, and a credit-based billing model integrated with Stripe.",
+        "languages": [
+            "TypeScript",
+            "React",
+            "Node.js",
+            "OpenAI API",
+            "PostgreSQL"
+        ],
+        "platforms": [
+            "Web"
+        ],
+        "github_url": "https://github.com",
+        "live_url": "https://nebula-ai.demo.com",
+        "vibrant_color": "#8b5cf6",
+        "bullets": [
+            "Multi-modal AI: text, images, and code generation",
+            "Team workspaces with role-based access control",
+            "Real-time collaboration on documents",
+            "Usage analytics dashboard for admins",
+            "Stripe subscription and credit billing"
+        ],
+        "stats": [
+            {
+                "label": "Prompts Processed",
+                "value": "2M+"
+            },
+            {
+                "label": "Active Teams",
+                "value": "800"
+            },
+            {
+                "label": "Avg Response",
+                "value": "1.2s"
+            }
+        ]
+    },
+    {
+        "name": "Aether Social",
+        "description": "Decentralized social network with on-chain identity and creator monetization.",
+        "full_description": "Aether Social is a Web3-native social platform that gives users full ownership of their identity and content via Ethereum-based smart contracts. Creators can gate premium posts behind token requirements, receive direct crypto tips, and grow verified on-chain audiences. The mobile apps are built in React Native with a vibrant, expressive UI system inspired by Farcaster and Lens Protocol.",
+        "languages": [
+            "React Native",
+            "Solidity",
+            "Ethers.js",
+            "TypeScript",
+            "IPFS"
+        ],
+        "platforms": [
+            "iOS",
+            "Android",
+            "Web"
+        ],
+        "github_url": "https://github.com",
+        "live_url": "https://aether-social.demo.com",
+        "vibrant_color": "#f59e0b",
+        "bullets": [
+            "On-chain identity via ENS & user-controlled wallets",
+            "Creator monetization: token-gated posts and NFT tips",
+            "Decentralized content storage on IPFS",
+            "Cross-platform: iOS, Android, and web PWA",
+            "Gas-optimized Solidity smart contracts"
+        ],
+        "stats": [
+            {
+                "label": "Monthly Users",
+                "value": "28K"
+            },
+            {
+                "label": "Posts Created",
+                "value": "140K+"
+            },
+            {
+                "label": "Creator Revenue",
+                "value": "$180K"
+            }
+        ]
+    },
+    {
+        "name": "Catalyst CRM",
+        "description": "Lightweight CRM built for growing agencies — pipelines, contacts, and email automation.",
+        "full_description": "Catalyst CRM is a modern sales pipeline and customer relationship management tool designed specifically for small-to-mid agencies. It features drag-and-drop Kanban pipelines, automated follow-up email sequences, client health scoring, and a live dashboard with conversion metrics. The backend is entirely Supabase with real-time subscriptions powering the live board updates.",
+        "languages": [
+            "Next.js",
+            "TypeScript",
+            "Supabase",
+            "Resend",
+            "Tailwind CSS"
+        ],
+        "platforms": [
+            "Web"
+        ],
+        "github_url": "https://github.com",
+        "live_url": "https://catalyst-crm.demo.com",
+        "vibrant_color": "#10b981",
+        "bullets": [
+            "Drag-and-drop Kanban sales pipeline",
+            "Automated email sequences via Resend",
+            "Client health score based on activity signals",
+            "Real-time board updates with Supabase subscriptions",
+            "CSV import/export for bulk contact management"
+        ],
+        "stats": [
+            {
+                "label": "Deals Closed",
+                "value": "3.2K"
+            },
+            {
+                "label": "Agencies Using",
+                "value": "120+"
+            },
+            {
+                "label": "Emails Sent",
+                "value": "890K"
+            }
+        ]
+    },
+    {
+        "name": "Momentum Fitness",
+        "description": "AI-powered personal trainer app that adapts workouts to your progress and goals.",
+        "full_description": "Momentum is a cross-platform fitness application that uses machine learning to create personalized workout plans. It adapts training intensity, rest periods, and exercise selection based on user performance data captured after each session. The app integrates with Apple Health and Google Fit for biometric data, and features a gamified progression system to maximize user retention.",
+        "languages": [
+            "React Native",
+            "Expo",
+            "FastAPI",
+            "Python",
+            "TensorFlow Lite"
+        ],
+        "platforms": [
+            "iOS",
+            "Android"
+        ],
+        "github_url": "https://github.com",
+        "live_url": "",
+        "vibrant_color": "#ef4444",
+        "bullets": [
+            "AI workout personalization using on-device TensorFlow Lite",
+            "Apple Health and Google Fit biometric sync",
+            "Gamified streak and achievement system",
+            "Video exercise demonstrations with rep counting",
+            "Social challenges and leaderboards"
+        ],
+        "stats": [
+            {
+                "label": "App Downloads",
+                "value": "45K"
+            },
+            {
+                "label": "Workouts Logged",
+                "value": "320K"
+            },
+            {
+                "label": "Avg Rating",
+                "value": "4.8★"
+            }
+        ]
+    }
+]

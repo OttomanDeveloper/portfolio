@@ -1,0 +1,37 @@
+[
+    {
+        "name": "Jordan Lee",
+        "email": "jordan.lee@techstartup.io",
+        "subject": "Full-Stack Engineer Needed for MVP",
+        "message": "Hi Alex, I found your portfolio through a Dribbble search and I'm incredibly impressed by the Zenith Banking project. We're building a fintech MVP and need a senior engineer who understands both product and code. Would love to jump on a call this week to discuss scope and timeline. Our budget is flexible for the right person.",
+        "status": "unread"
+    },
+    {
+        "name": "Natasha Rivera",
+        "email": "natasha@creativeco.agency",
+        "subject": "React Native App for a Luxury Brand",
+        "message": "Hey! We're a design agency working with a luxury fashion brand on a mobile loyalty app. We need an engineer who can translate our Figma prototypes into pixel-perfect React Native code. The project is approximately 10 weeks. Have you worked with animations and custom gestures in RN? Your Momentum project looks promising!",
+        "status": "read"
+    },
+    {
+        "name": "Ben Okafor",
+        "email": "ben.okafor@ventures.com",
+        "subject": "Series A Startup - CTO Possible Role?",
+        "message": "Alex, I'm the founder of a Series A-backed B2B SaaS company. We're scaling fast and looking for a strong engineering lead who can own our technical roadmap. I saw your Catalyst CRM case study and the architecture decisions there are exactly the kind of thinking we need. Open to a fractional CTO arrangement or full-time. Would love to talk.",
+        "status": "replied"
+    },
+    {
+        "name": "Mei Lin",
+        "email": "mei.lin@edtech.co",
+        "subject": "EdTech Platform Development",
+        "message": "Hello Alex, I'm building an online learning platform for professional upskilling. We need someone who can build the course delivery engine, progress tracking, and admin dashboard. The tech stack is Next.js + Supabase, which I see you're very comfortable with. Timeline is 16 weeks. Are you available starting April?",
+        "status": "unread"
+    },
+    {
+        "name": "Stefan Bauer",
+        "email": "stefan@bauer-design.de",
+        "subject": "Agency Collaboration",
+        "message": "Guten Tag Alex! I run a design agency in Berlin and frequently need a reliable development partner for our clients' web projects. I liked how your portfolio site itself is built — very clean technically. Would you be open to a retainer or per-project partnership arrangement? Our typical projects are medium-complexity Next.js builds.",
+        "status": "unread"
+    }
+]

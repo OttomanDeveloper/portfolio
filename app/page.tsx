@@ -38,9 +38,29 @@ export default async function Home() {
   // Use DB profile or fallback to GitHub
   const avatarUrl = dbProfile?.avatarUrl || githubProfile?.avatar_url;
   const bio = dbProfile?.bio || githubProfile?.bio;
+  
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": dbProfile.full_name || dbProfile.name,
+    "jobTitle": dbProfile.siteTitle || "Software Engineer",
+    "url": process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+    "image": avatarUrl,
+    "sameAs": [
+      dbProfile.githubUrl,
+      dbProfile.linkedinUrl,
+      dbProfile.twitterUrl,
+      dbProfile.youtubeUrl
+    ].filter(Boolean),
+    "description": bio
+  };
 
   return (
     <div className="flex flex-col w-full">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <FloatingNav dbProfile={dbProfile} />
       <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
         <Hero 
@@ -51,11 +71,9 @@ export default async function Home() {
       <Suspense fallback={<div className="py-20 text-center">Loading projects...</div>}>
         <Projects repos={repos} dbProjects={dbProjects} dbProfile={dbProfile} />
       </Suspense>
-      
-      <About 
-          dbProfile={dbProfile}
-          bio={bio}
-      />
+            <About 
+          dbProfile={dbProfile} 
+        />
       
       <Experience experiences={dbExperiences} />
       

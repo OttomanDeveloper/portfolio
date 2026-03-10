@@ -91,6 +91,8 @@ export async function getProfile() {
     youtubeUrl: data.youtube_url,
     experienceStartDate: data.experience_start_date,
     manualYearsExperience: data.manual_years_experience,
+    siteTitle: data.site_title,
+    faviconUrl: data.favicon_url,
     // Taglines and dynamic content merged from settings
     contactDescription: content.contact_description || data.contact_description,
     tagline: data.tagline, // Exists in DB

@@ -5,6 +5,7 @@ import { X, ExternalLink, Check } from 'lucide-react'
 import { Button } from './Button'
 import { IPhoneMockup } from './IPhoneMockup'
 import { cn } from '@/lib/utils'
+import ReactMarkdown from 'react-markdown'
 
 interface CaseStudyModalProps {
   isOpen: boolean
@@ -132,9 +133,11 @@ export function CaseStudyModal({ isOpen, onClose, project }: CaseStudyModalProps
                   </div>
                   
                   <div className="pt-6 space-y-8">
-                    <p className="text-lg text-text-secondary leading-relaxed font-normal opacity-90">
-                      {project.fullDescription || `Tailored digital solution built with ${project.languages[0]}. Focused on seamless performance and user-centric architecture.`}
-                    </p>
+                    <div className="markdown-content">
+                      <ReactMarkdown>
+                        {project.fullDescription || `Tailored digital solution built with ${project.languages[0]}. Focused on seamless performance and user-centric architecture.`}
+                      </ReactMarkdown>
+                    </div>
 
                     <div className="flex flex-wrap gap-3">
                         {project.platforms.map(p => (

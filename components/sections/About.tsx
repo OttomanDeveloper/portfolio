@@ -18,10 +18,9 @@ import { calculateExperienceYears } from '@/lib/utils/experience'
 
 interface AboutProps {
   dbProfile?: any
-  bio?: string
 }
 
-export function About({ dbProfile, bio }: AboutProps) {
+export function About({ dbProfile }: AboutProps) {
   const yearsExp = calculateExperienceYears(
     dbProfile?.experience_start_date, 
     dbProfile?.manual_years_experience

@@ -1,765 +1,743 @@
 # Ottoman Portfolio — Complete Deployment & Setup Guide
 
-> **Audience:** Developers setting up this project for the first time. No prior knowledge of the codebase is assumed.
+> **For first-time developers.** Everything you need to deploy, configure, and run this portfolio from scratch. No prior knowledge of the codebase required.
 
 ---
 
 ## Table of Contents
 
 1. [Project Overview](#1-project-overview)
-2. [System Requirements](#2-system-requirements)
-3. [Installation Steps](#3-installation-steps)
-4. [Dependency Management](#4-dependency-management)
-5. [Database Setup](#5-database-setup)
-6. [Database Schema](#6-database-schema)
+2. [Project Structure Tree](#2-project-structure-tree)
+3. [Requirements Before Deployment](#3-requirements-before-deployment)
+4. [Installation Guide](#4-installation-guide)
+5. [Database Schema](#5-database-schema)
+6. [Data Import Guide](#6-data-import-guide)
 7. [Seed Data](#7-seed-data)
 8. [Dummy Portfolio Content](#8-dummy-portfolio-content)
-9. [Storage & File Upload Setup](#9-storage--file-upload-setup)
-10. [Authentication Setup](#10-authentication-setup)
-11. [Project Structure](#11-project-structure)
-12. [Environment Variables Template](#12-environment-variables-template)
+9. [Updating Dependencies](#9-updating-dependencies)
+10. [Database Connection Guide](#10-database-connection-guide)
+11. [Authentication & Storage](#11-authentication--storage)
+12. [Deployment Guide](#12-deployment-guide)
 13. [Troubleshooting](#13-troubleshooting)
-14. [Verification Checklist](#14-verification-checklist)
+14. [Final Verification Checklist](#14-final-verification-checklist)
+15. [SEO Configuration](#15-seo-configuration)
+16. [Dynamic Branding (Title & Favicon)](#16-dynamic-branding-title--favicon)
+17. [Case Study Markdown](#17-case-study-markdown)
 
 ---
 
 ## 1. Project Overview
 
-**Ottoman Portfolio** is a full-stack personal portfolio website designed to be managed entirely through a custom Admin Panel — no code editing required after initial setup.
+The **Ottoman Portfolio** is a full-stack, production-grade developer portfolio with a premium visitor-facing site and a fully featured Admin Panel.
 
 ### Key Features
-
 | Feature | Description |
 |---|---|
-| 🎨 **Premium Visitor Site** | Animated hero, project showcase, about, experience, reviews, and contact sections |
-| 🛠️ **Admin Panel** | A full CRUD dashboard at `/admin` for managing all content |
-| 📝 **Projects Management** | Add / edit / delete portfolio projects with tech stacks, bullet highlights, and stats |
-| 💼 **Experience Management** | Manage work history with timeline, achievements, and technologies |
-| ⭐ **Reviews Moderation** | Approve, archive, or manually create client testimonials |
-| 📬 **Inquiries Inbox** | View and manage contact form submissions |
-| 🌗 **Dark / Light Mode** | System-aware theme with toggle |
-| 📱 **Fully Responsive** | Looks great on mobile, tablet, and desktop |
-| ⚡ **Performance First** | Built with Next.js App Router and Turbopack for fast builds |
+| **Dynamic Projects Grid** | Projects are fetched live from the database, filterable by category |
+| **Case Study Modals** | Full project deep-dives in animated modals |
+| **Career Timeline** | Automated experience years calculation |
+| **Narrative & Expertise** | Data-driven "About Me" with tech-stack clusters |
+| **Reviews System** | Visitors can submit testimonials; admin moderates them |
+| **Inquiries / Messages** | Contact form stored in DB; admin can manage statuses |
+| **Admin Panel** | Full CRUD for all content, responsive on desktop & mobile |
+| **Dynamic Settings** | Taglines, contact description, theme — all DB-controlled |
 
-### Tech Stack
-
-- **Frontend / Backend:** Next.js 16 (App Router, React Server Components)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS v4
-- **Animation:** Framer Motion
-- **Database:** Supabase (PostgreSQL)
-- **File Storage:** Supabase Storage
-- **Deployment:** Vercel (recommended)
-
----
-
-## 2. System Requirements
-
-Before you begin, ensure your system has the following installed.
-
-### Runtime
-
-| Tool | Minimum Version | Check Command |
-|---|---|---|
-| **Node.js** | `≥ 20.x LTS` | `node -v` |
-| **npm** | `≥ 10.x` | `npm -v` |
-
-> **Windows users:** Install Node.js via [nodejs.org](https://nodejs.org) or using [nvm-windows](https://github.com/coreybutler/nvm-windows).  
-> **macOS/Linux users:** Use [nvm](https://github.com/nvm-sh/nvm) for easy version switching.
-
-### External Services
-
-| Service | Purpose | Free Tier? |
-|---|---|---|
-| **Supabase** | PostgreSQL database + storage + auth | ✅ Yes |
-| **GitHub** (optional) | For avatar images via GitHub API | ✅ Yes |
-| **Vercel** (optional) | Deployment platform | ✅ Yes |
-
-### Environment Variables (required)
-
-```
-NEXT_PUBLIC_SUPABASE_URL       # Your Supabase project URL
-NEXT_PUBLIC_SUPABASE_ANON_KEY  # Supabase anon/public key
-SUPABASE_SERVICE_ROLE_KEY      # Supabase service role key (admin operations)
-```
+### Technology Stack
+| Layer | Technology |
+|---|---|
+| **Framework** | Next.js 16 (App Router) |
+| **Language** | TypeScript 5 |
+| **Styling** | Tailwind CSS v4 |
+| **UI** | Framer Motion, Lucide React, Sonner (toasts) |
+| **Database** | Supabase (PostgreSQL) |
+| **ORM / Client** | `@supabase/supabase-js`, `@supabase/ssr` |
+| **Forms** | React Hook Form + Zod |
+| **Deployment** | Vercel (recommended) |
+| **Analytics** | @vercel/speed-insights |
 
 ---
 
-## 3. Installation Steps
+## 2. Project Structure Tree
 
-### Step 1 — Clone the Repository
+```
+portfolio/
+├── app/                          ← Next.js App Router
+│   ├── admin/                    ← 🔒 Admin Panel (server-only)
+│   │   ├── layout.tsx            ←   Sidebar + mobile nav
+│   │   ├── dashboard/            ←   Stats overview
+│   │   ├── about/                ←   Edit profile, skills, social links, favicon, site title
+│   │   ├── projects/             ←   CRUD for portfolio projects
+│   │   ├── experience/           ←   CRUD for work history
+│   │   ├── reviews/              ←   Moderate and publish testimonials
+│   │   ├── messages/             ←   Read and manage contact inquiries
+│   │   └── settings/             ←   Site taglines and descriptions
+│   ├── sitemap.ts                ← Dynamic sitemap (/sitemap.xml)
+│   ├── robots.ts                 ← Dynamic robots.txt
+│   ├── globals.css               ← Global Tailwind v4 styles + CSS vars
+│   ├── layout.tsx                ← Root HTML layout + dynamic SEO metadata
+│   └── page.tsx                  ← Public visitor landing page (JSON-LD schema)
+│
+├── components/
+│   ├── sections/                 ← Page sections (Hero, Projects, About…)
+│   └── ui/                       ← Reusable atoms: Button, Card, Modal…
+│
+├── lib/
+│   ├── supabase/                 ← Supabase client helpers
+│   ├── api-server.ts             ← Server-side data fetch functions
+│   └── animations.ts             ← Framer Motion variant presets
+│
+├── seeds/                        ← 🌱 Demo data for new developers
+│   ├── profile.json              ←   Developer profile
+│   ├── projects.json             ←   5 portfolio projects
+│   ├── experience.json           ←   3 work history entries
+│   ├── reviews.json              ←   8 client testimonials
+│   ├── messages.json             ←   5 sample contact messages
+│   ├── import-seeds.js           ←   Import script (run via npm run seed)
+│   └── reset-seeds.js            ←   Reset/clear all data
+├── public/                       ← Static files served as-is
+│
+├── database-schema.sql           ← ✅ THE only schema file — import this first
+├── database_seeds.sql            ← Optional: SQL alternative to npm run seed
+├── .env.example                  ← Template — copy to .env.local
+├── package.json                  ← Dependencies & scripts (includes npm run seed)
+└── tsconfig.json                 ← TypeScript config
+```
+
+### What to modify as a new developer:
+- **`app/admin/about/`** — Set your real name, bio, social links, tech stacks.
+- **`app/admin/projects/`** — Add your real projects.
+- **`app/admin/experience/`** — Add your work history.
+- **`app/globals.css`** — Change accent color variables if desired.
+
+---
+
+## 3. Requirements Before Deployment
+
+### Software Requirements
+| Requirement | Version | Notes |
+|---|---|---|
+| Node.js | v18 or higher | v20 LTS recommended |
+| npm | v9 or higher | Bundled with Node.js |
+| Git | Any | For cloning the repo |
+| Supabase Account | Free tier works | [supabase.com](https://supabase.com) |
+
+### Services Required
+- **Supabase Project**: Free tier provides all features needed.
+- **Vercel Account** *(for deployment)*: Free tier is sufficient.
+
+### Environment Variables
+
+Create a file called `.env.local` in the project root. **Never commit this file to Git.**
 
 ```bash
-# Via HTTPS
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-cd YOUR_REPO_NAME/portfolio
+# .env.local
 
-# Via SSH
-git clone git@github.com:YOUR_USERNAME/YOUR_REPO_NAME.git
-cd YOUR_REPO_NAME/portfolio
+# --------------------------------------------------
+# SUPABASE (Required)
+# Get these from: Supabase → Project Settings → API
+# --------------------------------------------------
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+> ⚠️ **IMPORTANT**: The `SUPABASE_SERVICE_ROLE_KEY` has admin privileges.
+> It must **NEVER** be exposed to the browser or stored in a public repo.
+> It is only used inside Next.js Server Actions (server-side code).
+
+---
+
+## 4. Installation Guide
+
+Follow these steps in order. Each step builds on the previous.
+
+### Step 1 — Clone the Repository
+```bash
+git clone https://github.com/your-username/your-repo.git
+cd portfolio
 ```
 
 ### Step 2 — Install Dependencies
-
 ```bash
 npm install
 ```
-
-This will install all packages listed in `package.json` including Next.js, Tailwind CSS, Supabase client, Framer Motion, and others.
+This will install all packages listed in `package.json`.
 
 ### Step 3 — Configure Environment Variables
-
-Copy the example file and fill in your Supabase credentials:
-
 ```bash
-cp .env.example .env.local
+# Copy the example file
+copy .env.example .env.local   # (Windows)
+cp .env.example .env.local     # (Mac/Linux)
 ```
+Then open `.env.local` and fill in your Supabase credentials (see Section 3).
 
-Open `.env.local` and fill in your values:
+### Step 4 — Set Up the Database
+1. Log in to [supabase.com](https://supabase.com) and create a new project.
+2. Wait ~2 minutes for it to provision.
+3. Go to **Project Settings → API**.
+4. Copy your **Project URL** and **anon key** into `.env.local`.
+5. Also copy the **service_role** key.
 
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT_ID.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
-SUPABASE_SERVICE_ROLE_KEY=your_service_role_key_here
-```
+### Step 5 — Import the Database Schema
+1. In Supabase, go to the **SQL Editor** (left sidebar).
+2. Click **New Query**.
+3. Open `database-schema.sql` from this project, copy all content.
+4. Paste it into the SQL Editor and click **Run**.
 
-> ⚠️ **Never commit `.env.local` to version control.** It is already listed in `.gitignore`.
+### Step 6 — Import Seed Data (Optional but Recommended)
+1. In the SQL Editor, click **New Query** again.
+2. Open `database_seeds.sql`, copy all content.
+3. Paste and click **Run**.
 
-### Step 4 — Start the Development Server
+This populates the site with professional dummy content instantly.
 
+### Step 7 — Run the Development Server
 ```bash
 npm run dev
 ```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-Visit [http://localhost:3000](http://localhost:3000) in your browser.
+The Admin Panel is at [http://localhost:3000/admin/dashboard](http://localhost:3000/admin/dashboard).
 
-The Admin Panel is available at [http://localhost:3000/admin](http://localhost:3000/admin).
-
-### Step 5 — Build for Production
-
+### Step 8 — Build for Production
 ```bash
 npm run build
-npm run start
 ```
+If the build succeeds, the project is ready to deploy.
 
-Or deploy directly to Vercel (see [Authentication Setup](#10-authentication-setup) for Vercel environment variables).
+### Step 9 — Deploy to Vercel
+See [Section 12](#12-deployment-guide) for full deployment instructions.
 
 ---
 
-## 4. Dependency Management
+## 5. Database Schema
 
-### Updating All Packages
+The project uses **6 tables** in a Supabase PostgreSQL database.
 
-```bash
-# Check which packages are outdated
-npm outdated
-
-# Update all packages to their latest allowed versions (respects semver)
-npm update
-
-# Force update a specific package to its latest version
-npm install package-name@latest
-```
-
-### Installing a New Package
-
-```bash
-# Production dependency
-npm install package-name
-
-# Development-only dependency
-npm install --save-dev package-name
-```
-
-### Rebuilding the Lock File
-
-If `package-lock.json` is corrupted or you want a clean install:
-
-```bash
-# Delete node_modules and lock file
-rm -rf node_modules package-lock.json   # macOS/Linux
-rmdir /s /q node_modules & del package-lock.json  # Windows CMD
-
-# Reinstall from scratch
-npm install
-```
-
-### Handling Version Conflicts
-
-If you see `ERESOLVE` errors during install:
-
-```bash
-# Option 1: Let npm resolve conflicts automatically
-npm install --legacy-peer-deps
-
-# Option 2: Force install (not recommended for production)
-npm install --force
-```
-
-To pin a package to a specific version:
-
-```bash
-npm install package-name@1.2.3
-```
-
----
-
-## 5. Database Setup
-
-This project uses **Supabase** (PostgreSQL) as its database.
-
-### Step 1 — Create a Supabase Project
-
-1. Go to [supabase.com](https://supabase.com) and sign in.
-2. Click **New Project**.
-3. Choose a name, strong database password, and region closest to your users.
-4. Wait ~2 minutes for the project to initialise.
-
-### Step 2 — Get Your API Keys
-
-In your Supabase project dashboard:
-
-1. Go to **Settings → API**
-2. Copy:
-   - **Project URL** → `NEXT_PUBLIC_SUPABASE_URL`
-   - **anon public key** → `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   - **service_role key** → `SUPABASE_SERVICE_ROLE_KEY`
-3. Paste them into your `.env.local` file.
-
-> ⚠️ The **service_role key** has full database access. Never expose it on the client side or in public repositories.
-
-### Step 3 — Create the Database Tables
-
-1. In your Supabase project, open **SQL Editor**.
-2. Click **New Query**.
-3. Open the `database_schema.sql` file from this project.
-4. Paste the entire contents into the editor.
-5. Click **Run**.
-
-You should see all tables created with Row Level Security enabled.
-
-### Step 4 — (Optional) Load Seed Data
-
-To populate the database with realistic example data:
-
-1. In the Supabase SQL Editor, create a new query.
-2. Open `database_seeds.sql` from this project.
-3. Paste and run.
-
-> This will insert a sample profile, 5 projects, 3 work experiences, 8 reviews, and 3 contact messages.
-
-### Step 5 — Configure Storage Bucket
-
-For review photos and resume uploads:
-
-1. In Supabase, go to **Storage**.
-2. Click **New Bucket**.
-3. Name it `portfolio-assets`.
-4. Check **Public bucket** (so uploaded images are accessible via URL).
-5. Click **Create Bucket**.
-
-#### Storage Policies
-
-In the SQL Editor, run:
-
-```sql
--- Allow public reads
-CREATE POLICY "Public read for portfolio-assets"
-    ON storage.objects FOR SELECT
-    USING (bucket_id = 'portfolio-assets');
-
--- Allow authenticated uploads (admin)
-CREATE POLICY "Admin upload for portfolio-assets"
-    ON storage.objects FOR INSERT
-    TO authenticated
-    WITH CHECK (bucket_id = 'portfolio-assets');
-
--- Allow authenticated deletes (admin)
-CREATE POLICY "Admin delete for portfolio-assets"
-    ON storage.objects FOR DELETE
-    TO authenticated
-    USING (bucket_id = 'portfolio-assets');
-```
-
-### Step 6 — Configure Allowed Image Domains
-
-Open `next.config.ts` and add your Supabase storage domain:
-
-```typescript
-const nextConfig: NextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'YOUR_PROJECT_ID.supabase.co', // Replace with your project ID
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'avatars.githubusercontent.com',
-        pathname: '/**',
-      },
-    ],
-  },
-};
-```
-
----
-
-## 6. Database Schema
-
-The complete database schema is in **`database_schema.sql`** at the project root.
-
-### Tables Summary
-
+### Table Overview
 | Table | Purpose |
 |---|---|
-| `projects` | Portfolio projects (name, description, tech stack, stats) |
-| `experience` | Work history (company, role, dates, responsibilities) |
-| `profile` | About Me data (name, tagline, social links, tech stacks) |
-| `reviews` | Client testimonials with moderation status |
+| `profile` | Developer identity: name, bio, avatar, social links, tech stack |
+| `projects` | Portfolio items shown in the Projects section |
+| `experience` | Career history shown in the Experience timeline |
+| `reviews` | Visitor testimonials with moderation status |
 | `messages` | Contact form submissions |
-| `settings` | Key/value store for dynamic site configuration (taglines, etc.) |
+| `settings` | Site-wide text config (taglines, descriptions) |
 
-### Table Details
-
-**`projects`**
+### Schema Relationships
 ```
-id              UUID        PRIMARY KEY
-name            TEXT        NOT NULL
-description     TEXT        NOT NULL  (short summary)
-full_description TEXT        NOT NULL  (long description)
-languages       TEXT[]      e.g. {TypeScript, Python}
-platforms       TEXT[]      e.g. {Web, iOS}
-github_url      TEXT
-vibrant_color   TEXT        hex color for UI accent
-bullets         TEXT[]      highlight bullet points
-stats           JSONB       [{label, value}]
-created_at      TIMESTAMPTZ
+profile         (singleton — one row for the developer)
+projects        (many rows — each a portfolio item)
+experience      (many rows — each a career milestone)
+reviews         (many rows — pending/published/archived)
+messages        (many rows — visitor contact submissions)
+settings        (key-value pairs — site configuration)
 ```
 
-**`experience`**
-```
-id           UUID    PRIMARY KEY
-company      TEXT    NOT NULL
-position     TEXT    NOT NULL
-start_date   TEXT    e.g. "Jan 2022"
-end_date     TEXT    e.g. "Present"
-location     TEXT
-description  TEXT[]  bullet responsibilities
-technologies TEXT[]  tech stack
-achievements TEXT[]  notable wins
-created_at   TIMESTAMPTZ
-```
+### How to Import
+The schema file is: **`database-schema.sql`**
 
-**`profile`**
-```
-id                      UUID
-name                    TEXT  Developer name
-tagline                 TEXT  Hero tagline
-bio                     TEXT  Long bio
-core_values             JSONB [{icon, title, description}]
-metrics                 JSONB {apps_delivered, happy_clients}
-social_links            JSONB {github, linkedin, twitter, instagram}
-tech_stacks             JSONB {Languages:[...], Frameworks:[...]}
-avatar_url              TEXT  GitHub avatar or uploaded image
-resume_url              TEXT  Supabase Storage URL
-contact_email           TEXT
-whatsapp_number         TEXT
-apps_delivered          INT
-happy_clients           INT
-```
+**Method A — Supabase SQL Editor (Easiest)**:
+1. Open Supabase → SQL Editor → New Query
+2. Paste entire contents of `database-schema.sql`
+3. Click Run
 
-**`reviews`**
-```
-id             UUID
-customer_name  TEXT    NOT NULL
-review_text    TEXT    NOT NULL
-customer_photo TEXT    Supabase Storage URL (nullable)
-is_verified    BOOLEAN default false
-status         TEXT    pending | published | archived
-created_at     TIMESTAMPTZ
-```
-
-**`settings`**
-```
-key        TEXT    PRIMARY KEY  (e.g. "site_content")
-value      JSONB               (JSON object with sub-fields)
-updated_at TIMESTAMPTZ
-```
-
-Important `settings` keys:
-- `site_content.contact_description` — shown under "Let's Connect"
-- `site_content.projects_tagline` — Projects section subtitle
-- `site_content.narrative_tagline` — About section subtitle
-
-### Importing the Schema
-
+**Method B — psql CLI (Advanced)**:
 ```bash
-# Using psql CLI (if you have it installed)
-psql -h db.YOUR_PROJECT_ID.supabase.co \
-     -U postgres \
-     -d postgres \
-     -f database_schema.sql
+psql -h db.YOUR-PROJECT-ID.supabase.co -U postgres -d postgres -f database-schema.sql
+```
+*(Get the host from Supabase → Project Settings → Database)*
+
+---
+
+## 6. Data Import Guide
+
+### Importing Schema
+Follow Step 5 in the Installation Guide above.
+
+### Importing Seed Data
+```sql
+-- In Supabase SQL Editor, run:
+-- Contents of database_seeds.sql
 ```
 
-Or via the Supabase SQL Editor (recommended for beginners).
+### Importing via Supabase Dashboard (No SQL)
+You can also import data using the **Table Editor** in Supabase:
+1. Supabase → Table Editor → Select a table
+2. Click **Insert Row** to manually add data
+
+### Resetting Data
+To clear all data and start fresh:
+```sql
+TRUNCATE TABLE projects, experience, reviews, messages, settings RESTART IDENTITY;
+DELETE FROM profile;
+```
 
 ---
 
 ## 7. Seed Data
 
-**`database_seeds.sql`** contains realistic dummy data to populate all tables instantly.
+The project ships with a complete seed data system to help new developers see a populated portfolio immediately after setup.
 
-### What's Included
+### Seed Files
 
-| Table | Records |
-|---|---|
-| `profile` | 1 complete profile (Alex Morgan) |
-| `projects` | 5 real-world projects with stats |
-| `experience` | 3 work experiences |
-| `reviews` | 8 client testimonials |
-| `messages` | 3 sample contact messages |
+| File | Records | Purpose |
+| --- | --- | --- |
+| `seeds/profile.json` | 1 | Developer identity, bio, social links, tech stacks |
+| `seeds/projects.json` | 5 | Full-featured portfolio projects with stats |
+| `seeds/experience.json` | 3 | Detailed career history entries |
+| `seeds/reviews.json` | 8 | Client testimonials (all `published`) |
+| `seeds/messages.json` | 5 | Sample contact form submissions |
+| `database_seeds.sql` | — | SQL alternative (for manual Supabase import) |
 
-### How to Import
+### Option A — Automated Import (Recommended)
 
-1. Open Supabase SQL Editor.
-2. Paste contents of `database_seeds.sql`.
-3. Click **Run**.
+Run the bundled import script with a single command:
 
-> ⚠️ Run `database_schema.sql` first before running seeds.
+```bash
+npm run seed
+```
+
+This connects to your Supabase project using your `.env.local` credentials and inserts all demo data automatically.
+
+### Option B — SQL Import (Manual)
+
+1. Open **Supabase → SQL Editor → New Query**
+2. Open `database_seeds.sql`, copy all content
+3. Paste and click **Run**
+
+### How to Reset Demo Data
+
+To wipe all seeded data and start fresh:
+
+```bash
+npm run seed:reset
+```
+
+Then re-run the seed:
+```bash
+npm run seed
+```
+
+### Verifying the Import
+
+After seeding, open Supabase → Table Editor and confirm:
+
+- `profile` → 1 row
+- `projects` → 5 rows
+- `experience` → 3 rows
+- `reviews` → 8 rows (all `published`)
+- `messages` → 5 rows
 
 ---
 
-## 8. Dummy Portfolio Content
+## 8. Demo Portfolio Preview
 
-The seed data uses the following fictional developer persona — feel free to replace all content via the Admin Panel after setup.
+After importing seed data, the site displays this example portfolio:
 
-### Sample Profile
+### Developer Profile
 
-- **Name:** Alex Morgan
-- **Tagline:** "Architecting premium digital ecosystems through code and strategic design."
-- **Email:** alex@example.com
-- **Skills:** TypeScript, Python, Dart, Next.js, Flutter, Supabase, Docker
+```
+Name:     Alex Ottoman
+Role:     Lead Full-Stack Engineer
+Tagline:  Architecting Premium Digital Ecosystems Through Code & Strategic Design
+Email:    alex@ottomandev.com
+```
 
 ### Sample Projects
 
-| Project | Stack | Highlight |
-|---|---|---|
-| TradeFlow Dashboard | TypeScript, Python, PostgreSQL | Real-time SaaS analytics for traders |
-| Petto – Pet Care App | Flutter, Dart | 28K downloads, 4.8★ rating |
-| OmniBlog CMS | TypeScript, GraphQL | Headless CMS with visual editor |
-| ShipItFast CLI | TypeScript, Node.js | 3.2K GitHub stars CLI scaffolding tool |
-| Kanbu – Inventory System | TypeScript, Python | Barcode scanning, warehouse management |
+| Project | Platforms | Key Feature |
+| --- | --- | --- |
+| Zenith Banking | Web | AI spending insights, Stripe integration |
+| Nebula AI Platform | Web | GPT-4 + Stable Diffusion multi-modal SaaS |
+| Aether Social | iOS, Android, Web | On-chain identity, creator monetization |
+| Catalyst CRM | Web | Drag-and-drop Kanban, email automation |
+| Momentum Fitness | iOS, Android | AI workout personalization, HealthKit sync |
 
-### Sample Experiences
+### Sample Experience
 
-1. **NovaTech Solutions** — Senior Full-Stack Developer (2022–Present)
-2. **Pixel & Code Agency** — Full-Stack Developer (2020–2022)
-3. **Freelance** — Mobile App Developer (2018–2020)
+| Company | Role | Period |
+| --- | --- | --- |
+| Apex Digital Studio | Lead Full-Stack Engineer | Mar 2023 – Present |
+| Pixel Perfect Studio | Mid-Level Full-Stack Developer | Jun 2021 – Feb 2023 |
+| InnovateTech Labs | Junior Software Engineer | Jan 2018 – May 2021 |
+
+### Sample Reviews
+
+8 published testimonials from clients across fintech, AI, and mobile verticals.
 
 ---
 
-## 9. Storage & File Upload Setup
+## 9. Updating Dependencies
 
-### What Uses Storage
-
-| Feature | File Type | Where Uploaded |
-|---|---|---|
-| Review customer photos | JPEG/PNG | `portfolio-assets/review-photos/` |
-| Developer avatar | JPEG/PNG | External URL (GitHub avatar recommended) |
-| Resume / CV | PDF | `portfolio-assets/resumes/` |
-
-### Supabase Storage Configuration
-
-1. Create a bucket named `portfolio-assets` (see [Database Setup](#step-5--configure-storage-bucket)).
-2. Set bucket to **Public**.
-3. Apply the storage RLS policies from the SQL above.
-
-### File Size Limits
-
-| Type | Max Size |
-|---|---|
-| Review photos | 1 MB |
-| Resume PDF | 5 MB |
-
-File size validation is enforced on the admin upload inputs.
-
-### Uploaded File URL Format
-
-Files uploaded to Supabase Storage are accessible at:
-
+### Check for Outdated Packages
+```bash
+npm outdated
 ```
-https://YOUR_PROJECT_ID.supabase.co/storage/v1/object/public/portfolio-assets/FILEPATH
+This shows all packages that have newer versions available.
+
+### Update All Packages (Patch & Minor)
+```bash
+npm update
+```
+This is safe to run — it only upgrades to non-breaking versions.
+
+### Update a Specific Package
+```bash
+npm install package-name@latest
+# Example:
+npm install framer-motion@latest
+npm install next@latest
 ```
 
----
-
-## 10. Authentication Setup
-
-### How Authentication Works
-
-This project uses a **simple admin path** at `/admin` without a formal login screen. Admin operations (creating, editing, deleting content) are secured at the API level using the **Supabase Service Role Key**, which is stored as a server-side environment variable and never exposed to the browser.
-
-> The visitor-facing site is completely public. The admin panel is protected only by the fact that it requires server-side secrets to write data.
-
-### Adding a Login Screen (Recommended for Production)
-
-If you want to add a real login screen:
-
-1. Enable **Email Auth** in Supabase → Authentication → Providers.
-2. Create an admin user in Supabase → Authentication → Users.
-3. Add middleware to `middleware.ts` to check session before allowing `/admin` routes.
-
-### Supabase Auth Configuration
-
-In your Supabase dashboard:
-
-1. Go to **Authentication → Settings**
-2. Set **Site URL** to your production domain (e.g. `https://yourdomain.com`)
-3. Add `http://localhost:3000` to **Additional Redirect URLs** for development
-
-### Environment Variables for Auth
-
-No additional environment variables are needed for the current setup. The three keys in `.env.local` cover all admin operations.
-
----
-
-## 11. Project Structure
-
-```
-portfolio/
-├── app/                         # Next.js App Router
-│   ├── layout.tsx               # Root HTML layout (fonts, theme provider)
-│   ├── page.tsx                 # Main visitor home page
-│   ├── globals.css              # Global styles + Tailwind base
-│   └── admin/                   # Protected admin panel
-│       ├── page.tsx             # Admin dashboard overview
-│       ├── actions.ts           # Server Actions for admin writes (uses service role)
-│       ├── about/
-│       │   ├── page.tsx         # Edit profile, taglines, tech stacks
-│       │   └── actions.ts       # Save profile + settings server action
-│       ├── projects/
-│       │   └── page.tsx         # Add/edit/delete projects
-│       ├── experience/
-│       │   └── page.tsx         # Add/edit/delete work experience
-│       ├── reviews/
-│       │   └── page.tsx         # Moderation dashboard for testimonials
-│       └── inquiries/
-│           └── page.tsx         # View contact form messages
-│
-├── components/
-│   ├── sections/                # Major visitor page sections
-│   │   ├── Hero.tsx             # Landing hero with name and tagline
-│   │   ├── Projects.tsx         # Project cards grid
-│   │   ├── About.tsx            # About Me / core values section
-│   │   ├── Experience.tsx       # Timeline of work history
-│   │   ├── Reviews.tsx          # Client testimonials grid
-│   │   └── Contact.tsx          # Contact form + info
-│   └── ui/                      # Reusable UI components
-│       ├── Button.tsx
-│       ├── Card.tsx
-│       ├── SectionHeading.tsx
-│       ├── ProjectCard.tsx
-│       ├── ReviewForm.tsx       # Visitor review submission modal
-│       └── ...
-│
-├── lib/
-│   ├── api.ts                   # Client-side Supabase fetch functions
-│   ├── api-server.ts            # Server-side Supabase fetch functions
-│   ├── animations.ts            # Framer Motion animation presets
-│   └── supabase/
-│       ├── client.ts            # Browser Supabase client
-│       └── server.ts            # Server Supabase client (uses cookies)
-│
-├── data/
-│   ├── projects.ts              # Static fallback project data
-│   └── experience.ts            # Static fallback experience data
-│
-├── public/                      # Static assets (favicon, images)
-│
-├── database_schema.sql          # ← Complete DB schema to import
-├── database_seeds.sql           # ← Sample data to import
-├── .env.example                 # ← Copy to .env.local and fill in
-├── next.config.ts               # Next.js config (allowed image domains)
-├── tailwind.config.ts           # Tailwind CSS configuration
-└── tsconfig.json                # TypeScript configuration
+### Update to a Specific Version
+```bash
+npm install next@16.1.6
 ```
 
----
-
-## 12. Environment Variables Template
-
-Copy this to `.env.local` and fill in your values.
-
-```env
-# ========================================================
-# SUPABASE — Required for all database operations
-# Get these from: supabase.com → Your Project → Settings → API
-# ========================================================
-
-# Your project URL (safe to expose, it's public)
-NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT_ID.supabase.co
-
-# Anon/public key (safe to expose, protected by RLS)
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-
-# Service role key — KEEP SECRET — never expose on client side
-# Used by Server Actions for admin writes that bypass RLS
-SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-```
-
-> Never add `SUPABASE_SERVICE_ROLE_KEY` to any client-side code or expose it in git.
-
----
-
-## 13. Troubleshooting
-
-### ❌ Database connection failure
-
-**Symptom:** Pages load with fallback static data, or console shows `Error fetching from Supabase`.
-
-**Solutions:**
-1. Verify `.env.local` exists and is not named `.env` (the project requires `.env.local`).
-2. Confirm `NEXT_PUBLIC_SUPABASE_URL` starts with `https://` and ends with `.supabase.co`.
-3. Check that the Supabase project is active (not paused) in your Supabase dashboard.
-4. Restart the dev server after changing environment variables: `Ctrl+C` → `npm run dev`.
-
----
-
-### ❌ "Could not find column 'X' in the schema cache"
-
-**Symptom:** Admin save operations fail with a schema cache error.
-
-**Solutions:**
-1. The database schema may be out of date. Re-run `database_schema.sql` in the SQL Editor.
-2. If a column was recently added, Supabase may need a moment to refresh. Wait 30 seconds and retry.
-3. Verify the column name in the SQL schema file matches exactly what the code sends.
-
----
-
-### ❌ npm install fails / ERESOLVE error
-
-**Solution:**
+### Fix Dependency Conflicts
 ```bash
 npm install --legacy-peer-deps
 ```
 
-If using Node.js <20, upgrade Node first:
+### Full Clean Reinstall
 ```bash
-# Using nvm
-nvm install 20
-nvm use 20
+# Delete node_modules and lock file, then reinstall
+rm -rf node_modules package-lock.json
 npm install
 ```
 
 ---
 
-### ❌ Build error: `Module not found`
+## 10. Database Connection Guide
 
-**Solution:**
-```bash
-# Clean build cache and reinstall
-rm -rf .next node_modules
-npm install
-npm run build
+### How the Connection Works
+1. **Browser-side** (public reads): Uses `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY` → RLS policies control what's readable.
+2. **Server-side** (admin writes): Uses `SUPABASE_SERVICE_ROLE_KEY` → bypasses RLS for secure admin operations.
+
+### Connection Files
+| File | Purpose |
+|---|---|
+| `lib/supabase/client.ts` | Browser Supabase client |
+| `lib/supabase/server.ts` | Server-side Supabase client (uses cookies for auth) |
+| `lib/supabase/storage.ts` | File upload helpers |
+| `app/admin/actions.ts` | Server Actions using the service role key |
+
+### Example Connection Settings
+```typescript
+// lib/supabase/client.ts
+import { createBrowserClient } from '@supabase/ssr'
+
+export function createClient() {
+  return createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
+}
 ```
 
 ---
 
-### ❌ Images not loading (broken image icons)
+## 11. Authentication & Storage
 
-**Symptom:** Review photos or avatar images show as broken.
+### Authentication Model
+This project uses a **service-role key** pattern for admin access rather than a full auth login system.
 
-**Solutions:**
-1. Ensure `next.config.ts` includes your Supabase storage hostname under `remotePatterns`.
-2. Verify the Supabase Storage bucket is set to **Public**.
-3. Check the image URL in the database is correct and accessible in a browser.
+- All admin pages under `/admin/` issue writes using `SUPABASE_SERVICE_ROLE_KEY`.
+- There is a `/admin/login` page that can be connected to Supabase Auth for a full login flow.
+- For production, it is **strongly recommended** to enable Supabase Auth and add email/password login.
 
----
+### Setting Up Storage (For File Uploads)
+The project uses Supabase Storage for:
+- Resume PDF uploads
+- Project icons / screenshots
+- Review customer photos
 
-### ❌ Changes in `.env.local` not taking effect
+**Steps to create the storage bucket:**
+1. Supabase → **Storage** → **New Bucket**
+2. Name it `portfolio`
+3. Set **Public Bucket** = ✅ Enabled
+4. Save
 
-Next.js only reads `.env.local` at startup. After any change:
-```bash
-# Stop the dev server (Ctrl+C) and restart
-npm run dev
-```
+Your `next.config.ts` already has the Supabase hostname whitelisted for `next/image`.
 
----
+### Row Level Security (RLS)
+RLS policies are included in `database-schema.sql`. Summary:
 
-### ❌ Admin panel not saving data ("Row Level Security" error)
-
-**Symptom:** Console shows an RLS or permission error when saving from the admin panel.
-
-**Solutions:**
-1. Ensure `SUPABASE_SERVICE_ROLE_KEY` is set in `.env.local`.
-2. This key must **not** start with `NEXT_PUBLIC_` — it must remain server-side only.
-3. Confirm the key is the `service_role` key and not the `anon` key (they look similar).
-
----
-
-### ❌ Dark mode not working
-
-The theme is controlled by the `ThemeProvider` component and stored in `localStorage`. If it's not persisting:
-1. Hard refresh the page: `Ctrl+Shift+R` (Windows) / `Cmd+Shift+R` (macOS).
-2. Clear browser localStorage for the site.
+| Table | Anon (Visitor) | Authenticated (Admin) |
+|---|---|---|
+| `profile` | Read ✅ | Full Access ✅ |
+| `projects` | Read ✅ | Full Access ✅ |
+| `experience` | Read ✅ | Full Access ✅ |
+| `reviews` | Read published ✅ | Full Access ✅ |
+| `messages` | Insert only ✅ | Full Access ✅ |
+| `settings` | Read ✅ | Full Access ✅ |
 
 ---
 
-## 14. Verification Checklist
+## 12. Deployment Guide
 
-Use this checklist to confirm your deployment is complete and working correctly.
+### Option A — Vercel (Recommended — Free)
 
-### Environment Setup
-- [ ] Node.js v20+ is installed (`node -v`)
-- [ ] npm v10+ is installed (`npm -v`)
-- [ ] `.env.local` file exists with all three Supabase keys filled in
-- [ ] `npm install` completed without errors
-
-### Database
-- [ ] Supabase project is created and ACTIVE (green status)
-- [ ] `database_schema.sql` has been run in the SQL Editor
-- [ ] All 6 tables are visible under **Table Editor** in Supabase
-- [ ] Row Level Security is enabled for all tables
-- [ ] Supabase Storage bucket `portfolio-assets` exists and is set to Public
-- [ ] Storage RLS policies have been applied
-
-### Visitor Site
-- [ ] `npm run dev` starts without errors
-- [ ] [http://localhost:3000](http://localhost:3000) loads the portfolio home page
-- [ ] Hero section shows the developer name and tagline
-- [ ] Projects section loads data (or shows empty state if no projects added yet)
-- [ ] Contact form submits without errors
-
-### Admin Panel
-- [ ] [http://localhost:3000/admin](http://localhost:3000/admin) loads the dashboard
-- [ ] Profile can be saved without errors (Admin → About Me → Save)
-- [ ] A new project can be created (Admin → Projects → Add New Project)
-- [ ] A new experience can be created (Admin → Experience → Add Experience)
-- [ ] Reviews tab shows seeded reviews (if seed was run)
-- [ ] Inquiries page shows contact messages
-
-### Production Build
-- [ ] `npm run build` completes without errors
-- [ ] `npm run start` serves the production build correctly
-- [ ] All environment variables are configured in your hosting platform (Vercel, etc.)
-
----
-
-## Deployment to Vercel (Recommended)
-
-1. Push your code to a GitHub repository.
-2. Go to [vercel.com](https://vercel.com) and click **New Project**.
-3. Import your GitHub repository.
-4. In **Environment Variables**, add:
+1. Push your code to a **GitHub** repository.
+2. Go to [vercel.com](https://vercel.com) → **New Project** → Import your repo.
+3. In the Vercel dashboard, go to **Settings → Environment Variables**.
+4. Add all three variables from your `.env.local`:
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
    - `SUPABASE_SERVICE_ROLE_KEY`
 5. Click **Deploy**.
 
-Vercel automatically detects Next.js and configures the build command (`next build`) and output directory (`.next`).
+> Vercel auto-detects Next.js. No build command configuration needed.
+
+Every time you push to `main`, Vercel auto-deploys.
 
 ---
 
-*Generated for the Ottoman Portfolio project. Last updated: March 2026.*
+### Option B — Netlify
+
+1. Push to GitHub.
+2. Netlify → **Add New Site → Import from Git**.
+3. Set **Build command**: `npm run build`
+4. Set **Publish directory**: `.next`
+5. Add environment variables in **Site Settings → Environment**.
+6. Deploy.
+
+---
+
+### Option C — VPS / Self-Hosted
+
+```bash
+# 1. Clone on the server
+git clone https://github.com/your-username/your-repo.git
+cd portfolio
+
+# 2. Install
+npm install
+
+# 3. Create .env.local with your credentials
+nano .env.local
+
+# 4. Build
+npm run build
+
+# 5. Start production server
+npm start
+# App runs on port 3000 by default
+
+# Optional: use PM2 to keep it alive
+npm install -g pm2
+pm2 start "npm start" --name ottoman-portfolio
+pm2 save
+```
+
+---
+
+### Option D — Docker
+
+Create a `Dockerfile` in the project root:
+
+```dockerfile
+FROM node:20-alpine AS base
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+ARG NEXT_PUBLIC_SUPABASE_URL
+ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
+ARG SUPABASE_SERVICE_ROLE_KEY
+RUN npm run build
+EXPOSE 3000
+CMD ["npm", "start"]
+```
+
+Build and run:
+```bash
+docker build \
+  --build-arg NEXT_PUBLIC_SUPABASE_URL=https://... \
+  --build-arg NEXT_PUBLIC_SUPABASE_ANON_KEY=... \
+  --build-arg SUPABASE_SERVICE_ROLE_KEY=... \
+  -t ottoman-portfolio .
+
+docker run -p 3000:3000 ottoman-portfolio
+```
+
+---
+
+## 13. Troubleshooting
+
+### ❌ Error: Could not find column 'xyz' in schema cache
+**Cause**: The column name in code doesn't match the actual database column.
+**Fix**: Open Supabase → Table Editor, check the exact column names.
+In `app/admin/actions.ts`, ensure every key in the save payload exactly matches a database column.
+
+---
+
+### ❌ Error: missing environment variable NEXT_PUBLIC_SUPABASE_URL
+**Cause**: `.env.local` file is missing or misnamed.
+**Fix**:
+```bash
+# Check the file exists
+ls .env.local   # Mac/Linux
+dir .env.local  # Windows
+```
+Ensure there are no typos in variable names and no spaces around the `=` sign.
+
+---
+
+### ❌ Error: new row violates row-level security policy
+**Cause**: You're trying to write data using the anon key, which is blocked by RLS.
+**Fix**: All write operations (save, delete, update) must go through Next.js **Server Actions** that use the `SUPABASE_SERVICE_ROLE_KEY`. Never perform admin writes from client-side components.
+
+---
+
+### ❌ Build fails with TypeScript errors
+**Fix**:
+```bash
+npm run lint
+npx tsc --noEmit
+```
+Review the errors listed, correct type mismatches, and re-run.
+
+---
+
+### ❌ Images not loading
+**Cause**: The image hostname is not whitelisted in `next.config.ts`.
+**Fix**: Add the hostname to the `remotePatterns` array in `next.config.ts`:
+```typescript
+{ protocol: 'https', hostname: 'your-image-host.com', pathname: '/**' }
+```
+
+---
+
+### ❌ Admin Panel shows blank page on mobile
+**Cause**: The mobile header may be obscuring the content.
+**Fix**: Ensure the main content area has `pt-24` padding on mobile to clear the fixed header.
+
+---
+
+### ❌ Seeds block on profile insert
+**Cause**: A profile row may already exist with the same UUID.
+**Fix**: The seeds use `ON CONFLICT (id) DO UPDATE`, so re-running is safe. If it still fails, delete the existing profile row first via Table Editor.
+
+---
+
+## 14. Final Verification Checklist
+
+Before going live, confirm every item below:
+
+```
+SETUP
+[ ] Node.js v18+ is installed
+[ ] npm install completed without errors
+[ ] .env.local is populated with real Supabase credentials
+
+DATABASE
+[ ] database-schema.sql was imported successfully (all 6 tables exist)
+[ ] database_seeds.sql was imported (profile, projects, experience, reviews visible)
+[ ] Supabase Storage bucket 'portfolio' created and set to Public
+
+DEVELOPMENT
+[ ] npm run dev starts without errors
+[ ] Visitor site loads at http://localhost:3000
+[ ] Projects section shows seed data
+[ ] Reviews section shows published reviews
+[ ] Contact form submits a message to Supabase
+
+ADMIN PANEL
+[ ] /admin/dashboard loads
+[ ] Can create, edit, delete a project
+[ ] Can create, edit, delete an experience entry
+[ ] Can publish/archive a review
+[ ] Can view and change message status
+[ ] About Me page saves profile data (including Site Title)
+[ ] Site Favicon can be uploaded and updated
+[ ] Settings page updates site taglines
+
+SEO & BRANDING
+[ ] Browser tab shows the custom Site Title
+[ ] Browser tab shows the custom Favicon
+[ ] /sitemap.xml is accessible and contains the base URL
+[ ] /robots.txt is accessible and disallows /admin/
+[ ] Page source includes JSON-LD Person schema
+[ ] Open Graph and Twitter meta tags are present in <head>
+
+PRODUCTION BUILD
+[ ] npm run build completes with zero errors
+[ ] All environment variables added to hosting platform
+[ ] Deployed URL loads the visitor site correctly
+[ ] Admin Panel works on the deployed URL
+```
+
+
+---
+
+## 15. SEO Configuration
+
+The portfolio is pre-optimized for search engines using modern Next.js 16 best practices.
+
+### Dynamic Metadata
+Located in `app/layout.tsx`. It automatically fetches your profile data to set:
+- **Title**: Your custom `site_title` from the database.
+- **Description**: Your primary tagline.
+- **Open Graph / Twitter**: Social sharing cards with your avatar and bio.
+- **Canonical URLs**: Automatically generated based on `NEXT_PUBLIC_SITE_URL`.
+
+### Search Engine Crawling
+- **Sitemap**: Generated dynamically at `/sitemap.xml`.
+- **Robots.txt**: Located at `/robots.txt`. It encourages indexing of the main site while protecting the `/admin/` area.
+
+### Structured Data (JSON-LD)
+The main landing page (`app/page.tsx`) injects a **Schema.org Person** object. This helps Google understand your professional identity, social profiles, and role.
+
+---
+
+## 16. Dynamic Branding (Title & Favicon)
+
+You can maintain your brand identity directly from the Admin Panel without touching code.
+
+### Changing the Browser Tab Title
+1. Navigate to **Admin Panel → About Me**.
+2. Locate the **Search & Branding** section.
+3. Update the **Browser Tab Title** field.
+4. Click **Save Changes**.
+
+### Updating the Site Favicon
+1. Navigate to **Admin Panel → About Me**.
+2. In the **Search & Branding** section, click **Change Icon**.
+3. Upload a square image (recommended: 32x32 or 64x64 PNG/ICO).
+4. The system automatically:
+   - Compresses the image for performance.
+   - Uploads it to Supabase Storage.
+   - Updates your site's metadata instantly.
+
+## 17. Case Study Markdown
+
+The portfolio supports **GitHub Flavored Markdown** for project case studies. This allows you to format your deep-dives with headers, lists, code blocks, and more.
+
+### How to use Markdown:
+1. Navigate to **Admin Panel → Projects**.
+2. Edit an existing project or create a new one.
+3. In the **Case Study (Markdown)** field, enter your content using standard markdown syntax:
+   ```markdown
+   # Project Overview
+   
+   A brief description of what was achieved.
+   
+   ## Core Features
+   - Feature 1
+   - Feature 2
+   
+   ### Technical Implementation
+   ```javascript
+   // Sample code block
+   const project = "Ottoman";
+   ```
+4. Click **Save Changes**.
+
+Instantly, the visitor-facing project popup will render this content with premium, polished styling.
+
+---
+
+*Generated for Ottoman Portfolio — March 2026*
+*Report issues in the project repository.*

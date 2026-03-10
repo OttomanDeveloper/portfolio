@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Home, User, Briefcase, Mail, Github, Twitter, Linkedin, Menu, X, Instagram, Youtube, MessageSquare } from 'lucide-react'
+import { Home, User, Briefcase, Mail, Github, Twitter, Linkedin, Menu, X, Instagram, Youtube, MessageSquare, Cpu } from 'lucide-react'
 import { ThemeToggle } from './ThemeToggle'
 import { cn } from '@/lib/utils'
 
@@ -16,6 +16,7 @@ export function FloatingNav({ dbProfile }: FloatingNavProps) {
   const navItems = [
     { name: 'Home', href: '#home', icon: <Home size={20} /> },
     { name: 'Projects', href: '#projects', icon: <Briefcase size={20} /> },
+    { name: 'Experience', href: '#experience', icon: <Cpu size={20} /> },
     { name: 'About', href: '#about', icon: <User size={20} /> },
     { name: 'Reviews', href: '#reviews', icon: <MessageSquare size={20} /> },
     { name: 'Contact', href: '#contact', icon: <Mail size={20} /> },
@@ -43,6 +44,7 @@ export function FloatingNav({ dbProfile }: FloatingNavProps) {
             <a
               key={item.name}
               href={item.href}
+              aria-label={`Scroll to ${item.name}`}
               className="p-3 rounded-2xl text-text-secondary hover:text-accent hover:bg-accent/5 transition-all relative group"
             >
               {item.icon}
@@ -60,6 +62,7 @@ export function FloatingNav({ dbProfile }: FloatingNavProps) {
                href={social.url}
                target="_blank"
                rel="noopener noreferrer"
+               aria-label="Social Link"
                className="p-3 rounded-2xl text-text-secondary hover:text-accent hover:bg-white/5 transition-all"
              >
                {social.icon}
@@ -83,16 +86,32 @@ export function FloatingNav({ dbProfile }: FloatingNavProps) {
               className="flex flex-col gap-2 p-2 rounded-3xl bg-surface/60 backdrop-blur-3xl border border-border shadow-2xl"
             >
               {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setIsExpanded(false)}
-                  className="p-4 rounded-2xl flex items-center gap-4 text-text-secondary hover:text-accent hover:bg-white/5"
-                >
-                  {item.icon}
-                  <span className="text-sm font-bold uppercase tracking-widest">{item.name}</span>
-                </a>
+                 <a
+                   key={item.name}
+                   href={item.href}
+                   aria-label={`Scroll to ${item.name}`}
+                   onClick={() => setIsExpanded(false)}
+                   className="p-4 rounded-2xl flex items-center gap-4 text-text-secondary hover:text-accent hover:bg-white/5"
+                 >
+                   {item.icon}
+                   <span className="text-sm font-bold uppercase tracking-widest">{item.name}</span>
+                 </a>
               ))}
+              <div className="h-px bg-border/10 my-2 mx-4" />
+              <div className="flex items-center justify-center gap-2 p-2">
+                {socials.map((social, i) => (
+                   <a
+                     key={i}
+                     href={social.url}
+                     target="_blank"
+                     rel="noopener noreferrer"
+                     aria-label="Social Link"
+                     className="p-3 rounded-2xl text-text-secondary hover:text-accent hover:bg-white/5 transition-all"
+                   >
+                     {social.icon}
+                   </a>
+                ))}
+              </div>
               <div className="h-px bg-border/10 my-2 mx-4" />
               <div className="flex justify-center p-2">
                  <ThemeToggle />

@@ -145,28 +145,43 @@ export function ProjectCard({
         </div>
 
         {/* Actions Row */}
-        <div className="mt-auto flex gap-4">
+        <div className="mt-auto flex gap-3">
             <Button 
                 onClick={(e) => {
                     e.preventDefault();
                     onViewCaseStudy();
                 }}
                 style={{ backgroundColor: vibrantColor }}
-                className="flex-[2] py-6 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-xl hover:brightness-110 active:scale-95 transition-all"
+                className="flex-1 py-6 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-xl hover:brightness-110 active:scale-95 transition-all"
             >
-                View Project
+                Case Study
             </Button>
             
-            {githubUrl && (
-              <a 
-                  href={githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center px-6 rounded-2xl bg-surface/50 dark:bg-white/10 border border-[var(--card-border)] text-text-primary hover:bg-surface dark:hover:bg-white/20 transition-all font-black text-[10px] uppercase tracking-widest"
-              >
-                  Source
-              </a>
-            )}
+            <div className="flex gap-2">
+                {liveUrl && (
+                  <a 
+                      href={liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="Live Preview"
+                      className="flex items-center justify-center w-12 rounded-2xl bg-accent/10 border border-accent/20 text-accent hover:bg-accent/20 transition-all"
+                  >
+                      <ExternalLink size={18} />
+                  </a>
+                )}
+
+                {githubUrl && (
+                  <a 
+                      href={githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="Source Code"
+                      className="flex items-center justify-center w-12 rounded-2xl bg-surface/50 dark:bg-white/10 border border-[var(--card-border)] text-text-primary hover:bg-surface dark:hover:bg-white/20 transition-all"
+                  >
+                      <Github size={18} />
+                  </a>
+                )}
+            </div>
         </div>
       </Card>
     </motion.div>
