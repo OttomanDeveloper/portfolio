@@ -226,7 +226,7 @@ export default function ProjectsAdmin() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className={`absolute inset-0 bg-black/80 ${!isMobile && 'backdrop-blur-sm'}`}
+                className={`absolute inset-0 bg-black/80 admin-modal-overlay ${!isMobile && 'backdrop-blur-sm'}`}
                 onClick={() => setIsEditing(false)}
               />
             <motion.div 
@@ -404,7 +404,7 @@ export default function ProjectsAdmin() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className={`absolute inset-0 bg-black/60 ${!isMobile && 'backdrop-blur-sm'}`}
+              className={`absolute inset-0 bg-black/60 admin-modal-overlay ${!isMobile && 'backdrop-blur-sm'}`}
               onClick={() => setShowDeleteConfirm(null)}
             />
             <motion.div 

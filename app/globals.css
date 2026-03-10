@@ -41,6 +41,9 @@
 }
 
 @layer base {
+  body:has(.admin-modal-overlay) .admin-header-mobile {
+    display: none !important;
+  }
   * {
     @apply border-[var(--border)];
   }

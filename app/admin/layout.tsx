@@ -37,7 +37,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <div className="flex min-h-screen bg-background text-text-primary">
       {/* Mobile Header */}
-      <header className={`fixed top-0 left-0 right-0 h-16 border-b border-border bg-surface/80 z-[60] flex items-center justify-between px-6 md:hidden ${!isMobile && 'backdrop-blur-xl'}`}>
+      <header className={`fixed top-0 left-0 right-0 h-16 border-b border-border bg-surface/80 z-[60] flex items-center justify-between px-6 md:hidden admin-header-mobile ${!isMobile && 'backdrop-blur-xl'}`}>
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center text-white font-black text-xs">A</div>
           <span className="font-black tracking-tighter text-lg">Command</span>

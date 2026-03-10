@@ -45,11 +45,11 @@ export function CaseStudyModal({ isOpen, onClose, project }: CaseStudyModalProps
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 30 }}
             transition={{ type: 'spring', damping: 30, stiffness: 400 }}
-            className="relative w-full max-w-5xl h-full md:h-auto max-h-[100vh] md:max-h-[90vh] overflow-hidden rounded-none md:rounded-3xl bg-surface border-0 md:border border-border shadow-2xl flex flex-col md:flex-row"
+            className="relative w-full max-w-5xl h-full md:h-auto max-h-[100vh] md:max-h-[90vh] overflow-y-auto md:overflow-hidden rounded-none md:rounded-3xl bg-surface border-0 md:border border-border shadow-2xl flex flex-col md:flex-row scrollbar-hide"
           >
             <button 
               onClick={onClose}
-              className="absolute top-4 right-4 z-50 p-2.5 rounded-full bg-background/80 md:bg-background/50 backdrop-blur-md hover:bg-surface transition-colors shadow-lg border border-border/20"
+              className="fixed md:absolute top-4 right-4 z-[70] p-2.5 rounded-full bg-background/80 md:bg-background/50 backdrop-blur-md hover:bg-surface transition-colors shadow-lg border border-border/20"
             >
               <X size={18} />
             </button>
@@ -111,7 +111,7 @@ export function CaseStudyModal({ isOpen, onClose, project }: CaseStudyModalProps
             </div>
 
             {/* Right Column: Details */}
-            <div className="w-full md:w-3/5 p-8 sm:p-10 md:p-14 overflow-y-auto bg-surface text-text-primary scrollbar-hide">
+            <div className="w-full md:w-3/5 p-8 sm:p-10 md:p-14 md:overflow-y-auto bg-surface text-text-primary md:scrollbar-hide">
               <div className="max-w-xl mx-auto md:mx-0 space-y-8 md:space-y-10">
                 <div className="space-y-4">
                   <div className="space-y-1">

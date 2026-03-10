@@ -25,7 +25,7 @@ export function Hero({ dbProfile }: HeroProps) {
     <section id="home" className="relative min-h-screen flex items-center justify-center py-24 overflow-hidden">
       {/* Premium Background Elements */}
       <div className="absolute inset-0 z-0">
-        <div className={`absolute top-0 left-1/4 w-[500px] h-[500px] bg-accent/20 rounded-full blur-[120px] pointer-events-none ${!isMobile && 'animate-pulse'}`} />
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-accent/20 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-accent-secondary/10 rounded-full blur-[120px] pointer-events-none" />
       </div>
 
@@ -114,8 +114,8 @@ export function Hero({ dbProfile }: HeroProps) {
             <div className="relative w-72 h-72 sm:w-96 sm:h-96 lg:w-[32rem] lg:h-[32rem] mx-auto">
               {/* Complex decorative layers */}
               <div className="absolute inset-0 bg-accent/30 rounded-[3rem] rotate-6 group-hover:rotate-0 transition-all duration-1000 blur-3xl opacity-50" />
-              <div className={`absolute -inset-8 border border-accent/5 rounded-4xl ${!isMobile && 'animate-[spin_30s_linear_infinite]'}`} />
-              <div className={`absolute -inset-16 border border-accent/5 rounded-5xl ${!isMobile && 'animate-[spin_45s_linear_infinite_reverse]'}`} />
+              <div className="absolute -inset-8 border border-accent/5 rounded-4xl" />
+              <div className="absolute -inset-16 border border-accent/5 rounded-5xl" />
               
               <div className="relative w-full h-full rounded-[3rem] overflow-hidden bg-surface-secondary/30 backdrop-blur-md border border-border group-hover:border-accent/40 transition-all duration-700 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] dark:shadow-[0_32px_64px_-16px_rgba(0,0,0,0.7)] p-2">
                 <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden">
@@ -132,26 +132,18 @@ export function Hero({ dbProfile }: HeroProps) {
               </div>
 
               {/* Floaties */}
-              <motion.div 
-                animate={{ y: [0, -20, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -top-6 -right-6 p-4 rounded-3xl bg-surface/80 backdrop-blur-xl border border-border shadow-2xl z-20"
-              >
+              <div className="absolute -top-6 -right-6 p-4 rounded-3xl bg-surface/80 backdrop-blur-xl border border-border shadow-2xl z-20">
                 <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center text-accent">
                     <Zap size={16} />
                 </div>
-              </motion.div>
+              </div>
               
-              <motion.div 
-                animate={{ y: [0, 20, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className="absolute -bottom-10 -left-10 p-5 rounded-3xl bg-surface/80 backdrop-blur-xl border border-border shadow-2xl z-20"
-              >
+              <div className="absolute -bottom-10 -left-10 p-5 rounded-3xl bg-surface/80 backdrop-blur-xl border border-border shadow-2xl z-20">
                 <div className="flex flex-col gap-1">
                     <span className="text-[8px] font-black text-text-secondary uppercase tracking-widest">Global Reach</span>
                     <span className="text-sm font-black text-text-primary">100% Remote</span>
                 </div>
-              </motion.div>
+              </div>
             </div>
           </motion.div>
         </div>
