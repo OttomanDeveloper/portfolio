@@ -261,6 +261,55 @@ export async function updateReview(id: string, updates: Partial<Review>) {
   return { data, error }
 }
 
+export async function adminUpdateReview(id: string, updates: Partial<Review>, photoFile?: File) {
+  const supabase = createClient()
+  if (!supabase) return { error: 'Database connection failed' }
+
+  let photoUrl = updates.customer_photo
+
+  // 1. Handle new photo upload if provided
+  if (photoFile) {
+    // Optional: Clean up old photo if it exists
+    if (updates.customer_photo) {
+      const oldFileName = updates.customer_photo.split('/').pop()
+      if (oldFileName) {
+        await supabase.storage.from('customer-photos').remove([oldFileName])
+      }
+    }
+
+    const fileExt = photoFile.name.split('.').pop()
+    const fileName = `${Math.random()}.${fileExt}`
+    const filePath = `${fileName}`
+
+    const { error: uploadError } = await supabase.storage
+      .from('customer-photos')
+      .upload(filePath, photoFile)
+
+    if (uploadError) {
+      console.error('Photo upload error during update:', uploadError)
+    } else {
+      const { data: { publicUrl } } = supabase.storage
+        .from('customer-photos')
+        .getPublicUrl(filePath)
+      photoUrl = publicUrl
+    }
+  }
+
+  const { data, error } = await supabase
+    .from('reviews')
+    .update({
+      customer_name: updates.customer_name,
+      customer_photo: photoUrl,
+      review_text: updates.review_text,
+      status: updates.status,
+      is_verified: updates.is_verified
+    })
+    .eq('id', id)
+    .select()
+
+  return { data, error }
+}
+
 export async function deleteReview(id: string, photoUrl?: string) {
   const supabase = createClient()
   if (!supabase) return { error: 'Database connection failed' }

@@ -9,7 +9,7 @@ import {
   Trash
 } from 'lucide-react'
 import Image from 'next/image'
-import { getAllReviewsAdmin, updateReview, deleteReview, adminCreateReview } from '@/lib/api'
+import { getAllReviewsAdmin, updateReview, deleteReview, adminCreateReview, adminUpdateReview } from '@/lib/api'
 import { Review } from '@/lib/types'
 import { toast } from 'sonner'
 import { useIsMobile } from '@/hooks/use-mobile'
@@ -82,15 +82,18 @@ export default function ReviewsAdmin() {
     }
     setIsSaving(true)
     try {
-      const { error } = await updateReview(editingReview.id, {
-        customer_name: editingReview.customer_name,
-        review_text: editingReview.review_text,
-        is_verified: editingReview.is_verified
-      })
+      const { error } = await adminUpdateReview(
+        editingReview.id, 
+        editingReview, 
+        photoFile || undefined
+      )
       if (error) throw error
       toast.success('Review updated')
       setReviews(reviews.map(r => r.id === editingReview.id ? editingReview : r))
       setEditingReview(null)
+      setPhotoFile(null)
+      setPhotoPreview(null)
+      fetchReviews() // Refresh to get current URLs after possible upload cleanup
     } catch (error) {
       toast.error('Failed to save changes')
     } finally {
@@ -432,6 +435,27 @@ export default function ReviewsAdmin() {
                     rows={4}
                     className="w-full p-4 rounded-xl bg-surface-secondary border border-border text-text-primary font-bold text-sm outline-none focus:border-accent resize-none"
                   />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-text-secondary uppercase tracking-widest">Customer Photo</label>
+                  <div className="flex items-center gap-4">
+                    <label className="flex-1 cursor-pointer group">
+                      <div className="flex items-center justify-center gap-3 p-4 rounded-xl border-2 border-dashed border-border group-hover:border-accent/40 bg-surface-secondary/50 transition-all">
+                        <User size={18} className="text-text-secondary group-hover:text-accent" />
+                        <span className="text-xs font-bold text-text-secondary group-hover:text-text-primary">Change Avatar</span>
+                      </div>
+                      <input type="file" onChange={handlePhotoChange} className="hidden" accept="image/*" />
+                    </label>
+                    <div className="w-14 h-14 rounded-xl border border-border overflow-hidden shrink-0 relative">
+                      <Image 
+                        src={photoPreview || editingReview.customer_photo || '/placeholder-avatar.png'} 
+                        alt="" 
+                        fill 
+                        className="object-cover" 
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-3 p-4 rounded-xl bg-surface-secondary/50 border border-border">
