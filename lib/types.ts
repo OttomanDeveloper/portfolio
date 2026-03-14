@@ -60,8 +60,7 @@ export interface Profile {
   linkedin_url?: string
   experience_start_date: string
   experienceStartDate?: string
-  manual_years_experience: number
-  manualYearsExperience?: number
+  manual_years_experience: number | null
   tech_stacks: Record<string, string[]>
   techStacks?: Record<string, string[]>
   bio?: string
