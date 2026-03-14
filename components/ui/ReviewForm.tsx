@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { X, User, MessageSquare, Camera, Check, Loader2, ShieldCheck, Rocket } from 'lucide-react'
 import Image from 'next/image'
 import { submitReview } from '@/lib/api'
+import { compressImage } from '@/lib/supabase/storage'
 import { toast } from 'sonner'
 
 interface ReviewFormProps {
@@ -21,17 +22,33 @@ export function ReviewForm({ isOpen, onClose }: ReviewFormProps) {
   const [submitted, setSubmitted] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
-      if (file.size > 1024 * 1024) {
-        toast.error('File size too large (max 1MB)')
+      if (file.size > 5 * 1024 * 1024) { // Increased limit since we compress anyway
+        toast.error('File size too large (max 5MB)')
         return
       }
-      setPhoto(file)
-      const reader = new FileReader()
-      reader.onloadend = () => setPhotoPreview(reader.result as string)
-      reader.readAsDataURL(file)
+      
+      try {
+        // Compress for preview and upload
+        const compressedBlob = await compressImage(file, 512, 0.8)
+        const compressedFile = new File([compressedBlob], file.name.replace(/\.[^.]+$/, '.webp'), {
+          type: 'image/webp'
+        })
+        
+        setPhoto(compressedFile)
+        const reader = new FileReader()
+        reader.onloadend = () => setPhotoPreview(reader.result as string)
+        reader.readAsDataURL(compressedFile)
+      } catch (err) {
+        console.error('Compression failed:', err)
+        // Fallback to original
+        setPhoto(file)
+        const reader = new FileReader()
+        reader.onloadend = () => setPhotoPreview(reader.result as string)
+        reader.readAsDataURL(file)
+      }
     }
   }
 
@@ -132,7 +149,7 @@ export function ReviewForm({ isOpen, onClose }: ReviewFormProps) {
                     </div>
                     <div>
                       <h4 className="text-sm font-bold text-text-primary">Your Photo</h4>
-                      <p className="text-[10px] text-text-secondary uppercase font-bold tracking-wider mt-1 opacity-60">Optional • Max 1MB</p>
+                      <p className="text-[10px] text-text-secondary uppercase font-bold tracking-wider mt-1 opacity-60">Auto-Optimized • High Quality</p>
                     </div>
                   </div>
 

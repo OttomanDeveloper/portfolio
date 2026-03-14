@@ -2,7 +2,8 @@ import { createClient } from './client'
 
 export const BUCKETS = {
   AVATARS: 'avatars',
-  RESUMES: 'resumes'
+  RESUMES: 'resumes',
+  CUSTOMER_PHOTOS: 'customer-photos'
 }
 
 /**
@@ -67,8 +68,9 @@ export async function uploadAsset(bucket: string, file: File, path: string) {
 
   let uploadFile: File | Blob = file
   const isFavicon = path.toLowerCase().includes('favicon')
+  const shouldCompress = (bucket === BUCKETS.AVATARS || bucket === BUCKETS.CUSTOMER_PHOTOS) && file.type.startsWith('image/')
 
-  if (bucket === BUCKETS.AVATARS && file.type.startsWith('image/')) {
+  if (shouldCompress) {
     try {
       if (isFavicon) {
         // Favicon specific: Resize to 64x64 and convert to PNG
@@ -76,7 +78,7 @@ export async function uploadAsset(bucket: string, file: File, path: string) {
         path = path.replace(/\.[^.]+$/, '.png')
         uploadFile = processed
       } else {
-        // Standard Avatar: Compress to WebP
+        // Standard Avatar / Customer Photo: Compress to WebP
         const compressed = await compressImage(file, 512, 0.85)
         path = path.replace(/\.[^.]+$/, '.webp')
         uploadFile = compressed
@@ -91,7 +93,7 @@ export async function uploadAsset(bucket: string, file: File, path: string) {
     .upload(path, uploadFile, {
       upsert: true,
       cacheControl: '31536000', // 1 year cache for assets
-      contentType: isFavicon ? 'image/png' : (bucket === BUCKETS.AVATARS ? 'image/webp' : undefined)
+      contentType: isFavicon ? 'image/png' : (shouldCompress ? 'image/webp' : undefined)
     })
 
   if (error) throw error

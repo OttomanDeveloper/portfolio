@@ -10,6 +10,7 @@ import {
 } from 'lucide-react'
 import Image from 'next/image'
 import { getAllReviewsAdmin, updateReview, deleteReview, adminCreateReview, adminUpdateReview } from '@/lib/api'
+import { compressImage } from '@/lib/supabase/storage'
 import { Review } from '@/lib/types'
 import { toast } from 'sonner'
 import { useIsMobile } from '@/hooks/use-mobile'
@@ -123,13 +124,25 @@ export default function ReviewsAdmin() {
     }
   }
 
-  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
-      setPhotoFile(file)
-      const reader = new FileReader()
-      reader.onloadend = () => setPhotoPreview(reader.result as string)
-      reader.readAsDataURL(file)
+      try {
+        const compressedBlob = await compressImage(file, 512, 0.8)
+        const compressedFile = new File([compressedBlob], file.name.replace(/\.[^.]+$/, '.webp'), {
+          type: 'image/webp'
+        })
+        setPhotoFile(compressedFile)
+        const reader = new FileReader()
+        reader.onloadend = () => setPhotoPreview(reader.result as string)
+        reader.readAsDataURL(compressedFile)
+      } catch (err) {
+        console.error('Compression failed:', err)
+        setPhotoFile(file)
+        const reader = new FileReader()
+        reader.onloadend = () => setPhotoPreview(reader.result as string)
+        reader.readAsDataURL(file)
+      }
     }
   }
 

@@ -1,4 +1,5 @@
 import { createClient } from './supabase/client'
+import { uploadAsset, deleteAsset, BUCKETS } from './supabase/storage'
 import { curatedProjects } from '../data/projects'
 import { experiences } from '../data/experience'
 import { Project, Experience, Profile, Review } from './types'
@@ -203,21 +204,11 @@ export async function submitReview(review: { customerName: string; reviewText: s
   let photoUrl = null
 
   if (photoFile) {
-    const fileExt = photoFile.name.split('.').pop()
-    const fileName = `${Math.random()}.${fileExt}`
-    const filePath = `${fileName}`
-
-    const { error: uploadError } = await supabase.storage
-      .from('customer-photos')
-      .upload(filePath, photoFile)
-
-    if (uploadError) {
-      console.error('Photo upload error:', uploadError)
-    } else {
-      const { data: { publicUrl } } = supabase.storage
-        .from('customer-photos')
-        .getPublicUrl(filePath)
-      photoUrl = publicUrl
+    const fileName = `review-${Date.now()}`
+    try {
+      photoUrl = await uploadAsset(BUCKETS.CUSTOMER_PHOTOS, photoFile, fileName)
+    } catch (uploadError) {
+      console.error('Photo upload error during submitReview:', uploadError)
     }
   }
 
@@ -271,27 +262,14 @@ export async function adminUpdateReview(id: string, updates: Partial<Review>, ph
   if (photoFile) {
     // Optional: Clean up old photo if it exists
     if (updates.customer_photo) {
-      const oldFileName = updates.customer_photo.split('/').pop()
-      if (oldFileName) {
-        await supabase.storage.from('customer-photos').remove([oldFileName])
-      }
+      await deleteAsset(BUCKETS.CUSTOMER_PHOTOS, updates.customer_photo)
     }
 
-    const fileExt = photoFile.name.split('.').pop()
-    const fileName = `${Math.random()}.${fileExt}`
-    const filePath = `${fileName}`
-
-    const { error: uploadError } = await supabase.storage
-      .from('customer-photos')
-      .upload(filePath, photoFile)
-
-    if (uploadError) {
-      console.error('Photo upload error during update:', uploadError)
-    } else {
-      const { data: { publicUrl } } = supabase.storage
-        .from('customer-photos')
-        .getPublicUrl(filePath)
-      photoUrl = publicUrl
+    const fileName = `review-update-${Date.now()}`
+    try {
+      photoUrl = await uploadAsset(BUCKETS.CUSTOMER_PHOTOS, photoFile, fileName)
+    } catch (uploadError) {
+      console.error('Photo upload error during adminUpdateReview:', uploadError)
     }
   }
 
@@ -316,10 +294,7 @@ export async function deleteReview(id: string, photoUrl?: string) {
 
   // 1. Delete from storage if photo exists
   if (photoUrl) {
-    const fileName = photoUrl.split('/').pop()
-    if (fileName) {
-      await supabase.storage.from('customer-photos').remove([fileName])
-    }
+    await deleteAsset(BUCKETS.CUSTOMER_PHOTOS, photoUrl)
   }
 
   // 2. Delete from database
@@ -335,21 +310,11 @@ export async function adminCreateReview(review: Partial<Review> & { customer_nam
   let photoUrl = review.customer_photo || null
 
   if (photoFile) {
-    const fileExt = photoFile.name.split('.').pop()
-    const fileName = `${Math.random()}.${fileExt}`
-    const filePath = `${fileName}`
-
-    const { error: uploadError } = await supabase.storage
-      .from('customer-photos')
-      .upload(filePath, photoFile)
-
-    if (uploadError) {
-      console.error('Photo upload error:', uploadError)
-    } else {
-      const { data: { publicUrl } } = supabase.storage
-        .from('customer-photos')
-        .getPublicUrl(filePath)
-      photoUrl = publicUrl
+    const fileName = `admin-review-${Date.now()}`
+    try {
+      photoUrl = await uploadAsset(BUCKETS.CUSTOMER_PHOTOS, photoFile, fileName)
+    } catch (uploadError) {
+      console.error('Photo upload error during adminCreateReview:', uploadError)
     }
   }
 
