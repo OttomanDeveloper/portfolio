@@ -61,6 +61,7 @@ export interface Profile {
   experience_start_date: string
   experienceStartDate?: string
   manual_years_experience: number | null
+  manualYearsExperience?: number | null
   tech_stacks: Record<string, string[]>
   techStacks?: Record<string, string[]>
   bio?: string
