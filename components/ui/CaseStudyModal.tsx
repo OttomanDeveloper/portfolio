@@ -21,6 +21,7 @@ interface CaseStudyModalProps {
     vibrantColor: string
     fullDescription?: string
     features?: { icon: React.ReactNode; text: string }[]
+    stats?: { label: string; value: string }[]
     bullets?: string[]
   } | null
 }
@@ -94,18 +95,16 @@ export function CaseStudyModal({ isOpen, onClose, project }: CaseStudyModalProps
 
                   {/* Stats Row */}
                   <div className="pt-8 pb-4 flex justify-between px-4 border-t border-border/10 mt-auto">
-                     <div className="text-center">
-                        <span className="block text-[13px] font-bold text-text-primary">1M+</span>
-                        <span className="block text-[9px] text-text-secondary uppercase tracking-widest opacity-60">Downloads</span>
-                     </div>
-                     <div className="text-center">
-                        <span className="block text-[13px] font-bold text-text-primary">4.8★</span>
-                        <span className="block text-[9px] text-text-secondary uppercase tracking-widest opacity-60">Rating</span>
-                     </div>
-                     <div className="text-center">
-                        <span className="block text-[13px] font-bold text-text-primary">2.4K</span>
-                        <span className="block text-[9px] text-text-secondary uppercase tracking-widest opacity-60">Reviews</span>
-                     </div>
+                     {(project.stats && project.stats.length > 0 ? project.stats : [
+                        { label: 'Downloads', value: '1M+' },
+                        { label: 'Rating', value: '4.8★' },
+                        { label: 'Reviews', value: '2.4K' }
+                     ]).slice(0, 3).map((stat, i) => (
+                        <div key={i} className="text-center">
+                           <span className="block text-[13px] font-bold text-text-primary">{stat.value}</span>
+                           <span className="block text-[9px] text-text-secondary uppercase tracking-widest opacity-60">{stat.label}</span>
+                        </div>
+                     ))}
                   </div>
                 </div>
               </IPhoneMockup>
@@ -157,10 +156,6 @@ export function CaseStudyModal({ isOpen, onClose, project }: CaseStudyModalProps
                                {bullet}
                              </li>
                            ))}
-                           <li className="text-text-secondary/90 flex gap-4 items-center font-medium">
-                               <div className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" style={{ backgroundColor: project.vibrantColor }} />
-                               Available in 120+ countries
-                           </li>
                         </ul>
                     </div>
                   </div>

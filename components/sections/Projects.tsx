@@ -38,6 +38,7 @@ interface DisplayProject {
   description: string
   fullDescription?: string
   bullets?: string[]
+  stats?: { label: string; value: string }[]
   vibrantColor: string
   image_url?: string
   imageUrl?: string
@@ -65,6 +66,7 @@ export function Projects({ repos, dbProjects = [], dbProfile }: ProjectsProps) {
     name: p.name || 'Untitled Project',
     description: p.description || '',
     githubUrl: p.githubUrl || '',
+    stats: p.stats || [],
     languages: p.languages || [],
     platforms: p.platforms || [],
     vibrantColor: p.vibrantColor || VIBRANT_COLORS[index % VIBRANT_COLORS.length],
