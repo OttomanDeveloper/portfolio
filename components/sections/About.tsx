@@ -26,7 +26,7 @@ export function About({ dbProfile }: AboutProps) {
   const isMobile = useIsMobile()
   const yearsExp = calculateExperienceYears(
     dbProfile?.experience_start_date || dbProfile?.experienceStartDate || '', 
-    dbProfile?.manual_years_experience || dbProfile?.manualYearsExperience || 0
+    dbProfile?.manual_years_experience ?? dbProfile?.manualYearsExperience ?? null
   )
   
   const stats = [
