@@ -82,7 +82,7 @@ export function CaseStudyModal({ isOpen, onClose, project }: CaseStudyModalProps
                   </div>
 
                   <div className="flex-1 space-y-2.5 px-2">
-                    {project.bullets?.map((bullet, i) => (
+                    {project.bullets?.slice(0, 3).map((bullet, i) => (
                       <div key={i} className="py-2.5 px-5 rounded-full border border-border/80 bg-surface/50 text-[11px] font-medium leading-none flex items-center gap-3 transition-all cursor-default shadow-sm hover:border-accent/40">
                          <div 
                           className="w-1.5 h-1.5 rounded-full shadow-[0_0_8px_rgba(0,0,0,0.1)]" 
@@ -96,9 +96,9 @@ export function CaseStudyModal({ isOpen, onClose, project }: CaseStudyModalProps
                   {/* Stats Row */}
                   <div className="pt-8 pb-4 flex justify-between px-4 border-t border-border/10 mt-auto">
                      {(project.stats && project.stats.length > 0 ? project.stats : [
-                        { label: 'Downloads', value: '1M+' },
-                        { label: 'Rating', value: '4.8★' },
-                        { label: 'Reviews', value: '2.4K' }
+                        { label: 'Status', value: 'Active' },
+                        { label: 'Rating', value: '5.0★' },
+                        { label: 'Type', value: 'Public' }
                      ]).slice(0, 3).map((stat, i) => (
                         <div key={i} className="text-center">
                            <span className="block text-[13px] font-bold text-text-primary">{stat.value}</span>
@@ -142,7 +142,7 @@ export function CaseStudyModal({ isOpen, onClose, project }: CaseStudyModalProps
 
                     <div className="flex flex-wrap gap-3">
                         {project.platforms.map(p => (
-                             <span key={p} className="px-4 py-1.5 rounded-full border border-border bg-surface text-[10px] font-bold uppercase tracking-widest text-text-secondary/80">
+                             <span key={p} className="px-4 py-1.5 rounded-full border border-accent/20 bg-accent/5 text-[10px] font-bold uppercase tracking-widest text-accent">
                             {p}
                             </span>
                         ))}

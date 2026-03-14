@@ -32,7 +32,8 @@ export async function getProjects() {
     liveUrl: p.live_url,
     languages: p.languages || [],
     platforms: p.platforms || [],
-    bullets: []
+    bullets: p.bullets || [],
+    stats: p.stats || []
   }))
 }
 

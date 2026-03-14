@@ -162,24 +162,34 @@ export function About({ dbProfile }: AboutProps) {
           </div>
 
           {/* Philosophy Statement */}
-          <div className="lg:col-span-12 mt-10 p-0.5 md:p-1 bg-gradient-to-r from-accent/20 via-accent-secondary/20 to-accent/20 rounded-[1.5rem] md:rounded-[2.5rem]">
-             <div className="rounded-[1.4rem] md:rounded-[2.4rem] bg-background dark:bg-surface p-8 md:p-12 text-center space-y-6 md:space-y-8 relative overflow-hidden">
-                {!isMobile && <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-accent/5 blur-[100px] rounded-full" />}
-                <h4 className="text-xl sm:text-3xl md:text-5xl font-black text-text-primary tracking-tighter max-w-3xl mx-auto leading-tight sm:leading-none relative z-10">
-                   {dbProfile?.philosophy || ""}
-                </h4>
-                <div className="flex flex-wrap justify-center gap-4 relative z-10">
-                   <div className="flex items-center gap-2 text-xs font-bold text-text-secondary/60 uppercase tracking-widest">
-                      <CheckCircle2 size={14} className="text-accent" />
-                      Scaleable Architecture
+          <div className="lg:col-span-12 mt-16 md:mt-24">
+             <div className="relative p-10 md:p-16 rounded-[2.5rem] bg-surface dark:bg-surface/10 border border-border/40 text-center space-y-8 overflow-hidden">
+                {/* Subtle Background Glow - Desktop Only */}
+                {!isMobile && <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-accent/20 to-transparent" />}
+                
+                <div className="relative z-10 max-w-4xl mx-auto">
+                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/5 border border-accent/10 mb-8">
+                      <Zap size={14} className="text-accent" />
+                      <span className="text-[10px] font-black uppercase tracking-[0.3em] text-accent">Strategic Vision</span>
                    </div>
-                   <div className="flex items-center gap-2 text-xs font-bold text-text-secondary/60 uppercase tracking-widest">
+
+                   <h4 className="text-xl sm:text-2xl md:text-3xl font-bold text-text-primary tracking-tight leading-relaxed">
+                      {dbProfile?.philosophy || "Engineering digital products with a focus on performance, scalability, and user-centric architecture."}
+                   </h4>
+                </div>
+
+                <div className="flex flex-wrap justify-center gap-6 relative z-10 pt-4">
+                   <div className="flex items-center gap-2.5 text-[10px] md:text-xs font-bold text-text-secondary/60 uppercase tracking-[0.2em]">
+                      <CheckCircle2 size={14} className="text-accent" />
+                      Scalable Architecture
+                   </div>
+                   <div className="flex items-center gap-2.5 text-[10px] md:text-xs font-bold text-text-secondary/60 uppercase tracking-[0.2em]">
                       <CheckCircle2 size={14} className="text-accent" />
                       Pixel Perfection
                    </div>
-                   <div className="flex items-center gap-2 text-xs font-bold text-text-secondary/60 uppercase tracking-widest">
+                   <div className="flex items-center gap-2.5 text-[10px] md:text-xs font-bold text-text-secondary/60 uppercase tracking-[0.2em]">
                       <CheckCircle2 size={14} className="text-accent" />
-                      Client Satisfaction
+                      Product Strategy
                    </div>
                 </div>
              </div>

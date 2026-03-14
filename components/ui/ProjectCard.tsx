@@ -72,26 +72,53 @@ export function ProjectCard({
       whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true }}
       className="group relative h-full"
+      style={{
+        rotateX: isMobile ? 0 : rotateX,
+        rotateY: isMobile ? 0 : rotateY,
+        transformStyle: 'preserve-3d',
+        willChange: isMobile ? 'auto' : 'transform'
+      }}
     >
-      <Card className={`h-full overflow-hidden border-[var(--card-border)] bg-[var(--card-bg)] transition-all duration-500 hover:border-accent/30 p-6 sm:p-8 flex flex-col relative ${!isMobile ? 'backdrop-blur-[40px] backdrop-saturate-[180%] shadow-[var(--card-shadow)]' : 'shadow-sm'}`}>
+      <Card 
+        className={`h-full overflow-hidden border-[var(--card-border)] bg-[var(--card-bg)] transition-all duration-500 p-6 sm:p-8 flex flex-col relative ${!isMobile ? 'backdrop-blur-[40px] backdrop-saturate-[180%] shadow-[var(--card-shadow)]' : 'shadow-sm'}`}
+        onMouseEnter={(e) => {
+          if (!isMobile) {
+            e.currentTarget.style.borderColor = `${vibrantColor}40`;
+            e.currentTarget.style.boxShadow = `0 20px 40px -15px ${vibrantColor}20`;
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (!isMobile) {
+            e.currentTarget.style.borderColor = '';
+            e.currentTarget.style.boxShadow = '';
+          }
+        }}
+      >
         
-        {/* Glass Edge Highlight (Simulating iOS depth) */}
+        {/* Glass Edge Highlight */}
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none opacity-50 dark:opacity-20" />
-        <div className="absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-white/10 to-transparent pointer-events-none opacity-50 dark:opacity-10" />
+
+        {/* Inner Glow Overlay - Disabled on mobile for performance */}
+        {!isMobile && (
+            <div 
+                className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none"
+                style={{ 
+                    background: `radial-gradient(circle at center, ${vibrantColor}, transparent 70%)` 
+                }}
+            />
+        )}
 
         {/* Subtle Glow Background */}
         <div 
-            className="absolute -top-24 -right-24 w-64 h-64 rounded-full blur-[120px] opacity-[0.1] pointer-events-none group-hover:opacity-[0.2] transition-opacity duration-700"
+            className="absolute -top-24 -right-24 w-64 h-64 rounded-full blur-[120px] opacity-[0.05] pointer-events-none group-hover:opacity-[0.15] transition-opacity duration-700"
             style={{ backgroundColor: vibrantColor }}
         />
 
-        {/* Header: Icon + Title */}
-        <div className="flex items-start gap-5 mb-6">
+        {/* Header: Icon + Title + Platforms */}
+        <div className="flex items-center gap-5 mb-8">
             <div 
-                className="w-16 h-16 shrink-0 rounded-[1.4rem] bg-surface flex items-center justify-center text-text-primary shadow-lg dark:shadow-2xl relative z-10 overflow-hidden group/icon"
-                style={{ 
-                    border: `1.5px solid ${vibrantColor}30`,
-                }}
+                className="w-14 h-14 shrink-0 rounded-2xl bg-surface flex items-center justify-center text-text-primary shadow-lg relative z-10 overflow-hidden group/icon"
+                style={{ border: `1px solid ${vibrantColor}30` }}
             >
                 <div 
                     className="absolute inset-0 opacity-0 group-hover/icon:opacity-20 transition-opacity duration-500"
@@ -102,45 +129,46 @@ export function ProjectCard({
                 </div>
             </div>
 
-            <div className="flex-1 pt-1.5">
-                <h3 className="text-xl font-extrabold text-text-primary tracking-tight leading-none mb-2">{name}</h3>
-                <p className="text-sm font-medium text-text-secondary line-clamp-1 opacity-80">{description}</p>
+            <div className="flex-1 min-w-0">
+                <h3 className="text-xl font-black text-text-primary tracking-tight leading-none mb-3 truncate">{name}</h3>
+                <div className="flex flex-wrap gap-2">
+                    {platforms.map((platform) => (
+                        <span key={platform} className="px-2 py-0.5 rounded-md border border-accent/30 text-[9px] font-black text-accent uppercase tracking-widest flex items-center gap-1.5 opacity-90 transition-colors hover:bg-accent/5">
+                            {platform.toLowerCase().includes('android') && <Smartphone size={10} />}
+                            {platform.toLowerCase().includes('ios') && <Smartphone size={10} />}
+                            {platform.toLowerCase().includes('web') && <Globe size={10} />}
+                            {platform}
+                        </span>
+                    ))}
+                </div>
             </div>
         </div>
 
-        {/* Tech Stack Tags */}
-        <div className="flex flex-wrap gap-x-4 gap-y-1.5 mb-6">
-            {languages.map((lang) => (
-                <span key={lang} className="text-[11px] font-bold text-text-secondary uppercase tracking-widest">
-                    {lang}
-                </span>
-            ))}
+        {/* Info Area: Description + Stack */}
+        <div className="flex-1 flex flex-col mb-8">
+            <p className="text-sm font-medium text-text-secondary leading-relaxed opacity-90 mb-6">{description}</p>
+            
+            <div className="mt-auto flex flex-wrap gap-2">
+                {languages.map((lang) => (
+                    <span key={lang} className="px-2.5 py-1 rounded-lg border border-dashed border-text-secondary/20 text-[10px] font-bold text-text-secondary/60 uppercase tracking-[0.1em] hover:border-text-secondary/40 transition-colors">
+                        {lang}
+                    </span>
+                ))}
+            </div>
         </div>
 
-        {/* Platform Pills */}
-        <div className="flex flex-wrap gap-2.5 mb-8">
-            {platforms.map((platform) => (
-                <span 
-                    key={platform} 
-                    className="px-3.5 py-1.5 rounded-full text-[10px] font-black bg-surface/50 dark:bg-white/5 border border-[var(--card-border)] text-text-primary uppercase tracking-[0.1em] shadow-sm backdrop-blur-md"
-                >
-                    {platform}
-                </span>
-            ))}
-        </div>
-
-        {/* Stats Grid - Premium Contrast Card */}
+        {/* Stats Grid - Limited to 3 */}
         <div className="grid grid-cols-3 gap-3 mb-8">
-            {(stats.length > 0 ? stats : [
-                { label: 'Price', value: 'Free' },
+            {(stats && stats.length > 0 ? stats : [
+                { label: 'Status', value: 'Active' },
                 { label: 'Rating', value: '5.0★' },
-                { label: 'Type', value: 'OSS' }
-            ]).map((stat, i) => (
-                <div key={i} className="flex flex-col items-center justify-center p-3.5 rounded-2xl bg-surface/50 dark:bg-white/5 border border-[var(--card-border)] text-center transition-all hover:bg-surface dark:hover:bg-white/10">
-                    <span className="text-sm font-black text-text-primary mb-1 tracking-tight" style={{ color: i === 0 ? vibrantColor : undefined }}>
+                { label: 'Type', value: 'Public' }
+            ]).slice(0, 3).map((stat, i) => (
+                <div key={i} className="flex flex-col items-center justify-center p-3 rounded-xl bg-surface/40 dark:bg-white/[0.02] border border-border/40 text-center transition-all hover:bg-surface dark:hover:bg-white/[0.05] group/stat hover:scale-[1.02] backdrop-blur-sm">
+                    <span className="text-[12px] font-black text-text-primary mb-0.5 tracking-tight" style={{ color: i === 0 ? vibrantColor : undefined }}>
                         {stat.value}
                     </span>
-                    <span className="text-[9px] font-black text-text-secondary/60 uppercase tracking-widest leading-none">
+                    <span className="text-[8px] font-black text-text-secondary/40 uppercase tracking-[0.1em] leading-none">
                         {stat.label}
                     </span>
                 </div>

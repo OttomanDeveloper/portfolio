@@ -38,7 +38,7 @@ export function Hero({ dbProfile }: HeroProps) {
             variants={staggerContainer}
             className="flex-1 text-center lg:text-left space-y-10"
           >
-            <motion.div variants={fadeInUp} className={`inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 shadow-sm ${!isMobile && 'backdrop-blur-md'}`}>
+            <motion.div variants={fadeInUp} className={`inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 shadow-sm ${!isMobile && 'backdrop-blur-md font-bold'}`}>
               <span className="relative flex h-2 w-2">
                 {!isMobile && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>}
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -55,14 +55,16 @@ export function Hero({ dbProfile }: HeroProps) {
                 <span className="text-accent inline-block mt-2">{dbProfile?.name?.split(' ').slice(1).join(' ') || "Developer"}</span>
               </motion.h1>
               
-              <motion.div variants={fadeInUp} className="space-y-4">
-                <p className="text-xl md:text-2xl text-text-secondary max-w-2xl font-medium leading-relaxed">
+              <motion.div variants={fadeInUp} className="space-y-6">
+                <p className="text-xl md:text-2xl text-text-primary max-w-2xl font-bold leading-relaxed tracking-tight border-l-4 border-accent pl-8 py-2">
                   {dbProfile?.tagline || "Architecting premium digital ecosystems through code and strategic design."}
                 </p>
-                <div className="w-20 h-1 bg-accent/20 rounded-full mx-auto lg:mx-0" />
-                <p className="text-[10px] sm:text-xs text-text-secondary/40 font-black tracking-[0.4em] uppercase">
-                  {dbProfile?.tagline || "Specializing in High-Performance Modern Solutions"}
-                </p>
+                <div className="flex items-center gap-4 lg:justify-start justify-center">
+                  <div className="h-px w-24 bg-border/60" />
+                  <p className="text-[10px] sm:text-xs text-text-secondary/40 font-black tracking-[0.5em] uppercase whitespace-nowrap">
+                    Senior Engineering Spec.
+                  </p>
+                </div>
               </motion.div>
             </div>
 

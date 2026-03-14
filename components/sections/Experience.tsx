@@ -29,7 +29,7 @@ export function Experience({ experiences = staticExperiences }: ExperienceProps)
             initial={isMobile ? false : "initial"}
             whileInView={isMobile ? undefined : "animate"}
             animate={isMobile ? { opacity: 1, y: 0 } : undefined}
-            viewport={{ once: true, margin: "200px 0px", amount: 0 }}
+            viewport={isMobile ? undefined : { once: true, margin: "200px 0px", amount: 0 }}
             className="space-y-8"
           >
             {experiences.map((exp, index) => (

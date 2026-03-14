@@ -77,11 +77,18 @@
   *, *::before, *::after {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    transition-duration: 0.1s !important; /* Snappier transitions */
+    mask-image: none !important; /* Masking is expensive on mobile */
+    transition-duration: 150ms !important; /* Snappier, less Interpolation */
+    animation-duration: 0.01ms !important; /* Disable non-critical animations */
+    animation-iteration-count: 1 !important;
   }
   
   .site-grid {
-    opacity: 0.2; /* Dimmier grid for less paint cost */
+    display: none; /* Fixed backgrounds are expensive to repaint on scroll */
+  }
+
+  .mesh-gradient, .mesh-ball {
+    display: none !important;
   }
 }
 
@@ -240,3 +247,4 @@ html {
 .markdown-content blockquote {
   @apply pl-4 border-l-4 border-accent/30 italic text-text-secondary/80 my-6;
 }
+
