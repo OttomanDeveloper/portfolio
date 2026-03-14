@@ -1,57 +1,36 @@
 [
     {
         "customer_name": "Sarah Mitchell",
-        "review_text": "Alex delivered our banking dashboard 3 weeks ahead of schedule with a level of polish we didn't think was possible in that timeframe. The codebase is clean, the performance is exceptional, and the UI is genuinely beautiful. Easily the best engineering hire we've made in 4 years.",
+        "review_text": "Muhammad delivered our mobile dashboard with a level of polish we didn't think was possible in such a tight timeframe. The codebase is clean, the performance is exceptional, and the UI is genuinely beautiful. Easily the best engineering hire we've made.",
         "customer_photo": "https://api.dicebear.com/7.x/notionists/svg?seed=sarah&backgroundColor=6366f1",
         "is_verified": true,
         "status": "published"
     },
     {
         "customer_name": "James Okonkwo",
-        "review_text": "We brought Alex in for a critical refactor of our legacy CRM and he transformed it into a modern, maintainable codebase in 6 weeks. What impressed us most was his ability to balance speed with quality — we had zero regressions post-deployment. Will absolutely work with him again.",
+        "review_text": "We brought Muhammad in for a critical refactor of our legacy app and he transformed it into a modern, maintainable codebase in record time. What impressed us most was his ability to balance speed with quality — we had zero regressions. Will absolutely work with him again.",
         "customer_photo": "https://api.dicebear.com/7.x/notionists/svg?seed=james&backgroundColor=f59e0b",
         "is_verified": true,
         "status": "published"
     },
     {
         "customer_name": "Priya Sharma",
-        "review_text": "The Nebula AI platform Alex built for us is our core product and it works flawlessly. He proactively suggested architectural improvements that saved us months of tech debt, and he communicated clearly throughout. The code reviews he left behind became our internal standards document.",
+        "review_text": "The Flutter platform Muhammad built for us is our core product and it works flawlessly. He proactively suggested architectural improvements that saved us months of tech debt, and he communicated clearly throughout. His Firebase expertise is top-notch.",
         "customer_photo": "https://api.dicebear.com/7.x/notionists/svg?seed=priya&backgroundColor=10b981",
         "is_verified": true,
         "status": "published"
     },
     {
         "customer_name": "Carlos Mendes",
-        "review_text": "Truly rare to find someone who understands both product and engineering at Alex's level. He asked exactly the right questions before writing a single line of code, which meant every feature shipped was exactly what we needed. Our users noticed the quality immediately — support tickets dropped 30%.",
+        "review_text": "Truly rare to find someone who understands both product and engineering at this level. Muhammad asked exactly the right questions before writing code, which meant every feature shipped was exactly what we needed. Highly recommended.",
         "customer_photo": "https://api.dicebear.com/7.x/notionists/svg?seed=carlos&backgroundColor=8b5cf6",
         "is_verified": true,
         "status": "published"
     },
     {
         "customer_name": "Emily Zhao",
-        "review_text": "Professional, fast, and genuinely cares about the outcome. Alex built our React Native fitness app from scratch and delivered an experience that felt premium and native on both iOS and Android. The gamification system he designed single-handedly boosted our Day-30 retention by 22%.",
+        "review_text": "Professional, fast, and genuinely cares about the outcome. Muhammad built our fitness app from scratch and delivered an experience that felt premium and native. His integration of biometrics and offline caching was flawless.",
         "customer_photo": "https://api.dicebear.com/7.x/notionists/svg?seed=emily&backgroundColor=ef4444",
-        "is_verified": true,
-        "status": "published"
-    },
-    {
-        "customer_name": "David Keller",
-        "review_text": "We had a tight deadline for our investor demo and Alex not only hit it but exceeded expectations. The product looked like it had been built over months, not 3 weeks. He was always reachable, always delivering, and always two steps ahead of problems. Highly recommend without hesitation.",
-        "customer_photo": "https://api.dicebear.com/7.x/notionists/svg?seed=david&backgroundColor=14b8a6",
-        "is_verified": true,
-        "status": "published"
-    },
-    {
-        "customer_name": "Aisha Nwosu",
-        "review_text": "Working with Alex was a masterclass in how modern software should be built. His attention to accessibility, performance, and SEO was outstanding — our Lighthouse scores went from the 50s to consistent 95+. Our organic search traffic grew 140% within 2 months of the relaunch.",
-        "customer_photo": "https://api.dicebear.com/7.x/notionists/svg?seed=aisha&backgroundColor=f97316",
-        "is_verified": true,
-        "status": "published"
-    },
-    {
-        "customer_name": "Tom Harrington",
-        "review_text": "Alex is the kind of developer who makes everyone around him better. His code is self-documenting, his PR descriptions are thorough, and he always has time to explain his architectural choices. Our whole team leveled up just from reviewing his work. An absolute asset on any collaborative project.",
-        "customer_photo": "https://api.dicebear.com/7.x/notionists/svg?seed=tom&backgroundColor=a855f7",
         "is_verified": true,
         "status": "published"
     }

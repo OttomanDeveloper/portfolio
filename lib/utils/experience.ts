@@ -1,4 +1,4 @@
-export function calculateExperienceYears(startDate: string, manualOverride?: number) {
+export function calculateExperienceYears(startDate: string, manualOverride?: number | null) {
     if (manualOverride !== undefined && manualOverride !== null) return manualOverride
     
     const start = new Date(startDate)

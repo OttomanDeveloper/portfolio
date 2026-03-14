@@ -455,8 +455,8 @@ export default function AboutAdmin() {
                 <label className="text-[10px] font-black uppercase tracking-widest text-text-secondary/60 ml-1">Manual Years of Experience (Optional)</label>
                 <input
                   type="number"
-                  value={profile.manual_years_experience || ''}
-                  onChange={(e) => setProfile({ ...profile, manual_years_experience: e.target.value ? parseInt(e.target.value) : 0 })}
+                  value={profile.manual_years_experience ?? ''}
+                  onChange={(e) => setProfile({ ...profile, manual_years_experience: e.target.value === '' ? null : parseInt(e.target.value) })}
                   className="w-full p-4 rounded-xl bg-surface/30 border border-border focus:border-accent/40 outline-none text-text-primary text-sm font-bold"
                   placeholder="Leave empty for auto-calculate"
                 />

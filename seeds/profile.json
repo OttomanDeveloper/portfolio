@@ -1,79 +1,83 @@
 {
-    "full_name": "Alex Ottoman",
-    "tagline": "Architecting Premium Digital Ecosystems Through Code & Strategic Design",
-    "bio": "I'm a lead full-stack engineer with 7+ years of experience shipping high-performing web and mobile products for startups, agencies, and enterprise clients. I specialize in Next.js, React Native, and Supabase — building systems that are fast, beautiful, and built to last.\n\nI believe that exceptional software is the intersection of engineering precision and design intentionality. I don't just write code — I craft experiences that make users say 'wow' and codebases that make developers say 'finally'.",
-    "philosophy": "Code is communication. Every function, component, and architecture decision is a message to the next developer who reads it — and that developer is often me at 2am. Write with clarity, build with intention.",
-    "avatar_url": "https://api.dicebear.com/7.x/notionists/svg?seed=ottoman&backgroundColor=6366f1",
+    "name": "Muhammad Usman",
+    "tagline": "Senior Mobile App Engineer & Product Builder",
+    "bio": "I am a Senior Mobile App Engineer who thrives at the intersection of product vision and technical execution. Over the past 5 years, I've delivered 50+ complex applications for diverse clients on Fiverr and Upwork, engineered complex multi-vendor e-commerce solutions (Fulfil Supply Chain, YouShopper) in Southeast Asia and Australia, and built massive-scale consumer streaming platforms. Beyond building apps, I build the tools that empower other developers, authoring and maintaining critical Firebase Cloud Messaging and Admin SDK packages for the Flutter ecosystem. I dedicate my free time to teaching software engineering on YouTube, focusing on creating visually stunning, highly performant applications that solve real-world problems and drive measurable business impact.",
+    "philosophy": "Software engineering is more than just writing code; it's about solving real-world friction and scaling impact. Whether saving a project from failure in 21 days or architecting infrastructure for 600,000 users, my approach remains the same: build with resilience, document for the community, and always prioritize the user's end experience.",
+    "avatar_url": "https://github.com/OttomanDeveloper/OttomanDeveloper/blob/main/Assets/usman_profile.jpg?raw=true",
     "resume_url": "",
-    "contact_email": "alex@example.com",
-    "whatsapp_number": "+1 (555) 000-0000",
-    "youtube_url": "",
+    "contact_email": "ottomandeveloper@gmail.com",
+    "whatsapp_number": "+923041561853",
+    "youtube_url": "https://www.youtube.com/@OttomanCoder",
     "social_links": {
-        "github": "https://github.com",
-        "linkedin": "https://linkedin.com",
-        "twitter": "https://twitter.com",
-        "instagram": "https://instagram.com"
+        "github": "https://github.com/OttomanDeveloper",
+        "linkedin": "https://www.linkedin.com/in/ottomancoder",
+        "twitter": "",
+        "instagram": "https://instagram.com/ottoman_coder",
+        "stackoverflow": "https://stackoverflow.com/users/15117215"
     },
     "tech_stacks": {
         "Mobile": [
-            "React Native",
-            "Expo",
-            "Flutter"
+            "Flutter",
+            "Dart",
+            "Kotlin",
+            "Java",
+            "Isolates"
         ],
         "Frontend": [
-            "Next.js",
             "React",
+            "Next.js",
             "TypeScript",
-            "Tailwind CSS",
-            "Framer Motion"
+            "Tailwind CSS"
         ],
-        "Backend": [
+        "Backend & DB": [
+            "PHP",
+            "Laravel",
             "Node.js",
-            "Express",
-            "FastAPI",
-            "Python",
-            "PostgreSQL",
             "Supabase",
-            "Redis"
+            "Firebase (Firestore, Storage, Functions)",
+            "PostgreSQL",
+            "MySQL",
+            "SQLite (Hive, iSar)"
         ],
-        "DevOps & Tools": [
-            "Docker",
+        "DevOps & Utils": [
+            "Cloudflare",
+            "GCP",
             "GitHub Actions",
-            "Vercel",
-            "AWS",
+            "Docker",
             "Figma",
-            "Stripe"
+            "Postman",
+            "Gradle"
         ]
     },
-    "apps_delivered": 42,
-    "happy_clients": 28,
-    "experience_start_date": "2018",
-    "manual_years_experience": null,
-    "narrativeTagline": "A specialized window into the vision, metrics, and technological foundation I bring to every project.",
-    "site_title": "Alex Ottoman — Lead Full-Stack Engineer",
+    "apps_delivered": "50",
+    "happy_clients": "200",
+    "experience_start_date": "2019-01-01",
+    "manual_years_experience": 5,
+    "narrative_tagline": "Product-Minded Flutter Engineer shipping scalable apps, rescuing legacy codebases, and building open-source infrastructure.",
+    "site_title": "Muhammad Usman — Senior Mobile App Engineer & Product Builder",
     "favicon_url": "",
     "core_values": [
-        "Precision",
-        "Performance",
-        "Design Excellence",
-        "Developer Experience"
+        "Product Resilience",
+        "Scalability",
+        "Community Education",
+        "Open Source Leadership"
     ],
     "metrics": [
         {
             "label": "Apps Delivered",
-            "value": "42+"
+            "value": "50+"
         },
         {
             "label": "Happy Clients",
-            "value": "28"
+            "value": "200+"
         },
         {
-            "label": "Years Experience",
-            "value": "7+"
+            "label": "Max Scale",
+            "value": "600K Users"
         },
         {
-            "label": "Open Source Stars",
-            "value": "1.2K"
+            "label": "YouTube Subs",
+            "value": "1K+"
         }
     ]
 }

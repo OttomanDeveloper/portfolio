@@ -1,89 +1,122 @@
 [
     {
-        "company": "Apex Digital Studio",
-        "position": "Lead Full-Stack Engineer",
-        "start_date": "Mar 2023",
+        "company": "BeInMedia - Nmo AI",
+        "position": "Senior Flutter Developer",
+        "start_date": "Jul 2024",
         "end_date": "Present",
-        "location": "Remote (USA)",
+        "location": "Kuwait City, Kuwait (Remote)",
         "description": [
-            "Architected and delivered a multi-tenant SaaS CRM used by 120+ agencies, reducing client onboarding time by 40%",
-            "Led a cross-functional team of 5 engineers — weekly code reviews, architectural standards, and sprint planning",
-            "Migrated a legacy PHP monolith to a Next.js + Supabase microservice architecture, improving page load by 65%",
-            "Implemented CI/CD pipelines with GitHub Actions, cutting deployment time from 45 minutes to under 8 minutes",
-            "Established a shared component library in Storybook adopted across 3 product lines"
+            "Architecting and delivering AI-powered mobile solutions using Flutter and Dart",
+            "Integrating LLM capabilities and generative models into high-performance mobile interfaces",
+            "Leading technical decisions for state management and local storage architectures"
         ],
         "technologies": [
-            "Next.js",
-            "TypeScript",
-            "Supabase",
-            "PostgreSQL",
-            "Docker",
-            "GitHub Actions",
-            "Resend",
-            "Tailwind CSS"
+            "Flutter",
+            "Dart",
+            "AI Integration",
+            "Firebase",
+            "Bloc"
         ],
         "achievements": [
-            "Promoted to Lead Engineer after 6 months for exceptional delivery velocity",
-            "Reduced production incidents by 72% through systematic testing and observability",
-            "Received company 'Engineer of the Year' recognition for Q1 2024"
+            "Delivering cutting-edge AI features to regional consumer markets"
         ]
     },
     {
-        "company": "Pixel Perfect Studio",
-        "position": "Mid-Level Full-Stack Developer",
-        "start_date": "Jun 2021",
-        "end_date": "Feb 2023",
-        "location": "Remote (EU)",
+        "company": "Ottoman Coder Studio",
+        "position": "Lead Mobile App Developer (Freelance)",
+        "start_date": "Nov 2020",
+        "end_date": "Present",
+        "location": "Global / Remote",
         "description": [
-            "Developed and maintained 8+ client web applications using React and Node.js with full test coverage",
-            "Collaborated with UI/UX designers to implement pixel-perfect, performant interfaces from Figma prototypes",
-            "Built a custom e-commerce engine integrated with Stripe handling $2M+ in annual transaction volume",
-            "Optimised React bundle sizes by 38% through code splitting, lazy loading, and dependency auditing",
-            "Mentored 2 junior developers on modern JavaScript patterns and clean code practices"
+            "Delivered 50+ diverse mobile applications for 200+ satisfied international clients on Fiverr and Upwork",
+            "Specialized in rescuing stalled projects, resolving Gradle/Firebase conflicts, and performance optimization",
+            "Scaled the 'Legend TV' streaming platform organically to 600,000+ users and #1 category rank",
+            "Authored and maintained open-source packages enabling Firebase Admin and FCM integration in Dart",
+            "Maintained persistent 100% job success rate and Top Rated status across freelance platforms"
         ],
         "technologies": [
-            "React",
-            "Node.js",
-            "Express",
-            "MongoDB",
-            "Stripe",
-            "Figma",
-            "Jest",
-            "AWS S3"
-        ],
-        "achievements": [
-            "Delivered the flagship e-commerce platform 2 weeks ahead of schedule",
-            "Zero critical production incidents over 18 months of ownership",
-            "Client satisfaction rating of 9.6/10 across all delivered projects"
-        ]
-    },
-    {
-        "company": "InnovateTech Labs",
-        "position": "Junior Software Engineer",
-        "start_date": "Jan 2018",
-        "end_date": "May 2021",
-        "location": "New York, NY (Hybrid)",
-        "description": [
-            "Built RESTful APIs in Express.js for internal tooling used by 200+ employees across 4 departments",
-            "Contributed to a React Native cross-platform mobile app shipped to 15,000+ users on iOS and Android",
-            "Implemented automated testing suites achieving 85% code coverage with Jest and React Testing Library",
-            "Participated in Agile sprints, standups, and retrospectives in a team of 12 engineers",
-            "Integrated third-party APIs including Google Maps, Twilio SMS, and SendGrid email services"
-        ],
-        "technologies": [
-            "JavaScript",
-            "React",
-            "React Native",
-            "Node.js",
-            "Express",
+            "Flutter",
+            "Firebase",
+            "REST APIs",
+            "PHP",
+            "Laravel",
             "MySQL",
-            "Jest",
-            "Git"
+            "Gradle"
         ],
         "achievements": [
-            "Graduated from junior to mid-level role within 18 months",
-            "Won internal hackathon with an AI-powered meeting summariser tool",
-            "Published 2 internal npm packages used across 5+ company projects"
+            "Reached 1,000+ subscribers on YouTube teaching Flutter and App Engineering",
+            "Highest Client Satisfaction award across 200+ unique deliveries",
+            "Successfully salvaged 15+ 'failed' codebases for startups and solo-founders"
+        ]
+    },
+    {
+        "company": "SD Cold Logistics & YouShopper",
+        "position": "Senior Software Engineer",
+        "start_date": "Nov 2022",
+        "end_date": "May 2023",
+        "location": "Sydney, Australia (Remote)",
+        "description": [
+            "Orchestrated a massive ecosystem consolidation, merging User, Seller, and Delivery Boy apps into a unified architecture",
+            "Redesigned the core e-commerce experience for YouShopper, significantly boosting mobile core vitals and retention",
+            "Managed technical compliance for strict Australian App Store and Play Store guidelines for 3 concurrent applications",
+            "Led the mobile-first UX strategy for the LBH multi-vendor beauty product platform"
+        ],
+        "technologies": [
+            "Flutter",
+            "API Integration",
+            "Unit Testing",
+            "App Store Connect",
+            "Play Console"
+        ],
+        "achievements": [
+            "Reduced development overhead by 40% through unified architecture consolidation",
+            "Perfect 100% approval rate for all App Store submissions following redesign"
+        ]
+    },
+    {
+        "company": "HomyKSA",
+        "position": "Flutter Specialist",
+        "start_date": "May 2022",
+        "end_date": "Oct 2022",
+        "location": "Riyadh, Saudi Arabia (Remote)",
+        "description": [
+            "Rescued a failing home services project (Cleaning, Plumbing, AC services) previously stranded by another team",
+            "Spearheaded the ground-up rewrite and launch of the entire platform in a high-pressure 21-day window",
+            "Engineered complex real-time order flow and technician tracking using Firebase Realtime Database",
+            "Collaborated with backend teams to optimize RESTful API responses for low-bandwidth scenarios"
+        ],
+        "technologies": [
+            "Flutter",
+            "Firebase Realtime",
+            "Google Maps API",
+            "Rapid Prototyping"
+        ],
+        "achievements": [
+            "Delivered 100% feature-complete app in 21 days from blank canvas to App Store submission",
+            "Directly attributed to 50% increase in service bookings post-launch due to improved UX"
+        ]
+    },
+    {
+        "company": "Fulfil Supply Chain",
+        "position": "E-commerce App Developer",
+        "start_date": "Sep 2021",
+        "end_date": "Mar 2023",
+        "location": "Vientiane, Laos (Remote)",
+        "description": [
+            "Developed complex multi-vendor supply chain apps from the ground up for the SE Asian market",
+            "Integrated cross-border payment gateways and secure transaction logic via custom REST APIs",
+            "Architected deep local caching strategies (Hive) to ensure app functionality in remote logistics areas",
+            "Implemented the 'CourierGo' international parcel tracking and stock management system for OpenCart integration"
+        ],
+        "technologies": [
+            "Flutter",
+            "OpenCart API",
+            "Hive",
+            "Payment Integrations",
+            "Bloc"
+        ],
+        "achievements": [
+            "Built a multi-country logistics system now handling active stock and delivery flows across the region"
         ]
     }
 ]
