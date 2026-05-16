@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Replace the existing Next.js + Supabase portfolio with a faster, more distinctive Astro 5 + MDX site in the "brutalist terminal" design direction, deployed as a static build to the same `ottomancoder.com` domain.
+**Goal:** Replace the existing Next.js + Supabase portfolio with a faster, more distinctive Astro 5 + MDX site in the "brutalist terminal" design direction, deployed as a static build to a domain the user will register (the old `ottomancoder.com` is no longer owned). Site URL is read from `PUBLIC_SITE_URL` env var so the eventual domain swap is one config change with no code edits.
 
 **Architecture:** Astro 5 static site, content-as-code (MDX case studies + typed TS data files), minimal React (only ContactForm), no CMS/database. CSS variables drive light/dark theming. Three JS islands total, <8KB gzipped. New code lives on a `rewrite-v2` branch with `main` tagged `pre-rewrite-v1` for rollback.
 
@@ -104,8 +104,12 @@ import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 
+// Site URL — read from env so the eventual real domain is a one-line swap.
+// Falls back to localhost for `npm run dev` builds.
+const SITE = process.env.PUBLIC_SITE_URL || 'http://localhost:4321';
+
 export default defineConfig({
-  site: 'https://ottomancoder.com',
+  site: SITE,
   output: 'static',
   integrations: [
     mdx(),
@@ -137,13 +141,23 @@ export default defineConfig({
 
 ```
 # Resend API key for /api/contact endpoint
+# Get one at https://resend.com/api-keys (free tier: 100 emails/day, 3000/month)
 RESEND_API_KEY=re_xxx_replace_me
 
 # Recipient address for contact form submissions
-CONTACT_TO_EMAIL=usman@ottomancoder.com
+CONTACT_TO_EMAIL=ottomandeveloper@gmail.com
 
-# Public site URL (used for OG, sitemap, JSON-LD)
-PUBLIC_SITE_URL=https://ottomancoder.com
+# Sender ("from:") used by Resend.
+# Until you've registered + verified a custom domain in Resend, use their default:
+#   onboarding@resend.dev
+# Once your real domain is verified at https://resend.com/domains, swap this to:
+#   noreply@your-real-domain.com
+RESEND_FROM=onboarding@resend.dev
+
+# Public site URL — used for canonical, sitemap, OG image URLs, JSON-LD.
+# For local dev leave as http://localhost:4321; for deploy preview use the
+# Vercel-assigned URL; for production swap to your registered domain.
+PUBLIC_SITE_URL=http://localhost:4321
 ```
 
 - [ ] **Step 6: Extend `.gitignore`**
@@ -751,7 +765,7 @@ export const profile = {
   },
   stackSummary: 'Flutter · Dart · Gemini · BLE · Firebase · Supabase',
   openTo: ['full-time', 'contract', 'advisory'],
-  email: 'usman@ottomancoder.com',
+  email: 'ottomandeveloper@gmail.com',
   resumeHref: '/cv.pdf',
   stats: [
     { num: '600K', unit: '+', desc: 'peak users on Legend TV streaming platform' },
@@ -2368,7 +2382,7 @@ import CopyEmail from '@/components/islands/CopyEmail.astro';
 `npm run dev`.
 - Theme toggle in top-right cycles `⌘ → ☀ → ☾ → ⌘` on click; theme actually changes; persists across reload
 - Click the email button in #contact: text changes to `✓ copied` for 2s
-- Open new tab, paste — clipboard has `usman@ottomancoder.com`
+- Open new tab, paste — clipboard has `ottomandeveloper@gmail.com`
 - DevTools → disable clipboard permission → click again → falls back to `mailto:`
 
 - [ ] **Step 8: Commit**
@@ -2403,8 +2417,10 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import vercel from '@astrojs/vercel';
 
+const SITE = process.env.PUBLIC_SITE_URL || 'http://localhost:4321';
+
 export default defineConfig({
-  site: 'https://ottomancoder.com',
+  site: SITE,
   output: 'static',
   adapter: vercel(),
   integrations: [mdx(), react(), sitemap()],
@@ -2465,16 +2481,20 @@ export const POST: APIRoute = async ({ request }) => {
 
   const apiKey = import.meta.env.RESEND_API_KEY;
   const to = import.meta.env.CONTACT_TO_EMAIL;
+  // Sender address must be on a domain verified in your Resend account.
+  // Default `onboarding@resend.dev` works out of the box for testing; swap
+  // to `noreply@your-domain.com` after verifying your real domain.
+  const sender = import.meta.env.RESEND_FROM || 'onboarding@resend.dev';
   if (!apiKey || !to) {
     return new Response(JSON.stringify({ error: 'misconfigured' }), { status: 500 });
   }
 
   const resend = new Resend(apiKey);
   const { error } = await resend.emails.send({
-    from: 'ottomancoder.com <noreply@ottomancoder.com>',
+    from: `Ottoman Coder <${sender}>`,
     to,
     replyTo: from,
-    subject: `[ottomancoder.com] ${about}`,
+    subject: `[portfolio contact] ${about}`,
     text: `From: ${from}\nAbout: ${about}\n\n${body}`,
   });
   if (error) {
@@ -2705,14 +2725,18 @@ git -c safe.directory=D:/MyProjects/My_Portfolio/portfolio -C /d/MyProjects/My_P
 In `src/pages/index.astro`, inside `<BaseLayout>`, add at the top:
 
 ```astro
+---
+// (within the frontmatter, in addition to existing imports)
+const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? 'http://localhost:4321';
+---
 <script type="application/ld+json" set:html={JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: profile.name,
   alternateName: profile.alias,
   jobTitle: profile.tagline,
-  url: import.meta.env.PUBLIC_SITE_URL,
-  image: `${import.meta.env.PUBLIC_SITE_URL}/og/default.png`,
+  url: siteUrl,
+  image: `${siteUrl}/og/default.png`,
   email: `mailto:${profile.email}`,
   address: { '@type': 'PostalAddress', addressLocality: 'Islamabad', addressCountry: 'PK' },
   sameAs: [
@@ -2727,11 +2751,13 @@ In `src/pages/index.astro`, inside `<BaseLayout>`, add at the top:
 
 - [ ] **Step 2: `public/robots.txt`**
 
+> **Note:** when you have a real domain, update the `Sitemap:` line below to use it. Until then the localhost / preview URL is good enough — search engines don't crawl `localhost`, and Vercel preview deploys are `noindex` by default.
+
 ```
 User-agent: *
 Allow: /
 
-Sitemap: https://ottomancoder.com/sitemap-index.xml
+Sitemap: /sitemap-index.xml
 ```
 
 (Sitemap is generated automatically by `@astrojs/sitemap` at build.)
@@ -2819,7 +2845,7 @@ export async function renderOgPng({ title, tagline, slug }: Props): Promise<Buff
           { type: 'div', props: { style: { color: '#a3e635', fontSize: 28, marginTop: 16 }, children: tagline.replace(/^#\s*/, '# ') } },
           { type: 'div', props: { style: { marginTop: 'auto', color: '#a3a3a3', fontSize: 22, display: 'flex', justifyContent: 'space-between' },
             children: [
-              { type: 'div', props: { children: 'ottomancoder.com' } },
+              { type: 'div', props: { children: 'Ottoman Coder' } },
               { type: 'div', props: { children: 'Muhammad Usman' } },
             ],
           } },
@@ -2876,10 +2902,14 @@ Build the site once; `dist/og/legend-tv.png` etc. will exist. Generate a one-off
 In `src/layouts/CaseStudyLayout.astro`, pass an `ogImage` prop to `BaseLayout`:
 
 ```astro
+---
+// (within the frontmatter, in addition to existing imports/props)
+const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? 'http://localhost:4321';
+---
 <BaseLayout
   title={`${title} — case study`}
   description={tagline.replace(/^#\s*/, '')}
-  ogImage={new URL(`/og/${slug}.png`, import.meta.env.PUBLIC_SITE_URL).toString()}
+  ogImage={new URL(`/og/${slug}.png`, siteUrl).toString()}
 >
 ```
 
@@ -3020,10 +3050,11 @@ In Vercel dashboard → Project → Settings → Environment Variables:
 
 | Name | Value | Environments |
 |---|---|---|
-| `RESEND_API_KEY` | real key | Production, Preview |
-| `CONTACT_TO_EMAIL` | `usman@ottomancoder.com` | Production, Preview |
-| `PUBLIC_SITE_URL` | `https://ottomancoder.com` | Production |
-| `PUBLIC_SITE_URL` | (preview URL) | Preview |
+| `RESEND_API_KEY` | real key from resend.com/api-keys | Production, Preview |
+| `CONTACT_TO_EMAIL` | `ottomandeveloper@gmail.com` | Production, Preview |
+| `RESEND_FROM` | `onboarding@resend.dev` (until you verify a real domain in Resend, then `noreply@your-domain.com`) | Production, Preview |
+| `PUBLIC_SITE_URL` | your registered domain, e.g. `https://your-domain.com` | Production |
+| `PUBLIC_SITE_URL` | leave unset on Preview — Vercel auto-provides `VERCEL_URL`; the build falls back to localhost otherwise | Preview |
 
 - [ ] **Step 4: Verify Vercel preview deploy**
 
@@ -3041,7 +3072,7 @@ After user (Muhammad) reviews and approves the live preview:
 gh pr merge --squash --delete-branch
 ```
 
-Confirm `ottomancoder.com` now serves the new site. If DNS still points elsewhere, update DNS at the registrar to Vercel's records.
+Confirm your registered domain now serves the new site. If DNS still points elsewhere, update DNS at the registrar to Vercel's records (add the A / CNAME from Vercel → Project → Settings → Domains).
 
 - [ ] **Step 7: Final commit / tag**
 

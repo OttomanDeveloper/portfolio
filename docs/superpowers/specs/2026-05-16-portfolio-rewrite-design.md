@@ -3,7 +3,7 @@
 **Date:** 2026-05-16
 **Owner:** Muhammad Usman (Ottoman Coder)
 **Status:** approved (pending user spec review)
-**Domain:** ottomancoder.com (current site lives under `d:/MyProjects/My_Portfolio/portfolio`)
+**Domain:** TBD — a new domain to be registered by the user (`ottomancoder.com` is no longer owned). Treated as an `PUBLIC_SITE_URL` env var throughout the build so nothing hardcodes it. (Current site lives under `d:/MyProjects/My_Portfolio/portfolio`.)
 
 ---
 
@@ -54,7 +54,7 @@ We are dropping: Next.js, Supabase (`@supabase/ssr`, `@supabase/supabase-js`), `
 ## 6. Information architecture
 
 ```
-ottomancoder.com/
+<site>/
 ├── /                  one-page README — top-to-bottom scroll, deep-link anchors
 │   ├── #whoami        hero — name, role, identity kv block, "proof of work" stats
 │   ├── #projects      ls-style directory listing of 5 featured projects
@@ -173,7 +173,7 @@ Roles, reverse-chronological: BeInMedia / Nmo AI (Jul 2024–present) · Ottoman
 
 ### 8.6 `#contact`
 
-`$ echo "$MSG" | mail usman@ottomancoder.com` heading. Form panel with three labeled inputs (`from:`, `about:`, `body:`) and a `▸ send` button. Plain socials line below: email link + `@ottomancoder` at twitter/linkedin/github/youtube.
+`$ echo "$MSG" | mail ottomandeveloper@gmail.com` heading. Form panel with three labeled inputs (`from:`, `about:`, `body:`) and a `▸ send` button. Plain socials line below: email link + `@ottomancoder` at twitter/linkedin/github/youtube.
 
 ## 9. Case study template (`/projects/[slug]`)
 
@@ -226,7 +226,7 @@ Only three islands ship JavaScript to the browser. Estimated total: **<8KB gzipp
 |---|---|---|---|
 | Contact form | `src/components/islands/ContactForm.tsx` | React 19 | Controlled form, client-side validation (email format + non-empty body), submits POST `/api/contact`, optimistic UI (`▸ sending…`), success/error states accessible to screen readers. |
 | Theme toggle | `src/components/islands/ThemeToggle.ts` | Vanilla TS, mounted via `<script>` | Cycles `system → light → dark`, writes `localStorage.theme`, updates `<html data-theme>`. ~600 bytes minified. |
-| Copy email | `src/components/islands/copy-email.ts` | Vanilla TS | Click-to-copy `usman@ottomancoder.com` to clipboard, swaps button label to `✓ copied` for 2s. ~400 bytes minified. |
+| Copy email | `src/components/islands/copy-email.ts` | Vanilla TS | Click-to-copy `ottomandeveloper@gmail.com` to clipboard, swaps button label to `✓ copied` for 2s. ~400 bytes minified. |
 
 Server-side: `src/pages/api/contact.ts` validates payload with Zod, sends via Resend, returns 200/400/500. Spam mitigation: honeypot field + minimum-fill-time (>2s) — no rate limiting at v1 (portfolio scale; revisit only if abuse appears).
 
@@ -355,7 +355,7 @@ public/
 - **Build:** `astro build` → static `dist/` + one edge function for `/api/contact`.
 - **Host:** Vercel (or Cloudflare Pages with Workers for the contact endpoint).
 - **Env vars:** `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, optional `PLAUSIBLE_DOMAIN`.
-- **Domain:** existing `ottomancoder.com`; deploy preview branches on each PR.
+- **Domain:** new domain to be registered by the user (the old `ottomancoder.com` is no longer owned). Until registered, deploy to a Vercel-provided subdomain; the site URL is read from `PUBLIC_SITE_URL` env var so the swap is one config change. Deploy previews on each PR regardless.
 - **Migration cutover:** new site built on a dedicated git branch (`rewrite-v2`) inside the existing repo, with the current `app/`, `components/`, `data/`, `seeds/`, `lib/`, `hooks/`, and `deployment_guide/` trees deleted on that branch. Tested end-to-end via a deploy preview, then merged to `main` and DNS swapped. Old code remains in git history (and on the `main` snapshot tagged `pre-rewrite-v1`).
 
 ## 18. Out of scope (for v1)
