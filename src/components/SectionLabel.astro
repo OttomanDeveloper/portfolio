@@ -1,0 +1,16 @@
+---
+// src/components/SectionLabel.astro
+interface Props { n: number; name: string; }
+const { n, name } = Astro.props;
+---
+<p class="label" aria-hidden="true">// {n} — #{name}</p>
+
+<style>
+  .label {
+    color: var(--fg-dim);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-3);
+  }
+</style>

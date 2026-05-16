@@ -1,0 +1,53 @@
+/* src/styles/global.css */
+@import './fonts.css';
+@import './tokens.css';
+
+/* reset */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: var(--fs-base);
+  line-height: var(--lh-default);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+html { scroll-behavior: smooth; }
+img, svg, video { display: block; max-width: 100%; }
+input, button, textarea, select { font: inherit; color: inherit; }
+
+a {
+  color: var(--link);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in oklab, var(--link) 40%, transparent);
+  padding-bottom: 1px;
+}
+a:hover, a:focus-visible { border-bottom-color: var(--link); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* skip link */
+.skip-link {
+  position: absolute; top: -100px; left: 0;
+  padding: 8px 14px; background: var(--accent); color: var(--bg);
+  z-index: 100; border-radius: 0 0 var(--radius-sm) 0;
+}
+.skip-link:focus { top: 0; }
+
+/* container */
+.container {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+@media (min-width: 640px) { .container { padding-inline: var(--space-7); } }
+
+/* selection */
+::selection { background: var(--accent); color: var(--bg); }

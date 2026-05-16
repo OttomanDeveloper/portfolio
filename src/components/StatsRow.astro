@@ -1,0 +1,56 @@
+---
+// src/components/StatsRow.astro
+interface Stat { num: string; unit?: string; desc: string; }
+interface Props { label?: string; stats: Stat[]; }
+const { label, stats } = Astro.props;
+---
+<section class="stats">
+  {label && <p class="label" aria-hidden="true">▸ {label}</p>}
+  <ul class="grid">
+    {stats.map((s) => (
+      <li>
+        <div class="num">{s.num}{s.unit && <span class="unit">{s.unit}</span>}</div>
+        <div class="desc">{s.desc}</div>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .stats {
+    margin-top: var(--space-7);
+    padding-top: var(--space-6);
+    border-top: 1px dashed var(--border-soft);
+  }
+  .label {
+    color: var(--fg-dim);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-4);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  @media (min-width: 640px) { .grid { gap: var(--space-7); } }
+  @media (min-width: 1024px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+
+  .num {
+    font-size: 1.875rem;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--fg);
+  }
+  .unit { font-size: var(--fs-sm); color: var(--fg-dim); margin-left: 2px; font-weight: 400; }
+  .desc {
+    color: var(--fg);
+    margin-top: var(--space-2);
+    font-size: var(--fs-sm);
+    line-height: 1.5;
+  }
+</style>

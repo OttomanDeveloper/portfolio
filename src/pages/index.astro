@@ -1,17 +1,24 @@
 ---
-
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import TerminalFrame from '@/components/TerminalFrame.astro';
+import KvBlock from '@/components/KvBlock.astro';
+import StatsRow from '@/components/StatsRow.astro';
+import SectionLabel from '@/components/SectionLabel.astro';
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="atoms smoke" description="dev">
+  <div class="container" style="padding-block: 48px; display: grid; gap: 24px;">
+    <SectionLabel n={1} name="whoami" />
+    <TerminalFrame>
+      <KvBlock pairs={[
+        { key: 'based', value: 'Islamabad, PK' },
+        { key: 'links', value: '<a href="#">github</a> · <a href="#">linkedin</a>', valueHtml: true },
+      ]} />
+      <StatsRow label="proof of work" stats={[
+        { num: '600K', unit: '+', desc: 'peak users' },
+        { num: '50', unit: '+', desc: 'apps shipped' },
+        { num: '#1', desc: 'category 5 months' },
+        { num: '1', unit: ' pkg', desc: 'adopted by Google' },
+      ]} />
+    </TerminalFrame>
+  </div>
+</BaseLayout>
