@@ -42,3 +42,6 @@ next-env.d.ts
 
 # superpowers brainstorming session files
 .superpowers/
+
+# per-user Claude Code config (don't commit personal permission settings)
+.claude/
