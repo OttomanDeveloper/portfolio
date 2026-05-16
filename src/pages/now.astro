@@ -1,0 +1,38 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import TerminalFrame from '@/components/TerminalFrame.astro';
+
+// HAND-UPDATE THIS DATE ON EACH REFRESH OF THE PAGE'S CONTENT
+const lastUpdated = '2026-05-16';
+---
+<BaseLayout title="Now — Muhammad Usman" description="What I'm shipping this week.">
+  <div class="container" style="padding-block: var(--space-7); display: grid; gap: var(--space-6);">
+    <p class="crumb"><a href="/">~</a> / <span class="here">now</span></p>
+
+    <TerminalFrame meta="last-updated">
+      <p class="meta">▸ last updated: {lastUpdated}</p>
+      <p class="prompt"><span class="dim">$</span> <span class="accent">ps -aux</span> <span class="fg">--mine</span></p>
+      <ul class="ps">
+        <li><span class="fg">▸</span> <span class="link">nmo-ai</span>  <span class="dim"># BLE health-device sync v2</span></li>
+        <li><span class="fg">▸</span> <span class="link">gemini-features</span> <span class="dim"># adaptive workout coaching</span></li>
+        <li><span class="fg">▸</span> <span class="link">cs degree</span> <span class="dim"># Virtual University of Pakistan</span></li>
+        <li><span class="fg">▸</span> <span class="link">open source</span> <span class="dim"># maintaining firebase_cloud_messaging_dart</span></li>
+      </ul>
+      <p class="foot dim"># inspired by /now from nownownow.com<br />
+        # also: i'm open to chat — see <a href="/#contact">#contact</a></p>
+    </TerminalFrame>
+  </div>
+</BaseLayout>
+
+<style>
+  .crumb { font-family: var(--font-mono); color: var(--fg-dim); font-size: var(--fs-sm); }
+  .here { color: var(--fg); }
+  .meta { color: var(--fg-dim); margin-bottom: var(--space-3); }
+  .prompt { font-family: var(--font-mono); margin-bottom: var(--space-3); }
+  .ps { list-style: none; padding: 0; margin: 0 0 var(--space-5); display: grid; gap: var(--space-1); }
+  .dim { color: var(--fg-dim); }
+  .accent { color: var(--accent); }
+  .link { color: var(--link); }
+  .fg { color: var(--fg); }
+  .foot { font-family: var(--font-mono); font-size: var(--fs-sm); line-height: 1.7; }
+</style>

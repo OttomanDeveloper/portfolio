@@ -6,6 +6,7 @@ import OpenSourceCards from '@/components/sections/OpenSourceCards.astro';
 import ExperienceLog from '@/components/sections/ExperienceLog.astro';
 import StackTree from '@/components/sections/StackTree.astro';
 import ContactSection from '@/components/sections/ContactSection.astro';
+import ContactForm from '@/components/islands/ContactForm.tsx';
 import { profile } from '@/data/profile';
 
 const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? 'http://localhost:4321';
@@ -39,6 +40,8 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? 'http://localhost:4321';
     <OpenSourceCards />
     <ExperienceLog />
     <StackTree />
-    <ContactSection />
+    <ContactSection>
+      <ContactForm slot="form" client:idle to={profile.email} />
+    </ContactSection>
   </div>
 </BaseLayout>

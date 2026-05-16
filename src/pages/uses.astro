@@ -1,0 +1,43 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import TerminalFrame from '@/components/TerminalFrame.astro';
+---
+<BaseLayout title="Uses — Muhammad Usman" description="The hardware and software setup behind Ottoman Coder's daily work.">
+  <div class="container" style="padding-block: var(--space-7); display: grid; gap: var(--space-6);">
+    <p class="crumb"><a href="/">~</a> / <span class="here">uses</span></p>
+
+    <TerminalFrame meta="setup">
+      <p class="prompt"><span class="dim">$</span> <span class="accent">cat</span> <span class="fg">./hardware</span></p>
+      <dl class="kv">
+        <dt>laptop</dt>   <dd>MacBook Pro 14" <span class="dim">· M-series · 16GB</span></dd>
+        <dt>phone</dt>    <dd>iPhone + Pixel <span class="dim">· cross-platform QA</span></dd>
+        <dt>display</dt>  <dd>2K external · 27"</dd>
+      </dl>
+      <p class="prompt" style="margin-top: var(--space-6)"><span class="dim">$</span> <span class="accent">cat</span> <span class="fg">./software</span></p>
+      <dl class="kv">
+        <dt>editor</dt>   <dd>VS Code <span class="dim">· Cursor for AI</span></dd>
+        <dt>terminal</dt> <dd>Warp + zsh</dd>
+        <dt>font</dt>     <dd>JetBrains Mono</dd>
+        <dt>design</dt>   <dd>Figma</dd>
+        <dt>notes</dt>    <dd>Obsidian + Apple Notes</dd>
+      </dl>
+    </TerminalFrame>
+  </div>
+</BaseLayout>
+
+<style>
+  .crumb { font-family: var(--font-mono); color: var(--fg-dim); font-size: var(--fs-sm); }
+  .here { color: var(--fg); }
+  .prompt { font-family: var(--font-mono); margin-bottom: var(--space-3); }
+  .dim { color: var(--fg-dim); }
+  .accent { color: var(--accent); }
+  .fg { color: var(--fg); }
+  .kv { display: grid; grid-template-columns: 110px 1fr; gap: var(--space-2) var(--space-5); margin: 0; }
+  .kv dt { color: var(--key); margin: 0; }
+  .kv dd { margin: 0; color: var(--fg); }
+  @media (max-width: 479px) {
+    .kv { grid-template-columns: 1fr; gap: 0; }
+    .kv dt { margin-top: var(--space-3); }
+    .kv dt:first-child { margin-top: 0; }
+  }
+</style>

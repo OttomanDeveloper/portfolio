@@ -1,0 +1,23 @@
+---
+interface Props { email: string; }
+const { email } = Astro.props;
+---
+<button class="copy" data-email={email} type="button">{email}</button>
+
+<script>
+  import { mountCopyEmail } from './CopyEmail.ts';
+  document.querySelectorAll<HTMLButtonElement>('button.copy[data-email]').forEach((btn) => {
+    const email = btn.dataset.email;
+    if (email) mountCopyEmail(btn, email);
+  });
+</script>
+
+<style>
+  .copy {
+    background: none; border: 0; padding: 0;
+    color: var(--link); font: inherit; cursor: pointer;
+    border-bottom: 1px solid color-mix(in oklab, var(--link) 40%, transparent);
+  }
+  .copy:hover { border-bottom-color: var(--link); }
+  @media (pointer: coarse) { .copy { min-height: 44px; } }
+</style>

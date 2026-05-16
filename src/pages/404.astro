@@ -1,0 +1,21 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import TerminalFrame from '@/components/TerminalFrame.astro';
+---
+<BaseLayout title="404 — not found" description="That path does not exist.">
+  <div class="container" style="padding-block: var(--space-9);">
+    <TerminalFrame meta="error · 404">
+      <p class="ln"><span class="dim">$</span> <span class="accent">cd</span> {Astro.url.pathname}</p>
+      <p class="err"><span class="alert">zsh: no such file or directory:</span> {Astro.url.pathname}</p>
+      <p class="ln" style="margin-top: var(--space-5)"><span class="dim">$</span> <span class="accent">cd</span> <a href="/">/</a></p>
+    </TerminalFrame>
+  </div>
+</BaseLayout>
+
+<style>
+  .ln { font-family: var(--font-mono); margin: 0; line-height: 1.8; }
+  .err { font-family: var(--font-mono); margin: var(--space-3) 0 0; }
+  .dim { color: var(--fg-dim); }
+  .accent { color: var(--accent); }
+  .alert { color: var(--alert); }
+</style>

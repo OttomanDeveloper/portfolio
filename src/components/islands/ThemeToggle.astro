@@ -1,0 +1,30 @@
+---
+// src/components/islands/ThemeToggle.astro
+---
+<button id="theme-toggle" type="button" aria-label="theme toggle">⌘</button>
+
+<script>
+  import { mountThemeToggle } from './ThemeToggle.ts';
+  const el = document.getElementById('theme-toggle');
+  if (el instanceof HTMLButtonElement) mountThemeToggle(el);
+</script>
+
+<style>
+  #theme-toggle {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    z-index: 50;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--bg-elev);
+    color: var(--fg);
+    border: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #theme-toggle:hover { border-color: var(--accent); }
+  @media (pointer: coarse) { #theme-toggle { width: 44px; height: 44px; } }
+</style>

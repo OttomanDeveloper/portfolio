@@ -2,6 +2,7 @@
 // src/components/sections/ContactSection.astro
 import TerminalFrame from '@/components/TerminalFrame.astro';
 import SectionLabel from '@/components/SectionLabel.astro';
+import CopyEmail from '@/components/islands/CopyEmail.astro';
 import { profile } from '@/data/profile';
 ---
 <section id="contact" aria-labelledby="contact-h">
@@ -19,7 +20,7 @@ import { profile } from '@/data/profile';
 
     <p class="alt">
       <span class="dim"># or reach me anywhere:</span><br />
-      <span class="key">▸</span> <a href={`mailto:${profile.email}`}>{profile.email}</a>
+      <span class="key">▸</span> <CopyEmail email={profile.email} />
       &nbsp;<span class="key">▸</span> <a href="https://twitter.com/ottomancoder">@ottomancoder</a>
       <span class="dim">(twitter/linkedin/github/youtube)</span>
     </p>
