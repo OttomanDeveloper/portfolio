@@ -1,0 +1,93 @@
+---
+// src/components/sections/ProjectsList.astro
+import { getCollection } from 'astro:content';
+import TerminalFrame from '@/components/TerminalFrame.astro';
+import SectionLabel from '@/components/SectionLabel.astro';
+
+const allProjects = await getCollection('projects', (e) => !e.data.draft);
+const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
+---
+<section id="projects" aria-labelledby="projects-h">
+  <SectionLabel n={2} name="projects" />
+  <TerminalFrame>
+    <p class="prompt"><span class="dim">$</span> <span class="accent">ls -la</span> <span class="fg">./projects</span> <span class="dim">--pinned --sort=impact</span></p>
+    <h2 id="projects-h" class="sr-only">Featured projects</h2>
+    <ul class="rows">
+      {projects.map((p) => {
+        const d = p.data;
+        const isCurrent = d.status === 'in-progress';
+        const yearStart = String(d.years.start).slice(-2);
+        const yearEnd = d.years.end === 'present' ? '' : String(d.years.end).slice(-2);
+        const yearLabel = d.years.end === 'present' ? `20${yearStart}–` : (yearStart === yearEnd ? `20${yearStart}` : `20${yearStart}–${yearEnd}`);
+        const isGithubOnly = p.id === 'status-getter';
+        const ctaLabel = isGithubOnly ? 'github →' : 'case study →';
+        const ctaHref  = isGithubOnly
+          ? (d.links.find((l) => /github/i.test(l.label))?.href ?? `/projects/${p.id}`)
+          : `/projects/${p.id}`;
+        return (
+          <li class="row">
+            <span class="ico" aria-hidden="true">▸</span>
+            <div class="body">
+              <p class="nm">
+                {p.id}
+                {d.featured && <span class="star" aria-label="featured">★</span>}
+                {isCurrent && <span class="dim"> (current)</span>}
+              </p>
+              <p class="desc" set:html={d.listingDesc ?? d.tagline.replace(/^#\s*/, '')} />
+              <p class="tags">{d.stack.join(' · ').toLowerCase()}</p>
+            </div>
+            <span class="yr">{yearLabel}</span>
+            <a class="cta" href={ctaHref}>{ctaLabel}</a>
+          </li>
+        );
+      })}
+    </ul>
+    <p class="archive"><span class="dim">$</span> <span class="accent">ls</span> ./archive  <span class="dim"># 45+ other apps shipped for clients · ask if curious</span></p>
+  </TerminalFrame>
+</section>
+
+<style>
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .prompt { font-family: var(--font-mono); margin-bottom: var(--space-4); }
+  .dim { color: var(--fg-dim); }
+  .accent { color: var(--accent); }
+  .fg { color: var(--fg); }
+  .rows { list-style: none; padding: 0; margin: 0; }
+  .row {
+    display: grid;
+    grid-template-columns: 18px 1fr 80px 110px;
+    column-gap: var(--space-4);
+    padding: var(--space-3) 0;
+    border-bottom: 1px dashed var(--border-soft);
+    align-items: baseline;
+  }
+  .row:last-child { border-bottom: 0; }
+  .ico { color: var(--accent); }
+  .nm { color: var(--fg); font-weight: 600; margin: 0; }
+  .star { color: var(--key); margin-left: 4px; }
+  .desc { color: var(--fg); font-size: var(--fs-sm); margin: 2px 0 0; line-height: 1.55; }
+  :global(.desc .dim) { color: var(--fg-dim); }
+  .tags { color: var(--fg-dim); font-size: var(--fs-xs); margin: 4px 0 0; }
+  .yr { color: var(--fg-dim); font-size: var(--fs-sm); text-align: right; }
+  .cta {
+    color: var(--link);
+    font-size: var(--fs-sm);
+    text-align: right;
+    border-bottom: 1px solid color-mix(in oklab, var(--link) 40%, transparent);
+    white-space: nowrap;
+  }
+  .archive { margin-top: var(--space-4); font-family: var(--font-mono); }
+
+  @media (max-width: 640px) {
+    .row { grid-template-columns: 18px 1fr; row-gap: var(--space-1); }
+    .yr, .cta {
+      grid-column: 2;
+      text-align: left;
+      justify-self: start;
+    }
+    .cta { padding-top: var(--space-1); }
+  }
+  @media (pointer: coarse) {
+    .cta { min-height: 44px; display: inline-flex; align-items: center; }
+  }
+</style>

@@ -1,0 +1,36 @@
+---
+title: YouShopper Suite
+tagline: '# three production apps for one multi-vendor e-commerce ecosystem'
+role: 'lead Flutter engineer'
+yearsLabel: '2022 – 2023'
+years: { start: 2022, end: 2023 }
+stack: [Flutter, Provider, Firebase, 'YouTube V3', OneSignal]
+status: live
+links:
+  - { label: customer app, href: 'https://play.google.com/store/apps/details?id=com.warehousesheriff.ssPlatform' }
+  - { label: seller app, href: 'https://play.google.com/store/apps/details?id=com.warehousesheriff.youshopper.seller' }
+stats:
+  - { num: '3', desc: 'separate Flutter apps shipped' }
+  - { num: '1', desc: 'shared backend (zero-downtime migrated)' }
+  - { num: 'YT V3', desc: 'API integration for content channels' }
+  - { num: 'live', desc: 'on Play Store today' }
+featured: false
+order: 4
+listingDesc: 'Three production apps for one e-commerce ecosystem: Customer, Seller, Delivery. Coin-based monetization, OneSignal, YouTube V3.'
+---
+
+## three apps, one ecosystem
+
+The YouShopper platform serves three distinct audiences — buyers, sellers, and delivery partners — and each needs its own app with its own UX assumptions. I architected and shipped all three as separate Flutter apps that share a backend, code patterns, and design system but ship independently and update on their own cadence.
+
+## the coin economy
+
+A central design feature was a **coin-based monetization system** that lets users earn in-app currency by engaging with content (YouTube V3 integration for video channels) and spend it across the marketplace. OneSignal push notifications close the loop — real-time alerts when coins are earned, orders move state, or sellers respond.
+
+## zero-downtime migration
+
+Halfway through, the seller platform needed a backend migration that absolutely could not interrupt live transactions. Coordinated with backend engineers to ship a dual-write phase, validated traffic on both, then cut over without a service window. Sellers never noticed.
+
+## what shipped
+
+Customer app — browse, cart, checkout, coin balance. Seller app — listings, orders, fulfilment, coin payouts. Delivery app — route, pickup, drop confirmation. All three on Play Store, all three still maintained.

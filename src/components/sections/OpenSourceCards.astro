@@ -1,0 +1,69 @@
+---
+// src/components/sections/OpenSourceCards.astro
+import TerminalFrame from '@/components/TerminalFrame.astro';
+import SectionLabel from '@/components/SectionLabel.astro';
+import { openSource } from '@/data/openSource';
+---
+<section id="opensource" aria-labelledby="os-h">
+  <SectionLabel n={3} name="opensource" />
+  <TerminalFrame>
+    <p class="prompt"><span class="dim">$</span> <span class="accent">dart pub publisher</span> <span class="fg">ottomancoder.com</span></p>
+    <h2 id="os-h" class="sr-only">Published packages</h2>
+    <ul class="pkgs">
+      {openSource.map((p) => (
+        <li class:list={['pkg', p.featured && 'featured']}>
+          <div>
+            <a class="nm" href={p.href}>{p.name}</a>
+            <p class="desc">
+              {p.desc}
+              {p.highlight && <span class="hl">{' '}{p.highlight}</span>}
+            </p>
+          </div>
+          <div class="meta">
+            {p.badge && <span class="badge">{p.badge}</span>}
+            {p.stats && (
+              <p class="nums">{p.stats.likes} likes<br />{p.stats.downloads} dl</p>
+            )}
+            <a class="link" href={p.href}>pub.dev →</a>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </TerminalFrame>
+</section>
+
+<style>
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .prompt { font-family: var(--font-mono); margin-bottom: var(--space-4); }
+  .dim { color: var(--fg-dim); }
+  .accent { color: var(--accent); }
+  .fg { color: var(--fg); }
+  .pkgs { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-3); }
+  .pkg {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-5);
+    padding: var(--space-4) var(--space-5);
+    background: var(--bg-elev);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+  }
+  .pkg.featured {
+    border-color: var(--key);
+    background: linear-gradient(180deg, color-mix(in oklab, var(--key) 8%, transparent), transparent);
+  }
+  .nm { color: var(--fg); font-weight: 600; font-size: var(--fs-base); border-bottom: 0; }
+  .nm:hover { border-bottom: 1px solid var(--fg); }
+  .desc { color: var(--fg); font-size: var(--fs-sm); line-height: 1.6; margin: 4px 0 0; }
+  .hl { color: var(--fg); font-weight: 600; }
+  .meta { text-align: right; display: flex; flex-direction: column; gap: var(--space-2); align-items: flex-end; }
+  .badge { font-size: var(--fs-xs); padding: 3px 8px; border-radius: var(--radius-sm);
+    background: color-mix(in oklab, var(--key) 18%, transparent); color: var(--key); display: inline-block; white-space: nowrap; }
+  .nums { color: var(--fg-dim); font-size: var(--fs-xs); margin: 0; line-height: 1.4; }
+  .link { color: var(--link); font-size: var(--fs-sm); white-space: nowrap; }
+
+  @media (max-width: 640px) {
+    .pkg { grid-template-columns: 1fr; }
+    .meta { text-align: left; flex-direction: row; flex-wrap: wrap; align-items: center; }
+  }
+</style>

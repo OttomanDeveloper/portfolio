@@ -1,0 +1,35 @@
+---
+title: Status Getter
+tagline: '# multi-platform media downloader powered by Dart Isolates'
+role: 'solo author · open source'
+yearsLabel: '2022'
+years: { start: 2022, end: 2022 }
+stack: [Flutter, BLoC, 'Dart Isolates', AdMob]
+status: live
+links:
+  - { label: github, href: 'https://github.com/OttomanDeveloper/status_getter' }
+stats:
+  - { num: '10+', desc: 'social platforms supported' }
+  - { num: '4 ★', desc: 'GitHub stars' }
+  - { num: '0', desc: 'UI jank under heavy I/O' }
+  - { num: 'OSS', desc: 'open source on GitHub' }
+featured: false
+order: 5
+listingDesc: 'Multi-platform media downloader. 10+ social platforms via custom extraction engine. Dart Isolates for concurrent I/O.'
+---
+
+## the itch
+
+WhatsApp statuses, Instagram reels, TikTok clips, YouTube shorts — every platform has its own way of restricting downloads. Status Getter scratches that itch by reverse-engineering each platform's media URL pattern and exposing them through one shared download surface.
+
+## the extraction engine
+
+The core is a pluggable **extraction engine** that routes a URL through platform-specific handlers, each responsible for resolving the underlying media asset. Adding a new platform is one file. The engine is the part of the codebase I'm proudest of — well-bounded, no inter-handler coupling, fully tested.
+
+## isolates for I/O
+
+Concurrent downloads under poor connectivity used to make the UI freeze. Moving the I/O loop into a **Dart Isolate** killed the jank entirely — the main thread paints at 60fps no matter how many parallel transfers are running.
+
+## why it's open
+
+Open source on GitHub. The platform handlers are a moving target (sites change their URL schemes constantly) and that's a maintenance burden the community is better at sharing than any one developer.

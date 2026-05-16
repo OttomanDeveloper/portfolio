@@ -1,24 +1,44 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import TerminalFrame from '@/components/TerminalFrame.astro';
-import KvBlock from '@/components/KvBlock.astro';
-import StatsRow from '@/components/StatsRow.astro';
-import SectionLabel from '@/components/SectionLabel.astro';
+import Hero from '@/components/sections/Hero.astro';
+import ProjectsList from '@/components/sections/ProjectsList.astro';
+import OpenSourceCards from '@/components/sections/OpenSourceCards.astro';
+import ExperienceLog from '@/components/sections/ExperienceLog.astro';
+import StackTree from '@/components/sections/StackTree.astro';
+import ContactSection from '@/components/sections/ContactSection.astro';
+import { profile } from '@/data/profile';
+
+const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? 'http://localhost:4321';
 ---
-<BaseLayout title="atoms smoke" description="dev">
-  <div class="container" style="padding-block: 48px; display: grid; gap: 24px;">
-    <SectionLabel n={1} name="whoami" />
-    <TerminalFrame>
-      <KvBlock pairs={[
-        { key: 'based', value: 'Islamabad, PK' },
-        { key: 'links', value: '<a href="#">github</a> · <a href="#">linkedin</a>', valueHtml: true },
-      ]} />
-      <StatsRow label="proof of work" stats={[
-        { num: '600K', unit: '+', desc: 'peak users' },
-        { num: '50', unit: '+', desc: 'apps shipped' },
-        { num: '#1', desc: 'category 5 months' },
-        { num: '1', unit: ' pkg', desc: 'adopted by Google' },
-      ]} />
-    </TerminalFrame>
+<BaseLayout
+  title={`${profile.name} — ${profile.tagline}`}
+  description={`${profile.alias}. ${profile.tagline}. Based in ${profile.basedIn}. ${profile.stackSummary}.`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: profile.name,
+    alternateName: profile.alias,
+    jobTitle: profile.tagline,
+    url: siteUrl,
+    image: `${siteUrl}/og/default.png`,
+    email: `mailto:${profile.email}`,
+    address: { '@type': 'PostalAddress', addressLocality: 'Islamabad', addressCountry: 'PK' },
+    sameAs: [
+      'https://github.com/OttomanDeveloper',
+      'https://www.linkedin.com/in/ottomancoder/',
+      'https://pub.dev/publishers/ottomancoder.com/packages',
+      'https://www.youtube.com/@OttomanCoder',
+      'https://twitter.com/ottomancoder',
+    ],
+  })} />
+
+  <div class="container" style="display:grid; gap: var(--space-9); padding-block: var(--space-7);">
+    <Hero />
+    <ProjectsList />
+    <OpenSourceCards />
+    <ExperienceLog />
+    <StackTree />
+    <ContactSection />
   </div>
 </BaseLayout>

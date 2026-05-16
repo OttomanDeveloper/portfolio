@@ -1,0 +1,53 @@
+---
+// src/components/sections/StackTree.astro
+import TerminalFrame from '@/components/TerminalFrame.astro';
+import SectionLabel from '@/components/SectionLabel.astro';
+import { stack } from '@/data/stack';
+---
+<section id="stack" aria-labelledby="stack-h">
+  <SectionLabel n={5} name="stack" />
+  <TerminalFrame>
+    <p class="prompt"><span class="dim">$</span> <span class="accent">cat</span> <span class="fg">.tools/manifest.toml</span></p>
+    <h2 id="stack-h" class="sr-only">Tech stack</h2>
+    <dl class="grid">
+      {stack.map((g) => (
+        <>
+          <dt class="k">{g.category}</dt>
+          <dd class="v">
+            {g.chips.map((c) => <span class="chip">{c}</span>)}
+          </dd>
+        </>
+      ))}
+    </dl>
+  </TerminalFrame>
+</section>
+
+<style>
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .prompt { font-family: var(--font-mono); margin-bottom: var(--space-4); }
+  .dim { color: var(--fg-dim); }
+  .accent { color: var(--accent); }
+  .fg { color: var(--fg); }
+  .grid {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: var(--space-3) var(--space-5);
+    margin: 0;
+  }
+  .k { color: var(--key); align-self: baseline; margin: 0; }
+  .v { margin: 0; }
+  .chip {
+    display: inline-block;
+    padding: 2px 9px;
+    margin: 2px 5px 2px 0;
+    background: color-mix(in oklab, var(--fg) 6%, transparent);
+    border-radius: 3px;
+    font-size: var(--fs-sm);
+    color: var(--fg);
+  }
+  @media (max-width: 479px) {
+    .grid { grid-template-columns: 1fr; gap: var(--space-1); }
+    .k { margin-top: var(--space-3); }
+    .k:first-child { margin-top: 0; }
+  }
+</style>

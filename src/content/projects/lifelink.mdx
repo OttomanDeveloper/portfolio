@@ -1,0 +1,36 @@
+---
+title: LifeLink
+tagline: '# crisis-intervention app with Gemini AI + passive background tracking'
+role: 'lead Flutter engineer'
+yearsLabel: '2023'
+years: { start: 2023, end: 2023 }
+stack: [Flutter, BLoC, Gemini, Firebase, 'Dart Isolates']
+status: live
+links:
+  - { label: play store, href: 'https://play.google.com/store/apps/details?id=com.helper.lifelink' }
+stats:
+  - { num: '0%', desc: 'measurable battery hit from passive tracking' }
+  - { num: '24/7', desc: 'background sleep/stress/movement signals' }
+  - { num: '1st', desc: 'Flutter consumer health app shipping Gemini' }
+  - { num: 'live', desc: 'on Play Store today' }
+featured: true
+order: 2
+listingDesc: 'Crisis-intervention app with Gemini AI for empathetic mood support &amp; Dart Isolates for passive background tracking.'
+---
+
+## the problem
+
+A user in crisis needs support *now* — not three taps later, and not after the app has woken up from cold start. LifeLink had to passively watch for the signals that something was wrong (sleep disruption, sustained stress patterns, unusual stillness) and route the user to the right intervention without ever feeling surveilled.
+
+## passive without parasitic
+
+The hard engineering question was: how do you run continuous background analysis on a phone without destroying battery or warm-pocket trust? The answer was **Dart Isolates**. Sensor reads, signal smoothing, and pattern detection all run off the UI thread, batched into windowed reads, and woken only when a threshold crosses. The user-facing app stays light; the always-on layer never blocks paint.
+
+## empathetic Gemini
+
+When LifeLink does intervene, the conversational layer uses **Google Gemini** for empathetic mood support — one of the earliest Flutter consumer health apps to ship Gemini in a live production context. Prompt engineering for crisis support is its own discipline: every response is bounded, never diagnostic, always routed toward action (call this hotline, message this contact, breathe with me for 60 seconds).
+
+## what I'd do differently
+
+- On-device classification for the simpler trigger patterns would cut cloud cost and improve latency under poor connectivity.
+- A "trusted-contact" handoff was scoped out of v1; in retrospect it should have been the v1 hero feature.

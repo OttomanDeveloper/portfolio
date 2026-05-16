@@ -1,0 +1,118 @@
+---
+// src/layouts/CaseStudyLayout.astro
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import TerminalFrame from '@/components/TerminalFrame.astro';
+import KvBlock from '@/components/KvBlock.astro';
+import StatsRow from '@/components/StatsRow.astro';
+
+interface Props {
+  title: string;
+  slug: string;
+  tagline: string;
+  role: string;
+  yearsLabel: string;
+  stack: string[];
+  status: 'live' | 'retired' | 'in-progress';
+  links: { label: string; href: string }[];
+  stats: { num: string; unit?: string; desc: string }[];
+  prev?: { slug: string; title: string } | null;
+  next?: { slug: string; title: string } | null;
+}
+
+const { title, slug, tagline, role, yearsLabel, stack, status, links, stats, prev, next } = Astro.props;
+
+const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? 'http://localhost:4321';
+const linksHtml = links.length
+  ? links.map((l) => `<a href="${l.href}">${l.label} →</a>`).join(' · ')
+  : '<span class="dim">—</span>';
+
+const pairs = [
+  { key: 'role',   value: role },
+  { key: 'years',  value: yearsLabel },
+  { key: 'stack',  value: stack.join(' · ') },
+  { key: 'status', value: `<span class="status status-${status}">${status}</span>`, valueHtml: true },
+  { key: 'links',  value: linksHtml, valueHtml: true },
+];
+---
+<BaseLayout
+  title={`${title} — case study`}
+  description={tagline.replace(/^#\s*/, '')}
+  ogImage={new URL(`/og/${slug}.png`, siteUrl).toString()}
+>
+  <div class="container" style="padding-block: var(--space-7); display: grid; gap: var(--space-8);">
+    <TerminalFrame meta={`case-study · ${slug}.mdx`}>
+      <p class="crumb">
+        <a href="/">~</a> / <a href="/#projects">projects</a> / <span class="here">{slug}</span>
+      </p>
+      <h1 class="title">{title}</h1>
+      <p class="tagline">{tagline}</p>
+      <div class="meta-wrap">
+        <KvBlock pairs={pairs} />
+      </div>
+      <StatsRow stats={stats} />
+      <article class="prose"><slot /></article>
+      <nav class="navfoot" aria-label="More case studies">
+        <span class="dim">$</span> <a href="/#projects">← back to projects</a>
+        {prev && (<>{' · '}<a href={`/projects/${prev.slug}`}>← {prev.title}</a></>)}
+        {next && (<>{' · '}<a href={`/projects/${next.slug}`}>{next.title} →</a></>)}
+      </nav>
+    </TerminalFrame>
+  </div>
+</BaseLayout>
+
+<style>
+  .crumb { color: var(--fg-dim); font-size: var(--fs-sm); margin: 0 0 var(--space-5); font-family: var(--font-mono); }
+  .crumb .here { color: var(--fg); }
+  .title { color: var(--fg); font-size: 1.75rem; font-weight: 600; line-height: 1.15; margin: 0 0 var(--space-1); font-family: var(--font-mono); }
+  .tagline { color: var(--accent); font-size: var(--fs-base); margin: 0 0 var(--space-5); font-family: var(--font-mono); }
+  .meta-wrap { padding: var(--space-4) 0; border-top: 1px dashed var(--border-soft); border-bottom: 1px dashed var(--border-soft); }
+  :global(.status) { font-family: var(--font-mono); padding: 1px 8px; border-radius: 3px; font-size: var(--fs-sm); }
+  :global(.status-live) { color: var(--accent); background: color-mix(in oklab, var(--accent) 12%, transparent); }
+  :global(.status-retired) { color: var(--fg-dim); background: color-mix(in oklab, var(--fg-dim) 12%, transparent); }
+  :global(.status-in-progress) { color: var(--link); background: color-mix(in oklab, var(--link) 12%, transparent); }
+
+  .prose {
+    font-family: var(--font-sans);
+    font-size: var(--fs-prose);
+    line-height: var(--lh-loose);
+    color: var(--fg);
+    max-width: var(--prose-measure);
+    margin-top: var(--space-6);
+  }
+  .prose :global(h2),
+  .prose :global(h3) {
+    font-family: var(--font-mono);
+    color: var(--fg);
+    font-weight: 600;
+    margin: var(--space-7) 0 var(--space-3);
+    line-height: 1.2;
+  }
+  .prose :global(h2) { font-size: var(--fs-h2); }
+  .prose :global(h3) { font-size: var(--fs-h3); }
+  .prose :global(h2)::before,
+  .prose :global(h3)::before { content: '## '; color: var(--accent); }
+  .prose :global(p) { margin: 0 0 var(--space-4); }
+  .prose :global(ul), .prose :global(ol) { margin: 0 0 var(--space-4) 0; padding-left: var(--space-5); }
+  .prose :global(li) { margin-bottom: var(--space-2); }
+  .prose :global(code) {
+    background: var(--bg-elev); color: var(--key);
+    padding: 1px 6px; border-radius: 3px;
+    font-size: 0.9em; font-family: var(--font-mono);
+  }
+  .prose :global(pre) {
+    background: var(--bg-elev); padding: var(--space-4); border-radius: var(--radius-sm);
+    overflow-x: auto;
+    border: 1px solid var(--border-soft);
+  }
+  .prose :global(pre code) { background: transparent; padding: 0; }
+  .prose :global(blockquote) {
+    border-left: 3px solid var(--accent);
+    padding-left: var(--space-4);
+    margin: var(--space-5) 0;
+    color: var(--fg-dim);
+  }
+  .prose :global(strong) { color: var(--fg); font-weight: 600; }
+
+  .navfoot { margin-top: var(--space-8); padding-top: var(--space-4); border-top: 1px dashed var(--border-soft); font-family: var(--font-mono); }
+  .dim { color: var(--fg-dim); }
+</style>

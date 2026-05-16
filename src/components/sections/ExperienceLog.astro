@@ -1,0 +1,47 @@
+---
+// src/components/sections/ExperienceLog.astro
+import TerminalFrame from '@/components/TerminalFrame.astro';
+import SectionLabel from '@/components/SectionLabel.astro';
+import { experience } from '@/data/experience';
+---
+<section id="experience" aria-labelledby="exp-h">
+  <SectionLabel n={4} name="experience" />
+  <TerminalFrame>
+    <p class="prompt"><span class="dim">$</span> <span class="accent">git log</span> <span class="fg">--all --oneline ./career</span></p>
+    <h2 id="exp-h" class="sr-only">Work experience</h2>
+    <ol class="entries">
+      {experience.map((e) => (
+        <li class="entry">
+          <p class="hdr">
+            <span class="hash">{e.hash}</span>
+            <span class="role">{e.role}</span>
+            <span class="dim"> @ </span>
+            {e.whereHref ? <a class="where" href={e.whereHref}>{e.where}</a> : <span class="where">{e.where}</span>}
+            <span class="when">{e.date} · {e.location}</span>
+          </p>
+          <p class="body">{e.body}</p>
+        </li>
+      ))}
+    </ol>
+  </TerminalFrame>
+</section>
+
+<style>
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .prompt { font-family: var(--font-mono); margin-bottom: var(--space-4); }
+  .dim { color: var(--fg-dim); }
+  .accent { color: var(--accent); }
+  .fg { color: var(--fg); }
+  .entries { list-style: none; padding: 0; margin: 0; }
+  .entry { padding: var(--space-3) 0; border-bottom: 1px dashed var(--border-soft); }
+  .entry:last-child { border-bottom: 0; }
+  .hdr { margin: 0; line-height: 1.6; }
+  .hash { color: var(--key); margin-right: 8px; }
+  .role { color: var(--fg); font-weight: 600; }
+  .where { color: var(--accent); border-bottom-color: color-mix(in oklab, var(--accent) 40%, transparent); }
+  .when { color: var(--fg-dim); font-size: var(--fs-xs); margin-left: var(--space-3); }
+  .body { color: var(--fg); font-size: var(--fs-sm); line-height: 1.6; margin: 4px 0 0; max-width: 700px; }
+  @media (max-width: 640px) {
+    .when { display: block; margin: 4px 0 0; }
+  }
+</style>

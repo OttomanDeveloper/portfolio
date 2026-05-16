@@ -1,0 +1,45 @@
+---
+// src/components/sections/ContactSection.astro
+import TerminalFrame from '@/components/TerminalFrame.astro';
+import SectionLabel from '@/components/SectionLabel.astro';
+import { profile } from '@/data/profile';
+---
+<section id="contact" aria-labelledby="contact-h">
+  <SectionLabel n={6} name="contact" />
+  <TerminalFrame>
+    <p class="prompt"><span class="dim">$</span> <span class="accent">echo</span> <span class="link">"$MSG"</span> | <span class="accent">mail</span> <span class="fg">{profile.email}</span></p>
+    <h2 id="contact-h" class="sr-only">Contact</h2>
+
+    <slot name="form">
+      {/* Static fallback if no React form provided */}
+      <p class="fallback">
+        Drop a line: <a href={`mailto:${profile.email}`}>{profile.email}</a>
+      </p>
+    </slot>
+
+    <p class="alt">
+      <span class="dim"># or reach me anywhere:</span><br />
+      <span class="key">▸</span> <a href={`mailto:${profile.email}`}>{profile.email}</a>
+      &nbsp;<span class="key">▸</span> <a href="https://twitter.com/ottomancoder">@ottomancoder</a>
+      <span class="dim">(twitter/linkedin/github/youtube)</span>
+    </p>
+  </TerminalFrame>
+</section>
+
+<style>
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .prompt { font-family: var(--font-mono); margin-bottom: var(--space-4); }
+  .dim { color: var(--fg-dim); }
+  .accent { color: var(--accent); }
+  .link { color: var(--link); }
+  .fg { color: var(--fg); }
+  .key { color: var(--key); }
+  .fallback {
+    margin-top: var(--space-4);
+    padding: var(--space-4) var(--space-5);
+    background: var(--bg-elev);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+  }
+  .alt { margin-top: var(--space-4); line-height: 1.8; }
+</style>

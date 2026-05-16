@@ -1,0 +1,36 @@
+---
+title: Nmo AI
+tagline: '# AI-powered fitness + BLE health-device sync for the MENA market'
+role: 'Flutter developer · architecture lead'
+yearsLabel: '2024 – present'
+years: { start: 2024, end: 'present' }
+stack: [Flutter, BLE, Gemini, Firebase, 'AI personalization']
+status: in-progress
+links: []
+stats:
+  - { num: 'MENA', desc: 'regional launch market' }
+  - { num: 'BLE', desc: 'scales + heart-rate monitors sync' }
+  - { num: 'AI', desc: 'on-device + cloud personalization' }
+  - { num: '2024–', desc: 'ongoing build' }
+featured: false
+order: 3
+listingDesc: 'AI-powered fitness app for MENA market. BLE sync with scales / heart-rate monitors. On-device + cloud inference.'
+---
+
+> Some implementation details are intentionally omitted — Nmo AI is unreleased. The shape of what we're building is what matters.
+
+## the build
+
+Nmo AI is an AI-driven fitness and health application targeting users in the MENA region — a market underserved by Western fitness products and with specific cultural, linguistic, and dietary requirements that English-first apps don't meet.
+
+## BLE everywhere
+
+Smart scales, heart rate monitors, and chest straps all talk over Bluetooth Low Energy via the `flutter_blue_plus` plugin. Pairing flows are notoriously bad on mobile fitness apps; we're investing heavily in making the device handshake feel like magic — surface the right device first, retry without prompting, sync silently.
+
+## personalization
+
+Gemini drives the adaptive coaching layer. The interesting design question is *what is sent to the cloud and what stays on device* — sensitive biometric signals are processed locally where possible, with cloud inference reserved for higher-level coaching decisions that benefit from broader context.
+
+## architecture
+
+I'm driving Flutter architecture decisions for a cross-functional international team — code structure, state management patterns (BLoC), build pipeline, and the always-thorny question of how to keep an app this sensor-heavy maintainable as the team grows.

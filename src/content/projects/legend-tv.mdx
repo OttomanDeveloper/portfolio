@@ -1,0 +1,41 @@
+---
+title: Legend TV
+tagline: '# self-built Urdu-dubbed streaming platform'
+role: 'solo founder · designer · engineer'
+yearsLabel: '2020 – 2022'
+years: { start: 2020, end: 2022 }
+stack: [Flutter, Firebase, AdMob, 'REST APIs']
+status: retired
+links: []
+stats:
+  - { num: '600K', unit: '+', desc: 'peak active users' }
+  - { num: '$20K', unit: '+', desc: 'year-1 revenue' }
+  - { num: '#1', desc: 'PS category · 5 mo' }
+  - { num: '3', desc: 'countries · PK · IN · SA' }
+featured: true
+order: 1
+listingDesc: 'Self-built Urdu-dubbed streaming platform. <span class="dim">600K+ users · $20K+ rev · #1 Play Store category for 5 months.</span>'
+---
+
+## the bet
+
+Urdu-speaking audiences in Pakistan, India, and Saudi Arabia had access to a flood of foreign streaming content, but very little dubbed in their own language. The bet was simple: ship a streaming experience that prioritized Urdu dubs first, and most users would never need anything else.
+
+## building solo
+
+The whole stack was Flutter on the client and Firebase on the server. I built the content ingestion pipeline, the player, the recommendation surface, the ad mediation, and the subscription flow myself. The hardest call was sticking with AdMob mediation early instead of negotiating direct ad deals — it paid off when scale hit and CPM tuning could happen automatically.
+
+## what scale taught me
+
+- Cold-start latency on low-end Androids was the difference between #6 and #1 in category — every `100ms` shaved off the splash mattered.
+- Caching *thumbnails*, not just video segments, cut perceived browsing time in half.
+- Firebase costs at 600K users teach you very fast which reads can be denormalized.
+- Ad mediation tuning is its own discipline — the highest-CPM network isn't always the highest-revenue network for *your* fill rate.
+
+## the numbers
+
+`600,000+` peak users. `$20,000+` revenue in year one from ad mediation + subscriptions. `#1` in the Play Store entertainment category for 5 consecutive months across Pakistan, India, and Saudi Arabia.
+
+## retirement
+
+Legend TV is retired — content licensing got prohibitively expensive at scale and the unit economics stopped working. But every architectural lesson from it is alive in the apps I've shipped since: how to design a Flutter app that holds up on low-end hardware, how to instrument for product decisions, how to run a single-person product team.
