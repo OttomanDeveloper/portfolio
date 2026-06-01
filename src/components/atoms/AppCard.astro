@@ -1,0 +1,86 @@
+---
+// src/components/atoms/AppCard.astro
+interface Props {
+  name: string;
+  tagline: string;
+  iconGlyph?: string;
+  iconColor?: string;
+  badge?: { label: string; tone?: 'gold' | 'cyan' | 'lime' };
+  href: string;
+  external?: boolean;
+  vt?: string;
+}
+const { name, tagline, iconGlyph = '◆', iconColor = 'var(--accent)', badge, href, external = false, vt } = Astro.props;
+const target = external ? '_blank' : undefined;
+const rel = external ? 'noopener noreferrer' : undefined;
+---
+<a class="card" href={href} target={target} rel={rel}>
+  <div class="icon" style={`--icon-color: ${iconColor};`}><span aria-hidden="true">{iconGlyph}</span></div>
+  <div class="text">
+    {badge && <p class={`badge tone-${badge.tone ?? 'gold'}`}>{badge.label}</p>}
+    <h3 class="name" style={vt ? `view-transition-name: ${vt};` : undefined}>{name}</h3>
+    <p class="tagline">{tagline}</p>
+  </div>
+  <span class="open" aria-hidden="true">OPEN {external ? '↗' : '→'}</span>
+</a>
+
+<style>
+  .card {
+    display: grid;
+    grid-template-columns: 82px 1fr auto;
+    gap: var(--s-4);
+    align-items: center;
+    padding: var(--s-4);
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--t-base) var(--ease-out),
+                border-color var(--t-base) var(--ease-out),
+                box-shadow var(--t-base) var(--ease-out);
+    min-block-size: 110px;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .card:hover, .card:focus-visible {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 32px -12px oklch(20% 0.02 80 / 0.6);
+    }
+  }
+  .icon {
+    inline-size: 82px; block-size: 82px;
+    background: color-mix(in oklab, var(--icon-color) 14%, transparent);
+    border-radius: var(--r-icon);
+    display: grid; place-items: center;
+    color: var(--icon-color);
+    font: 700 2rem var(--font-mono);
+  }
+  .badge {
+    font: 400 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 0 0 var(--s-1);
+  }
+  .tone-gold { color: var(--accent); }
+  .tone-cyan { color: var(--cyan); }
+  .tone-lime { color: var(--lime); }
+
+  .name { font: 700 var(--fs-body) var(--font-sans); color: var(--fg); margin: 0; }
+  .tagline { color: var(--fg-dim); font-size: var(--fs-small); margin: var(--s-1) 0 0; line-height: 1.4; }
+  .open {
+    color: var(--accent);
+    font: 600 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.12em;
+    padding: var(--s-2) var(--s-3);
+    border-radius: var(--r-pill);
+    background: oklch(76% 0.13 80 / 0.12);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 479px) {
+    .card { grid-template-columns: 64px 1fr; }
+    .icon { inline-size: 64px; block-size: 64px; font-size: 1.5rem; }
+    .open { grid-column: 2; justify-self: start; margin-block-start: var(--s-2); }
+  }
+</style>

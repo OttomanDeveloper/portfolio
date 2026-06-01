@@ -1,9 +1,38 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import SectionLabel from '@/components/atoms/SectionLabel.astro';
+import StatusPill from '@/components/atoms/StatusPill.astro';
+import StatsRow from '@/components/atoms/StatsRow.astro';
+import KvBlock from '@/components/atoms/KvBlock.astro';
+import TodayCard from '@/components/atoms/TodayCard.astro';
+import AppCard from '@/components/atoms/AppCard.astro';
+import OssCard from '@/components/atoms/OssCard.astro';
+import PhoneFrame from '@/components/atoms/PhoneFrame.astro';
 ---
-<BaseLayout title="Portfolio v3 — scaffold" description="dev">
-  <div class="container" style="padding-block: var(--s-9)">
-    <p style="font: 700 var(--fs-hero)/var(--lh-tight) var(--font-mono); color: var(--fg)">MUHAMMAD USMAN.</p>
-    <p style="color: var(--accent); font: var(--fs-body) var(--font-sans); margin-top: var(--s-3)">Scaffold OK. Tokens loaded. <span style="font: 700 var(--fs-arabic) var(--font-arabic);" lang="ar" dir="rtl">عُثماني</span></p>
+<BaseLayout title="Atoms smoke" description="dev">
+  <div class="container" style="display: grid; gap: var(--s-8); padding-block: var(--s-9)">
+    <SectionLabel n={1} name="atoms-smoke" />
+    <StatusPill label="Available for new work" />
+    <KvBlock pairs={[
+      { key: 'based', value: 'Islamabad, PK' },
+      { key: 'links', value: '<a href="#">github</a> · <a href="#">linkedin</a>', valueHtml: true },
+    ]} />
+    <StatsRow stats={[
+      { num: '600K', unit: '+', desc: 'peak users on Legend TV' },
+      { num: '50',   unit: '+', desc: 'production apps shipped' },
+      { num: '#1',              desc: 'PS category, 5 months' },
+      { num: '9',    unit: ' pkgs', desc: 'open-source on pub.dev' },
+    ]} />
+    <TodayCard eyebrow="▸ FEATURED · ADOPTED BY GOOGLE" title="firebase_admin_sdk" vt="google-credential">
+      <p>A Dart package I wrote — later officially taken over and maintained by Google's Dart &amp; Flutter team.</p>
+      <Fragment slot="ctas">
+        <a href="https://pub.dev/packages/firebase_admin_sdk">Get on pub.dev →</a>
+      </Fragment>
+    </TodayCard>
+    <AppCard name="LifeLink" tagline="Crisis app · Gemini AI · Isolates" iconGlyph="🧬" badge={{ label: 'FEATURED', tone: 'cyan' }}
+             href="https://play.google.com/store/apps/details?id=com.helper.lifelink" external />
+    <OssCard name="vision_ai" tagline="On-device gesture + emotion in Flutter" href="https://pub.dev/packages/vision_ai"
+             badge={{ label: 'NEW · ON-DEVICE AI', tone: 'cyan' }} meta="just shipped" />
+    <PhoneFrame src="/favicon.svg" alt="placeholder" variant="front" />
   </div>
 </BaseLayout>

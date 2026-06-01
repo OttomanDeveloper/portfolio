@@ -1,0 +1,45 @@
+---
+// src/components/atoms/StatusPill.astro
+interface Props { label: string; href?: string; cta?: string; }
+const { label, href = '#contact', cta = 'Get in touch ↓' } = Astro.props;
+---
+<a class="pill" href={href}>
+  <span class="dot" aria-hidden="true"></span>
+  <span class="label">{label}</span>
+  <span class="cta">{cta}</span>
+</a>
+
+<style>
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-3);
+    padding: var(--s-2) var(--s-4);
+    background: oklch(20% 0.02 80 / 0.55);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--r-pill);
+    color: var(--fg);
+    font: 400 var(--fs-small) var(--font-sans);
+    text-decoration: none;
+    transition: border-color var(--t-base) var(--ease-out),
+                background-color var(--t-base) var(--ease-out);
+    min-block-size: 44px;
+  }
+  .pill:hover, .pill:focus-visible {
+    border-color: var(--accent);
+    background: oklch(25% 0.04 80 / 0.65);
+    color: var(--fg);
+  }
+  .dot {
+    inline-size: 8px; block-size: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 var(--accent-glow);
+    animation: pulse 2s var(--ease-out) infinite;
+  }
+  .cta { color: var(--accent); font: 600 var(--fs-small) var(--font-sans); }
+  @keyframes pulse {
+    0%, 60%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+    30% { box-shadow: 0 0 0 10px transparent; }
+  }
+</style>

@@ -1,0 +1,67 @@
+---
+// src/components/atoms/TodayCard.astro
+interface Props {
+  eyebrow: string;
+  title: string;
+  glow?: boolean;
+  vt?: string; // view-transition-name on the title
+}
+const { eyebrow, title, glow = true, vt } = Astro.props;
+---
+<article class:list={['today', glow && 'glow']}>
+  <p class="eyebrow" aria-hidden="true">{eyebrow}</p>
+  <h2 class="title" style={vt ? `view-transition-name: ${vt};` : undefined}>{title}</h2>
+  <div class="body"><slot /></div>
+  <div class="ctas"><slot name="ctas" /></div>
+</article>
+
+<style>
+  .today {
+    --angle: 0deg;
+    position: relative;
+    padding: clamp(var(--s-5), 4vw, var(--s-7));
+    background: linear-gradient(180deg, var(--bg-elev), color-mix(in oklab, var(--bg-elev) 70%, var(--bg)));
+    border: 1.5px solid var(--border-soft);
+    border-radius: var(--r-featured);
+    isolation: isolate;
+  }
+  .glow {
+    background:
+      radial-gradient(120% 80% at 0% 0%, var(--accent-glow), transparent 60%),
+      linear-gradient(180deg, var(--bg-elev), color-mix(in oklab, var(--bg-elev) 60%, var(--bg)));
+  }
+  .glow::before {
+    content: ''; position: absolute; inset: -1.5px;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: conic-gradient(from var(--angle), transparent 0deg, var(--accent) 90deg, transparent 180deg);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    animation: spin 6s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+  }
+  @property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+  @keyframes spin { to { --angle: 360deg; } }
+  @media (prefers-reduced-motion: reduce) { .glow::before { animation: none; } }
+
+  .eyebrow {
+    color: var(--accent);
+    font: 400 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-block-end: var(--s-4);
+  }
+  .title {
+    color: var(--fg);
+    font: 700 var(--fs-featured) / var(--lh-snug) var(--font-sans);
+    margin-block-end: var(--s-4);
+  }
+  .body { color: var(--fg); font-size: var(--fs-body); line-height: var(--lh-default); max-inline-size: 60ch; }
+  .ctas {
+    margin-block-start: var(--s-5);
+    display: flex; flex-wrap: wrap; gap: var(--s-3);
+  }
+</style>

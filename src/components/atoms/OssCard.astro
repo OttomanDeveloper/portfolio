@@ -1,0 +1,65 @@
+---
+// src/components/atoms/OssCard.astro
+interface Props {
+  name: string;
+  tagline: string;
+  href: string;
+  badge?: { label: string; tone?: 'gold' | 'cyan' | 'lime' | 'dim' };
+  meta?: string;
+}
+const { name, tagline, href, badge, meta } = Astro.props;
+---
+<a class="oss" href={href} target="_blank" rel="noopener noreferrer">
+  {badge && <p class={`badge tone-${badge.tone ?? 'gold'}`}>{badge.label}</p>}
+  <h3 class="name">{name}</h3>
+  <p class="tagline">{tagline}</p>
+  <div class="foot">
+    <span class="link">pub.dev →</span>
+    {meta && <span class="meta">{meta}</span>}
+  </div>
+</a>
+
+<style>
+  .oss {
+    display: block;
+    padding: var(--s-5);
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--r-pkg);
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--t-base) var(--ease-out),
+                border-color var(--t-base) var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .oss:hover, .oss:focus-visible {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+  }
+  .badge {
+    font: 400 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 0 0 var(--s-2);
+  }
+  .tone-gold { color: var(--accent); }
+  .tone-cyan { color: var(--cyan); }
+  .tone-lime { color: var(--lime); }
+  .tone-dim  { color: var(--fg-dim); }
+
+  .name {
+    font: 600 var(--fs-h3) var(--font-mono);
+    color: var(--fg);
+    margin: 0 0 var(--s-2);
+    overflow-wrap: anywhere;
+  }
+  .tagline { color: var(--fg-dim); font-size: var(--fs-small); line-height: 1.55; margin: 0; }
+  .foot {
+    display: flex; justify-content: space-between; align-items: end;
+    margin-block-start: var(--s-4);
+    font: 400 var(--fs-micro) var(--font-mono);
+  }
+  .link { color: var(--accent); }
+  .meta { color: var(--fg-dim); }
+</style>
