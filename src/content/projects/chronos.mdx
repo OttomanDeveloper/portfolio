@@ -1,0 +1,38 @@
+---
+title: Chronos
+tagline: A scroll-driven journey through the universe — in pure Flutter Web, 60 fps.
+stack: [Flutter 3.44, Provider, CustomPainter, "Single Ticker"]
+stats:
+  - { num: '30+', desc: 'CustomPainter scenes' }
+  - { num: '60', unit: 'fps', desc: 'on a single Ticker' }
+  - { num: '9',  desc: 'hand-painted eras' }
+  - { num: '0',  desc: 'image assets used' }
+liveUrl: https://ottomandeveloper.github.io/andro_meda/
+sourceUrl: https://github.com/OttomanDeveloper/andro_meda
+order: 3
+---
+
+## The brief
+
+A single-page experience tracing the entire history of the cosmos — Big Bang to today — across **nine hand-painted eras** and a final developer reveal. Scroll position is the timeline. Drag, tap, and hover all interact with each scene. Fully responsive across mobile, tablet, and desktop.
+
+## The constraint that shaped the build
+
+**Zero image assets.** Every scene is drawn in pure Dart. No GIFs, no Lottie, no sprite sheets. Just **`CustomPainter`** and math. That meant rendering a stylised galaxy, conic-section comet orbits, math-driven creatures, sun rotations, and supernova explosions from primitives, every frame.
+
+## How it stays at 60 fps
+
+- A **single `Ticker`** drives all 30+ scenes — no per-scene controllers, no animation graph.
+- **`EraScope`** gates visibility — only the on-screen era subscribes to per-frame updates. Off-screen scenes are dormant.
+- All paints are `Canvas` calls; no widget rebuilds in the inner loop.
+- Scroll position is the timeline, not a separate animation. One source of truth.
+
+The result: dozens of animated scenes coexist without dropping a frame on mid-range hardware.
+
+## See it
+
+<iframe src="https://ottomandeveloper.github.io/andro_meda/" title="Chronos live demo" loading="lazy" allow="autoplay"></iframe>
+
+## What I'd do differently
+
+A small set of WebGL primitives for the heaviest scenes (galaxy spirals especially) would offload some compositor cost from the canvas pipeline. Worth a v2 experiment.
