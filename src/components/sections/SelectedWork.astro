@@ -13,8 +13,8 @@ const GROUPS: Record<string, string> = {
   wisbig: 'rewards', rewardpay: 'rewards', 'lucky-spin': 'rewards',
   'yt-master': 'rewards', 'trust-earning': 'rewards', 'quiz-news-rewards': 'rewards',
   saveit: 'media', tfpdl: 'media', 'movo-downloader': 'media', 'football-wallpaper': 'media',
-  'status-saver': 'media',
-  icare: 'health',
+  'status-saver': 'media', 'legend-tv': 'media', udownload: 'media',
+  icare: 'health', lifelink: 'health',
   meetbook: 'social', 'hostel-finder': 'social', grouper: 'social',
   couriergo: 'other', 'allinone-game': 'other', 'bill-checker': 'other',
 };
@@ -33,10 +33,14 @@ const STATUS_LABEL: Record<string, string> = {
   prototype: 'Prototype', nda: 'Under NDA',
 };
 
-// UDownload + LifeLink are in the Featured carousel — drop them from the grid.
-const FEATURED_SLUGS = ['udownload', 'lifelink'];
+interface Props { n?: number; includeFeatured?: boolean; }
+const { n = 2, includeFeatured = false } = Astro.props;
+
+// On the home page the featured trio lives in the big carousel, so the grid drops
+// them. On /projects (includeFeatured) every project renders as a normal card.
+const FEATURED_SLUGS = ['legend-tv', 'udownload', 'lifelink'];
 const items = showcaseProjects
-  .filter((p) => !FEATURED_SLUGS.includes(p.slug))
+  .filter((p) => includeFeatured || !FEATURED_SLUGS.includes(p.slug))
   .map((p) => ({ ...p, group: GROUPS[p.slug] ?? 'other' }));
 
 const counts = Object.fromEntries(
@@ -50,9 +54,6 @@ const pickThumb = (screens: readonly string[]) =>
 const richSlugs = new Set(showcaseProjects.map((p) => p.slug));
 const liveApps = projects.filter((p) => !richSlugs.has(p.slug)).map((p) => ({ name: p.name, sub: p.tagline, href: p.href }));
 const moreLive = [...liveApps, ...moreApps.map((a) => ({ name: a.name, sub: a.category, href: a.href }))];
-
-interface Props { n?: number; }
-const { n = 2 } = Astro.props;
 ---
 <section id="selected-work">
   <div class="container">
@@ -160,6 +161,7 @@ const { n = 2 } = Astro.props;
         <div class="m-foot">
           <p class="m-role">{p.role} · {p.client}</p>
           <div class="m-links">
+            {p.caseHref && <a href={withBase(p.caseHref)}>Read case study →</a>}
             {p.githubLink && <a href={p.githubLink} target="_blank" rel="noopener noreferrer">GitHub ↗</a>}
             {p.storeLink && <a href={p.storeLink} target="_blank" rel="noopener noreferrer">Get the app ↗</a>}
           </div>

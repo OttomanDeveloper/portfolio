@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import FeaturedProjects from '@/components/sections/FeaturedProjects.astro';
 import SelectedWork from '@/components/sections/SelectedWork.astro';
 import { withBase } from '@/lib/paths';
 import { profile } from '@/data/profile';
@@ -14,14 +13,13 @@ import { profile } from '@/data/profile';
       <p class="crumb"><a href={withBase('/')}>~</a> / <span>projects</span></p>
       <h1 class="h1">Projects</h1>
       <p class="lead">
-        A marquee pair up top, then a deeper archive of client and personal apps —
-        each with its full screenshot gallery. Built across {profile.basedIn} and remote teams worldwide.
+        Every app worth showing — client and personal, flagship and archive — each with its full
+        screenshot gallery. Filter by category, tap any card to dive in. Built across {profile.basedIn} and remote teams worldwide.
       </p>
     </div>
   </header>
 
-  <FeaturedProjects n={1} />
-  <SelectedWork n={2} />
+  <SelectedWork n={1} includeFeatured />
 
   <div class="container">
     <p class="back"><a href={withBase('/')}>← back home</a></p>

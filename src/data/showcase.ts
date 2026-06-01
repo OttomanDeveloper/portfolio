@@ -20,11 +20,43 @@ export type ShowcaseProject = {
   status: 'live' | 'shipped' | 'shelved' | 'prototype' | 'nda';
   storeLink: string | null;
   githubLink: string | null;
+  caseHref?: string;
   screens: string[];
   featured: boolean;
 };
 
 export const showcaseProjects: ShowcaseProject[] = [
+  {
+    // Marquee commercial product. Shown big in the home Featured carousel and as a
+    // normal card (with case-study link) in the /projects grid.
+    slug: 'legend-tv',
+    name: 'Legend TV',
+    packageId: null,
+    year: 2021,
+    role: 'sole developer',
+    client: 'Personal',
+    category: 'Streaming',
+    tagline: 'Urdu-first streaming platform — 600K users, #1 in category for 5 months',
+    description:
+      'A solo-built streaming platform serving Urdu-dubbed Turkish series and films to audiences in Pakistan, India and Saudi Arabia. Built end-to-end — streaming architecture, content delivery, AdMob mediation, subscription loops and Play Store deployment — and scaled to 600K peak users and $20K year-1 revenue, holding #1 in its Play Store category for five months.',
+    motive:
+      'Urdu-speaking audiences had a flood of foreign content but little dubbed in their language — ship an Urdu-first streaming experience and own that gap.',
+    techStack: ['Flutter', 'Firebase', 'REST APIs', 'AdMob', 'Razorpay'],
+    features: [
+      'Urdu-dubbed series & films catalogue',
+      'Native video player',
+      'AdMob mediation at scale',
+      'Subscription loops',
+      'Content ingestion pipeline',
+      'Scaled solo to 600K users',
+    ],
+    status: 'shipped',
+    storeLink: null,
+    githubLink: null,
+    caseHref: '/projects/legend-tv',
+    screens: ['legend_home.avif', 'legend_series.avif', 'legend_movies.avif', 'legend_player.avif', 'legend_episodes.avif', 'legend_splash.avif'],
+    featured: true,
+  },
   {
     slug: 'grouper',
     name: 'WA Grouper',
