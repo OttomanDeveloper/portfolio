@@ -1,0 +1,363 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 2700" width="1280" font-family="system-ui">
+  <defs>
+    <!-- Phone frame template - reusable -->
+    <symbol id="phone" viewBox="0 0 200 410">
+      <rect x="2" y="2" width="196" height="406" rx="32" ry="32" fill="#0a0a0a" stroke="#222" stroke-width="2"/>
+      <rect x="14" y="14" width="172" height="382" rx="22" ry="22" fill="currentColor"/>
+      <rect x="74" y="18" width="52" height="14" rx="7" fill="#0a0a0a"/>
+    </symbol>
+
+    <!-- Editorial gold gradient -->
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#c89a57"/>
+      <stop offset="100%" stop-color="#a47a3f"/>
+    </linearGradient>
+
+    <!-- App Store glow -->
+    <radialGradient id="todayGlow" cx="0.5" cy="0.5" r="0.7">
+      <stop offset="0%" stop-color="#d4a558" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#d4a558" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Editorial × App Store editorial red accent -->
+    <linearGradient id="todayCard" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a1a1f"/>
+      <stop offset="100%" stop-color="#0a0a10"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ============================================================ -->
+  <!-- DIRECTION A · EDITORIAL × HERITAGE                            -->
+  <!-- ============================================================ -->
+  <g transform="translate(0,0)">
+    <rect width="1280" height="900" fill="#f4efe6"/>
+
+    <!-- Section header -->
+    <text x="60" y="50" font-family="'IBM Plex Mono', 'JetBrains Mono', monospace" font-size="12" letter-spacing="3" fill="#8a7752">DIRECTION A · 01 / 03</text>
+    <text x="60" y="86" font-family="Georgia, serif" font-size="32" font-style="italic" font-weight="500" fill="#1a1208">Editorial × Heritage</text>
+    <text x="60" y="112" font-family="Georgia, serif" font-size="14" fill="#6e5d3f">Magazine layout · serif display + mono · cream &amp; warm gold · Naskh Arabic accent · phones as embedded figures</text>
+    <line x1="60" y1="135" x2="1220" y2="135" stroke="#1a1208" stroke-width="0.5" opacity="0.2"/>
+
+    <!-- HERO ROW -->
+    <g transform="translate(60,170)">
+      <!-- Left: hero text -->
+      <g>
+        <text font-family="'IBM Plex Mono', monospace" font-size="11" letter-spacing="4" fill="#8a7752">PROFILE · 003 · ISLAMABAD</text>
+        <text y="58" font-family="Georgia, 'Times New Roman', serif" font-size="56" font-weight="400" fill="#1a1208" font-style="italic">Muhammad</text>
+        <text y="110" font-family="Georgia, serif" font-size="56" font-weight="600" fill="#1a1208">Usman.</text>
+
+        <text y="148" font-family="'IBM Plex Mono', monospace" font-size="12" letter-spacing="2" fill="url(#goldGrad)">OTTOMAN CODER · SENIOR MOBILE ENGINEER</text>
+
+        <!-- Google credential as editorial pull-quote -->
+        <g transform="translate(0,180)">
+          <line x1="0" y1="0" x2="60" y2="0" stroke="#c89a57" stroke-width="2"/>
+          <text y="34" font-family="Georgia, serif" font-size="13" letter-spacing="2" fill="#8a7752">— THE GOOGLE CREDENTIAL</text>
+          <text y="76" font-family="Georgia, serif" font-size="28" font-style="italic" font-weight="500" fill="#1a1208">"firebase_admin_sdk —</text>
+          <text y="110" font-family="Georgia, serif" font-size="28" font-style="italic" font-weight="500" fill="#1a1208">officially adopted by Google's</text>
+          <text y="144" font-family="Georgia, serif" font-size="28" font-style="italic" font-weight="500" fill="#1a1208">Dart &amp; Flutter team."</text>
+          <text y="178" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#6e5d3f">→ pub.dev / publishers / ottomancoder.com</text>
+        </g>
+      </g>
+
+      <!-- Right: phone with screen content + Arabic mark -->
+      <g transform="translate(700,0)">
+        <text x="200" y="0" font-family="serif" font-size="42" fill="#c89a57" text-anchor="end" lang="ar">عُثماني</text>
+        <text x="200" y="22" font-family="'IBM Plex Mono', monospace" font-size="10" letter-spacing="2" fill="#8a7752" text-anchor="end">OTTOMAN MARK · WORDMARK CONCEPT</text>
+
+        <g transform="translate(20,40)" color="#f4efe6">
+          <use href="#phone"/>
+          <!-- Phone screen content - editorial -->
+          <g transform="translate(14,14)" font-family="Georgia, serif">
+            <text x="86" y="64" font-size="10" letter-spacing="2" fill="#8a7752" text-anchor="middle">— LEGEND TV —</text>
+            <text x="86" y="100" font-size="20" font-style="italic" fill="#1a1208" text-anchor="middle">600K</text>
+            <text x="86" y="124" font-size="10" fill="#6e5d3f" text-anchor="middle">peak users · 11 countries</text>
+            <rect x="34" y="160" width="104" height="120" rx="4" fill="#c89a57" opacity="0.15"/>
+            <text x="86" y="225" font-size="32" font-style="italic" fill="#c89a57" text-anchor="middle">★</text>
+            <text x="86" y="305" font-size="9" font-family="'IBM Plex Mono', monospace" letter-spacing="2" fill="#8a7752" text-anchor="middle">CASE STUDY →</text>
+            <text x="86" y="350" font-size="8" font-family="'IBM Plex Mono', monospace" fill="#6e5d3f" text-anchor="middle">2020 – 2022</text>
+          </g>
+        </g>
+      </g>
+    </g>
+
+    <!-- PROJECT GRID PREVIEW -->
+    <g transform="translate(60,580)">
+      <text font-family="'IBM Plex Mono', monospace" font-size="11" letter-spacing="3" fill="#8a7752">PROJECTS · INDEX</text>
+
+      <g transform="translate(0,40)">
+        <!-- Project row 1 - editorial article style -->
+        <line x1="0" y1="0" x2="1160" y2="0" stroke="#1a1208" stroke-width="0.5" opacity="0.2"/>
+        <text x="0" y="40" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#8a7752">01</text>
+        <text x="50" y="40" font-family="Georgia, serif" font-size="28" font-style="italic" fill="#1a1208">Legend TV</text>
+        <text x="50" y="64" font-family="Georgia, serif" font-size="13" fill="#6e5d3f">A streaming platform built solo. 600,000 active users at peak. Number one in Play Store category for five months.</text>
+        <text x="1140" y="40" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#8a7752" text-anchor="end">2022</text>
+        <text x="1140" y="64" font-family="'IBM Plex Mono', monospace" font-size="11" fill="url(#goldGrad)" text-anchor="end">READ →</text>
+
+        <line x1="0" y1="84" x2="1160" y2="84" stroke="#1a1208" stroke-width="0.5" opacity="0.2"/>
+        <text x="0" y="124" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#8a7752">02</text>
+        <text x="50" y="124" font-family="Georgia, serif" font-size="28" font-style="italic" fill="#1a1208">LifeLink</text>
+        <text x="50" y="148" font-family="Georgia, serif" font-size="13" fill="#6e5d3f">Crisis-intervention application powered by Google Gemini, with Dart Isolates handling passive background analysis.</text>
+        <text x="1140" y="124" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#8a7752" text-anchor="end">2023</text>
+        <text x="1140" y="148" font-family="'IBM Plex Mono', monospace" font-size="11" fill="url(#goldGrad)" text-anchor="end">READ →</text>
+
+        <line x1="0" y1="168" x2="1160" y2="168" stroke="#1a1208" stroke-width="0.5" opacity="0.2"/>
+      </g>
+    </g>
+
+    <!-- TYPE + PALETTE -->
+    <g transform="translate(60,820)">
+      <text font-family="'IBM Plex Mono', monospace" font-size="11" letter-spacing="3" fill="#8a7752">TYPE</text>
+      <text x="80" y="0" font-family="Georgia, serif" font-size="18" font-style="italic" fill="#1a1208">Georgia / GT Sectra (display)</text>
+      <text x="80" y="22" font-family="'IBM Plex Mono', monospace" font-size="13" fill="#1a1208">IBM Plex Mono (meta)</text>
+      <text x="80" y="44" font-family="serif" font-size="16" fill="#c89a57">Naskh Arabic (wordmark)</text>
+
+      <g transform="translate(600,-12)">
+        <text font-family="'IBM Plex Mono', monospace" font-size="11" letter-spacing="3" fill="#8a7752">PALETTE</text>
+        <g transform="translate(80,-12)">
+          <rect x="0"   y="0" width="40" height="40" fill="#f4efe6" stroke="#1a1208" stroke-width="0.5" stroke-opacity="0.2"/>
+          <text x="20" y="60" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#1a1208" text-anchor="middle">cream</text>
+          <rect x="50"  y="0" width="40" height="40" fill="#1a1208"/>
+          <text x="70" y="60" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#1a1208" text-anchor="middle">ink</text>
+          <rect x="100" y="0" width="40" height="40" fill="#c89a57"/>
+          <text x="120" y="60" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#1a1208" text-anchor="middle">gold</text>
+          <rect x="150" y="0" width="40" height="40" fill="#8a7752"/>
+          <text x="170" y="60" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#1a1208" text-anchor="middle">sepia</text>
+          <rect x="200" y="0" width="40" height="40" fill="#6e5d3f"/>
+          <text x="220" y="60" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#1a1208" text-anchor="middle">muted</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- DIRECTION B · APP STORE × HERITAGE                            -->
+  <!-- ============================================================ -->
+  <g transform="translate(0,900)">
+    <rect width="1280" height="900" fill="#0d0d12"/>
+    <rect width="1280" height="600" fill="url(#todayGlow)" opacity="0.6"/>
+
+    <!-- Section header -->
+    <text x="60" y="50" font-family="'JetBrains Mono', monospace" font-size="12" letter-spacing="3" fill="#d4a558">DIRECTION B · 02 / 03</text>
+    <text x="60" y="86" font-family="'JetBrains Mono', monospace" font-size="32" font-weight="600" fill="#fafafa">App Store × Heritage</text>
+    <text x="60" y="112" font-family="Inter, sans-serif" font-size="14" fill="#a0a0a8">Dark · warm gold signal · App Store "Today" card grid · Naskh Arabic mark · phones as the visual language</text>
+    <line x1="60" y1="135" x2="1220" y2="135" stroke="#fafafa" stroke-width="0.5" opacity="0.15"/>
+
+    <!-- HERO -->
+    <g transform="translate(60,170)">
+      <text font-family="'JetBrains Mono', monospace" font-size="11" letter-spacing="4" fill="#d4a558">▸ TODAY</text>
+
+      <text y="68" font-family="'JetBrains Mono', monospace" font-size="58" font-weight="700" letter-spacing="-1" fill="#fafafa">MUHAMMAD</text>
+      <text y="120" font-family="'JetBrains Mono', monospace" font-size="58" font-weight="700" letter-spacing="-1" fill="#fafafa">USMAN.</text>
+      <text y="152" font-family="Inter, sans-serif" font-size="14" fill="#d4a558">Senior Mobile Engineer · Ottoman Coder · 50+ apps shipped</text>
+
+      <!-- Google credential as a glowing Today card -->
+      <g transform="translate(0,200)">
+        <rect width="700" height="180" rx="16" fill="url(#todayCard)" stroke="#d4a558" stroke-width="1.5" stroke-opacity="0.5"/>
+        <text x="32" y="46" font-family="'JetBrains Mono', monospace" font-size="11" letter-spacing="4" fill="#d4a558">FEATURED · ADOPTED BY GOOGLE</text>
+        <text x="32" y="94" font-family="Inter, sans-serif" font-size="32" font-weight="700" fill="#fafafa">firebase_admin_sdk</text>
+        <text x="32" y="124" font-family="Inter, sans-serif" font-size="15" fill="#d0d0d8">A Dart package I wrote — later officially taken over</text>
+        <text x="32" y="146" font-family="Inter, sans-serif" font-size="15" fill="#d0d0d8">and maintained by Google's Dart &amp; Flutter team.</text>
+        <rect x="540" y="100" width="130" height="40" rx="20" fill="#d4a558"/>
+        <text x="605" y="125" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#0d0d12" text-anchor="middle">GET ON PUB.DEV</text>
+      </g>
+
+      <!-- Right: phone + Arabic mark -->
+      <g transform="translate(900,0)">
+        <text x="0" y="0" font-family="serif" font-size="44" fill="#d4a558" lang="ar">عُثماني</text>
+
+        <g transform="translate(40,40)" color="#1a1a22">
+          <use href="#phone"/>
+          <g transform="translate(14,14)" font-family="Inter, sans-serif">
+            <rect x="0" y="0" width="172" height="382" rx="22" fill="#0d0d12"/>
+            <text x="86" y="36" font-size="9" letter-spacing="2" fill="#d4a558" text-anchor="middle">LEGEND TV</text>
+            <rect x="20" y="56" width="132" height="180" rx="12" fill="#d4a558" opacity="0.2"/>
+            <text x="86" y="160" font-size="48" fill="#d4a558" text-anchor="middle">▶</text>
+            <text x="86" y="270" font-size="22" font-weight="700" fill="#fafafa" text-anchor="middle">600K</text>
+            <text x="86" y="290" font-size="10" fill="#a0a0a8" text-anchor="middle">peak users</text>
+            <rect x="40" y="320" width="92" height="32" rx="16" fill="#d4a558"/>
+            <text x="86" y="341" font-size="10" font-weight="700" fill="#0d0d12" text-anchor="middle">CASE STUDY</text>
+          </g>
+        </g>
+      </g>
+    </g>
+
+    <!-- App Store card grid -->
+    <g transform="translate(60,640)">
+      <text font-family="'JetBrains Mono', monospace" font-size="11" letter-spacing="3" fill="#d4a558">▸ ALL PROJECTS</text>
+
+      <g transform="translate(0,30)">
+        <!-- Card 1 -->
+        <rect width="370" height="110" rx="14" fill="#1a1a22" stroke="#2a2a32" stroke-width="1"/>
+        <rect x="14" y="14" width="82" height="82" rx="18" fill="#d4a558" opacity="0.3"/>
+        <text x="55" y="62" font-family="Inter, sans-serif" font-size="36" font-weight="700" fill="#d4a558" text-anchor="middle">L</text>
+        <text x="116" y="42" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="2" fill="#d4a558">FEATURED</text>
+        <text x="116" y="62" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#fafafa">Legend TV</text>
+        <text x="116" y="80" font-family="Inter, sans-serif" font-size="11" fill="#a0a0a8">Solo-built streaming · 600K users</text>
+        <rect x="290" y="68" width="62" height="26" rx="13" fill="#d4a558"/>
+        <text x="321" y="85" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#0d0d12" text-anchor="middle">OPEN</text>
+
+        <!-- Card 2 -->
+        <g transform="translate(395,0)">
+          <rect width="370" height="110" rx="14" fill="#1a1a22" stroke="#2a2a32" stroke-width="1"/>
+          <rect x="14" y="14" width="82" height="82" rx="18" fill="#67e8f9" opacity="0.2"/>
+          <text x="55" y="62" font-family="Inter, sans-serif" font-size="36" font-weight="700" fill="#67e8f9" text-anchor="middle">L</text>
+          <text x="116" y="42" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="2" fill="#67e8f9">FEATURED</text>
+          <text x="116" y="62" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#fafafa">LifeLink</text>
+          <text x="116" y="80" font-family="Inter, sans-serif" font-size="11" fill="#a0a0a8">Crisis app · Gemini AI · Isolates</text>
+          <rect x="290" y="68" width="62" height="26" rx="13" fill="#67e8f9"/>
+          <text x="321" y="85" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#0d0d12" text-anchor="middle">OPEN</text>
+        </g>
+
+        <!-- Card 3 -->
+        <g transform="translate(790,0)">
+          <rect width="370" height="110" rx="14" fill="#1a1a22" stroke="#2a2a32" stroke-width="1"/>
+          <rect x="14" y="14" width="82" height="82" rx="18" fill="#a3e635" opacity="0.2"/>
+          <text x="55" y="62" font-family="Inter, sans-serif" font-size="36" font-weight="700" fill="#a3e635" text-anchor="middle">N</text>
+          <text x="116" y="42" font-family="'JetBrains Mono', monospace" font-size="9" letter-spacing="2" fill="#a3e635">CURRENT</text>
+          <text x="116" y="62" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#fafafa">Nmo AI</text>
+          <text x="116" y="80" font-family="Inter, sans-serif" font-size="11" fill="#a0a0a8">BLE health · MENA · in build</text>
+          <rect x="290" y="68" width="62" height="26" rx="13" fill="#a3e635"/>
+          <text x="321" y="85" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#0d0d12" text-anchor="middle">OPEN</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- TYPE + PALETTE -->
+    <g transform="translate(60,820)">
+      <text font-family="'JetBrains Mono', monospace" font-size="11" letter-spacing="3" fill="#d4a558">TYPE</text>
+      <text x="80" y="0" font-family="'JetBrains Mono', monospace" font-size="16" font-weight="600" fill="#fafafa">JetBrains Mono (display)</text>
+      <text x="80" y="22" font-family="Inter, sans-serif" font-size="14" fill="#fafafa">Inter (UI, body)</text>
+      <text x="80" y="44" font-family="serif" font-size="16" fill="#d4a558">Naskh Arabic (wordmark)</text>
+
+      <g transform="translate(600,-12)">
+        <text font-family="'JetBrains Mono', monospace" font-size="11" letter-spacing="3" fill="#d4a558">PALETTE</text>
+        <g transform="translate(80,-12)">
+          <rect x="0"   y="0" width="40" height="40" fill="#0d0d12" stroke="#2a2a32"/>
+          <text x="20" y="60" font-family="'JetBrains Mono', monospace" font-size="9" fill="#fafafa" text-anchor="middle">ink</text>
+          <rect x="50"  y="0" width="40" height="40" fill="#1a1a22"/>
+          <text x="70" y="60" font-family="'JetBrains Mono', monospace" font-size="9" fill="#fafafa" text-anchor="middle">elev</text>
+          <rect x="100" y="0" width="40" height="40" fill="#d4a558"/>
+          <text x="120" y="60" font-family="'JetBrains Mono', monospace" font-size="9" fill="#fafafa" text-anchor="middle">gold</text>
+          <rect x="150" y="0" width="40" height="40" fill="#fafafa"/>
+          <text x="170" y="60" font-family="'JetBrains Mono', monospace" font-size="9" fill="#fafafa" text-anchor="middle">text</text>
+          <rect x="200" y="0" width="40" height="40" fill="#67e8f9"/>
+          <text x="220" y="60" font-family="'JetBrains Mono', monospace" font-size="9" fill="#fafafa" text-anchor="middle">cyan</text>
+          <rect x="250" y="0" width="40" height="40" fill="#a3e635"/>
+          <text x="270" y="60" font-family="'JetBrains Mono', monospace" font-size="9" fill="#fafafa" text-anchor="middle">lime</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- DIRECTION C · EDITORIAL × APP STORE (cleanest, no heritage)   -->
+  <!-- ============================================================ -->
+  <g transform="translate(0,1800)">
+    <rect width="1280" height="900" fill="#fafaf6"/>
+
+    <!-- Section header -->
+    <text x="60" y="50" font-family="'IBM Plex Mono', monospace" font-size="12" letter-spacing="3" fill="#6b7280">DIRECTION C · 03 / 03</text>
+    <text x="60" y="86" font-family="GT Sectra, 'Playfair Display', Georgia, serif" font-size="32" fill="#0a0a0a">Editorial × App Store</text>
+    <text x="60" y="112" font-family="Inter, sans-serif" font-size="14" fill="#525252">Magazine layout · serif display + sans · single signal color · App Store cards for projects · NO heritage element</text>
+    <line x1="60" y1="135" x2="1220" y2="135" stroke="#0a0a0a" stroke-width="0.5" opacity="0.15"/>
+
+    <!-- HERO -->
+    <g transform="translate(60,170)">
+      <text font-family="'IBM Plex Mono', monospace" font-size="11" letter-spacing="4" fill="#c4302b">— ISSUE 003 / ISLAMABAD</text>
+
+      <text y="80" font-family="GT Sectra, 'Playfair Display', Georgia, serif" font-size="80" font-weight="500" fill="#0a0a0a">Muhammad</text>
+      <text y="160" font-family="GT Sectra, 'Playfair Display', Georgia, serif" font-size="80" font-weight="500" fill="#0a0a0a">Usman</text>
+      <text x="368" y="160" font-family="GT Sectra, serif" font-size="80" fill="#c4302b">.</text>
+      <text y="192" font-family="Inter, sans-serif" font-size="15" fill="#525252">Senior Mobile Engineer · ships across iOS, Android, Web, Desktop · open to work</text>
+
+      <!-- Google credential as embedded Today card in editorial layout -->
+      <g transform="translate(0,250)">
+        <rect width="720" height="160" rx="12" fill="#0a0a0a"/>
+        <text x="32" y="44" font-family="'IBM Plex Mono', monospace" font-size="10" letter-spacing="4" fill="#c4302b">— THE GOOGLE CREDENTIAL —</text>
+        <text x="32" y="86" font-family="GT Sectra, serif" font-size="26" fill="#fafafa" font-style="italic">"firebase_admin_sdk —</text>
+        <text x="32" y="116" font-family="GT Sectra, serif" font-size="26" fill="#fafafa" font-style="italic">adopted by Google's Dart team."</text>
+        <text x="32" y="142" font-family="Inter, sans-serif" font-size="12" fill="#a0a0a8">→ Read the story · 4 min</text>
+        <rect x="600" y="118" width="100" height="32" rx="16" fill="#c4302b"/>
+        <text x="650" y="138" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#fafafa" text-anchor="middle">PUB.DEV →</text>
+      </g>
+
+      <!-- Right: phone -->
+      <g transform="translate(900,20)" color="#fafaf6">
+        <use href="#phone"/>
+        <g transform="translate(14,14)" font-family="Inter, sans-serif">
+          <text x="86" y="48" font-family="'IBM Plex Mono', monospace" font-size="9" letter-spacing="2" fill="#c4302b" text-anchor="middle">— LEGEND TV —</text>
+          <text x="86" y="100" font-family="GT Sectra, serif" font-size="44" font-weight="500" fill="#0a0a0a" text-anchor="middle">600K</text>
+          <text x="86" y="124" font-size="10" fill="#525252" text-anchor="middle">peak users · 11 countries</text>
+          <rect x="34" y="160" width="104" height="120" rx="6" fill="#0a0a0a" opacity="0.08"/>
+          <text x="86" y="225" font-size="32" fill="#c4302b" text-anchor="middle" font-family="GT Sectra, serif">★</text>
+          <rect x="36" y="306" width="100" height="34" rx="17" fill="#0a0a0a"/>
+          <text x="86" y="327" font-size="10" font-weight="700" fill="#fafafa" text-anchor="middle" letter-spacing="2">READ →</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- Project Today-style cards -->
+    <g transform="translate(60,690)">
+      <text font-family="'IBM Plex Mono', monospace" font-size="11" letter-spacing="3" fill="#6b7280">PROJECTS · TODAY</text>
+
+      <g transform="translate(0,30)">
+        <!-- Card 1 -->
+        <rect width="370" height="110" rx="14" fill="#fff" stroke="#e5e5e0" stroke-width="1"/>
+        <rect x="14" y="14" width="82" height="82" rx="18" fill="#c4302b" opacity="0.12"/>
+        <text x="55" y="64" font-family="GT Sectra, serif" font-size="36" fill="#c4302b" text-anchor="middle">L</text>
+        <text x="116" y="42" font-family="'IBM Plex Mono', monospace" font-size="9" letter-spacing="2" fill="#c4302b">FEATURED</text>
+        <text x="116" y="64" font-family="GT Sectra, serif" font-size="20" fill="#0a0a0a">Legend TV</text>
+        <text x="116" y="84" font-family="Inter, sans-serif" font-size="11" fill="#525252">Solo-built streaming · 600K users</text>
+
+        <!-- Card 2 -->
+        <g transform="translate(395,0)">
+          <rect width="370" height="110" rx="14" fill="#fff" stroke="#e5e5e0" stroke-width="1"/>
+          <rect x="14" y="14" width="82" height="82" rx="18" fill="#0a0a0a"/>
+          <text x="55" y="64" font-family="GT Sectra, serif" font-size="36" fill="#fafafa" text-anchor="middle">L</text>
+          <text x="116" y="42" font-family="'IBM Plex Mono', monospace" font-size="9" letter-spacing="2" fill="#c4302b">FEATURED</text>
+          <text x="116" y="64" font-family="GT Sectra, serif" font-size="20" fill="#0a0a0a">LifeLink</text>
+          <text x="116" y="84" font-family="Inter, sans-serif" font-size="11" fill="#525252">Crisis app · Gemini AI · Isolates</text>
+        </g>
+
+        <!-- Card 3 -->
+        <g transform="translate(790,0)">
+          <rect width="370" height="110" rx="14" fill="#fff" stroke="#e5e5e0" stroke-width="1"/>
+          <rect x="14" y="14" width="82" height="82" rx="18" fill="#0a0a0a" opacity="0.7"/>
+          <text x="55" y="64" font-family="GT Sectra, serif" font-size="36" fill="#fafafa" text-anchor="middle">N</text>
+          <text x="116" y="42" font-family="'IBM Plex Mono', monospace" font-size="9" letter-spacing="2" fill="#6b7280">CURRENT</text>
+          <text x="116" y="64" font-family="GT Sectra, serif" font-size="20" fill="#0a0a0a">Nmo AI</text>
+          <text x="116" y="84" font-family="Inter, sans-serif" font-size="11" fill="#525252">BLE health · MENA · in build</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- TYPE + PALETTE -->
+    <g transform="translate(60,870)">
+      <text font-family="'IBM Plex Mono', monospace" font-size="11" letter-spacing="3" fill="#6b7280">TYPE</text>
+      <text x="80" y="0" font-family="GT Sectra, 'Playfair Display', Georgia, serif" font-size="18" fill="#0a0a0a">GT Sectra / Playfair Display (display)</text>
+      <text x="80" y="22" font-family="Inter, sans-serif" font-size="14" fill="#0a0a0a">Inter (UI, body)</text>
+      <text x="80" y="44" font-family="'IBM Plex Mono', monospace" font-size="13" fill="#0a0a0a">IBM Plex Mono (meta, labels)</text>
+
+      <g transform="translate(600,-12)">
+        <text font-family="'IBM Plex Mono', monospace" font-size="11" letter-spacing="3" fill="#6b7280">PALETTE</text>
+        <g transform="translate(80,-12)">
+          <rect x="0"   y="0" width="40" height="40" fill="#fafaf6" stroke="#e5e5e0"/>
+          <text x="20" y="60" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#0a0a0a" text-anchor="middle">bg</text>
+          <rect x="50"  y="0" width="40" height="40" fill="#0a0a0a"/>
+          <text x="70" y="60" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#0a0a0a" text-anchor="middle">ink</text>
+          <rect x="100" y="0" width="40" height="40" fill="#c4302b"/>
+          <text x="120" y="60" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#0a0a0a" text-anchor="middle">red</text>
+          <rect x="150" y="0" width="40" height="40" fill="#525252"/>
+          <text x="170" y="60" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#0a0a0a" text-anchor="middle">meta</text>
+          <rect x="200" y="0" width="40" height="40" fill="#e5e5e0"/>
+          <text x="220" y="60" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#0a0a0a" text-anchor="middle">line</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- Footer label -->
+  <g transform="translate(60,2680)">
+    <text font-family="'IBM Plex Mono', monospace" font-size="11" letter-spacing="3" fill="#6b7280">— END EXPLORATION · 3 directions · 2026-05-16 —</text>
+  </g>
+</svg>
