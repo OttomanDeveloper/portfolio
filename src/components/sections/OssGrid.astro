@@ -7,7 +7,7 @@ import { openSource } from '@/data/openSource';
 <section id="opensource">
   <div class="container">
     <SectionLabel n={6} name="open source · pub.dev" />
-    <p class="intro">Nine packages published to pub.dev — gap-fillers for the Flutter/Dart ecosystem. Two are featured.</p>
+    <p class="intro">Nine packages published to pub.dev — gap-fillers for the Flutter/Dart ecosystem. Click any install snippet to copy.</p>
     <div class="grid">
       {openSource.map((p) => (
         <OssCard
@@ -16,6 +16,8 @@ import { openSource } from '@/data/openSource';
           href={p.href}
           badge={p.badge}
           meta={p.meta}
+          pubAdd={p.pubAdd}
+          featured={p.featured}
         />
       ))}
     </div>

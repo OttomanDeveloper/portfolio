@@ -4,8 +4,10 @@ export const openSource = [
     name: 'firebase_admin_sdk',
     tagline: "I authored the original firebase_admin_sdk on pub.dev. Google's official Firebase Admin SDK for Dart now uses the same package name and credits me as the original author.",
     href: 'https://pub.dev/packages/firebase_admin_sdk',
-    badge: { label: 'ORIGINAL AUTHOR · CREDITED', tone: 'gold' as const },
+    badge: { label: 'ORIGINAL AUTHOR · CREDITED BY GOOGLE', tone: 'gold' as const },
     meta: 'credited on pub.dev',
+    pubAdd: 'flutter pub add firebase_admin_sdk',
+    featured: true,
   },
   {
     name: 'vision_ai',
@@ -13,6 +15,8 @@ export const openSource = [
     href: 'https://pub.dev/packages/vision_ai',
     badge: { label: 'NEW · ON-DEVICE AI', tone: 'cyan' as const },
     meta: 'Android + iOS',
+    pubAdd: 'flutter pub add vision_ai',
+    featured: false,
   },
   {
     name: 'vision_ai_flutter',
@@ -20,6 +24,8 @@ export const openSource = [
     href: 'https://pub.dev/packages/vision_ai_flutter',
     badge: { label: 'COMPANION', tone: 'dim' as const },
     meta: 'companion to vision_ai',
+    pubAdd: 'flutter pub add vision_ai_flutter',
+    featured: false,
   },
   {
     name: 'tanquery',
@@ -27,6 +33,8 @@ export const openSource = [
     href: 'https://pub.dev/packages/tanquery',
     badge: { label: 'ACTIVE', tone: 'lime' as const },
     meta: 'v0.8.0',
+    pubAdd: 'dart pub add tanquery',
+    featured: false,
   },
   {
     name: 'tanquery_flutter',
@@ -34,6 +42,8 @@ export const openSource = [
     href: 'https://pub.dev/packages/tanquery_flutter',
     badge: { label: 'COMPANION', tone: 'dim' as const },
     meta: 'v0.8.0',
+    pubAdd: 'flutter pub add tanquery_flutter',
+    featured: false,
   },
   {
     name: 'tanquery_devtools',
@@ -41,6 +51,8 @@ export const openSource = [
     href: 'https://pub.dev/packages/tanquery_devtools',
     badge: { label: 'COMPANION', tone: 'dim' as const },
     meta: 'v0.8.0',
+    pubAdd: 'flutter pub add tanquery_devtools',
+    featured: false,
   },
   {
     name: 'newpipeextractor_dart',
@@ -48,6 +60,8 @@ export const openSource = [
     href: 'https://pub.dev/packages/newpipeextractor_dart',
     badge: { label: 'ACTIVE · GPL-3', tone: 'lime' as const },
     meta: 'v2.0.0',
+    pubAdd: 'flutter pub add newpipeextractor_dart',
+    featured: false,
   },
   {
     name: 'firebase_cloud_messaging_dart',
@@ -55,6 +69,8 @@ export const openSource = [
     href: 'https://pub.dev/packages/firebase_cloud_messaging_dart',
     badge: { label: 'ACTIVE', tone: 'lime' as const },
     meta: '17 likes · 371+ dl',
+    pubAdd: 'dart pub add firebase_cloud_messaging_dart',
+    featured: false,
   },
   {
     name: 'charts_flutter_maintained',
@@ -62,5 +78,7 @@ export const openSource = [
     href: 'https://pub.dev/packages/charts_flutter_maintained',
     badge: { label: 'COMMUNITY FORK', tone: 'dim' as const },
     meta: 'maintained',
+    pubAdd: 'flutter pub add charts_flutter_maintained',
+    featured: false,
   },
 ] as const;
