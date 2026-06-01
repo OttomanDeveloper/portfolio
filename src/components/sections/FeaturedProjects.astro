@@ -9,7 +9,7 @@ const { n = 3, viewAllHref, viewAllCount } = Astro.props;
 <section id="featured">
   <div class="container">
     <SectionLabel n={n} name="featured projects" />
-    <p class="intro">Two products that show the range — one I shipped commercially solo, one I shipped to the open-source community.</p>
+    <p class="intro">Three products that show the range — a commercial hit, a live flagship, and an open-source tool. <span class="swipe" aria-hidden="true">swipe →</span></p>
 
     <div class="grid">
       <article class="card legend">
@@ -39,6 +39,34 @@ const { n = 3, viewAllHref, viewAllCount } = Astro.props;
 
         <div class="cta-row">
           <a class="cta primary" href={withBase('/projects/legend-tv')}>Read case study →</a>
+        </div>
+      </article>
+
+      <article class="card lifelink">
+        <p class="badge tone-cyan"><span class="dot" aria-hidden="true"></span>FLAGSHIP · LIVE ON PLAY STORE</p>
+
+        <div class="row">
+          <figure class="shot">
+            <img src={withBase('/screens/lifelink_support.avif')} alt="LifeLink — nearby crisis-line support directory" width="540" height="1144" loading="lazy" decoding="async" />
+          </figure>
+
+          <div class="content">
+            <h3 class="title">LifeLink</h3>
+            <p class="sub">Crisis support + self-care companion, built with Gemini AI.</p>
+
+            <p class="body">
+              Province-aware crisis-line directory plus mood, sleep & diet tracking and supportive
+              artwork — with heavy work offloaded to Dart Isolates so the UI never stalls.
+            </p>
+
+            <ul class="chips" aria-hidden="true">
+              <li>Flutter</li><li>Gemini AI</li><li>Dart Isolates</li><li>Firebase</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <a class="cta primary" href="https://play.google.com/store/apps/details?id=com.helper.lifelink" target="_blank" rel="noopener noreferrer">Play Store →</a>
         </div>
       </article>
 
@@ -106,16 +134,36 @@ const { n = 3, viewAllHref, viewAllCount } = Astro.props;
   .va-btn:hover .va-arrow { transform: translateX(4px); }
   @media (prefers-reduced-motion: reduce) { .va-btn:hover .va-arrow { transform: none; } }
   .intro { color: var(--fg-dim); max-inline-size: 62ch; margin: 0 0 var(--s-7); }
+  .intro .swipe {
+    color: var(--accent);
+    font: 600 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-inline-start: var(--s-2);
+  }
+  @media (min-width: 1280px) { .intro .swipe { display: none; } }
 
+  /* Horizontal carousel of featured cards */
   .grid {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
     gap: var(--s-5);
     align-items: stretch;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-block-end: var(--s-3);
+    margin-inline: calc(-1 * var(--s-4));
+    padding-inline: var(--s-4);
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
   }
-  @media (min-width: 1024px) {
-    .grid { grid-template-columns: 1fr 1fr; gap: var(--s-6); }
+  .grid > .card {
+    flex: 0 0 auto;
+    inline-size: min(90vw, 480px);
+    scroll-snap-align: start;
   }
+  .grid::-webkit-scrollbar { block-size: 8px; }
+  .grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
 
   .card {
     position: relative;
@@ -168,6 +216,7 @@ const { n = 3, viewAllHref, viewAllCount } = Astro.props;
     text-transform: uppercase;
   }
   .badge.tone-lime { color: var(--lime); }
+  .badge.tone-cyan { color: var(--cyan); }
   .badge .dot {
     inline-size: 6px; block-size: 6px; border-radius: 50%;
     background: currentColor;

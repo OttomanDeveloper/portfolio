@@ -453,50 +453,49 @@ export const showcaseProjects: ShowcaseProject[] = [
     featured: false,
   },
   {
-    // NOTE: working title — the app's real product name was not captured in the
-    // screenshots. Rename `name`/`slug` once confirmed with the client.
-    slug: 'wellness-companion',
-    name: 'Mental Wellness Companion',
-    packageId: null,
+    // Flagship app. Promoted to the Featured carousel (see FeaturedProjects.astro)
+    // and excluded from the Selected Work grid. Was researched under the working
+    // title "Mental Wellness Companion" (Project 22) — confirmed = LifeLink via the
+    // life_link_resources screenshots (BC crisis lines + artwork + sleep/diet/stressor
+    // tracking + "Welcome Back Muhammad").
+    slug: 'lifelink',
+    name: 'LifeLink',
+    packageId: 'com.helper.lifelink',
     year: 2024,
     role: 'sole developer',
-    client: 'Client project',
-    category: 'Health / Mental Wellness',
-    tagline: 'Suicide-prevention guidance, crisis lines & self-tracking',
+    client: 'Personal',
+    category: 'Health / Crisis Support',
+    tagline: 'Crisis support + self-care companion, built with Gemini AI',
     description:
-      'A suicide-prevention and mental-wellness companion (Canada-focused). It pairs an educational Supporter Guide (warning signs, how to ask, risk factors) and Power Stories from survivors with a province-aware directory of national and regional crisis lines (988, Hope for Wellness, Kids Help Phone). A Track module lets users log sleep, diet, stressors, movement and journal entries, with charts and reminders.',
+      'A crisis-intervention and mental-wellness companion (Canada-focused). It pairs an educational Supporter Guide and survivor Power Stories with a province-aware directory of national and regional crisis lines (988, Hope for Wellness, Kids Help Phone, BC crisis networks). A Track module logs sleep, diet, stressors, movement and journal entries with charts and reminders, and Artwork/Hobbies galleries offer a calmer outlet. Heavy work runs on Dart Isolates so the UI never stalls.',
     motive:
       'Put crisis resources, supportive guidance and daily self-monitoring in one calm, always-available app for people at risk and the people supporting them.',
-    techStack: ['Flutter', 'Local DB (Hive/Isar)', 'Charts', 'Local notifications', 'image_picker', 'url_launcher'],
+    techStack: ['Flutter', 'Gemini AI', 'Dart Isolates', 'Firebase', 'Charts', 'Local notifications'],
     features: [
-      'Searchable Supporter Guide & risk-factor articles',
-      'Power Stories (survivors & supporters)',
-      'Province-aware crisis-line directory (988, Hope for Wellness, Kids Help Phone)',
-      'Hobbies, Photos & Artwork galleries',
+      'Province-aware crisis-line directory (988, Hope for Wellness, BC networks)',
+      'Searchable Supporter Guide & survivor Power Stories',
       'Track: sleep / diet / stressors / movement / journal',
+      'Artwork & Hobbies galleries',
       'Charts, reminders & light/dark theme',
     ],
-    status: 'shelved',
-    storeLink: null,
+    status: 'live',
+    storeLink: 'https://play.google.com/store/apps/details?id=com.helper.lifelink',
     githubLink: null,
     screens: [
+      'lifelink_support.avif',
+      'lifelink_track.avif',
+      'lifelink_sleep.avif',
+      'lifelink_artwork.avif',
       'wellness_home.avif',
       'wellness_guide.avif',
-      'wellness_article.avif',
       'wellness_stories.avif',
       'wellness_photos.avif',
       'wellness_hobbies.avif',
-      'wellness_artwork.avif',
-      'wellness_support.avif',
-      'wellness_support_bc.avif',
-      'wellness_track.avif',
-      'wellness_sleep.avif',
       'wellness_stressors.avif',
       'wellness_history.avif',
-      'wellness_history2.avif',
       'wellness_settings.avif',
     ],
-    featured: false,
+    featured: true,
   },
   {
     // Cross-matches the existing minimal `yt-master` entry in projects.ts.

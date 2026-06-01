@@ -14,7 +14,7 @@ const GROUPS: Record<string, string> = {
   'yt-master': 'rewards', 'trust-earning': 'rewards', 'quiz-news-rewards': 'rewards',
   saveit: 'media', tfpdl: 'media', 'movo-downloader': 'media', 'football-wallpaper': 'media',
   'status-saver': 'media',
-  'wellness-companion': 'health', icare: 'health',
+  icare: 'health',
   meetbook: 'social', 'hostel-finder': 'social', grouper: 'social',
   couriergo: 'other', 'allinone-game': 'other', 'bill-checker': 'other',
 };
@@ -33,9 +33,10 @@ const STATUS_LABEL: Record<string, string> = {
   prototype: 'Prototype', nda: 'Under NDA',
 };
 
-// UDownload is already in the Featured section — drop it here.
+// UDownload + LifeLink are in the Featured carousel — drop them from the grid.
+const FEATURED_SLUGS = ['udownload', 'lifelink'];
 const items = showcaseProjects
-  .filter((p) => p.slug !== 'udownload')
+  .filter((p) => !FEATURED_SLUGS.includes(p.slug))
   .map((p) => ({ ...p, group: GROUPS[p.slug] ?? 'other' }));
 
 const counts = Object.fromEntries(
