@@ -1,0 +1,66 @@
+// src/data/openSource.ts
+export const openSource = [
+  {
+    name: 'firebase_admin_sdk',
+    tagline: "Firebase Admin SDK for Dart — Firestore, Auth, FCM, Storage. Adopted into Google's official Firebase publisher.",
+    href: 'https://pub.dev/packages/firebase_admin_sdk',
+    badge: { label: '★ ADOPTED BY GOOGLE', tone: 'gold' as const },
+    meta: 'official Firebase publisher',
+  },
+  {
+    name: 'vision_ai',
+    tagline: 'On-device hand gesture + facial emotion detection for Flutter. 13 gestures, 7 emotions, 21 hand landmarks. MediaPipe + ML Kit + TFLite, 25–30 fps, zero cloud.',
+    href: 'https://pub.dev/packages/vision_ai',
+    badge: { label: 'NEW · ON-DEVICE AI', tone: 'cyan' as const },
+    meta: 'Android + iOS',
+  },
+  {
+    name: 'vision_ai_flutter',
+    tagline: 'Pre-built UI overlay widgets for vision_ai — hand skeleton painter, face contour mesh, gesture/emotion labels.',
+    href: 'https://pub.dev/packages/vision_ai_flutter',
+    badge: { label: 'COMPANION', tone: 'dim' as const },
+    meta: 'companion to vision_ai',
+  },
+  {
+    name: 'tanquery',
+    tagline: 'TanStack Query ported to Dart — automatic caching, stale-while-revalidate, background refetching, mutations, infinite queries. Pure Dart.',
+    href: 'https://pub.dev/packages/tanquery',
+    badge: { label: 'ACTIVE', tone: 'lime' as const },
+    meta: 'v0.8.0',
+  },
+  {
+    name: 'tanquery_flutter',
+    tagline: 'Flutter adapter for tanquery — QueryBuilder, MutationBuilder, InfiniteQueryBuilder widget builders.',
+    href: 'https://pub.dev/packages/tanquery_flutter',
+    badge: { label: 'COMPANION', tone: 'dim' as const },
+    meta: 'v0.8.0',
+  },
+  {
+    name: 'tanquery_devtools',
+    tagline: 'Visual cache inspector overlay for tanquery — real-time query status, mutation log, cache actions.',
+    href: 'https://pub.dev/packages/tanquery_devtools',
+    badge: { label: 'COMPANION', tone: 'dim' as const },
+    meta: 'v0.8.0',
+  },
+  {
+    name: 'newpipeextractor_dart',
+    tagline: 'NewPipe Extractor wrap — extract YouTube, SoundCloud, Bandcamp, PeerTube info, streams, subtitles, comments, channels, playlists. No API key.',
+    href: 'https://pub.dev/packages/newpipeextractor_dart',
+    badge: { label: 'ACTIVE · GPL-3', tone: 'lime' as const },
+    meta: 'v2.0.0',
+  },
+  {
+    name: 'firebase_cloud_messaging_dart',
+    tagline: 'Send FCM push notifications directly from Dart — zero backend needed. Works in Flutter, Serverpod, CLI, Cloud Run.',
+    href: 'https://pub.dev/packages/firebase_cloud_messaging_dart',
+    badge: { label: 'ACTIVE', tone: 'lime' as const },
+    meta: '17 likes · 371+ dl',
+  },
+  {
+    name: 'charts_flutter_maintained',
+    tagline: "Community-maintained fork of Google's abandoned charts library. Keeping legacy apps alive.",
+    href: 'https://pub.dev/packages/charts_flutter_maintained',
+    badge: { label: 'COMMUNITY FORK', tone: 'dim' as const },
+    meta: 'maintained',
+  },
+] as const;
