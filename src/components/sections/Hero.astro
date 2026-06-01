@@ -17,7 +17,10 @@ import { profile } from '@/data/profile';
       <div class="stats">
         <StatsRow stats={[...profile.stats]} compact />
       </div>
-      <p class="scroll" aria-hidden="true">scroll to explore ↓</p>
+      <a class="scroll" href="#google-story" aria-label="scroll to next section">
+        <span>scroll to explore</span>
+        <span class="arrow" aria-hidden="true">↓</span>
+      </a>
     </div>
 
     <aside class="side" aria-label="Portrait and current focus">
@@ -95,11 +98,35 @@ import { profile } from '@/data/profile';
   .pill-row { margin: var(--s-6) 0; }
   .stats { margin-block: var(--s-7) var(--s-5); }
   .scroll {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
     color: var(--fg-dim);
     font: 400 var(--fs-micro) var(--font-mono);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     margin-block-start: var(--s-7);
+    text-decoration: none;
+    padding-block: var(--s-2);
+    min-block-size: 44px;
+    transition: color var(--t-base) var(--ease-out);
+    width: max-content;
+  }
+  .scroll:hover, .scroll:focus-visible { color: var(--accent); }
+  .scroll .arrow {
+    display: inline-block;
+    animation: hero-bounce 1.6s ease-in-out infinite;
+  }
+  .scroll:hover .arrow,
+  .scroll:focus-visible .arrow {
+    animation-duration: 0.9s;
+  }
+  @keyframes hero-bounce {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(5px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll .arrow { animation: none; }
   }
 
   /* RIGHT — portrait + currently shipping + based */
