@@ -13,9 +13,10 @@ const GROUPS: Record<string, string> = {
   wisbig: 'rewards', rewardpay: 'rewards', 'lucky-spin': 'rewards',
   'yt-master': 'rewards', 'trust-earning': 'rewards', 'quiz-news-rewards': 'rewards',
   saveit: 'media', tfpdl: 'media', 'movo-downloader': 'media', 'football-wallpaper': 'media',
+  'status-saver': 'media',
   'wellness-companion': 'health', icare: 'health',
-  meetbook: 'social', 'hostel-finder': 'social',
-  couriergo: 'other', 'allinone-game': 'other',
+  meetbook: 'social', 'hostel-finder': 'social', grouper: 'social',
+  couriergo: 'other', 'allinone-game': 'other', 'bill-checker': 'other',
 };
 
 const FILTERS = [
@@ -159,7 +160,7 @@ const { n = 2 } = Astro.props;
           <p class="m-role">{p.role} · {p.client}</p>
           <div class="m-links">
             {p.githubLink && <a href={p.githubLink} target="_blank" rel="noopener noreferrer">GitHub ↗</a>}
-            {p.storeLink && <a href={p.storeLink} target="_blank" rel="noopener noreferrer">Play Store ↗</a>}
+            {p.storeLink && <a href={p.storeLink} target="_blank" rel="noopener noreferrer">Get the app ↗</a>}
           </div>
         </div>
       </div>
