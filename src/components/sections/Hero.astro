@@ -19,7 +19,33 @@ import { profile } from '@/data/profile';
       </div>
       <p class="scroll" aria-hidden="true">scroll to explore ↓</p>
     </div>
-    <span class="arabic" lang="ar" dir="rtl">{profile.aliasArabic}</span>
+
+    <aside class="side" aria-label="Portrait and current focus">
+      <div class="portrait-wrap">
+        <img class="portrait" src="/profile.avif" alt={profile.name} width="280" height="280" loading="eager" fetchpriority="high" />
+        <span class="arabic" lang="ar" dir="rtl">{profile.aliasArabic}</span>
+      </div>
+
+      <article class="now">
+        <p class="now-eyebrow" aria-hidden="true">▸ CURRENTLY SHIPPING</p>
+        <p class="now-title">{profile.currentlyShipping.text}</p>
+        <p class="now-where">
+          at <a href={profile.currentlyShipping.href} target="_blank" rel="noopener noreferrer">{profile.currentlyShipping.at}</a>
+        </p>
+        <ul class="now-tags" aria-hidden="true">
+          <li>BLE</li>
+          <li>Gemini AI</li>
+          <li>Flutter</li>
+          <li>MENA</li>
+        </ul>
+      </article>
+
+      <p class="based">
+        <span class="based-k">based</span>
+        <span class="based-v">{profile.basedIn}</span>
+        <span class="based-note">{profile.basedNote}</span>
+      </p>
+    </aside>
   </div>
 </section>
 
@@ -37,9 +63,10 @@ import { profile } from '@/data/profile';
     position: relative;
   }
   @media (min-width: 1024px) {
-    .row { max-inline-size: 720px; }
+    .row { grid-template-columns: 1.3fr 1fr; align-items: center; }
   }
 
+  /* LEFT — copy */
   .eyebrow {
     color: var(--accent);
     font: 400 var(--fs-micro) var(--font-mono);
@@ -75,13 +102,95 @@ import { profile } from '@/data/profile';
     margin-block-start: var(--s-7);
   }
 
+  /* RIGHT — portrait + currently shipping + based */
+  .side {
+    display: grid;
+    gap: var(--s-5);
+    align-self: stretch;
+    align-content: center;
+  }
+
+  .portrait-wrap {
+    position: relative;
+    justify-self: center;
+    inline-size: clamp(180px, 28vw, 280px);
+  }
+  .portrait {
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent);
+    box-shadow:
+      0 0 0 6px var(--bg-elev),
+      0 0 0 7px var(--border-soft),
+      0 20px 40px -12px oklch(20% 0.02 80 / 0.55);
+  }
   .arabic {
     position: absolute;
-    inset-block-start: 0;
-    inset-inline-end: 0;
+    inset-block-start: -8px;
+    inset-inline-end: -16px;
     color: var(--accent);
     font: 700 var(--fs-arabic) / 1 var(--font-arabic);
     pointer-events: none;
+    background: var(--bg);
+    padding: 0 var(--s-2);
+    border-radius: var(--r-pill);
   }
 
+  .now {
+    padding: var(--s-5);
+    background: var(--bg-elev);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--r-card);
+  }
+  .now-eyebrow {
+    color: var(--accent);
+    font: 400 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 0 0 var(--s-3);
+  }
+  .now-title {
+    color: var(--fg);
+    font: 700 var(--fs-h3) var(--font-sans);
+    margin: 0 0 var(--s-2);
+  }
+  .now-where {
+    color: var(--fg-dim);
+    font: 400 var(--fs-small) var(--font-sans);
+    margin: 0 0 var(--s-4);
+  }
+  .now-where a { color: var(--accent); text-decoration: none; border-bottom: 1px solid color-mix(in oklab, var(--accent) 35%, transparent); }
+  .now-where a:hover { border-bottom-color: var(--accent); color: var(--fg); }
+
+  .now-tags {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-wrap: wrap; gap: var(--s-2);
+  }
+  .now-tags li {
+    padding: 3px 9px;
+    color: var(--fg);
+    background: color-mix(in oklab, var(--fg) 5%, transparent);
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    font: 400 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.04em;
+  }
+
+  .based {
+    display: flex; flex-wrap: wrap; gap: var(--s-2);
+    align-items: baseline;
+    margin: 0;
+    color: var(--fg-dim);
+    font: 400 var(--fs-small) var(--font-sans);
+  }
+  .based-k { color: var(--accent); font: 400 var(--fs-micro) var(--font-mono); letter-spacing: 0.18em; text-transform: uppercase; }
+  .based-v { color: var(--fg); font-weight: 600; }
+  .based-note { color: var(--fg-dim); }
+
+  @media (max-width: 639px) {
+    .arabic { font-size: clamp(1.5rem, 1.5vw + 0.5rem, 2rem); inset-inline-end: -8px; }
+  }
 </style>
