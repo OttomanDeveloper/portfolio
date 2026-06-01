@@ -18,7 +18,7 @@ const { title, slug, tagline, stack, stats, liveUrl, sourceUrl } = Astro.props;
   <div class="progress" aria-hidden="true"></div>
   <article class="container">
     <p class="crumb">
-      <a href={withBase('/')}>~</a> / <a href={withBase('/#projects')}>projects</a> / <span>{slug}</span>
+      <a href={withBase('/')}>~</a> / <a href={withBase('/projects')}>projects</a> / <span>{slug}</span>
     </p>
     <h1 class="title" style={`view-transition-name: case-title-${slug};`}>{title}</h1>
     <p class="tagline">{tagline}</p>
@@ -31,7 +31,7 @@ const { title, slug, tagline, stack, stats, liveUrl, sourceUrl } = Astro.props;
     </div>
     <StatsRow stats={stats} compact />
     <div class="prose"><slot /></div>
-    <p class="back"><a href={withBase('/#projects')}>← back to projects</a></p>
+    <p class="back"><a href={withBase('/projects')}>← back to projects</a></p>
   </article>
 </BaseLayout>
 

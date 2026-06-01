@@ -1,0 +1,41 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import FeaturedProjects from '@/components/sections/FeaturedProjects.astro';
+import SelectedWork from '@/components/sections/SelectedWork.astro';
+import { withBase } from '@/lib/paths';
+import { profile } from '@/data/profile';
+---
+<BaseLayout
+  title={`Projects — ${profile.name}`}
+  description={`Selected work by ${profile.name} (${profile.alias}). 50+ apps shipped — streaming, rewards, downloaders, health, logistics and more. Tap any project for its full screenshot gallery.`}
+>
+  <header class="page-head">
+    <div class="container">
+      <p class="crumb"><a href={withBase('/')}>~</a> / <span>projects</span></p>
+      <h1 class="h1">Projects</h1>
+      <p class="lead">
+        A marquee pair up top, then a deeper archive of client and personal apps —
+        each with its full screenshot gallery. Built across {profile.basedIn} and remote teams worldwide.
+      </p>
+    </div>
+  </header>
+
+  <FeaturedProjects n={1} />
+  <SelectedWork n={2} />
+
+  <div class="container">
+    <p class="back"><a href={withBase('/')}>← back home</a></p>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-head { padding-block: clamp(var(--s-7), 7vw, var(--s-9)) 0; }
+  .crumb { color: var(--fg-dim); font: 400 var(--fs-micro) var(--font-mono); letter-spacing: 0.1em; margin: 0 0 var(--s-5); }
+  .crumb a { color: var(--accent); text-decoration: none; }
+  .crumb a:hover { text-decoration: underline; }
+  .h1 { margin: 0; color: var(--fg); font: 700 var(--fs-hero) / var(--lh-tight) var(--font-mono); letter-spacing: -0.02em; }
+  .lead { margin: var(--s-4) 0 0; max-inline-size: 60ch; color: var(--fg-dim); font: 400 var(--fs-body) var(--font-sans); line-height: var(--lh-default); }
+  .back { padding-block: var(--s-7) var(--s-9); margin: 0; }
+  .back a { color: var(--accent); text-decoration: none; font: 600 var(--fs-small) var(--font-sans); }
+  .back a:hover { text-decoration: underline; }
+</style>

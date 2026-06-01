@@ -48,10 +48,13 @@ const pickThumb = (screens: readonly string[]) =>
 const richSlugs = new Set(showcaseProjects.map((p) => p.slug));
 const liveApps = projects.filter((p) => !richSlugs.has(p.slug)).map((p) => ({ name: p.name, sub: p.tagline, href: p.href }));
 const moreLive = [...liveApps, ...moreApps.map((a) => ({ name: a.name, sub: a.category, href: a.href }))];
+
+interface Props { n?: number; }
+const { n = 2 } = Astro.props;
 ---
 <section id="selected-work">
   <div class="container">
-    <SectionLabel n={5} name="selected work" />
+    <SectionLabel n={n} name="selected work" />
     <p class="intro">
       A slice of <strong>50+ apps</strong> shipped for clients worldwide — across rewards, media,
       health, logistics and more. Tap any card to open its full screenshot gallery.
