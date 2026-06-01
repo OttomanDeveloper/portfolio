@@ -19,17 +19,6 @@ import { profile } from '@/data/profile';
       </div>
       <p class="scroll" aria-hidden="true">scroll to explore ↓</p>
     </div>
-    <div class="phones" aria-hidden="true">
-      <div class="phone phone--back" style="--i:2">
-        <img src="/screens/hero-back.avif" alt="" loading="eager" fetchpriority="high">
-      </div>
-      <div class="phone phone--mid" style="--i:1">
-        <img src="/screens/hero-mid.avif" alt="" loading="eager" fetchpriority="high">
-      </div>
-      <div class="phone phone--front" style="--i:0">
-        <img src="/screens/hero-front.avif" alt="" loading="eager" fetchpriority="high">
-      </div>
-    </div>
     <span class="arabic" lang="ar" dir="rtl">{profile.aliasArabic}</span>
   </div>
 </section>
@@ -48,7 +37,7 @@ import { profile } from '@/data/profile';
     position: relative;
   }
   @media (min-width: 1024px) {
-    .row { grid-template-columns: 1.2fr 1fr; align-items: center; }
+    .row { max-inline-size: 720px; }
   }
 
   .eyebrow {
@@ -95,54 +84,4 @@ import { profile } from '@/data/profile';
     pointer-events: none;
   }
 
-  /* Phone stack */
-  .phones {
-    position: relative;
-    block-size: 220svh; /* scroll room for the drift */
-    display: none;
-  }
-  @media (min-width: 640px) {
-    .phones { display: block; block-size: auto; min-block-size: 480px; }
-  }
-  @media (min-width: 1024px) {
-    .phones { block-size: 100svh; min-block-size: 600px; }
-  }
-  .phone {
-    position: sticky;
-    inset-block-start: 15vh;
-    inline-size: min(280px, 60vw);
-    aspect-ratio: 9 / 19.5;
-    margin-inline: auto;
-    border-radius: 44px;
-    overflow: hidden;
-    background: #0a0a0a;
-    border: 2px solid #222;
-    box-shadow: 0 30px 60px -20px rgb(0 0 0 / .45);
-    translate: calc(var(--i) * 40px) calc(var(--i) * -20px);
-    z-index: calc(10 - var(--i));
-    animation: drift linear both;
-    animation-timeline: scroll(root block);
-    animation-range: 0% 100%;
-    animation-duration: 1ms; /* Firefox quirk */
-  }
-  .phone--front { animation-name: none; translate: none; }
-  .phone img {
-    inline-size: 100%; block-size: 100%;
-    object-fit: cover; object-position: top center;
-    border-radius: 40px;
-    padding: 14px;
-  }
-  @keyframes drift {
-    to {
-      translate: calc(var(--i) * 80px) calc(var(--i) * -160px);
-      opacity: calc(1 - var(--i) * 0.4);
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .phone { animation: none; translate: none; position: static; margin-block: var(--s-4); }
-  }
-  @media (max-width: 639px) {
-    .phone--back, .phone--mid { display: none; }
-    .phone--front { position: static; margin-block: var(--s-7); }
-  }
 </style>

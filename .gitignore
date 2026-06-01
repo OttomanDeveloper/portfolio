@@ -26,3 +26,4 @@ node_modules/
 
 # superpowers brainstorm files
 .superpowers/
+.gstack/
