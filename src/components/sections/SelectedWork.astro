@@ -387,22 +387,29 @@ const moreLive = [...liveApps, ...moreApps.map((a) => ({ name: a.name, sub: a.ca
   .gallery {
     display: flex; gap: var(--s-3);
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: x proximity;
     padding-block-end: var(--s-3);
     margin-block-end: var(--s-5);
     scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
   }
   .gallery:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: var(--r-pkg); }
   .gallery .shot {
     flex: 0 0 auto;
-    inline-size: clamp(132px, 38vw, 168px);
-    aspect-ratio: 9 / 20;
-    object-fit: cover;
+    block-size: clamp(220px, 38svh, 300px);
+    inline-size: auto;
+    object-fit: contain;
     border: 1px solid var(--border);
     border-radius: 12px;
     background: var(--bg);
     scroll-snap-align: start;
   }
+  .gallery::-webkit-scrollbar { block-size: 8px; }
+  .gallery::-webkit-scrollbar-track { background: transparent; }
+  .gallery::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+  .gallery::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
   .m-grid { display: grid; grid-template-columns: 1fr; gap: var(--s-5); }
   @media (min-width: 720px) { .m-grid { grid-template-columns: 1.1fr 1fr; gap: var(--s-6); } }
