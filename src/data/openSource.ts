@@ -2,10 +2,10 @@
 export const openSource = [
   {
     name: 'firebase_admin_sdk',
-    tagline: "Firebase Admin SDK for Dart — Firestore, Auth, FCM, Storage. Adopted into Google's official Firebase publisher.",
+    tagline: "I authored the original firebase_admin_sdk on pub.dev. Google's official Firebase Admin SDK for Dart now uses the same package name and credits me as the original author.",
     href: 'https://pub.dev/packages/firebase_admin_sdk',
-    badge: { label: '★ ADOPTED BY GOOGLE', tone: 'gold' as const },
-    meta: 'official Firebase publisher',
+    badge: { label: 'ORIGINAL AUTHOR · CREDITED', tone: 'gold' as const },
+    meta: 'credited on pub.dev',
   },
   {
     name: 'vision_ai',

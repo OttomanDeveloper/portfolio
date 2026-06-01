@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/sections/Hero.astro';
-import GoogleStory from '@/components/sections/GoogleStory.astro';
 import FeaturedLegendTV from '@/components/sections/FeaturedLegendTV.astro';
 import WebDemos from '@/components/sections/WebDemos.astro';
 import ProjectsGrid from '@/components/sections/ProjectsGrid.astro';
@@ -38,7 +37,6 @@ const jsonLd = {
 >
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <Hero />
-  <GoogleStory />
   <FeaturedLegendTV />
   <WebDemos />
   <ProjectsGrid />
