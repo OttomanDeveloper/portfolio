@@ -1,0 +1,78 @@
+/* src/styles/tokens.css — palette, type, spacing, radii, motion */
+
+:root {
+  /* palette — dark only in v1 */
+  --bg: #0d0d12;
+  --bg-elev: #1a1a22;
+  --bg-bar: #161620;
+  --fg: #fafafa;
+  --fg-dim: #a0a0a8;
+  --accent: #d4a558;
+  --accent-glow: oklch(76% 0.13 80 / 0.35);
+  --cyan: #67e8f9;
+  --lime: #a3e635;
+  --alert: #fca5a5;
+  --border: oklch(100% 0 0 / 0.08);
+  --border-soft: oklch(76% 0.13 80 / 0.18);
+
+  /* type families */
+  --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-arabic: 'Noto Naskh Arabic', serif;
+
+  /* fluid type scale */
+  --fs-hero: clamp(2.5rem, 4vw + 1rem, 5rem);
+  --fs-section: clamp(1.5rem, 2vw + 0.5rem, 2.25rem);
+  --fs-featured: clamp(1.5rem, 2vw + 0.5rem, 2rem);
+  --fs-h3: 1.25rem;
+  --fs-body: 1rem;
+  --fs-prose: 1.0625rem;
+  --fs-small: 0.875rem;
+  --fs-micro: 0.75rem;
+  --fs-arabic: clamp(1.75rem, 2vw + 0.5rem, 2.75rem);
+
+  /* line heights */
+  --lh-tight: 1.05;
+  --lh-snug: 1.4;
+  --lh-default: 1.6;
+  --lh-prose: 1.75;
+
+  /* spacing scale */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+  --s-10: 8rem;
+
+  /* radii */
+  --r-card: 14px;
+  --r-featured: 16px;
+  --r-pkg: 12px;
+  --r-icon: 18px;
+  --r-pill: 999px;
+
+  /* layout */
+  --container: 1200px;
+  --prose-measure: 68ch;
+
+  /* timings */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-fast: 120ms;
+  --t-base: 200ms;
+  --t-slow: 400ms;
+}
+
+/* reduce-motion global guardrail */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

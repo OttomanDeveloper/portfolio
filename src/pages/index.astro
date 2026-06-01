@@ -1,17 +1,9 @@
 ---
-
+import BaseLayout from '@/layouts/BaseLayout.astro';
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Portfolio v3 — scaffold" description="dev">
+  <div class="container" style="padding-block: var(--s-9)">
+    <p style="font: 700 var(--fs-hero)/var(--lh-tight) var(--font-mono); color: var(--fg)">MUHAMMAD USMAN.</p>
+    <p style="color: var(--accent); font: var(--fs-body) var(--font-sans); margin-top: var(--s-3)">Scaffold OK. Tokens loaded. <span style="font: 700 var(--fs-arabic) var(--font-arabic);" lang="ar" dir="rtl">عُثماني</span></p>
+  </div>
+</BaseLayout>
