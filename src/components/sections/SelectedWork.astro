@@ -79,21 +79,21 @@ const moreLive = [...liveApps, ...moreApps.map((a) => ({ name: a.name, sub: a.ca
     <div class="grid">
       {items.map((p) => (
         <a class={`card g-${p.group}`} href={`#proj-${p.slug}`} aria-label={`Open ${p.name} details`}>
-          <figure class="thumb">
+          <figure class="shot">
             <img
               src={withBase(`/screens/${pickThumb(p.screens)}`)}
               alt={`${p.name} screenshot`}
               width="540" height="1200" loading="lazy" decoding="async"
             />
           </figure>
-          <div class="body">
+          <div class="content">
             <p class="meta"><span class="cat">{p.category}</span><span class="dot">·</span><span>{p.year}</span></p>
             <h3 class="name">{p.name}</h3>
             <p class="tagline">{p.tagline}</p>
             <ul class="chips" aria-hidden="true">
               {p.techStack.slice(0, 3).map((t) => <li>{t}</li>)}
             </ul>
-            <p class="count" aria-hidden="true">{p.screens.length} screens →</p>
+            <p class="count" aria-hidden="true">{p.screens.length} screens · view gallery →</p>
           </div>
         </a>
       ))}
@@ -224,21 +224,23 @@ const moreLive = [...liveApps, ...moreApps.map((a) => ({ name: a.name, sub: a.ca
   /* keyboard focus signal */
   .sw-radio:focus-visible ~ .filters { outline: 2px solid var(--accent); outline-offset: 6px; border-radius: var(--r-card); }
 
-  /* GRID */
+  /* GRID — horizontal Featured-style cards (phone shot + content) */
   .grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--s-4);
   }
-  @media (min-width: 560px)  { .grid { grid-template-columns: 1fr 1fr; } }
-  @media (min-width: 960px)  { .grid { grid-template-columns: 1fr 1fr 1fr; } }
+  @media (min-width: 768px) { .grid { grid-template-columns: 1fr 1fr; } }
 
   .card {
-    display: flex; flex-direction: column;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--s-5);
+    align-items: center;
+    padding: var(--s-4);
     background: var(--bg-elev);
     border: 1px solid var(--border);
     border-radius: var(--r-card);
-    overflow: hidden;
     text-decoration: none;
     color: inherit;
     isolation: isolate;
@@ -252,25 +254,28 @@ const moreLive = [...liveApps, ...moreApps.map((a) => ({ name: a.name, sub: a.ca
       border-color: var(--accent);
       box-shadow: 0 22px 44px -22px oklch(20% 0.02 80 / 0.55);
     }
-    .card:hover .thumb img { transform: scale(1.04); }
+    .card:hover .shot img { transform: scale(1.05); }
   }
   .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-  .thumb {
+  .shot {
     margin: 0;
-    aspect-ratio: 4 / 3;
+    inline-size: clamp(100px, 26vw, 124px);
+    aspect-ratio: 9 / 19.5;
     overflow: hidden;
+    border-radius: 14px;
+    border: 1px solid var(--border);
     background: var(--bg);
-    border-block-end: 1px solid var(--border);
+    box-shadow: 0 14px 28px -16px oklch(20% 0.02 80 / 0.5);
   }
-  .thumb img {
+  .shot img {
     inline-size: 100%; block-size: 100%;
-    object-fit: cover; object-position: 50% 14%;
+    object-fit: cover; object-position: 50% 0;
     display: block;
     transition: transform var(--t-base) var(--ease-out);
   }
 
-  .body { display: flex; flex-direction: column; gap: var(--s-2); padding: var(--s-4); flex: 1; }
+  .content { display: flex; flex-direction: column; gap: var(--s-2); min-inline-size: 0; }
   .meta {
     display: flex; flex-wrap: wrap; gap: var(--s-2); align-items: center;
     margin: 0; color: var(--fg-dim);
@@ -291,10 +296,16 @@ const moreLive = [...liveApps, ...moreApps.map((a) => ({ name: a.name, sub: a.ca
     font: 400 var(--fs-micro) var(--font-mono);
   }
   .count {
-    margin: auto 0 0; padding-block-start: var(--s-3);
+    margin: var(--s-2) 0 0;
     color: var(--accent);
     font: 600 var(--fs-micro) var(--font-mono);
     letter-spacing: 0.08em; text-transform: uppercase;
+  }
+
+  /* Very narrow phones: stack shot above content */
+  @media (max-width: 380px) {
+    .card { grid-template-columns: 1fr; gap: var(--s-3); }
+    .shot { inline-size: min(42%, 116px); justify-self: start; }
   }
 
   /* MORE (live apps) */
