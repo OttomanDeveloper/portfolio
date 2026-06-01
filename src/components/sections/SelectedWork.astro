@@ -1,0 +1,423 @@
+---
+// src/components/sections/SelectedWork.astro
+// Rich showcase grid driven by src/data/showcase.ts.
+// Zero JS: CSS-only category filter (radio :checked) + per-project lightbox (:target).
+import SectionLabel from '@/components/atoms/SectionLabel.astro';
+import { withBase } from '@/lib/paths';
+import { showcaseProjects } from '@/data/showcase';
+import { projects } from '@/data/projects';
+import { moreApps } from '@/data/moreApps';
+
+// Granular categories collapse into a few broad filter buckets.
+const GROUPS: Record<string, string> = {
+  wisbig: 'rewards', rewardpay: 'rewards', 'lucky-spin': 'rewards',
+  'yt-master': 'rewards', 'trust-earning': 'rewards', 'quiz-news-rewards': 'rewards',
+  saveit: 'media', tfpdl: 'media', 'movo-downloader': 'media', 'football-wallpaper': 'media',
+  'wellness-companion': 'health', icare: 'health',
+  meetbook: 'social', 'hostel-finder': 'social',
+  couriergo: 'other', 'allinone-game': 'other',
+};
+
+const FILTERS = [
+  { id: 'all', label: 'All' },
+  { id: 'rewards', label: 'Rewards & Earning' },
+  { id: 'media', label: 'Media & Downloads' },
+  { id: 'health', label: 'Health' },
+  { id: 'social', label: 'Social & Directory' },
+  { id: 'other', label: 'Logistics & Games' },
+];
+
+const STATUS_LABEL: Record<string, string> = {
+  live: 'Live', shipped: 'Shipped', shelved: 'Client delivery',
+  prototype: 'Prototype', nda: 'Under NDA',
+};
+
+// UDownload is already in the Featured section — drop it here.
+const items = showcaseProjects
+  .filter((p) => p.slug !== 'udownload')
+  .map((p) => ({ ...p, group: GROUPS[p.slug] ?? 'other' }));
+
+const counts = Object.fromEntries(
+  FILTERS.map((f) => [f.id, f.id === 'all' ? items.length : items.filter((i) => i.group === f.id).length]),
+);
+
+const pickThumb = (screens: readonly string[]) =>
+  screens.find((s) => /home|grid|dashboard|listings|market|feed|main/.test(s)) ?? screens[1] ?? screens[0];
+
+// "More live apps" tail — live Play Store apps not already shown as rich cards above.
+const richSlugs = new Set(showcaseProjects.map((p) => p.slug));
+const liveApps = projects.filter((p) => !richSlugs.has(p.slug)).map((p) => ({ name: p.name, sub: p.tagline, href: p.href }));
+const moreLive = [...liveApps, ...moreApps.map((a) => ({ name: a.name, sub: a.category, href: a.href }))];
+---
+<section id="selected-work">
+  <div class="container">
+    <SectionLabel n={5} name="selected work" />
+    <p class="intro">
+      A slice of <strong>50+ apps</strong> shipped for clients worldwide — across rewards, media,
+      health, logistics and more. Tap any card to open its full screenshot gallery.
+    </p>
+
+    {/* CSS-only filter state (visually hidden radios) */}
+    {FILTERS.map((f) => (
+      <input
+        type="radio"
+        name="sw-filter"
+        id={`sw-${f.id}`}
+        class="sw-radio"
+        checked={f.id === 'all'}
+      />
+    ))}
+
+    <div class="filters" role="group" aria-label="Filter projects by category">
+      {FILTERS.map((f) => (
+        <label for={`sw-${f.id}`} class="chip">
+          {f.label}<span class="ct">{counts[f.id]}</span>
+        </label>
+      ))}
+    </div>
+
+    <div class="grid">
+      {items.map((p) => (
+        <a class={`card g-${p.group}`} href={`#proj-${p.slug}`} aria-label={`Open ${p.name} details`}>
+          <figure class="thumb">
+            <img
+              src={withBase(`/screens/${pickThumb(p.screens)}`)}
+              alt={`${p.name} screenshot`}
+              width="540" height="1200" loading="lazy" decoding="async"
+            />
+          </figure>
+          <div class="body">
+            <p class="meta"><span class="cat">{p.category}</span><span class="dot">·</span><span>{p.year}</span></p>
+            <h3 class="name">{p.name}</h3>
+            <p class="tagline">{p.tagline}</p>
+            <ul class="chips" aria-hidden="true">
+              {p.techStack.slice(0, 3).map((t) => <li>{t}</li>)}
+            </ul>
+            <p class="count" aria-hidden="true">{p.screens.length} screens →</p>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    {moreLive.length > 0 && (
+      <details class="more">
+        <summary>+ {moreLive.length} more apps live on Play Store ↓</summary>
+        <ul class="more-list">
+          {moreLive.map((a) => (
+            <li>
+              <a href={a.href} target="_blank" rel="noopener noreferrer">
+                <span class="more-name">{a.name}</span>
+                <span class="more-sub">{a.sub}</span>
+                <span class="more-arrow" aria-hidden="true">↗</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </details>
+    )}
+  </div>
+
+  {/* Lightbox modals (CSS :target) — galleries lazy-load only when opened */}
+  {items.map((p) => (
+    <div class="modal" id={`proj-${p.slug}`} role="dialog" aria-modal="true" aria-labelledby={`m-${p.slug}-title`}>
+      <a class="modal-backdrop" href="#selected-work" aria-label="Close" tabindex="-1"></a>
+      <div class="modal-card">
+        <a class="modal-close" href="#selected-work" aria-label="Close">×</a>
+
+        <p class="m-eyebrow">{p.category} · {p.year} · {STATUS_LABEL[p.status]}</p>
+        <h3 class="m-title" id={`m-${p.slug}-title`}>{p.name}</h3>
+        <p class="m-tagline">{p.tagline}</p>
+
+        <div class="gallery" tabindex="0" aria-label={`${p.name} screenshots`}>
+          {p.screens.map((s, i) => (
+            <img
+              class="shot"
+              src={withBase(`/screens/${s}`)}
+              alt={`${p.name} screen ${i + 1}`}
+              width="540" height="1200" loading="lazy" decoding="async"
+            />
+          ))}
+        </div>
+
+        <div class="m-grid">
+          <div class="m-col">
+            <p class="m-desc">{p.description}</p>
+            <p class="m-motive"><span class="m-k">Why</span> {p.motive}</p>
+          </div>
+          <div class="m-col">
+            <p class="m-k">Built with</p>
+            <ul class="m-stack">{p.techStack.map((t) => <li>{t}</li>)}</ul>
+            <p class="m-k">Features</p>
+            <ul class="m-features">{p.features.map((f) => <li>{f}</li>)}</ul>
+          </div>
+        </div>
+
+        <div class="m-foot">
+          <p class="m-role">{p.role} · {p.client}</p>
+          <div class="m-links">
+            {p.githubLink && <a href={p.githubLink} target="_blank" rel="noopener noreferrer">GitHub ↗</a>}
+            {p.storeLink && <a href={p.storeLink} target="_blank" rel="noopener noreferrer">Play Store ↗</a>}
+          </div>
+        </div>
+      </div>
+    </div>
+  ))}
+</section>
+
+<style>
+  #selected-work { padding-block: clamp(var(--s-8), 8vw, var(--s-10)); }
+  .intro { color: var(--fg-dim); max-inline-size: 62ch; margin: 0 0 var(--s-6); line-height: var(--lh-default); }
+  .intro strong { color: var(--fg); }
+
+  /* Filter radios — hidden but keyboard-reachable */
+  .sw-radio {
+    position: absolute;
+    inline-size: 1px; block-size: 1px;
+    opacity: 0; pointer-events: none;
+  }
+
+  .filters {
+    display: flex; flex-wrap: wrap; gap: var(--s-2);
+    margin-block-end: var(--s-6);
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: var(--s-2);
+    padding: var(--s-2) var(--s-4);
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    background: var(--bg-elev);
+    color: var(--fg-dim);
+    font: 600 var(--fs-small) var(--font-sans);
+    cursor: pointer;
+    user-select: none;
+    min-block-size: 40px;
+    transition: border-color var(--t-fast) var(--ease-out), color var(--t-fast) var(--ease-out), background var(--t-fast) var(--ease-out);
+  }
+  .chip .ct {
+    color: var(--fg-dim);
+    font: 400 var(--fs-micro) var(--font-mono);
+  }
+  .chip:hover { border-color: var(--accent); color: var(--fg); }
+
+  /* Active chip + matching grid filter (one rule pair per bucket) */
+  #sw-all:checked      ~ .filters label[for="sw-all"],
+  #sw-rewards:checked  ~ .filters label[for="sw-rewards"],
+  #sw-media:checked    ~ .filters label[for="sw-media"],
+  #sw-health:checked   ~ .filters label[for="sw-health"],
+  #sw-social:checked   ~ .filters label[for="sw-social"],
+  #sw-other:checked    ~ .filters label[for="sw-other"] {
+    background: var(--accent); color: var(--bg); border-color: var(--accent);
+  }
+  #sw-all:checked      ~ .filters label[for="sw-all"] .ct,
+  #sw-rewards:checked  ~ .filters label[for="sw-rewards"] .ct,
+  #sw-media:checked    ~ .filters label[for="sw-media"] .ct,
+  #sw-health:checked   ~ .filters label[for="sw-health"] .ct,
+  #sw-social:checked   ~ .filters label[for="sw-social"] .ct,
+  #sw-other:checked    ~ .filters label[for="sw-other"] .ct { color: var(--bg); }
+
+  #sw-rewards:checked ~ .grid .card:not(.g-rewards),
+  #sw-media:checked   ~ .grid .card:not(.g-media),
+  #sw-health:checked  ~ .grid .card:not(.g-health),
+  #sw-social:checked  ~ .grid .card:not(.g-social),
+  #sw-other:checked   ~ .grid .card:not(.g-other) { display: none; }
+
+  /* keyboard focus signal */
+  .sw-radio:focus-visible ~ .filters { outline: 2px solid var(--accent); outline-offset: 6px; border-radius: var(--r-card); }
+
+  /* GRID */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--s-4);
+  }
+  @media (min-width: 560px)  { .grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 960px)  { .grid { grid-template-columns: 1fr 1fr 1fr; } }
+
+  .card {
+    display: flex; flex-direction: column;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    isolation: isolate;
+    transition: transform var(--t-base) var(--ease-out),
+                border-color var(--t-base) var(--ease-out),
+                box-shadow var(--t-base) var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 22px 44px -22px oklch(20% 0.02 80 / 0.55);
+    }
+    .card:hover .thumb img { transform: scale(1.04); }
+  }
+  .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .thumb {
+    margin: 0;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--bg);
+    border-block-end: 1px solid var(--border);
+  }
+  .thumb img {
+    inline-size: 100%; block-size: 100%;
+    object-fit: cover; object-position: 50% 14%;
+    display: block;
+    transition: transform var(--t-base) var(--ease-out);
+  }
+
+  .body { display: flex; flex-direction: column; gap: var(--s-2); padding: var(--s-4); flex: 1; }
+  .meta {
+    display: flex; flex-wrap: wrap; gap: var(--s-2); align-items: center;
+    margin: 0; color: var(--fg-dim);
+    font: 400 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .meta .cat { color: var(--accent); }
+  .meta .dot { opacity: 0.4; }
+  .name { margin: 0; color: var(--fg); font: 700 var(--fs-h3) var(--font-sans); line-height: 1.1; }
+  .tagline { margin: 0; color: var(--fg-dim); font-size: var(--fs-small); line-height: 1.5; }
+  .chips { list-style: none; padding: 0; margin: var(--s-1) 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .chips li {
+    padding: 2px 8px;
+    color: var(--fg);
+    background: color-mix(in oklab, var(--fg) 5%, transparent);
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    font: 400 var(--fs-micro) var(--font-mono);
+  }
+  .count {
+    margin: auto 0 0; padding-block-start: var(--s-3);
+    color: var(--accent);
+    font: 600 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+
+  /* MORE (live apps) */
+  .more { margin-block-start: var(--s-7); }
+  .more summary {
+    color: var(--accent);
+    font: 600 var(--fs-small) var(--font-mono);
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    padding: var(--s-3) 0;
+    list-style: none;
+  }
+  .more summary::-webkit-details-marker { display: none; }
+  .more-list { list-style: none; padding: 0; margin: var(--s-3) 0 0; display: grid; grid-template-columns: 1fr; gap: var(--s-2); }
+  @media (min-width: 640px) { .more-list { grid-template-columns: 1fr 1fr; } }
+  .more-list a {
+    display: grid; grid-template-columns: 1fr auto auto; gap: var(--s-3); align-items: center;
+    padding: var(--s-3) var(--s-4);
+    border: 1px solid var(--border); border-radius: var(--r-pkg);
+    color: var(--fg); text-decoration: none; background: var(--bg-elev);
+    transition: border-color var(--t-base) var(--ease-out); min-block-size: 56px;
+  }
+  .more-list a:hover { border-color: var(--accent); }
+  .more-name { font-weight: 600; }
+  .more-sub { color: var(--fg-dim); font-size: var(--fs-small); }
+  .more-arrow { color: var(--accent); }
+
+  /* MODAL (CSS :target) */
+  .modal {
+    position: fixed; inset: 0; z-index: 100;
+    display: none;
+    place-items: center;
+    padding: var(--s-4);
+  }
+  .modal:target { display: grid; }
+  .modal-backdrop {
+    position: absolute; inset: 0;
+    background: oklch(8% 0.01 80 / 0.72);
+    backdrop-filter: blur(4px);
+  }
+  .modal-card {
+    position: relative;
+    inline-size: min(920px, 100%);
+    max-block-size: 90svh;
+    overflow-y: auto;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+    padding: clamp(var(--s-5), 4vw, var(--s-7));
+    box-shadow: 0 40px 80px -24px oklch(8% 0.01 80 / 0.7);
+  }
+  .modal:target .modal-card { animation: m-rise var(--t-base) var(--ease-out); }
+  @keyframes m-rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce) { .modal:target .modal-card { animation: none; } }
+
+  .modal-close {
+    position: absolute; inset-block-start: var(--s-3); inset-inline-end: var(--s-3);
+    inline-size: 40px; block-size: 40px;
+    display: grid; place-items: center;
+    border: 1px solid var(--border); border-radius: 50%;
+    background: var(--bg);
+    color: var(--fg); text-decoration: none;
+    font: 400 1.4rem/1 var(--font-sans);
+    transition: border-color var(--t-fast) var(--ease-out), color var(--t-fast) var(--ease-out);
+  }
+  .modal-close:hover { border-color: var(--accent); color: var(--accent); }
+
+  .m-eyebrow { margin: 0 var(--s-7) 0 0; color: var(--accent); font: 400 var(--fs-micro) var(--font-mono); letter-spacing: 0.16em; text-transform: uppercase; }
+  .m-title { margin: var(--s-2) 0 var(--s-1); color: var(--fg); font: 700 var(--fs-section) var(--font-sans); line-height: 1.05; }
+  .m-tagline { margin: 0 0 var(--s-5); color: var(--accent); font: 600 var(--fs-body) var(--font-sans); }
+
+  .gallery {
+    display: flex; gap: var(--s-3);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-block-end: var(--s-3);
+    margin-block-end: var(--s-5);
+    scrollbar-width: thin;
+  }
+  .gallery:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: var(--r-pkg); }
+  .gallery .shot {
+    flex: 0 0 auto;
+    inline-size: clamp(132px, 38vw, 168px);
+    aspect-ratio: 9 / 20;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg);
+    scroll-snap-align: start;
+  }
+
+  .m-grid { display: grid; grid-template-columns: 1fr; gap: var(--s-5); }
+  @media (min-width: 720px) { .m-grid { grid-template-columns: 1.1fr 1fr; gap: var(--s-6); } }
+  .m-col { display: flex; flex-direction: column; gap: var(--s-3); min-inline-size: 0; }
+  .m-desc { margin: 0; color: var(--fg-dim); line-height: var(--lh-default); }
+  .m-motive { margin: 0; color: var(--fg-dim); line-height: var(--lh-default); }
+  .m-k { color: var(--accent); font: 600 var(--fs-micro) var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; margin: 0; }
+  .m-stack, .m-features { list-style: none; padding: 0; margin: 0; }
+  .m-stack { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+  .m-stack li {
+    padding: 3px 10px; color: var(--fg);
+    background: color-mix(in oklab, var(--fg) 5%, transparent);
+    border: 1px solid var(--border); border-radius: var(--r-pill);
+    font: 400 var(--fs-micro) var(--font-mono);
+  }
+  .m-features { display: grid; gap: var(--s-2); }
+  .m-features li {
+    position: relative; padding-inline-start: var(--s-4);
+    color: var(--fg-dim); font-size: var(--fs-small); line-height: 1.45;
+  }
+  .m-features li::before { content: '✓'; position: absolute; inset-inline-start: 0; color: var(--accent); }
+
+  .m-foot {
+    display: flex; flex-wrap: wrap; gap: var(--s-3); justify-content: space-between; align-items: center;
+    margin-block-start: var(--s-6); padding-block-start: var(--s-4);
+    border-block-start: 1px solid var(--border);
+  }
+  .m-role { margin: 0; color: var(--fg-dim); font: 400 var(--fs-micro) var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; }
+  .m-links { display: flex; gap: var(--s-3); }
+  .m-links a {
+    color: var(--accent); text-decoration: none;
+    font: 600 var(--fs-small) var(--font-sans);
+    border-bottom: 1px solid color-mix(in oklab, var(--accent) 35%, transparent);
+  }
+  .m-links a:hover { color: var(--fg); border-bottom-color: var(--accent); }
+</style>

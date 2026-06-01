@@ -102,12 +102,12 @@ Already present: `lifelink`, `udownload`, `yt-master`, `grouper`, `status-saver`
 
 | Batch | Projects | Why |
 |---|---|---|
-| Batch A | 1, 2, 13, 21 | Quick wins: user's own brand projects + clear package IDs |
-| Batch B | 3, 4, 14, 15 | More single-package small projects |
-| Batch C | 17, 19, 22 | Smaller admin/meetbook projects |
-| Batch D | 5, 6, 7 (WA generic) | Need visual analysis, cross-check existing projects.ts |
-| Batch E | 8, 10, 11, 12 (WA generic) | Same |
-| Batch F | 16 (20 files) + 18 (35 files) + 20 enrich | Heavy projects, do alone |
+| Batch A ✅ DONE | 1, 2, 13, 21 | Quick wins: clear package IDs. All solo, client work, shelved, no links. Data in `src/data/showcase.ts`, 27 AVIFs in `public/screens/`. Stray `com.block2code.companion` dev-CV screenshot in Project 13 skipped (not tracked). |
+| Batch B ✅ DONE | 3, 4, 14, 15 | All solo, client work, shelved, no links. Data appended to `src/data/showcase.ts`, 17 AVIFs in `public/screens/`. (SAVEit's in-app About lists "Ottoman Coder" but user confirmed it as client work.) |
+| Batch C ✅ DONE | 17, 19, 22 | All solo, client work, shelved, no links. Data appended to `src/data/showcase.ts`, 25 AVIFs in `public/screens/`. 17 & 19 are two-app systems (admin + user). ⚠️ Project 22 = recent (2024) suicide-prevention/wellness app, 15 screens; **real app name unknown — entered under working title "Mental Wellness Companion" (slug `wellness-companion`, packageId null), rename when confirmed.** |
+| Batch D ✅ DONE | 5, 6, 7 (WA generic) | Solo, client, shelved, no links. **Projects 5 (admin) + 6 (user) = one product = existing `yt-master`** (in-app brand "ProBooster"); single enriched entry added to `src/data/showcase.ts` with 11 curated AVIFs (of 16; near-dup screens dropped). **Project 7 (Bitcoin mining app) — user said REMOVE, excluded entirely (no entry, no images).** |
+| Batch E ✅ DONE | 8, 10, 11, 12 (WA generic) | Solo, client, shelved, no links. **P10 = WisBig admin → enriched existing `wisbig` entry** (+5 admin AVIFs). **P8+P11 = one merged `trust-earning` entry** (profit-sharing investment app; dark main app + light OTP auth; +8 AVIFs). **P12 = `quiz-news-rewards`** (working title — real name unknown; 2017–2019 Asian earn-points-via-ads genre; +4 AVIFs). **Cross-check: NONE of 8/10/11/12 matched status-saver/couriergo/icare/lifelink/grouper/bill-checker — those 6 are NOT in this archive.** |
+| Batch F ✅ DONE | 16 (20 files) + 18 (35 files) + 20 enrich | All solo. **P16 = existing `couriergo`** (brand "Fulfil Supply Chain"/JinNiu on ShipOX; cross-border China/Laos/Thailand; client; shelved). **P18 = `icare`** — CONFIRMED the "Meditation" desc was correct (full self-care suite: meditation/mood/diary/breathe/hobby/todo + fingerprint lock & FLAG_SECURE); NOT live → shelved, no link. **P20 = `udownload`** — same open-source GPL-3/NewPipe app; kept GitHub link, status shipped. 3 rich entries added to `showcase.ts` (22 curated AVIFs of ~64; heavy folders sampled, not every frame). |
 
 Process per batch:
 1. Fresh session
