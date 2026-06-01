@@ -1,0 +1,17 @@
+---
+// src/components/molecules/StatusBanner.astro
+import { profile } from '@/data/profile';
+import { withBase } from '@/lib/paths';
+---
+<a class="banner" href={withBase('/#contact')}>
+  <span class="dot" aria-hidden="true"></span>
+  <span>● {profile.available} · tap for contact ↓</span>
+</a>
+
+<style>
+  .banner { position: sticky; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: center; gap: var(--s-3); padding: var(--s-2) var(--s-4); background: var(--bg-bar); color: var(--accent); font: 600 var(--fs-small) var(--font-mono); border-block-end: 1px solid var(--border-soft); text-decoration: none; min-block-size: 36px; }
+  .dot { inline-size: 8px; block-size: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); animation: gleam 2s ease-in-out infinite; }
+  @keyframes gleam { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  @media (prefers-reduced-motion: reduce) { .dot { animation: none; } }
+  @media (min-width: 1024px) { .banner { display: none; } }
+</style>

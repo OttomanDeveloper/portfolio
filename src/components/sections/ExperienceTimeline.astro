@@ -1,0 +1,71 @@
+---
+// src/components/sections/ExperienceTimeline.astro
+import SectionLabel from '@/components/atoms/SectionLabel.astro';
+import { experience } from '@/data/experience';
+---
+<section id="experience">
+  <div class="container">
+    <SectionLabel n={7} name="experience" />
+    <ol class="timeline">
+      {experience.map((e) => (
+        <li class="entry">
+          <span class="dot" aria-hidden="true"></span>
+          <p class="period">{e.period}</p>
+          <h3 class="role">
+            {e.role}{' '}
+            <span class="at">@</span>{' '}
+            {e.companyHref
+              ? <a href={e.companyHref} target="_blank" rel="noopener noreferrer">{e.company}</a>
+              : <span>{e.company}</span>}
+          </h3>
+          <p class="body">{e.body}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  #experience { padding-block: clamp(var(--s-8), 8vw, var(--s-10)); }
+  .timeline {
+    list-style: none; padding: 0; margin: 0;
+    position: relative;
+    padding-inline-start: var(--s-6);
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    inset-block: 6px;
+    inset-inline-start: 5px;
+    inline-size: 1px;
+    background: var(--border-soft);
+  }
+  .entry { position: relative; padding-block: var(--s-5); }
+  .entry:first-child { padding-block-start: 0; }
+  .dot {
+    position: absolute;
+    inset-block-start: var(--s-5);
+    inset-inline-start: calc(-1 * var(--s-6) + 1px);
+    inline-size: 11px; block-size: 11px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--bg);
+  }
+  .entry:first-child .dot { inset-block-start: 0; }
+  .period {
+    color: var(--accent);
+    font: 400 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0 0 var(--s-2);
+  }
+  .role {
+    color: var(--fg);
+    font: 700 var(--fs-h3) var(--font-sans);
+    margin: 0 0 var(--s-2);
+  }
+  .at { color: var(--fg-dim); font-weight: 400; }
+  .role a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--border-soft); }
+  .role a:hover { border-bottom-color: var(--accent); color: var(--fg); }
+  .body { color: var(--fg-dim); margin: 0; max-inline-size: 65ch; line-height: var(--lh-default); }
+</style>

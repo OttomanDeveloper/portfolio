@@ -1,0 +1,27 @@
+---
+// src/components/sections/StatusSection.astro
+import SectionLabel from '@/components/atoms/SectionLabel.astro';
+import TodayCard from '@/components/atoms/TodayCard.astro';
+import { profile } from '@/data/profile';
+import { withBase } from '@/lib/paths';
+---
+<section id="status">
+  <div class="container">
+    <SectionLabel n={9} name="availability" />
+    <TodayCard eyebrow="● AVAILABLE" title={profile.available} glow={false}>
+      <p>{profile.availableLong}</p>
+      <p class="current">Currently shipping: <strong>{profile.currentlyShipping.text}</strong> at <a href={profile.currentlyShipping.href} target="_blank" rel="noopener noreferrer">{profile.currentlyShipping.at}</a>.</p>
+      <Fragment slot="ctas">
+        <a class="cta" href={withBase('/#contact')}>Get in touch ↓</a>
+      </Fragment>
+    </TodayCard>
+  </div>
+</section>
+
+<style>
+  #status { padding-block: clamp(var(--s-8), 8vw, var(--s-10)); }
+  .current { color: var(--fg-dim); margin-block-start: var(--s-3); }
+  .current strong { color: var(--fg); font-weight: 600; }
+  .cta { display: inline-flex; align-items: center; gap: var(--s-2); padding: var(--s-3) var(--s-5); background: var(--accent); color: var(--bg); border-radius: var(--r-pill); font: 600 var(--fs-small) var(--font-sans); text-decoration: none; min-block-size: 44px; }
+  .cta:hover { background: color-mix(in oklab, var(--accent) 80%, white); color: var(--bg); }
+</style>

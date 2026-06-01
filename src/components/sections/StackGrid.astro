@@ -1,0 +1,29 @@
+---
+// src/components/sections/StackGrid.astro
+import SectionLabel from '@/components/atoms/SectionLabel.astro';
+import { stack } from '@/data/stack';
+---
+<section id="stack">
+  <div class="container">
+    <SectionLabel n={8} name="stack · day-to-day" />
+    <dl class="grid">
+      {stack.map((g) => (
+        <>
+          <dt class="k">{g.category}</dt>
+          <dd class="v">
+            {g.chips.map((c) => <span class="chip">{c}</span>)}
+          </dd>
+        </>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<style>
+  #stack { padding-block: clamp(var(--s-8), 8vw, var(--s-10)); }
+  .grid { display: grid; grid-template-columns: 140px 1fr; gap: var(--s-3) var(--s-5); margin: 0; }
+  @media (max-width: 479px) { .grid { grid-template-columns: 1fr; gap: var(--s-1); } .k { padding-block: var(--s-3) 0; } }
+  .k { color: var(--accent); font: 400 var(--fs-micro) var(--font-mono); text-transform: uppercase; letter-spacing: 0.12em; align-self: baseline; padding-block-start: 6px; }
+  .v { margin: 0; display: flex; flex-wrap: wrap; gap: var(--s-2); }
+  .chip { display: inline-block; padding: 4px 10px; background: color-mix(in oklab, var(--fg) 5%, transparent); border: 1px solid var(--border); border-radius: var(--r-pill); font: 400 var(--fs-small) var(--font-sans); color: var(--fg); }
+</style>

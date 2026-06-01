@@ -1,38 +1,29 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import SectionLabel from '@/components/atoms/SectionLabel.astro';
-import StatusPill from '@/components/atoms/StatusPill.astro';
-import StatsRow from '@/components/atoms/StatsRow.astro';
-import KvBlock from '@/components/atoms/KvBlock.astro';
-import TodayCard from '@/components/atoms/TodayCard.astro';
-import AppCard from '@/components/atoms/AppCard.astro';
-import OssCard from '@/components/atoms/OssCard.astro';
-import PhoneFrame from '@/components/atoms/PhoneFrame.astro';
+import Hero from '@/components/sections/Hero.astro';
+import GoogleStory from '@/components/sections/GoogleStory.astro';
+import FeaturedLegendTV from '@/components/sections/FeaturedLegendTV.astro';
+import WebDemos from '@/components/sections/WebDemos.astro';
+import ProjectsGrid from '@/components/sections/ProjectsGrid.astro';
+import OssGrid from '@/components/sections/OssGrid.astro';
+import ExperienceTimeline from '@/components/sections/ExperienceTimeline.astro';
+import StackGrid from '@/components/sections/StackGrid.astro';
+import StatusSection from '@/components/sections/StatusSection.astro';
+import Contact from '@/components/sections/Contact.astro';
+import { profile } from '@/data/profile';
 ---
-<BaseLayout title="Atoms smoke" description="dev">
-  <div class="container" style="display: grid; gap: var(--s-8); padding-block: var(--s-9)">
-    <SectionLabel n={1} name="atoms-smoke" />
-    <StatusPill label="Available for new work" />
-    <KvBlock pairs={[
-      { key: 'based', value: 'Islamabad, PK' },
-      { key: 'links', value: '<a href="#">github</a> · <a href="#">linkedin</a>', valueHtml: true },
-    ]} />
-    <StatsRow stats={[
-      { num: '600K', unit: '+', desc: 'peak users on Legend TV' },
-      { num: '50',   unit: '+', desc: 'production apps shipped' },
-      { num: '#1',              desc: 'PS category, 5 months' },
-      { num: '9',    unit: ' pkgs', desc: 'open-source on pub.dev' },
-    ]} />
-    <TodayCard eyebrow="▸ FEATURED · ADOPTED BY GOOGLE" title="firebase_admin_sdk" vt="google-credential">
-      <p>A Dart package I wrote — later officially taken over and maintained by Google's Dart &amp; Flutter team.</p>
-      <Fragment slot="ctas">
-        <a href="https://pub.dev/packages/firebase_admin_sdk">Get on pub.dev →</a>
-      </Fragment>
-    </TodayCard>
-    <AppCard name="LifeLink" tagline="Crisis app · Gemini AI · Isolates" iconGlyph="🧬" badge={{ label: 'FEATURED', tone: 'cyan' }}
-             href="https://play.google.com/store/apps/details?id=com.helper.lifelink" external />
-    <OssCard name="vision_ai" tagline="On-device gesture + emotion in Flutter" href="https://pub.dev/packages/vision_ai"
-             badge={{ label: 'NEW · ON-DEVICE AI', tone: 'cyan' }} meta="just shipped" />
-    <PhoneFrame src="/favicon.svg" alt="placeholder" variant="front" />
-  </div>
+<BaseLayout
+  title={`${profile.name} — ${profile.tagline}`}
+  description={`${profile.alias}. ${profile.tagline}. ${profile.basedIn}. 50+ apps shipped. 9 open-source packages.`}
+>
+  <Hero />
+  <GoogleStory />
+  <FeaturedLegendTV />
+  <WebDemos />
+  <ProjectsGrid />
+  <OssGrid />
+  <ExperienceTimeline />
+  <StackGrid />
+  <StatusSection />
+  <Contact />
 </BaseLayout>

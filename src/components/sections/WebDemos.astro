@@ -1,0 +1,83 @@
+---
+// src/components/sections/WebDemos.astro
+import SectionLabel from '@/components/atoms/SectionLabel.astro';
+import { webDemos } from '@/data/webDemos';
+import { withBase } from '@/lib/paths';
+---
+<section id="web-demos">
+  <div class="container">
+    <SectionLabel n={4} name="web demos · flutter web" />
+    <p class="intro">Live demos showcasing scroll-driven animation and zero-dependency performance — built with Flutter Web.</p>
+    <div class="grid">
+      {webDemos.map((d) => (
+        <article class="demo">
+          <img src={d.screenshot} alt={`${d.name} demo preview`} loading="lazy" decoding="async" />
+          <div class="meta">
+            <h3 class="name">{d.name}</h3>
+            <p class="sub">{d.subhead}</p>
+            <p class="body">{d.body}</p>
+            <ul class="highlights">
+              {d.highlights.map((h) => <li>{h}</li>)}
+            </ul>
+            <div class="ctas">
+              <a class="primary" href={d.live} target="_blank" rel="noopener noreferrer">▶ Open live ↗</a>
+              <a class="secondary" href={d.source} target="_blank" rel="noopener noreferrer">Source on GitHub →</a>
+              {d.caseStudyHref && <a class="secondary" href={withBase(d.caseStudyHref)}>Read case study →</a>}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  #web-demos { padding-block: clamp(var(--s-8), 8vw, var(--s-10)); }
+  .intro { color: var(--fg-dim); max-inline-size: 60ch; margin: 0 0 var(--s-6); }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--s-5);
+  }
+  @media (min-width: 1024px) { .grid { grid-template-columns: 1fr 1fr; } }
+  .demo {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--r-featured);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .demo img {
+    inline-size: 100%; aspect-ratio: 16 / 9;
+    object-fit: cover; background: #000;
+  }
+  .meta { padding: var(--s-5); display: flex; flex-direction: column; gap: var(--s-3); }
+  .name { font: 700 var(--fs-h3) var(--font-sans); color: var(--fg); margin: 0; }
+  .sub { color: var(--accent); margin: 0; font: 600 var(--fs-small) var(--font-sans); }
+  .body { color: var(--fg-dim); margin: 0; font-size: var(--fs-small); line-height: 1.55; }
+  .highlights {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-wrap: wrap; gap: var(--s-2);
+  }
+  .highlights li {
+    color: var(--fg);
+    font: 400 var(--fs-micro) var(--font-mono);
+    padding: 4px 8px;
+    background: color-mix(in oklab, var(--fg) 5%, transparent);
+    border-radius: var(--r-pill);
+  }
+  .ctas { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-block-start: var(--s-3); }
+  .primary, .secondary {
+    padding: var(--s-3) var(--s-4);
+    border-radius: var(--r-pill);
+    font: 600 var(--fs-small) var(--font-sans);
+    text-decoration: none;
+    min-block-size: 44px;
+    display: inline-flex; align-items: center;
+  }
+  .primary { background: var(--accent); color: var(--bg); }
+  .primary:hover { background: color-mix(in oklab, var(--accent) 80%, white); color: var(--bg); }
+  .secondary { color: var(--accent); border: 1px solid var(--border-soft); }
+  .secondary:hover { border-color: var(--accent); color: var(--fg); }
+</style>

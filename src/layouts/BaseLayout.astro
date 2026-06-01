@@ -1,6 +1,7 @@
 ---
 // src/layouts/BaseLayout.astro
 import '@/styles/global.css';
+import StatusBanner from '@/components/molecules/StatusBanner.astro';
 
 interface Props {
   title: string;
@@ -41,7 +42,7 @@ const ogImageUrl = ogImage ?? `${siteUrl}/og/default.png`;
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to content</a>
-    <slot name="banner" />
+    <StatusBanner />
     <main id="main"><slot /></main>
     <slot name="footer" />
   </body>

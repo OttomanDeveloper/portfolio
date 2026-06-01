@@ -1,0 +1,35 @@
+---
+// src/components/sections/OssGrid.astro
+import SectionLabel from '@/components/atoms/SectionLabel.astro';
+import OssCard from '@/components/atoms/OssCard.astro';
+import { openSource } from '@/data/openSource';
+---
+<section id="opensource">
+  <div class="container">
+    <SectionLabel n={6} name="open source · pub.dev" />
+    <p class="intro">Nine packages published to pub.dev — gap-fillers for the Flutter/Dart ecosystem. Two are featured.</p>
+    <div class="grid">
+      {openSource.map((p) => (
+        <OssCard
+          name={p.name}
+          tagline={p.tagline}
+          href={p.href}
+          badge={p.badge}
+          meta={p.meta}
+        />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  #opensource { padding-block: clamp(var(--s-8), 8vw, var(--s-10)); }
+  .intro { color: var(--fg-dim); max-inline-size: 60ch; margin: 0 0 var(--s-6); }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--s-4);
+  }
+  @media (min-width: 640px)  { .grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1024px) { .grid { grid-template-columns: 1fr 1fr 1fr; } }
+</style>
