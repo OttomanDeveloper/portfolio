@@ -3,36 +3,21 @@
 import StatusPill from '@/components/atoms/StatusPill.astro';
 import StatsRow from '@/components/atoms/StatsRow.astro';
 import { profile } from '@/data/profile';
-
-const techChips = ['Flutter', 'Dart', 'BLE', 'Gemini AI', 'Firebase', 'Isolates'];
-const reach = [
-  { label: 'YouTube',  value: '140K+', href: 'https://www.youtube.com/@OttomanCoder' },
-  { label: 'LinkedIn', value: '60K+',  href: 'https://www.linkedin.com/in/ottomancoder/' },
-  { label: 'Twitter',  value: '41K+',  href: 'https://twitter.com/ottomancoder' },
-  { label: 'GitHub',   value: '10K+',  href: 'https://github.com/OttomanDeveloper' },
-];
 ---
 <section id="hero" aria-labelledby="hero-name">
   <div class="bg-grid" aria-hidden="true"></div>
-  <div class="bg-glow" aria-hidden="true"></div>
 
   <div class="container row">
     <div class="copy">
       <p class="eyebrow" aria-hidden="true">
         <span class="dot"></span>
-        <span>▸ TODAY</span>
+        <span>▸ ISLAMABAD</span>
         <span class="sep">·</span>
         <span class="live"><span id="ist-clock">IST</span></span>
-        <span class="sep">·</span>
-        <span class="tone-accent">BUILDING NMO AI</span>
       </p>
 
       <h1 id="hero-name" class="wordmark">{profile.name}<span class="dot-period">.</span></h1>
       <p class="alias">{profile.alias} · {profile.tagline}</p>
-
-      <ul class="techchips" aria-hidden="true">
-        {techChips.map((t) => <li>{t}</li>)}
-      </ul>
 
       <p class="tagline">{profile.taglineLong}</p>
 
@@ -44,7 +29,7 @@ const reach = [
         <StatsRow stats={[...profile.stats]} compact />
       </div>
 
-      <a class="scroll" href="#legend-tv" aria-label="scroll to next section">
+      <a class="scroll" href="#featured" aria-label="scroll to next section">
         <span>scroll to explore</span>
         <span class="arrow" aria-hidden="true">↓</span>
       </a>
@@ -56,43 +41,24 @@ const reach = [
         <span class="arabic" lang="ar" dir="rtl">{profile.aliasArabic}</span>
       </div>
 
-      <article class="reach" aria-label="Reach across platforms">
-        <p class="reach-eyebrow" aria-hidden="true">▸ REACH</p>
-        <ul>
-          {reach.map((r) => (
+      <article class="now" aria-label={`Now — ${profile.now.month}`}>
+        <p class="now-eyebrow" aria-hidden="true">
+          <span>▸ NOW</span>
+          <span class="sep">·</span>
+          <span class="month">{profile.now.month}</span>
+        </p>
+        <ul class="now-list">
+          {profile.now.items.map((it) => (
             <li>
-              <a href={r.href} target="_blank" rel="noopener noreferrer">
-                <span class="r-value">{r.value}</span>
-                <span class="r-label">{r.label}</span>
-              </a>
+              <span class="k">{it.key}</span>
+              <span class="arr" aria-hidden="true">→</span>
+              <span class="v">{it.text}</span>
             </li>
           ))}
         </ul>
       </article>
-
-      <article class="now">
-        <p class="now-eyebrow" aria-hidden="true">▸ CURRENTLY SHIPPING</p>
-        <p class="now-title">{profile.currentlyShipping.text}</p>
-        <p class="now-where">
-          at <a href={profile.currentlyShipping.href} target="_blank" rel="noopener noreferrer">{profile.currentlyShipping.at}</a>
-        </p>
-        <ul class="now-tags" aria-hidden="true">
-          <li>BLE</li>
-          <li>Gemini AI</li>
-          <li>Flutter</li>
-          <li>MENA</li>
-        </ul>
-      </article>
-
-      <p class="based">
-        <span class="based-k">based</span>
-        <span class="based-v">{profile.basedIn}</span>
-        <span class="based-note">{profile.basedNote}</span>
-      </p>
     </aside>
   </div>
-
-  <p class="divider" aria-hidden="true">// ─────────── <span>01 · FEATURED PROJECT</span> ───────────</p>
 </section>
 
 <script>
@@ -122,22 +88,15 @@ const reach = [
     overflow: hidden;
   }
 
-  /* Background flair */
+  /* Background flair — single layer: subtle dotted grid */
   .bg-grid {
-    position: absolute; inset: 0; z-index: -2;
+    position: absolute; inset: 0; z-index: -1;
     background-image:
-      linear-gradient(to right, oklch(100% 0 0 / 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, oklch(100% 0 0 / 0.03) 1px, transparent 1px);
+      linear-gradient(to right, oklch(100% 0 0 / 0.025) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(100% 0 0 / 0.025) 1px, transparent 1px);
     background-size: 48px 48px;
     mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 0%, transparent 90%);
   }
-  .bg-glow {
-    position: absolute; inset: 0; z-index: -1;
-    background: radial-gradient(50% 50% at 75% 35%, var(--accent-glow), transparent 60%);
-    opacity: 0.55;
-    pointer-events: none;
-  }
-  @media (max-width: 1023px) { .bg-glow { background-position: 80% 8%; } }
 
   .row {
     display: grid;
@@ -167,7 +126,6 @@ const reach = [
     backdrop-filter: blur(8px);
   }
   .eyebrow .sep { color: var(--fg-dim); opacity: 0.5; }
-  .eyebrow .tone-accent { color: var(--accent); }
   .eyebrow .dot {
     inline-size: 7px; block-size: 7px; border-radius: 50%;
     background: var(--accent);
@@ -184,32 +142,12 @@ const reach = [
     margin: 0;
     text-wrap: balance;
   }
-  .dot-period {
-    color: var(--accent);
-    animation: dot-blink 1.6s steps(2) infinite;
-  }
-  @keyframes dot-blink { 50% { opacity: 0.35; } }
-  @media (prefers-reduced-motion: reduce) { .dot-period { animation: none; } }
+  .dot-period { color: var(--accent); }
 
   .alias {
     color: var(--accent);
     font: 600 var(--fs-body) var(--font-sans);
     margin: var(--s-4) 0 var(--s-3);
-  }
-
-  .techchips {
-    list-style: none; padding: 0;
-    margin: 0 0 var(--s-5);
-    display: flex; flex-wrap: wrap; gap: var(--s-2);
-  }
-  .techchips li {
-    padding: 3px 10px;
-    color: var(--fg);
-    background: color-mix(in oklab, var(--fg) 5%, transparent);
-    border: 1px solid var(--border);
-    border-radius: var(--r-pill);
-    font: 400 var(--fs-micro) var(--font-mono);
-    letter-spacing: 0.06em;
   }
 
   .tagline {
@@ -247,7 +185,7 @@ const reach = [
   /* RIGHT */
   .side {
     display: grid;
-    gap: var(--s-5);
+    gap: var(--s-6);
     align-self: stretch;
     align-content: center;
   }
@@ -267,7 +205,6 @@ const reach = [
     box-shadow:
       0 0 0 6px var(--bg-elev),
       0 0 0 7px var(--border-soft),
-      0 0 60px -4px var(--accent-glow),
       0 24px 48px -16px oklch(20% 0.02 80 / 0.55);
   }
   .arabic {
@@ -282,42 +219,6 @@ const reach = [
     border-radius: var(--r-pill);
   }
 
-  /* Reach widget */
-  .reach {
-    padding: var(--s-4) var(--s-5);
-    background: var(--bg-elev);
-    border: 1px solid var(--border-soft);
-    border-radius: var(--r-card);
-  }
-  .reach-eyebrow {
-    color: var(--accent);
-    font: 400 var(--fs-micro) var(--font-mono);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    margin: 0 0 var(--s-3);
-  }
-  .reach ul {
-    list-style: none; padding: 0; margin: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--s-3);
-  }
-  .reach a {
-    display: grid;
-    gap: 2px;
-    padding: var(--s-2) var(--s-3);
-    border: 1px solid var(--border);
-    border-radius: var(--r-pkg);
-    color: var(--fg);
-    text-decoration: none;
-    transition: border-color var(--t-base) var(--ease-out), color var(--t-base) var(--ease-out);
-    min-block-size: 56px;
-  }
-  .reach a:hover { border-color: var(--accent); color: var(--fg); }
-  .r-value { font: 700 var(--fs-body) var(--font-mono); color: var(--fg); }
-  .r-label { font: 400 var(--fs-micro) var(--font-mono); color: var(--fg-dim); letter-spacing: 0.12em; text-transform: uppercase; }
-  .reach a:hover .r-value { color: var(--accent); }
-
   .now {
     padding: var(--s-5);
     background: var(--bg-elev);
@@ -325,52 +226,35 @@ const reach = [
     border-radius: var(--r-card);
   }
   .now-eyebrow {
+    display: flex; align-items: center; gap: var(--s-2);
     color: var(--accent);
     font: 400 var(--fs-micro) var(--font-mono);
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    margin: 0 0 var(--s-3);
+    margin: 0 0 var(--s-4);
   }
-  .now-title { color: var(--fg); font: 700 var(--fs-h3) var(--font-sans); margin: 0 0 var(--s-2); }
-  .now-where { color: var(--fg-dim); font: 400 var(--fs-small) var(--font-sans); margin: 0 0 var(--s-4); }
-  .now-where a { color: var(--accent); text-decoration: none; border-bottom: 1px solid color-mix(in oklab, var(--accent) 35%, transparent); }
-  .now-where a:hover { border-bottom-color: var(--accent); color: var(--fg); }
-  .now-tags { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: var(--s-2); }
-  .now-tags li {
-    padding: 3px 9px;
-    color: var(--fg);
-    background: color-mix(in oklab, var(--fg) 5%, transparent);
-    border: 1px solid var(--border);
-    border-radius: var(--r-pill);
-    font: 400 var(--fs-micro) var(--font-mono);
-    letter-spacing: 0.04em;
-  }
-
-  .based {
-    display: flex; flex-wrap: wrap; gap: var(--s-2);
+  .now-eyebrow .sep { color: var(--fg-dim); opacity: 0.5; }
+  .now-eyebrow .month { color: var(--fg-dim); }
+  .now-list { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--s-3); }
+  .now-list li {
+    display: grid;
+    grid-template-columns: 64px auto 1fr;
     align-items: baseline;
-    margin: 0;
-    color: var(--fg-dim);
+    gap: var(--s-3);
     font: 400 var(--fs-small) var(--font-sans);
+    line-height: 1.4;
   }
-  .based-k { color: var(--accent); font: 400 var(--fs-micro) var(--font-mono); letter-spacing: 0.18em; text-transform: uppercase; }
-  .based-v { color: var(--fg); font-weight: 600; }
-  .based-note { color: var(--fg-dim); }
-
-  /* Section divider */
-  .divider {
-    margin: var(--s-9) auto 0;
-    text-align: center;
+  .now-list .k {
     color: var(--fg-dim);
     font: 400 var(--fs-micro) var(--font-mono);
-    letter-spacing: 0.18em;
-    opacity: 0.6;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
   }
-  .divider span { color: var(--accent); }
+  .now-list .arr { color: var(--accent); font-family: var(--font-mono); }
+  .now-list .v { color: var(--fg); }
 
   @media (max-width: 639px) {
     .arabic { font-size: clamp(1.5rem, 1.5vw + 0.5rem, 2rem); inset-inline-end: -8px; }
-    .reach ul { grid-template-columns: 1fr 1fr; }
     .eyebrow { flex-wrap: wrap; }
   }
 </style>

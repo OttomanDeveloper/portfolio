@@ -16,6 +16,15 @@ export const profile = {
     at: 'Nmo AI',
     href: 'https://www.beinmedia.com/',
   },
+  now: {
+    month: "JUN '26",
+    items: [
+      { key: 'building', text: 'personal apps — calmness, fitness, streaming' },
+      { key: 'reading',  text: 'Designing Data-Intensive Apps' },
+      { key: 'learning', text: 'on-device LLMs (Gemini Nano)' },
+      { key: 'side',     text: 'tanquery v1 stabilization' },
+    ],
+  },
   stats: [
     { num: '600K', unit: '+', desc: 'peak users on Legend TV' },
     { num: '50',   unit: '+', desc: 'production apps shipped' },

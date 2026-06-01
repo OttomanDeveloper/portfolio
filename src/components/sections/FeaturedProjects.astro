@@ -1,0 +1,225 @@
+---
+// src/components/sections/FeaturedProjects.astro
+import SectionLabel from '@/components/atoms/SectionLabel.astro';
+import { withBase } from '@/lib/paths';
+---
+<section id="featured">
+  <div class="container">
+    <SectionLabel n={3} name="featured projects" />
+    <p class="intro">Two products that show the range — one I shipped commercially solo, one I shipped to the open-source community.</p>
+
+    <div class="grid">
+      <article class="card legend">
+        <p class="badge"><span class="dot" aria-hidden="true"></span>COMMERCIAL · 600K USERS</p>
+
+        <div class="row">
+          <figure class="shot">
+            <img src={withBase('/screens/legend_home.avif')} alt="Legend TV home feed — Turkish-Urdu dubbed series catalog" width="540" height="1200" loading="lazy" decoding="async" />
+          </figure>
+
+          <div class="content">
+            <h3 class="title" style="view-transition-name: case-title-legend-tv;">Legend TV</h3>
+            <p class="sub">A streaming platform built solo — Urdu-first dubs for PK · IN · SA.</p>
+
+            <ul class="stats" aria-label="Legend TV stats">
+              <li><span class="n">600K<span class="u">+</span></span><span class="d">peak users</span></li>
+              <li><span class="n">$20K<span class="u">+</span></span><span class="d">year-1 rev</span></li>
+              <li><span class="n">#1</span><span class="d">PS · 5 mo</span></li>
+              <li><span class="n">3</span><span class="d">countries</span></li>
+            </ul>
+
+            <ul class="chips" aria-hidden="true">
+              <li>Flutter</li><li>Firebase</li><li>AdMob</li><li>Razorpay</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <a class="cta primary" href={withBase('/projects/legend-tv')}>Read case study →</a>
+        </div>
+      </article>
+
+      <article class="card udl">
+        <p class="badge tone-lime"><span class="dot" aria-hidden="true"></span>OPEN SOURCE · GPL-3</p>
+
+        <div class="row">
+          <figure class="shot">
+            <img src={withBase('/screens/u_download_1.avif')} alt="UDownload home screen" width="280" height="600" loading="lazy" decoding="async" />
+          </figure>
+
+          <div class="content">
+            <h3 class="title">UDownload</h3>
+            <p class="sub">A YouTube-style video browser & downloader — no API key.</p>
+
+            <p class="body">
+              Built on my own <a class="inline-link" href="https://pub.dev/packages/newpipeextractor_dart" target="_blank" rel="noopener noreferrer">newpipeextractor_dart</a>.
+              Search, channels, playlists, native ExoPlayer playback, and offline downloads.
+            </p>
+
+            <ul class="chips" aria-hidden="true">
+              <li>Flutter</li><li>BLoC</li><li>ExoPlayer</li><li>NewPipe</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <a class="cta primary" href="https://github.com/OttomanDeveloper/u_downloader" target="_blank" rel="noopener noreferrer">GitHub →</a>
+          <a class="cta ghost"   href="https://pub.dev/packages/newpipeextractor_dart" target="_blank" rel="noopener noreferrer">View extractor →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  #featured { padding-block: clamp(var(--s-8), 8vw, var(--s-10)); }
+  .intro { color: var(--fg-dim); max-inline-size: 62ch; margin: 0 0 var(--s-7); }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--s-5);
+    align-items: stretch;
+  }
+  @media (min-width: 1024px) {
+    .grid { grid-template-columns: 1fr 1fr; gap: var(--s-6); }
+  }
+
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-4);
+    padding: var(--s-5);
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+    isolation: isolate;
+    overflow: hidden;
+    transition: transform var(--t-base) var(--ease-out),
+                border-color var(--t-base) var(--ease-out),
+                box-shadow var(--t-base) var(--ease-out);
+  }
+
+  /* Horizontal row inside each card: shot on the left, content on the right */
+  .row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--s-5);
+    align-items: start;
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+    min-inline-size: 0;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+      box-shadow: 0 24px 48px -20px oklch(20% 0.02 80 / 0.5);
+    }
+  }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: var(--s-2);
+    align-self: flex-start;
+    margin: 0 0 var(--s-1);
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    background: oklch(15% 0.02 80 / 0.5);
+    color: var(--accent);
+    font: 400 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .badge.tone-lime { color: var(--lime); }
+  .badge .dot {
+    inline-size: 6px; block-size: 6px; border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 8px currentColor;
+  }
+
+  .title {
+    color: var(--fg);
+    font: 700 var(--fs-section) var(--font-sans);
+    margin: 0;
+    line-height: 1.05;
+  }
+  .sub { color: var(--accent); margin: 0; font: 600 var(--fs-body) var(--font-sans); }
+  .body { color: var(--fg-dim); margin: 0; line-height: var(--lh-default); max-inline-size: 50ch; }
+  .inline-link { color: var(--accent); text-decoration: none; border-bottom: 1px solid color-mix(in oklab, var(--accent) 35%, transparent); }
+  .inline-link:hover { border-bottom-color: var(--accent); color: var(--fg); }
+
+  /* Stats inside Legend card */
+  .stats {
+    list-style: none; padding: 0; margin: var(--s-3) 0 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-3);
+  }
+  .stats li {
+    display: flex; flex-direction: column; gap: 2px;
+    padding: var(--s-3);
+    background: oklch(15% 0.02 80 / 0.4);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--r-pkg);
+  }
+  .stats .n { color: var(--fg); font: 700 var(--fs-h3) var(--font-mono); }
+  .stats .n .u { color: var(--accent); font-size: 0.7em; margin-inline-start: 2px; }
+  .stats .d { color: var(--fg-dim); font: 400 var(--fs-micro) var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* Phone screenshot — slim & fixed-width on the left of the row */
+  .shot {
+    margin: 0;
+    inline-size: 130px;
+    aspect-ratio: 9 / 19.5;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    box-shadow: 0 16px 32px -18px oklch(20% 0.02 80 / 0.55);
+  }
+  .shot img { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
+
+  .chips {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-wrap: wrap; gap: var(--s-2);
+  }
+  .chips li {
+    padding: 3px 10px;
+    color: var(--fg);
+    background: color-mix(in oklab, var(--fg) 5%, transparent);
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    font: 400 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.04em;
+  }
+
+  .cta-row {
+    margin-block-start: auto;
+    padding-block-start: var(--s-3);
+    display: flex; flex-wrap: wrap; gap: var(--s-2);
+  }
+  .cta {
+    display: inline-flex; align-items: center;
+    padding: var(--s-3) var(--s-5);
+    border-radius: var(--r-pill);
+    font: 600 var(--fs-small) var(--font-sans);
+    text-decoration: none;
+    min-block-size: 44px;
+    transition: background var(--t-fast) var(--ease-out), color var(--t-fast) var(--ease-out), border-color var(--t-fast) var(--ease-out);
+  }
+  .cta.primary { background: var(--accent); color: var(--bg); }
+  .cta.primary:hover { background: color-mix(in oklab, var(--accent) 80%, white); }
+  .cta.ghost { background: transparent; color: var(--fg); border: 1px solid var(--border); }
+  .cta.ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  @media (max-width: 639px) {
+    .row { grid-template-columns: 1fr; gap: var(--s-4); }
+    .shot { inline-size: min(45%, 160px); justify-self: center; }
+    .stats { grid-template-columns: 1fr 1fr; }
+  }
+</style>
