@@ -141,11 +141,21 @@ HomyKSA exp tie. 3 real screenshots (homy_services/order/map.avif). Committed.
   MxTakaTak), `com.snaper.snaptok`. GetX + al_downloader + Chewie, dark **#121212 / coral #df4759**.
   3 SVG mockups (paste home, format picker, downloads library). (Generator: `scripts/gen-batch3-mockups.mjs`.)
 
-### Batch 4 — New multi-app systems
-- `D:/FlutterProject/globalnetwork` (network + network_admin; has Document.pdf + Project Details.docx
-  → read for spec) → NEW `globalnetwork`.
-- `D:/FlutterProject/calculator-aliRaza` (calculator + adminpanel) → NEW `calculator`.
-- `D:/ClientProjects/yashwant_gound` (meesho_e-commerce + admin) → NEW `meesho-clone`.
+### Batch 4 ✅ DONE — New multi-app systems (each = 2 user + 1 admin mockup)
+- `globalnetwork` (network + network_admin) → NEW **`profit-hub`** (**rewards** bucket). Spec PDF
+  revealed it's an **earning/rewards platform**: user app android:label "Profit Hub" `com.profit.hub`
+  (GetX, custom-encrypted REST easycashapp.online, OneSignal, AdMob+FAN+StartApp, Cloudinary) + admin
+  "Profit Hub Admin" `com.profit.hub_admin` (BLoC+HydratedBloc, green #006D40). Wallet/packages/tasks/
+  referral/spin/watch-earn; JazzCash/Easypaisa/BTC. 3 mockups (home, packages, admin). blue #1976D2.
+- `calculator-aliRaza` (calculator + adminpanel) → NEW **`calculator`** (**other** bucket). Real
+  calculator `com.aliraza.calculator` (GetX, math_expressions, **Firestore remote-config ad units**,
+  green #30D328/coral #F16C4E, light/dark) + admin panel managing users/balances/**withdrawal payouts**
+  (Provider+Firestore). 3 mockups (dark keypad, history w/ ad note, payout admin).
+- `yashwant_gound` (meesho_e-commerce + admin) → NEW **`meesho-clone`** (**other** bucket), name
+  "Meesho-style Marketplace". `com.meesho.supplier` + admin on **Supabase**, flutter_bloc + go_router +
+  dartz + OneSignal. Maroon #580A46 / magenta #9F2089 / orange #FF9C00. **No reseller-margin feature**
+  in this build (honest — described as a marketplace, not social-commerce). 3 mockups (home, product,
+  admin). (Generator: `scripts/gen-batch4-mockups.mjs`.)
 
 ### Batch 5 — Enrich rewards/earning (existing) + admins
 - `D:/ClientProjects/tech_gayan_vishal_india/three_lucky_spin_mining` → enrich `lucky-spin`

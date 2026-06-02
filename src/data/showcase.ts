@@ -954,6 +954,95 @@ export const showcaseProjects: ShowcaseProject[] = [
     featured: false,
   },
   {
+    // Two-app earning/rewards platform (repo folder "globalnetwork"): user app "Profit Hub"
+    // + "Profit Hub Admin". Product concept confirmed from the repo's spec PDF.
+    slug: 'profit-hub',
+    name: 'Profit Hub',
+    packageId: 'com.profit.hub',
+    year: 2025,
+    role: 'sole developer',
+    client: 'Client project',
+    category: 'Rewards / Earning',
+    tagline: 'Wallet-based earning platform with a full admin panel',
+    description:
+      'A two-app earning/rewards platform built end-to-end. The user app runs a wallet members top up to activate earning packages, then grow through daily tasks, a referral network, spin-to-win, watch-and-earn ads and a profit calculator; deposits and withdrawals flow through local rails (JazzCash, Easypaisa, bank, BTC, Perfect Money). A companion admin app manages users, packages, deposit/withdraw requests, ads and content. The user app is GetX over a custom-encrypted REST backend with OneSignal push, Cloudinary media and AdMob + Facebook Audience Network + StartApp mediation; the admin is a clean BLoC + HydratedBloc build. Multi-country, Urdu / English.',
+    motive:
+      'Give the operator a complete owned earning platform — the member-facing earning loop plus the admin tooling to run packages, payouts and content — instead of stitching together third-party tools.',
+    techStack: ['Flutter', 'GetX (user) + BLoC (admin)', 'Encrypted REST API', 'OneSignal', 'AdMob + FAN + StartApp', 'Cloudinary'],
+    features: [
+      'Wallet — deposit / withdraw (JazzCash, Easypaisa, BTC, bank)',
+      'Earning packages with daily returns',
+      'Daily tasks, spin-to-win, watch-&-earn, profit calculator',
+      'Referral network with commissions',
+      'Admin app: users, packages, payout requests, ads & content',
+      'Multi-country, Urdu / English, custom-encrypted API',
+    ],
+    status: 'shipped',
+    storeLink: null,
+    githubLink: null,
+    screens: ['profithub_home.avif', 'profithub_packages.avif', 'profithub_admin.avif'],
+    featured: false,
+  },
+  {
+    // Calculator (com.aliraza.calculator) + a Firebase-backed payout admin panel.
+    slug: 'calculator',
+    name: 'Calculator',
+    packageId: 'com.aliraza.calculator',
+    year: 2025,
+    role: 'sole developer',
+    client: 'Client project',
+    category: 'Utility',
+    tagline: 'A polished calculator with a Firebase-managed payout backend',
+    description:
+      'A clean, fast calculator with a real expression engine (it parses and evaluates full expressions), calculation history, light/dark themes and haptics — paired with a Firebase backend that does more than it looks. Ad units (banner, interstitial, reward) are configured remotely from Firestore, so monetisation changes without an app release, and a companion admin app manages users, balances and withdrawal payouts — approve or reject each with a transaction ID. Built on GetX + Cloud Firestore.',
+    motive:
+      'Ship a genuinely useful calculator whose ads and reward payouts are fully controllable from a backend — no redeploys to tune monetisation.',
+    techStack: ['Flutter', 'GetX', 'Cloud Firestore', 'math_expressions', 'AdMob (remote config)', 'get_storage'],
+    features: [
+      'Full expression engine with calculation history',
+      'Light / dark theme + haptic feedback',
+      'Remotely-configured AdMob units (Firestore)',
+      'Admin app: users, balances & withdrawal payouts',
+      'Approve / reject payouts with transaction IDs',
+      'Offline-capable local storage',
+    ],
+    status: 'shipped',
+    storeLink: null,
+    githubLink: null,
+    screens: ['calc_keypad.avif', 'calc_history.avif', 'calc_admin.avif'],
+    featured: false,
+  },
+  {
+    // Meesho-style multi-vendor marketplace (com.meesho.supplier) + admin, on Supabase.
+    // No reseller-margin feature in this build — described as a marketplace, not social-commerce.
+    slug: 'meesho-clone',
+    name: 'Meesho-style Marketplace',
+    packageId: 'com.meesho.supplier',
+    year: 2025,
+    role: 'sole developer',
+    client: 'Client project',
+    category: 'E-Commerce',
+    tagline: 'Multi-vendor shopping marketplace + admin, on Supabase',
+    description:
+      'A Meesho-style multi-vendor shopping marketplace built as a customer app plus an admin panel on a shared Supabase backend. Shoppers browse a deal-driven home feed, categories and multi-store listings, open rich product pages with reviews and seller ratings, and check out with Cash on Delivery or online payment — tracking orders and saving a wishlist, with OTP sign-in handled in-app. The admin app does full CRUD on products, categories, stores, banners, orders and reviews with image upload. Built on flutter_bloc + go_router with a clean dartz error layer, OneSignal push and shimmer loading.',
+    motive:
+      'Stand up a complete two-sided commerce system — a customer storefront plus an admin control room — on a single modern Supabase backend.',
+    techStack: ['Flutter', 'flutter_bloc + go_router', 'Supabase', 'dartz', 'OneSignal', 'cached_network_image'],
+    features: [
+      'Deal-driven home, categories & multi-store listings',
+      'Rich product pages with reviews & seller ratings',
+      'Cart & checkout — Cash on Delivery or online',
+      'Orders, tracking & wishlist, in-app OTP sign-in',
+      'Admin: products, categories, stores, banners, orders, reviews',
+      'Supabase backend, OneSignal push, shimmer loading',
+    ],
+    status: 'shipped',
+    storeLink: null,
+    githubLink: null,
+    screens: ['meesho_home.avif', 'meesho_product.avif', 'meesho_admin.avif'],
+    featured: false,
+  },
+  {
     // Cross-matches the existing minimal `icare` entry in projects.ts.
     slug: 'icare',
     name: 'iCare',
