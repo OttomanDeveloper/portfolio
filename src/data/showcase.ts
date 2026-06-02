@@ -780,7 +780,7 @@ export const showcaseProjects: ShowcaseProject[] = [
       'icare_todo.avif',
       'icare_mood.avif',
     ],
-    featured: false,
+    featured: true,
   },
   {
     // Cross-matches the existing minimal `udownload` entry in projects.ts (open-source, GPL-3).

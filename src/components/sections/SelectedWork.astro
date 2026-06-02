@@ -40,7 +40,7 @@ const { n = 2, includeFeatured = false } = Astro.props;
 
 // On the home page the featured trio lives in the big carousel, so the grid drops
 // them. On /projects (includeFeatured) every project renders as a normal card.
-const FEATURED_SLUGS = ['legend-tv', 'udownload', 'lifelink', 'chronos', 'babypig'];
+const FEATURED_SLUGS = ['legend-tv', 'udownload', 'lifelink', 'chronos', 'babypig', 'icare'];
 const items = showcaseProjects
   .filter((p) => includeFeatured || !FEATURED_SLUGS.includes(p.slug))
   .map((p) => ({ ...p, group: GROUPS[p.slug] ?? 'other' }));

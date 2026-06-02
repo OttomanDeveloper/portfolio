@@ -9,7 +9,7 @@ const { n = 3, viewAllHref, viewAllCount } = Astro.props;
 <section id="featured">
   <div class="container">
     <SectionLabel n={n} name="featured projects" />
-    <p class="intro">Three products that show the range — a commercial hit, a live flagship, and an open-source tool. <span class="swipe" aria-hidden="true">swipe →</span></p>
+    <p class="intro">A handful of projects that show the range — commercial hits, a live flagship, open-source tools and Flutter Web demos. <span class="swipe" aria-hidden="true">swipe →</span></p>
   </div>
 
   <div class="grid">
@@ -97,6 +97,34 @@ const { n = 3, viewAllHref, viewAllCount } = Astro.props;
         <div class="cta-row">
           <a class="cta primary" href="https://github.com/OttomanDeveloper/u_downloader" target="_blank" rel="noopener noreferrer">GitHub →</a>
           <a class="cta ghost"   href="https://pub.dev/packages/newpipeextractor_dart" target="_blank" rel="noopener noreferrer">View extractor →</a>
+        </div>
+      </article>
+
+      <article class="card icare">
+        <p class="badge tone-cyan"><span class="dot" aria-hidden="true"></span>SELF-CARE · PRIVACY-FIRST</p>
+
+        <div class="row">
+          <figure class="shot">
+            <img src={withBase('/screens/icare_home.avif')} alt="iCare — private self-care dashboard" width="540" height="1200" loading="lazy" decoding="async" />
+          </figure>
+
+          <div class="content">
+            <h3 class="title">iCare</h3>
+            <p class="sub">A private, judgement-free self-care companion.</p>
+
+            <p class="body">
+              Meditation & breathing, an emoji mood tracker, private diary, hobby timer and to-dos —
+              secured with a fingerprint lock and screenshot blocking.
+            </p>
+
+            <ul class="chips" aria-hidden="true">
+              <li>Flutter</li><li>Firebase</li><li>Fingerprint</li><li>Notifications</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <a class="cta primary" href={`${withBase('/projects')}#proj-icare`}>View details →</a>
         </div>
       </article>
 
