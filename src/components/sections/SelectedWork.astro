@@ -17,12 +17,14 @@ const GROUPS: Record<string, string> = {
   icare: 'health', lifelink: 'health',
   meetbook: 'social', 'hostel-finder': 'social', grouper: 'social',
   couriergo: 'other', 'allinone-game': 'other', 'bill-checker': 'other',
+  chronos: 'web', babypig: 'web',
 };
 
 const FILTERS = [
   { id: 'all', label: 'All' },
   { id: 'rewards', label: 'Rewards & Earning' },
   { id: 'media', label: 'Media & Downloads' },
+  { id: 'web', label: 'Web' },
   { id: 'health', label: 'Health' },
   { id: 'social', label: 'Social & Directory' },
   { id: 'other', label: 'Logistics & Games' },
@@ -38,7 +40,7 @@ const { n = 2, includeFeatured = false } = Astro.props;
 
 // On the home page the featured trio lives in the big carousel, so the grid drops
 // them. On /projects (includeFeatured) every project renders as a normal card.
-const FEATURED_SLUGS = ['legend-tv', 'udownload', 'lifelink'];
+const FEATURED_SLUGS = ['legend-tv', 'udownload', 'lifelink', 'chronos', 'babypig'];
 const items = showcaseProjects
   .filter((p) => includeFeatured || !FEATURED_SLUGS.includes(p.slug))
   .map((p) => ({ ...p, group: GROUPS[p.slug] ?? 'other' }));
@@ -84,7 +86,7 @@ const moreLive = [...liveApps, ...moreApps.map((a) => ({ name: a.name, sub: a.ca
 
     <div class="grid">
       {items.map((p) => (
-        <a class={`card g-${p.group}`} href={`#proj-${p.slug}`} aria-label={`Open ${p.name} details`}>
+        <a class={`card g-${p.group}${p.web ? ' web' : ''}`} href={`#proj-${p.slug}`} aria-label={`Open ${p.name} details`}>
           <figure class="shot">
             <img
               src={withBase(`/screens/${pickThumb(p.screens)}`)}
@@ -162,6 +164,7 @@ const moreLive = [...liveApps, ...moreApps.map((a) => ({ name: a.name, sub: a.ca
           <p class="m-role">{p.role} · {p.client}</p>
           <div class="m-links">
             {p.caseHref && <a href={withBase(p.caseHref)}>Read case study →</a>}
+            {p.liveLink && <a href={p.liveLink} target="_blank" rel="noopener noreferrer">Open live ↗</a>}
             {p.githubLink && <a href={p.githubLink} target="_blank" rel="noopener noreferrer">GitHub ↗</a>}
             {p.storeLink && <a href={p.storeLink} target="_blank" rel="noopener noreferrer">Get the app ↗</a>}
           </div>
@@ -210,6 +213,7 @@ const moreLive = [...liveApps, ...moreApps.map((a) => ({ name: a.name, sub: a.ca
   #sw-all:checked      ~ .filters label[for="sw-all"],
   #sw-rewards:checked  ~ .filters label[for="sw-rewards"],
   #sw-media:checked    ~ .filters label[for="sw-media"],
+  #sw-web:checked      ~ .filters label[for="sw-web"],
   #sw-health:checked   ~ .filters label[for="sw-health"],
   #sw-social:checked   ~ .filters label[for="sw-social"],
   #sw-other:checked    ~ .filters label[for="sw-other"] {
@@ -218,12 +222,14 @@ const moreLive = [...liveApps, ...moreApps.map((a) => ({ name: a.name, sub: a.ca
   #sw-all:checked      ~ .filters label[for="sw-all"] .ct,
   #sw-rewards:checked  ~ .filters label[for="sw-rewards"] .ct,
   #sw-media:checked    ~ .filters label[for="sw-media"] .ct,
+  #sw-web:checked      ~ .filters label[for="sw-web"] .ct,
   #sw-health:checked   ~ .filters label[for="sw-health"] .ct,
   #sw-social:checked   ~ .filters label[for="sw-social"] .ct,
   #sw-other:checked    ~ .filters label[for="sw-other"] .ct { color: var(--bg); }
 
   #sw-rewards:checked ~ .grid .card:not(.g-rewards),
   #sw-media:checked   ~ .grid .card:not(.g-media),
+  #sw-web:checked     ~ .grid .card:not(.g-web),
   #sw-health:checked  ~ .grid .card:not(.g-health),
   #sw-social:checked  ~ .grid .card:not(.g-social),
   #sw-other:checked   ~ .grid .card:not(.g-other) { display: none; }
@@ -281,6 +287,9 @@ const moreLive = [...liveApps, ...moreApps.map((a) => ({ name: a.name, sub: a.ca
     display: block;
     transition: transform var(--t-base) var(--ease-out);
   }
+  /* Web projects are landscape — wider, shorter thumbnail */
+  .card.web .shot { inline-size: clamp(150px, 42vw, 200px); aspect-ratio: 16 / 10; }
+  .card.web .shot img { object-position: 50% 50%; }
 
   .content { display: flex; flex-direction: column; gap: var(--s-2); min-inline-size: 0; }
   .meta {

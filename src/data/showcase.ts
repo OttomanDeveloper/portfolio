@@ -20,7 +20,9 @@ export type ShowcaseProject = {
   status: 'live' | 'shipped' | 'shelved' | 'prototype' | 'nda';
   storeLink: string | null;
   githubLink: string | null;
+  liveLink?: string;
   caseHref?: string;
+  web?: boolean;
   screens: string[];
   featured: boolean;
 };
@@ -55,6 +57,64 @@ export const showcaseProjects: ShowcaseProject[] = [
     githubLink: null,
     caseHref: '/projects/legend-tv',
     screens: ['legend_home.avif', 'legend_series.avif', 'legend_movies.avif', 'legend_player.avif', 'legend_episodes.avif', 'legend_splash.avif'],
+    featured: true,
+  },
+  {
+    slug: 'chronos',
+    name: 'Chronos',
+    packageId: null,
+    year: 2025,
+    role: 'sole developer',
+    client: 'Personal / open-source',
+    category: 'Flutter Web',
+    tagline: 'A scroll-driven journey through the universe — pure Flutter Web, 60 fps',
+    description:
+      'A single-page experience tracing the history of the cosmos from the Big Bang to today across nine hand-painted eras. Every scene is drawn in pure Dart with 30+ CustomPainters animated from a single Ticker — zero image assets — and an EraScope gates visibility so dozens of scenes hold 60 fps. Scroll position is the timeline.',
+    motive:
+      'Push Flutter Web to its limit — prove dozens of richly animated, hand-painted scenes can run at 60 fps with no images and no animation libraries.',
+    techStack: ['Flutter Web', 'Provider', 'CustomPainter', 'Single Ticker'],
+    features: [
+      '9 hand-painted cosmic eras',
+      'Scroll-as-timeline',
+      'Single-ticker 60 fps',
+      'Zero image assets',
+      'Fully responsive',
+    ],
+    status: 'live',
+    storeLink: null,
+    githubLink: 'https://github.com/OttomanDeveloper/andro_meda',
+    liveLink: 'https://ottomandeveloper.github.io/andro_meda/',
+    web: true,
+    screens: ['chronos.avif'],
+    featured: true,
+  },
+  {
+    slug: 'babypig',
+    name: 'BabyPig',
+    packageId: null,
+    year: 2025,
+    role: 'sole developer',
+    client: 'Personal / open-source',
+    category: 'Flutter Web',
+    tagline: 'Animated crypto landing page — zero animation packages',
+    description:
+      'A community-token landing page showcasing what Flutter Web can do for marketing sites: scroll-triggered reveals, glassmorphism navigation, animated counters, staggered card entrances, an FAQ accordion and responsive 3-breakpoint layouts — all built without any external animation packages.',
+    motive:
+      'Show that a polished, animation-heavy marketing landing page can ship entirely in Flutter Web with no JS animation libraries.',
+    techStack: ['Flutter Web', 'Provider', 'flutter_svg'],
+    features: [
+      '9 animated sections',
+      'Glassmorphism navigation',
+      'Active-section tracking',
+      'Animated counters',
+      'Responsive 3-breakpoint layout',
+    ],
+    status: 'live',
+    storeLink: null,
+    githubLink: 'https://github.com/OttomanDeveloper/piggyToken',
+    liveLink: 'https://ottomandeveloper.github.io/piggyToken/',
+    web: true,
+    screens: ['babypig.avif'],
     featured: true,
   },
   {

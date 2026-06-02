@@ -2,7 +2,6 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/sections/Hero.astro';
 import FeaturedProjects from '@/components/sections/FeaturedProjects.astro';
-import WebDemos from '@/components/sections/WebDemos.astro';
 import { withBase } from '@/lib/paths';
 import { showcaseProjects } from '@/data/showcase';
 import OssGrid from '@/components/sections/OssGrid.astro';
@@ -39,7 +38,6 @@ const jsonLd = {
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <Hero />
   <FeaturedProjects viewAllHref={withBase('/projects')} viewAllCount={showcaseProjects.length} />
-  <WebDemos />
   <OssGrid />
   <ExperienceTimeline />
   <StackGrid />
