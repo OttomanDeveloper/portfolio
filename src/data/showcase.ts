@@ -624,6 +624,36 @@ export const showcaseProjects: ShowcaseProject[] = [
     featured: true,
   },
   {
+    // Connected BLE breathalyzer station ("borne éthylotest"). android:label "BreatheTest",
+    // pkg com.borneethylotest.alcopass. Featured for the hardware-integration story.
+    slug: 'alcopass',
+    name: 'AlcoPass',
+    packageId: 'com.borneethylotest.alcopass',
+    year: 2025,
+    role: 'sole developer',
+    client: 'AlcoPass · France',
+    category: 'Health / Connected Hardware',
+    tagline: 'A connected breathalyzer station — blow, get your BAC',
+    description:
+      'A connected breathalyzer ("borne éthylotest") companion deployed at venues across Europe. It pairs over Bluetooth (universal_ble) with a physical breathalyzer, walks the user through the test phases — warm-up, blow, analyze — and refines a blood-alcohol estimate from age, weight, sex, driving-licence class and time since the last drink. Results come back in g/L of blood and mg/L of exhaled air, classified against the legal limit with a sober-up estimate, and are logged to Firestore. Built on Flutter + BLoC with go_router, localised in 5 languages (FR / EN / DE / ES / IT).',
+    motive:
+      'Give venues a turnkey self-test station so people can check whether they are over the limit before getting behind the wheel — backed by real breathalyzer hardware, not a guess.',
+    techStack: ['Flutter', 'BLoC + HydratedBloc', 'universal_ble (Bluetooth)', 'Firebase (Firestore)', 'go_router', 'easy_localization (5 langs)'],
+    features: [
+      'Pairs with a physical breathalyzer over BLE',
+      'Guided test phases — warm-up → blow → analyze',
+      'BAC refined by age / weight / sex / licence / last drink',
+      'Reads g/L blood + mg/L exhaled air vs the legal limit',
+      'Sober-up time estimate & legal-info screens',
+      '5 languages (FR / EN / DE / ES / IT)',
+    ],
+    status: 'shipped',
+    storeLink: null,
+    githubLink: null,
+    screens: ['alcopass_result.avif', 'alcopass_home.avif', 'alcopass_profile.avif', 'alcopass_blow.avif'],
+    featured: true,
+  },
+  {
     // Cross-matches the existing minimal `yt-master` entry in projects.ts.
     // Shipped under the in-app brand "ProBooster"; spans a user app + admin panel.
     slug: 'yt-master',

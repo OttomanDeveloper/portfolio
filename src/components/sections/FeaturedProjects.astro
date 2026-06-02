@@ -71,6 +71,35 @@ const { n = 3, viewAllHref, viewAllCount } = Astro.props;
         </div>
       </article>
 
+      <article class="card alcopass">
+        <p class="badge tone-lime"><span class="dot" aria-hidden="true"></span>CONNECTED HARDWARE · BLE BREATHALYZER</p>
+
+        <div class="row">
+          <figure class="shot">
+            <img src={withBase('/screens/alcopass_result.avif')} alt="AlcoPass — blood-alcohol result gauge in g/L" width="540" height="1200" loading="lazy" decoding="async" />
+          </figure>
+
+          <div class="content">
+            <h3 class="title">AlcoPass</h3>
+            <p class="sub">A connected breathalyzer station — blow, get your BAC.</p>
+
+            <p class="body">
+              Pairs over Bluetooth with a physical breathalyzer, refines blood-alcohol from
+              age / weight / sex / licence, and reads g/L blood + mg/L air against the legal limit.
+              Flutter + BLoC, 5 languages, synced to Firestore.
+            </p>
+
+            <ul class="chips" aria-hidden="true">
+              <li>Flutter</li><li>BLoC</li><li>BLE</li><li>Firebase</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <a class="cta primary" href={`${withBase('/projects')}#proj-alcopass`}>View details →</a>
+        </div>
+      </article>
+
       <article class="card udl">
         <p class="badge tone-lime"><span class="dot" aria-hidden="true"></span>OPEN SOURCE · GPL-3</p>
 
