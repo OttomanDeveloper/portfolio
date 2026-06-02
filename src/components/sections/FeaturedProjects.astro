@@ -67,7 +67,8 @@ const { n = 3, viewAllHref, viewAllCount } = Astro.props;
         </div>
 
         <div class="cta-row">
-          <a class="cta primary" href="https://play.google.com/store/apps/details?id=com.helper.lifelink" target="_blank" rel="noopener noreferrer">Play Store →</a>
+          <a class="cta primary" href={withBase('/projects/lifelink')}>Read case study →</a>
+          <a class="cta ghost" href="https://play.google.com/store/apps/details?id=com.helper.lifelink" target="_blank" rel="noopener noreferrer">Play Store ↗</a>
         </div>
       </article>
 
@@ -96,7 +97,7 @@ const { n = 3, viewAllHref, viewAllCount } = Astro.props;
         </div>
 
         <div class="cta-row">
-          <a class="cta primary" href={`${withBase('/projects')}#proj-alcopass`}>View details →</a>
+          <a class="cta primary" href={withBase('/projects/alcopass')}>Read case study →</a>
         </div>
       </article>
 
@@ -124,8 +125,8 @@ const { n = 3, viewAllHref, viewAllCount } = Astro.props;
         </div>
 
         <div class="cta-row">
-          <a class="cta primary" href="https://github.com/OttomanDeveloper/u_downloader" target="_blank" rel="noopener noreferrer">GitHub →</a>
-          <a class="cta ghost"   href="https://pub.dev/packages/newpipeextractor_dart" target="_blank" rel="noopener noreferrer">View extractor →</a>
+          <a class="cta primary" href={withBase('/projects/udownload')}>Read case study →</a>
+          <a class="cta ghost"   href="https://github.com/OttomanDeveloper/u_downloader" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
         </div>
       </article>
 
@@ -153,7 +154,8 @@ const { n = 3, viewAllHref, viewAllCount } = Astro.props;
         </div>
 
         <div class="cta-row">
-          <a class="cta primary" href={`${withBase('/projects')}#proj-icare`}>View details →</a>
+          <a class="cta primary" href={withBase('/projects/icare')}>Read case study →</a>
+          <a class="cta ghost" href={`${withBase('/projects')}#proj-icare`}>Screenshots →</a>
         </div>
       </article>
 

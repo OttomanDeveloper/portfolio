@@ -607,6 +607,7 @@ export const showcaseProjects: ShowcaseProject[] = [
     status: 'live',
     storeLink: 'https://play.google.com/store/apps/details?id=com.helper.lifelink',
     githubLink: null,
+    caseHref: '/projects/lifelink',
     screens: [
       'lifelink_support.avif',
       'lifelink_track.avif',
@@ -650,6 +651,7 @@ export const showcaseProjects: ShowcaseProject[] = [
     status: 'shipped',
     storeLink: null,
     githubLink: null,
+    caseHref: '/projects/alcopass',
     screens: ['alcopass_result.avif', 'alcopass_home.avif', 'alcopass_profile.avif', 'alcopass_blow.avif'],
     featured: true,
   },
@@ -1105,6 +1107,7 @@ export const showcaseProjects: ShowcaseProject[] = [
     status: 'shelved',
     storeLink: null,
     githubLink: null,
+    caseHref: '/projects/icare',
     screens: [
       'icare_splash.avif',
       'icare_auth.avif',
@@ -1143,6 +1146,7 @@ export const showcaseProjects: ShowcaseProject[] = [
     status: 'shipped',
     storeLink: null,
     githubLink: 'https://github.com/OttomanDeveloper/u_downloader',
+    caseHref: '/projects/udownload',
     screens: [
       'udownload_splash.avif',
       'udownload_drawer.avif',

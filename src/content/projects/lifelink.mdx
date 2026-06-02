@@ -1,0 +1,49 @@
+---
+title: LifeLink
+tagline: A crisis-intervention app for Canada — surface the patterns that warn, and make help one tap away.
+stack: [Flutter, BLoC, Gemini (google_generative_ai), Firebase, go_router, fl_chart]
+stats:
+  - { num: '13', desc: 'provinces & territories' }
+  - { num: '70+', desc: 'verified crisis lines' }
+  - { num: '5', desc: 'daily trackers + charts' }
+  - { num: 'Gemini', desc: 'AI support, safety-gated' }
+order: 2
+---
+
+## The brief
+
+A Canadian psychologist came to me with a hard, specific goal: help people notice the early signs of a mental-health crisis — their own, or a loved one's — before it deepens into suicidal thinking. Her insight from clinical work was that the warning signs usually show up in *behaviour* long before anyone says them out loud. Sleep slips. Routine frays. The journal goes quiet.
+
+So the app isn't a chatbot or a diagnosis. It's two honest things: a quiet way to record how you actually spend your days, and a directory that puts a real human on the line the moment someone needs one.
+
+## Patterns, not self-report
+
+People are unreliable narrators of their own week. The app sidesteps that by logging the plain facts — five daily trackers: `sleep`, `diet`, `movement`, `stressors`, and a `journal`. Each writes to a per-user Firestore collection with an `isSynced` flag, and the year rolls up into `fl_chart` bar charts so a month of poor sleep next to rising stressors reads as a *shape*, not a feeling.
+
+That monthly aggregation runs in a Dart isolate, off the UI thread — a small thing, but a crisis tool that janks while you scroll is a crisis tool people stop opening.
+
+## A directory you can trust at 2 a.m.
+
+The crisis directory is the part that has to be perfect. It's province-aware across all **13 provinces and territories**, with **70+ verified lines** — Crisis Line Association of BC `1-800-784-2433`, Distress Centre Calgary, Hope for Wellness, regional text and chat services, 2SLGBTQIA+ and youth-specific lines. You pick your province and you get the numbers that actually serve your region, rendered as tappable cards.
+
+There's no AI between a person and that phone number. A wrong digit in a moment like this is not an acceptable failure mode, so the directory is curated and static, not generated.
+
+## Safe AI was the real engineering
+
+The hardest part wasn't the trackers or the maps. It was the supportive content — short, AI-generated pieces meant to steady someone — built on Gemini (`google_generative_ai`, `gemini-pro`). In a suicide-prevention context, "usually fine" is not good enough. The model can never produce something bleak, dismissive, or harmful.
+
+I treated the model as untrusted by default and put three guards in front of it:
+
+- **Steer the tone, don't hope for it.** The prompt seeds a hope-affirming example (Derek Mahon's *Everything Is Going to Be All Right*) so the model anchors to that register instead of a cold-start guess.
+- **Fail closed.** Every response is checked against `promptFeedback.blockReasonMessage`, and `GenerativeAIException` is caught explicitly. If the model is blocked or uncertain, the user sees a graceful fallback — never a half-formed or risky output.
+- **Curated safety net.** Hope-affirming pieces (including Dickinson's *Hope is the thing with feathers*) ship pre-loaded, so there's always something kind to show even with no network and no model.
+
+The lesson that stuck: for AI in a sensitive domain, the prompt is the smallest part of the work. The validation around it is the product.
+
+## Built to keep working
+
+The whole app is `flutter_bloc` + `hydrated_bloc`, so state and tracked data persist locally and survive a dead connection — a support tool can't assume Wi-Fi. Auth, sync, storage and crash reporting run on Firebase; `go_router` and `get_it` keep the feature domains cleanly separated.
+
+## Where it stands
+
+I built and delivered LifeLink end-to-end; the client took it to the App Store and Play Store under their own branding, so I don't track its day-to-day numbers. What I keep is the discipline it demanded: that in software meant to help people in their worst moments, "careful" isn't a feature you add — it's the spec.
