@@ -3,6 +3,7 @@
 import StatusPill from '@/components/atoms/StatusPill.astro';
 import StatsRow from '@/components/atoms/StatsRow.astro';
 import { profile } from '@/data/profile';
+import { withBase } from '@/lib/paths';
 ---
 <section id="hero" aria-labelledby="hero-name">
   <div class="bg-grid" aria-hidden="true"></div>
@@ -37,7 +38,7 @@ import { profile } from '@/data/profile';
 
     <aside class="side" aria-label="Portrait and current focus">
       <div class="portrait-wrap">
-        <img class="portrait" src="/profile.avif" alt={profile.name} width="280" height="280" loading="eager" fetchpriority="high" />
+        <img class="portrait" src={withBase('/profile.avif')} alt={profile.name} width="280" height="280" loading="eager" fetchpriority="high" />
         <span class="arabic" lang="ar" dir="rtl">{profile.aliasArabic}</span>
       </div>
 

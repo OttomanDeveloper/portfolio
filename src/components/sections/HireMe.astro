@@ -5,6 +5,7 @@
 import SectionLabel from '@/components/atoms/SectionLabel.astro';
 import { contact } from '@/data/contact';
 import { profile } from '@/data/profile';
+import { withBase } from '@/lib/paths';
 
 const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID;
 const formspreeAction = formspreeId ? `https://formspree.io/f/${formspreeId}` : null;
@@ -56,7 +57,7 @@ const mediumHref = 'https://ottomancoder.medium.com/';
     <ul class="channels">
       {contact.map((c) => (
         <li>
-          <a href={c.href}
+          <a href={withBase(c.href)}
              target={c.href.startsWith('http') ? '_blank' : undefined}
              rel={c.href.startsWith('http') ? 'noopener noreferrer' : undefined}
              class={`channel tone-${c.tone}`}
