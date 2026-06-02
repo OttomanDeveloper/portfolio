@@ -83,13 +83,81 @@ Web (landscape) screens: resize width ~1280, no crop.
 - BeInMedia · Nmo AI (current) ↔ not in this source list (the BLE fitness app)
 - Consider linking project cards ↔ experience entries (e.g. a small "part of <company>" line).
 
-## Per-project status
-- [ ] homy (Batch 1 — in progress)
-- [ ] youshopper, veign-laos/couriergo (experience-tied logistics/commerce)
-- [ ] nakoda, daghta, blood-donors, puzzleur, snaptok, globalnetwork, calculator, meesho-clone (new)
-- [ ] enrich: lucky-spin (Egg Network), saveit, wisbig(+admin), grouper(+admin), yt-master(+admin),
-      football-wallpaper(+admin), movo(fbsaver), bill-checker, hostel-finder(+admin), meetbook(+admin),
-      icare, udownload, status-saver, chronos, babypig
+## How to run a batch (command: "Continue source research — Batch N")
+For EACH project in the batch, do all of:
+1. **Research the source deeply**: `pubspec.yaml` (real deps → tech stack), `README.md`,
+   `lib/` structure, Android `android:label` (real app name), theme files (real brand colours),
+   `assets/` (real screenshots? often device-framed in `assets/onboarding` or `assets/screenshots`).
+2. **Write accurate data** into `src/data/showcase.ts` (new entry) or update the existing entry.
+   Use the `ShowcaseProject` schema. Team projects → reflect in `role` + `description`.
+3. **Screenshots**:
+   - If real images exist in the repo → crop (remove frame/bg) + resize to 540px wide, AVIF.
+   - Else → generate 2-4 faithful **SVG mockups** themed in the app's REAL colours (see method
+     above) → AVIF at 540×1200 (phone) / 1280×620 (web). Never fabricate photo-screenshots.
+   - Name files `slug_screen.avif` in `public/screens/`.
+4. **Wire-in**: add to `GROUPS` (filter bucket) in SelectedWork.astro; if promoting from
+   `moreApps.ts`, remove the moreApps duplicate; if it ties to an Experience entry, keep names
+   consistent. Decide featured vs grid (default: grid, `featured:false`).
+5. **Verify**: `npm run build` clean, screens referenced exist, 0 JS. **Commit** (plain message,
+   NO Claude attribution). Tick the batch box below.
+
+Default filter buckets: rewards · media · web · health · social · other ("Commerce & More").
+Add a new bucket only if a batch introduces a clearly distinct category (update FILTERS + the 3
+CSS selector groups + GROUPS together).
+
+## BATCH PLAN
+
+### Batch 1 ✅ DONE — Homy
+`D:/ClientProjects/arslan_saudia/Copy of homy/homy` → new `homy` (grid). Team of 2 (backend + me).
+HomyKSA exp tie. 3 real screenshots (homy_services/order/map.avif). Committed.
+
+### Batch 2 — Experience-tied commerce & logistics (NEW + enrich couriergo)
+- `D:/ClientProjects/rossdonaldson/youshopper_app` (customer_app_source / seller_app_source /
+  delivery_app_source) → NEW `youshopper`. Tie: **SD Cold Logistics · YouShopper** exp (3 apps live,
+  coin monetisation, OneSignal, YouTube V3). Remove "YouShopper"/"YouShopper Seller" from moreApps.ts.
+- `D:/ClientProjects/VeignLaos` (courier_pro/courier_pro, shipox, ecommerce, Customer/CustomerApp) →
+  **enrich existing `couriergo`** (Fulfil Supply Chain; ShipOX; cross-border China/Laos/Thailand).
+  Add screens if any real ones; else SVG mockups in ShipOX colours.
+- `D:/ClientProjects/nakoda_urban_services/customer` → NEW `nakoda` (India home services). Remove
+  "Nakoda Urban" from moreApps.ts. 5 repo imgs — check if real screenshots.
+
+### Batch 3 — New consumer apps
+- `D:/ClientProjects/muhammad_arab/daghta` → NEW `daghta` (4 imgs — inspect). Research what it is.
+- `D:/ClientProjects/bestonlinegames` → NEW `puzzleur` (label "Puzzleur"; online games hub).
+- `D:/FlutterProject/blooddonation` → NEW `blood-donors` (label "Blood Donors 243 GB"; emergency
+  blood locator). Remove "Blood Donors" from moreApps.ts.
+- `D:/FlutterProject/snaptok` → NEW `snaptok` (label "SnapTok"; research — TikTok tools/downloader).
+
+### Batch 4 — New multi-app systems
+- `D:/FlutterProject/globalnetwork` (network + network_admin; has Document.pdf + Project Details.docx
+  → read for spec) → NEW `globalnetwork`.
+- `D:/FlutterProject/calculator-aliRaza` (calculator + adminpanel) → NEW `calculator`.
+- `D:/ClientProjects/yashwant_gound` (meesho_e-commerce + admin) → NEW `meesho-clone`.
+
+### Batch 5 — Enrich rewards/earning (existing) + admins
+- `D:/ClientProjects/tech_gayan_vishal_india/three_lucky_spin_mining` → enrich `lucky-spin`
+  (**label "Egg Network"** + mining mechanic — verify/correct the entry).
+- `D:/FlutterProject/wish_coin` (+ `D:/FlutterProject/wishadmin`) → enrich `wisbig` (+admin panel).
+- `D:/FlutterProject/probooster` (+ `D:/FlutterProject/adminpanelprobooster`) → enrich `yt-master`.
+
+### Batch 6 — Enrich downloaders/media (existing)
+- `D:/FlutterProject/saveit` → enrich `saveit` (17 repo imgs — likely real screenshots to add).
+- `D:/FlutterProject/fbsaver` → enrich `movo-downloader`.
+- `D:/statusgetter` → enrich `status-saver`.
+- `D:/ClientProjects/fahad_hanif/udownload` → enrich `udownload`.
+
+### Batch 7 — Enrich social/utility (existing) + admins
+- `D:/FlutterProject/grouper` (+ `grouper_admin`) → enrich `grouper`.
+- `D:/FlutterProject/footballwallpaper` (+ `WallpaperAdmin`) → enrich `football-wallpaper`.
+- `D:/FlutterProject/bill_checker` → enrich `bill-checker`.
+- `D:/ClientProjects/hostelfinder` (+ `D:/ClientProjects/adminhostelfinder`) → enrich `hostel-finder`.
+- `D:/ClientProjects/fahad_hanif/meetbook` (dating_app + meetbook_admin) → enrich `meetbook`.
+
+### Batch 8 — Enrich health/web (existing)
+- `D:/ClientProjects/icare` → enrich `icare` (39 repo imgs — inspect for real screenshots).
+- `D:/ClientProjects/smriit_canada/lifelink` → light pass on `lifelink` (already enriched).
+- `D:/ClientProjects/safeandromeda` → enrich `chronos`.
+- `D:/ClientProjects/PiggyProject/piggytoken` → enrich `babypig`.
 
 ## Schema reminder
 Use the `ShowcaseProject` type in showcase.ts (slug, name, packageId, year, role, client, category,
