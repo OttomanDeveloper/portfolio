@@ -200,30 +200,34 @@ export const showcaseProjects: ShowcaseProject[] = [
     featured: false,
   },
   {
+    // Source verified: real android:label "Status Getter", pkg com.androidsaver.statusgetter.
+    // The TikTok tab is a generic paste-URL video downloader (not "TikTok statuses"); the modern
+    // build is scoped-storage compliant via a native Kotlin SAF handler. Real screenshots cropped.
     slug: 'status-saver',
-    name: 'Status Saver',
-    packageId: null,
-    year: 2021,
+    name: 'Status Getter',
+    packageId: 'com.androidsaver.statusgetter',
+    year: 2024,
     role: 'sole developer',
     client: 'Personal / open-source',
-    category: 'Downloader',
-    tagline: 'Save WhatsApp / Business / TikTok statuses + paste-URL video downloader',
+    category: 'Status Saver / Downloader',
+    tagline: 'Save WhatsApp statuses (Android SAF) + paste-URL video downloader',
     description:
-      'A status saver and video downloader. It reads WhatsApp, WhatsApp Business and TikTok statuses into a gallery so users can save any photo or video, and an "All Video Saver" lets users paste any video URL and download it in a chosen quality and format — no watermark, no limits. Green dual-theme UI, AdMob ads, open-source on GitHub.',
+      'A status saver and all-in-one video downloader. It reads WhatsApp and WhatsApp Business statuses into a gallery so users can save any photo or video — built on Android\'s Storage Access Framework via a native Kotlin SAF handler for scoped-storage compliance on Android 11+. A separate "All Video Saver" pastes any link (TikTok, YouTube, Facebook, Instagram and more) and downloads it in a chosen quality and format, extracting through an in-app WebView + savefrom-style scraper. Thumbnails are generated off the UI thread with Dart isolates; Material-3 green dual-theme, AdMob configured from Firestore, open-source on GitHub.',
     motive:
-      'One app to keep the statuses worth remembering and grab any video by link — without watermarks or a separate downloader per platform.',
-    techStack: ['Flutter', 'Dart Isolates', 'Video extractor', 'AdMob'],
+      'One app to keep the statuses worth remembering and grab any video by link — without watermarks or a separate downloader per platform, while staying Play-Store compliant on modern Android.',
+    techStack: ['Flutter', 'BLoC + HydratedBloc', 'Storage Access Framework (native Kotlin)', 'InAppWebView scraper', 'Dart isolates', 'Firebase + AdMob'],
     features: [
-      'Save WhatsApp / Business / TikTok statuses',
-      'Status gallery (photos + videos)',
-      'Paste-URL video downloader',
+      'Save WhatsApp & WhatsApp Business statuses',
+      'Scoped-storage compliant via Android SAF (Android 11+)',
+      'All Video Saver — paste link (TikTok / YouTube / FB / IG / …)',
       'Quality / format picker',
-      'Light / dark theme',
+      'Off-thread thumbnail generation (Dart isolates)',
+      'Material-3 green light / dark theme',
     ],
     status: 'shipped',
     storeLink: null,
     githubLink: 'https://github.com/OttomanDeveloper/status_getter/releases',
-    screens: ['statussaver_grid.avif', 'statussaver_video.avif', 'statussaver_menu.avif', 'statussaver_splash.avif'],
+    screens: ['statussaver_splash.avif', 'statussaver_grid.avif', 'statussaver_downloader.avif', 'statussaver_sidebar.avif'],
     featured: false,
   },
   {
@@ -379,7 +383,7 @@ export const showcaseProjects: ShowcaseProject[] = [
   {
     slug: 'saveit',
     name: 'SAVEit',
-    packageId: 'com.saveit.down.saveit',
+    packageId: 'com.saveit.lucky',
     year: 2021,
     role: 'sole developer',
     client: 'Client project',
@@ -389,7 +393,7 @@ export const showcaseProjects: ShowcaseProject[] = [
       'An all-in-one social media downloader: paste any link and grab the video in HD or SD, or extract MP3 audio. Supports 15+ sources including Facebook, Instagram, WhatsApp, TikTok, Snack Video, TakaTak, Dailymotion, YouTube, Vimeo, plus cloud hosts like MEGA, Google Drive, MediaFire, Dropbox, Solidfiles and pCloud.',
     motive:
       'Give users a single app to save media from almost any social or cloud source instead of juggling one downloader per platform.',
-    techStack: ['Flutter', 'Video extractor APIs', 'AdMob'],
+    techStack: ['Flutter', 'Provider', 'dio + http', 'HTML-parsing extractor', 'chewie player'],
     features: [
       'Paste-URL download flow',
       'HD / SD video + MP3 audio extraction',
@@ -482,14 +486,15 @@ export const showcaseProjects: ShowcaseProject[] = [
     category: 'Downloader',
     tagline: 'Themeable, multi-language all-in-one video downloader',
     description:
-      'An all-in-one video downloader built from a reskinnable template, with a services grid for TikTok, Facebook, Instagram, Twitter, Vimeo and WhatsApp. Ships a light/dark theme toggle, English/Hindi localization, a Downloads manager tab, and a Share / More-apps menu, monetized with AdMob banners.',
+      'An all-in-one video downloader built from a reskinnable GetX template, with a services grid spanning TikTok, Facebook, YouTube, MX TakaTak, SnackVideo, Instagram and more. Ships a light/dark theme toggle, English/Hindi localization, a built-in Chewie video preview, a Downloads manager tab and a Share / More-apps menu.',
     motive:
       'Provide a white-label downloader that could be quickly rebranded per client, with theming and localization built in.',
-    techStack: ['Flutter', 'Video extractor APIs', 'i18n localization', 'Light/Dark theming', 'AdMob'],
+    techStack: ['Flutter', 'GetX', 'al_downloader', 'chewie player', 'i18n (EN / HI)', 'Light/Dark theming'],
     features: [
-      'Services grid (TikTok / FB / IG / Twitter / Vimeo / WhatsApp)',
+      'Services grid — TikTok, Facebook, YouTube, MX TakaTak, SnackVideo & more',
       'Light / dark theme toggle',
       'English / Hindi localization',
+      'Built-in Chewie video preview',
       'Downloads manager tab',
       'Share & More-apps menu',
     ],
@@ -1093,16 +1098,16 @@ export const showcaseProjects: ShowcaseProject[] = [
     category: 'Downloader',
     tagline: 'Open-source video client & downloader (GPL-3, NewPipe Extractor)',
     description:
-      'An open-source video client and downloader built on the NewPipe Extractor (GPL-3). It surfaces a trending/news video feed with search, plays videos in-app with quality, loop and playback-speed controls, bookmarks, and saves videos to the device at a chosen resolution (144p / 360p / 720p) through a downloads manager.',
+      'An open-source video client and downloader built on the NewPipe Extractor (newpipeextractor_dart, GPL-3). It surfaces a trending/news video feed with category tabs and search, plays videos in-app on a native ExoPlayer with quality, playback-speed and picture-in-picture controls plus chapters, related videos and comments, keeps bookmarks, and saves videos to the device at a chosen quality through a downloads manager. Built on a BLoC + go_router architecture.',
     motive:
-      'Provide a lightweight, ad-light open-source way to browse and save online videos without a heavyweight official client.',
-    techStack: ['Flutter', 'NewPipe Extractor', 'GPL-3', 'AdMob', 'Background downloads'],
+      'Provide a lightweight open-source way to browse and save online videos without a heavyweight official client.',
+    techStack: ['Flutter', 'NewPipe Extractor (newpipeextractor_dart)', 'BLoC + HydratedBloc', 'Native ExoPlayer', 'AppLovin MAX', 'GPL-3'],
     features: [
-      'Trending / news video feed + search',
-      'In-app player (quality / loop / playback speed)',
-      'Save to device with quality picker (144p/360p/720p)',
-      'Downloads manager',
-      'Bookmarks',
+      'Trending / news feed with category tabs + search',
+      'Native ExoPlayer (quality / speed / picture-in-picture)',
+      'Chapters, related videos & comments',
+      'Save to device with quality picker',
+      'Downloads manager & bookmarks',
     ],
     status: 'shipped',
     storeLink: null,

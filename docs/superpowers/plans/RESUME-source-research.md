@@ -174,11 +174,22 @@ HomyKSA exp tie. 3 real screenshots (homy_services/order/map.avif). Committed.
   is manual in Firestore; youtube_player_flutter for playback) → fixed techStack + softened "analytics".
   11 screens kept. (Generator: `scripts/gen-batch5-mockups.mjs`.)
 
-### Batch 6 — Enrich downloaders/media (existing)
-- `D:/FlutterProject/saveit` → enrich `saveit` (17 repo imgs — likely real screenshots to add).
-- `D:/FlutterProject/fbsaver` → enrich `movo-downloader`.
-- `D:/statusgetter` → enrich `status-saver`.
-- `D:/ClientProjects/fahad_hanif/udownload` → enrich `udownload`.
+### Batch 6 ✅ DONE — Enrich downloaders/media (existing)
+- `saveit` → enriched `saveit`. The "17 imgs" were network brand ICONS, not screenshots (kept
+  mockups). Corrections: packageId **com.saveit.lucky** (was wrong); **no AdMob** in code (removed);
+  Provider + dio/http + **HTML-parsing extractor** + chewie. 15 networks confirmed. (#FE6E2B/#9D1C88)
+- `fbsaver` → enriched `movo-downloader`. android:label is "fbsaver" but AppSettings name = "Movo
+  Downloader" (kept). **No AdMob** (removed). GetX + al_downloader + chewie + EN/HI. 10 services
+  (added YouTube/MX TakaTak/SnackVideo); some UI-only. Kept mockups.
+- `statusgetter` → enriched `status-saver` → **REAL screenshots**. Renamed display to **"Status
+  Getter"**, packageId **com.androidsaver.statusgetter**. Big correction: TikTok tab is a generic
+  paste-URL video downloader (not "TikTok statuses"); added the **native-Kotlin SAF (Storage Access
+  Framework)** architecture + InAppWebView scraper + Dart isolates + Firebase/AdMob. Cropped 4 real
+  device screenshots (splash/grid/downloader/sidebar) from repo_images → AVIF; removed 2 old mockups.
+- `udownload` → enriched `udownload`. NewPipe Extractor confirmed (newpipeextractor_dart). Corrections:
+  ads are **AppLovin MAX** (not AdMob); dynamic quality (dropped fixed 144p/360p/720p); **no loop**
+  (added PiP/chapters/comments); BLoC + native ExoPlayer. (#129B3B/#143AC1)
+  (Asset scanner: `scripts/scan-batch6-assets.mjs`.)
 
 ### Batch 7 — Enrich social/utility (existing) + admins
 - `D:/FlutterProject/grouper` (+ `grouper_admin`) → enrich `grouper`.
