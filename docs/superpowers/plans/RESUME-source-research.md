@@ -125,12 +125,21 @@ HomyKSA exp tie. 3 real screenshots (homy_services/order/map.avif). Committed.
   OneSignal/Firebase/in-app-updates. 3 SVG mockups (cleaning/AC/pest booking flow). Removed Nakoda
   Urban from moreApps. (Generator: `scripts/gen-batch2-mockups.mjs`.)
 
-### Batch 3 — New consumer apps
-- `D:/ClientProjects/muhammad_arab/daghta` → NEW `daghta` (4 imgs — inspect). Research what it is.
-- `D:/ClientProjects/bestonlinegames` → NEW `puzzleur` (label "Puzzleur"; online games hub).
-- `D:/FlutterProject/blooddonation` → NEW `blood-donors` (label "Blood Donors 243 GB"; emergency
-  blood locator). Remove "Blood Donors" from moreApps.ts.
-- `D:/FlutterProject/snaptok` → NEW `snaptok` (label "SnapTok"; research — TikTok tools/downloader).
+### Batch 3 ✅ DONE — New consumer apps
+- `muhammad_arab/daghta` → NEW `daghta` (media bucket). **Arabic-first (RTL) social-media downloader
+  + file manager**, `com.daghta.pro`. BLoC + HydratedBloc + go_router + flutter_inappwebview, blue
+  **#0776E8**. 3 SVG mockups (search/platforms, file manager, settings).
+- `bestonlinegames` → NEW `puzzleur` (other bucket). **HTML5 games hub via WebView**, Firestore
+  catalogue + AdMob (banner/native/interstitial) + OneSignal, GetX + zoom-drawer, purple **#8E47F8 /
+  #3A1688**. packageId=null (repo applicationId is a leftover forked-template id). 3 SVG mockups
+  (staggered grid, in-game + banner ad, zoom drawer).
+- `blooddonation` → NEW `blood-donors` (**health** bucket; live, `com.kalyanpur.blooddonation`).
+  **Offline-first** emergency donor locator for rural PK (village 243 GB) — HydratedBloc + Supabase +
+  connectivity_plus, sync queue w/ retry, incremental sync. Red **#D60033** / pink #FBE5EB, Urdu RTL.
+  3 SVG mockups (donor list + sync pill, blood-group search, register). Removed Blood Donors from moreApps.
+- `snaptok` → NEW `snaptok` (media bucket). **Multi-platform no-watermark downloader** (TikTok/YT/FB/
+  MxTakaTak), `com.snaper.snaptok`. GetX + al_downloader + Chewie, dark **#121212 / coral #df4759**.
+  3 SVG mockups (paste home, format picker, downloads library). (Generator: `scripts/gen-batch3-mockups.mjs`.)
 
 ### Batch 4 — New multi-app systems
 - `D:/FlutterProject/globalnetwork` (network + network_admin; has Document.pdf + Project Details.docx

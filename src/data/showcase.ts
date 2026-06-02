@@ -836,6 +836,124 @@ export const showcaseProjects: ShowcaseProject[] = [
     featured: false,
   },
   {
+    // Arabic-first (RTL) social-media downloader + file manager.
+    slug: 'daghta',
+    name: 'Daghta',
+    packageId: 'com.daghta.pro',
+    year: 2024,
+    role: 'sole developer',
+    client: 'Client project',
+    category: 'Media Downloader',
+    tagline: 'Arabic-first all-in-one media downloader & file manager',
+    description:
+      'An Arabic-first (RTL) downloader and file manager. Paste a link or use the built-in browser to grab video, audio, images and documents from TikTok, Instagram, YouTube, Facebook, Twitter and Snapchat; everything lands in an organised file manager (My Files / In Progress) with type filters, in-app playback, and rename / convert / share. Built on a clean BLoC + go_router architecture with HydratedBloc-persisted theme and language (English / Arabic), an in-app WebView, app-lock, picture-in-picture and full light/dark theming, plus a Pro tier.',
+    motive:
+      'Give Arabic-speaking users one polished, RTL-native app to save and organise media from every major platform.',
+    techStack: ['Flutter', 'BLoC + HydratedBloc', 'go_router', 'flutter_inappwebview', 'get_it', 'Arabic / English (RTL)'],
+    features: [
+      'Download from TikTok / Instagram / YouTube / FB / Twitter / Snapchat',
+      'In-app browser capture',
+      'File manager — My Files / In Progress, type filters',
+      'In-app playback, rename, convert & share',
+      'App lock, picture-in-picture, auto-paste, light/dark',
+      'Arabic-first RTL + English, Pro tier',
+    ],
+    status: 'shipped',
+    storeLink: null,
+    githubLink: null,
+    screens: ['daghta_search.avif', 'daghta_files.avif', 'daghta_settings.avif'],
+    featured: false,
+  },
+  {
+    // Casual HTML5 games hub — Firestore-driven catalogue rendered in a WebView.
+    // applicationId in the repo is a leftover from a forked template, so packageId is null.
+    slug: 'puzzleur',
+    name: 'Puzzleur',
+    packageId: null,
+    year: 2022,
+    role: 'sole developer',
+    client: 'Client project',
+    category: 'Games Hub',
+    tagline: 'A WebView games hub — instant HTML5 games, no installs',
+    description:
+      'A casual games hub that serves a Firestore-driven catalogue of HTML5 games inside a WebView — no installs, instant play. Games stream from a Firebase backend, so the catalogue updates without an app release, and render in a staggered card grid with skeleton loading and a zoom-drawer menu. Monetisation is full AdMob — banner, interstitial-on-exit and native ads woven into the feed every few cards — with OneSignal push and native share on top.',
+    motive:
+      'Let players jump straight into dozens of HTML5 games with zero installs, while the catalogue stays updatable from the cloud.',
+    techStack: ['Flutter', 'GetX', 'Firebase Firestore', 'WebView', 'AdMob', 'OneSignal'],
+    features: [
+      'Firestore-driven game catalogue (updatable without releases)',
+      'Instant HTML5 games in a WebView',
+      'Staggered grid with skeleton loading',
+      'Zoom-drawer navigation',
+      'AdMob — banner, interstitial & native ads',
+      'OneSignal push & native share',
+    ],
+    status: 'shipped',
+    storeLink: null,
+    githubLink: null,
+    screens: ['puzzleur_home.avif', 'puzzleur_game.avif', 'puzzleur_drawer.avif'],
+    featured: false,
+  },
+  {
+    // Offline-first emergency blood-donor locator for rural Pakistan (village 243 GB).
+    // Live on Play Store; promoted out of moreApps.ts ("Blood Donors").
+    slug: 'blood-donors',
+    name: 'Blood Donors 243 GB',
+    packageId: 'com.kalyanpur.blooddonation',
+    year: 2025,
+    role: 'sole developer',
+    client: 'Personal / open-source',
+    category: 'Health / Emergency',
+    tagline: 'Offline-first emergency blood-donor locator for rural Pakistan',
+    description:
+      'A free, open-source emergency blood-donor locator built for rural Pakistan (village 243 GB) where connectivity is intermittent. Search donors by blood group and distance, see availability, and reach them in one tap over WhatsApp or a call. The headline is the architecture: an offline-first stack on HydratedBloc + Supabase — cached donors render instantly on launch with no spinner, a background incremental sync pulls only records changed since the last sync, and writes made offline queue in a persistent sync queue (with retry) that auto-flushes the moment connectivity returns. Fully localised in Urdu (RTL) and English.',
+    motive:
+      'Make finding a matching blood donor possible at 2 AM on a 2G connection — the app has to work fully offline and sync silently when the network returns.',
+    techStack: ['Flutter', 'flutter_bloc + HydratedBloc', 'Supabase', 'connectivity_plus', 'go_router', 'Urdu / English (RTL)'],
+    features: [
+      'Search donors by blood group + distance',
+      'One-tap WhatsApp & call',
+      'Offline-first — cached list loads instantly, no spinner',
+      'Incremental background sync (changed records only)',
+      'Persistent offline write queue, auto-retry on reconnect',
+      'Urdu (RTL) + English, register-as-donor flow',
+    ],
+    status: 'live',
+    storeLink: 'https://play.google.com/store/apps/details?id=com.kalyanpur.blooddonation',
+    githubLink: null,
+    screens: ['blooddonors_home.avif', 'blooddonors_search.avif', 'blooddonors_register.avif'],
+    featured: false,
+  },
+  {
+    // Multi-platform no-watermark video downloader.
+    slug: 'snaptok',
+    name: 'SnapTok',
+    packageId: 'com.snaper.snaptok',
+    year: 2022,
+    role: 'sole developer',
+    client: 'Client project',
+    category: 'Media Downloader',
+    tagline: 'No-watermark video downloader for TikTok, YouTube & more',
+    description:
+      'A multi-platform video downloader that pulls clean, watermark-free videos — plus the audio track and thumbnail — from TikTok, YouTube, Facebook and MxTakaTak. Paste or auto-detect a link from the clipboard, preview it in a built-in Chewie player, then pick a format: HD MP4 video, MP3 music (with the original-sound metadata) or a JPG thumbnail. Built on GetX with al_downloader for reliable file saving, light/dark themes and English / Hindi localisation — and no ads.',
+    motive:
+      'Give users a fast, ad-free way to save TikTok and other short-form videos without the watermark, in the format they actually want.',
+    techStack: ['Flutter', 'GetX', 'al_downloader', 'Chewie / video_player', 'get_storage', 'English / Hindi'],
+    features: [
+      'No-watermark downloads from TikTok / YouTube / FB / MxTakaTak',
+      'Clipboard auto-detect + paste',
+      'Built-in Chewie video preview',
+      'Pick format — HD MP4, MP3 audio or JPG thumbnail',
+      'Light / dark theme, EN / HI',
+      'Ad-free',
+    ],
+    status: 'shipped',
+    storeLink: null,
+    githubLink: null,
+    screens: ['snaptok_home.avif', 'snaptok_download.avif', 'snaptok_library.avif'],
+    featured: false,
+  },
+  {
     // Cross-matches the existing minimal `icare` entry in projects.ts.
     slug: 'icare',
     name: 'iCare',
