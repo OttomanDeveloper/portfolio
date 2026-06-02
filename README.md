@@ -1,10 +1,13 @@
 # Ottoman Coder — Portfolio
 
+[![Live site](https://img.shields.io/badge/live-ottomandeveloper.github.io%2Fportfolio-d4a558?style=flat-square)](https://ottomandeveloper.github.io/portfolio/)
+[![Deploy to GitHub Pages](https://github.com/OttomanDeveloper/portfolio/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/OttomanDeveloper/portfolio/actions/workflows/deploy-pages.yml)
+
 Personal portfolio for **Muhammad Usman** (Ottoman Coder), Senior Mobile Engineer.
 Built with [Astro](https://astro.build) as a fully static, zero-runtime-JS site:
 project showcase, in-depth case studies, experience, tech stack and open-source work.
 
-**Live:** https://ottomandeveloper.github.io/portfolio/
+**Live:** <https://ottomandeveloper.github.io/portfolio/>
 
 ## Stack
 
