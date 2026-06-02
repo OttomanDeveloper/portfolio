@@ -10,8 +10,9 @@ const { n = 3, viewAllHref, viewAllCount } = Astro.props;
   <div class="container">
     <SectionLabel n={n} name="featured projects" />
     <p class="intro">Three products that show the range — a commercial hit, a live flagship, and an open-source tool. <span class="swipe" aria-hidden="true">swipe →</span></p>
+  </div>
 
-    <div class="grid">
+  <div class="grid">
       <article class="card legend">
         <p class="badge"><span class="dot" aria-hidden="true"></span>COMMERCIAL · 600K USERS</p>
 
@@ -101,14 +102,15 @@ const { n = 3, viewAllHref, viewAllCount } = Astro.props;
     </div>
 
     {viewAllHref && (
-      <div class="view-all">
-        <a class="va-btn" href={viewAllHref}>
-          View all{viewAllCount ? ` ${viewAllCount}` : ''} projects
-          <span class="va-arrow" aria-hidden="true">→</span>
-        </a>
+      <div class="container">
+        <div class="view-all">
+          <a class="va-btn" href={viewAllHref}>
+            View all{viewAllCount ? ` ${viewAllCount}` : ''} projects
+            <span class="va-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
       </div>
     )}
-  </div>
 </section>
 
 <style>
@@ -142,16 +144,16 @@ const { n = 3, viewAllHref, viewAllCount } = Astro.props;
   }
   @media (min-width: 1280px) { .intro .swipe { display: none; } }
 
-  /* Horizontal carousel of featured cards */
+  /* Full-bleed horizontal carousel — track spans the whole viewport width,
+     first/last card stays aligned with the container heading. */
   .grid {
     display: flex;
     gap: var(--s-5);
     align-items: stretch;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    padding-block-end: var(--s-3);
-    margin-inline: calc(-1 * var(--s-4));
-    padding-inline: var(--s-4);
+    padding-block: 6px var(--s-3);
+    padding-inline: calc(max(0px, (100% - var(--container)) / 2) + clamp(1rem, 4vw, 2rem));
     scrollbar-width: thin;
     scrollbar-color: var(--border) transparent;
     -webkit-overflow-scrolling: touch;
