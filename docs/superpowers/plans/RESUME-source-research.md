@@ -12,7 +12,22 @@ showcase entries with accurate data and (b) add new projects. Some tie to the Ex
 - Match existing AVIF sizes: phone screens **540px wide**, crop framed mockups to full-bleed first.
 - Save accurate data in `src/data/showcase.ts` (we need the info later).
 
-## Screenshot crop recipe (framed mockups)
+## Generated SVG mockups (for projects with NO real screenshots) — APPROVED + VALIDATED
+For projects that have no real screenshots in their repo, generate **hand-designed SVG screen
+mockups** rendered to AVIF — NOT fabricated photo-screenshots. Rules:
+- **Faithful to each app's REAL design**: pull the app's real theme colours, screen names, nav
+  structure and features from its source (theme files, lib/, README) and mock 2-4 key screens in
+  that style. They are honest *representations* of real work, grounded in the code — not invented UI.
+- Match existing sizes: **phone 540×1200**, web **1280×620**.
+- Pipeline (validated — sharp rasterizes SVG; Segoe UI/Arial fonts render fine):
+  ```js
+  // write screen as <svg width=540 height=1200 ...> with the app's real colours/labels
+  await sharp(svgPathOrBuffer).resize(540,1200).avif({quality:70,effort:6}).toFile(out);
+  ```
+- Keep a consistent device-screen layout (status bar, app bar, content, bottom nav) but themed per app.
+- Honesty: these are designed mockups, not literal captures — fine for a portfolio when accurate.
+
+## Screenshot crop recipe (real framed mockups in repos)
 Many repo images are device-framed phone mockups on a solid bg. Crop the frame/bg, then resize:
 ```js
 import sharp from 'sharp';
