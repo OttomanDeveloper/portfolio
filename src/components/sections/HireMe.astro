@@ -1,17 +1,58 @@
 ---
-// src/components/sections/Contact.astro
+// src/components/sections/HireMe.astro
+// Merged "why hire me" + availability + contact — the closing pitch of the page.
+// Keeps id="contact" so existing #contact anchors (Hero pill/banner) still resolve.
 import SectionLabel from '@/components/atoms/SectionLabel.astro';
 import { contact } from '@/data/contact';
 import { profile } from '@/data/profile';
 
 const formspreeId = import.meta.env.PUBLIC_FORMSPREE_ID;
 const formspreeAction = formspreeId ? `https://formspree.io/f/${formspreeId}` : null;
+
+const reasons = [
+  { k: 'End-to-end', t: 'UI, architecture, backend and the store release — one engineer, nothing lost in handoffs.' },
+  { k: 'Proven at scale', t: '600K users and real revenue, plus the hard parts: BLE hardware, on-device AI and multi-language.' },
+  { k: 'Open & communicative', t: '9 open-source packages on pub.dev, write-ups on Medium, and a reply within ~24h.' },
+];
+const mediumHref = 'https://ottomancoder.medium.com/';
 ---
 <section id="contact">
   <div class="container">
-    <SectionLabel n={8} name="contact" />
-    <h2 class="head">Reach me — pick a channel.</h2>
+    <SectionLabel n={7} name="why hire me" />
 
+    <div class="pitch">
+      <h2 class="head">Hire one engineer.<br /><span class="accent">Ship the whole app.</span></h2>
+      <p class="lead">
+        I design, build and release production Flutter apps end-to-end — <strong>50+ shipped</strong>,
+        one scaled to <strong>600K users</strong> and held <strong>#1</strong> in its Play Store
+        category for five months. Product-led, straight with founders, and I reply within ~24 hours.
+      </p>
+    </div>
+
+    <ul class="reasons">
+      {reasons.map((r) => (
+        <li>
+          <span class="r-k">{r.k}</span>
+          <span class="r-t">{r.t}</span>
+        </li>
+      ))}
+    </ul>
+
+    <div class="avail">
+      <div class="avail-main">
+        <span class="badge"><span class="dot" aria-hidden="true"></span>{profile.available}</span>
+        <p class="avail-text">
+          {profile.availableLong}{' '}
+          Currently shipping <strong>{profile.currentlyShipping.text}</strong> at{' '}
+          <a href={profile.currentlyShipping.href} target="_blank" rel="noopener noreferrer">{profile.currentlyShipping.at}</a>.
+        </p>
+      </div>
+      <a class="avail-write" href={mediumHref} target="_blank" rel="noopener noreferrer">
+        Read the engineering write-ups on Medium <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+
+    <h3 class="ch-head">Reach me — pick a channel.</h3>
     <ul class="channels">
       {contact.map((c) => (
         <li>
@@ -112,7 +153,84 @@ const formspreeAction = formspreeId ? `https://formspree.io/f/${formspreeId}` : 
 
 <style>
   #contact { padding-block: clamp(var(--s-8), 8vw, var(--s-10)); }
-  .head { color: var(--fg); font: 700 var(--fs-section) var(--font-sans); margin: 0 0 var(--s-6); }
+
+  /* Pitch — the bold closing statement */
+  .pitch { max-inline-size: 62ch; }
+  .head {
+    margin: 0;
+    color: var(--fg);
+    font: 700 var(--fs-section) / 1.05 var(--font-sans);
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  .head .accent { color: var(--accent); }
+  .lead { margin: var(--s-4) 0 0; color: var(--fg-dim); font-size: var(--fs-body); line-height: var(--lh-default); }
+  .lead strong { color: var(--fg); font-weight: 600; }
+
+  /* Reasons — three value props */
+  .reasons {
+    list-style: none; padding: 0; margin: var(--s-6) 0 0;
+    display: grid; grid-template-columns: 1fr; gap: var(--s-3);
+  }
+  @media (min-width: 768px) { .reasons { grid-template-columns: 1fr 1fr 1fr; gap: var(--s-4); } }
+  .reasons li {
+    display: flex; flex-direction: column; gap: var(--s-2);
+    padding: var(--s-4) var(--s-5);
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+  }
+  .r-k {
+    color: var(--accent);
+    font: 700 var(--fs-small) var(--font-sans);
+    letter-spacing: 0.01em;
+  }
+  .r-t { color: var(--fg-dim); font-size: var(--fs-small); line-height: 1.5; }
+
+  /* Availability strip */
+  .avail {
+    margin-block-start: var(--s-5);
+    padding: var(--s-5);
+    background:
+      radial-gradient(120% 100% at 0% 0%, var(--accent-glow), transparent 60%),
+      var(--bg-elev);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--r-card);
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    gap: var(--s-3) var(--s-5);
+  }
+  .avail-main { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3); min-inline-size: 0; }
+  .badge {
+    display: inline-flex; align-items: center; gap: var(--s-2);
+    padding: 5px 12px;
+    border: 1px solid color-mix(in oklab, var(--accent) 40%, transparent);
+    border-radius: var(--r-pill);
+    background: color-mix(in oklab, var(--accent) 10%, transparent);
+    color: var(--accent);
+    font: 600 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .badge .dot {
+    inline-size: 7px; block-size: 7px; border-radius: 50%;
+    background: var(--accent); box-shadow: 0 0 8px var(--accent);
+    animation: hm-pulse 2s ease-in-out infinite;
+  }
+  @keyframes hm-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+  @media (prefers-reduced-motion: reduce) { .badge .dot { animation: none; } }
+  .avail-text { margin: 0; color: var(--fg-dim); font-size: var(--fs-small); line-height: var(--lh-default); }
+  .avail-text strong { color: var(--fg); font-weight: 600; }
+  .avail-text a { color: var(--accent); text-decoration: none; border-bottom: 1px solid color-mix(in oklab, var(--accent) 35%, transparent); }
+  .avail-text a:hover { color: var(--fg); border-bottom-color: var(--accent); }
+  .avail-write {
+    color: var(--cyan); text-decoration: none; white-space: nowrap;
+    font: 600 var(--fs-small) var(--font-sans);
+    border-bottom: 1px solid color-mix(in oklab, var(--cyan) 35%, transparent);
+  }
+  .avail-write:hover { color: var(--fg); border-bottom-color: var(--cyan); }
+
+  /* Contact */
+  .ch-head { color: var(--fg); font: 700 var(--fs-h3) var(--font-sans); margin: var(--s-8) 0 var(--s-5); }
   .channels { list-style: none; padding: 0; margin: 0 0 var(--s-7); display: grid; grid-template-columns: 1fr; gap: var(--s-3); }
   @media (min-width: 640px)  { .channels { grid-template-columns: 1fr 1fr; } }
   @media (min-width: 1024px) { .channels { grid-template-columns: 1fr 1fr 1fr; } }
