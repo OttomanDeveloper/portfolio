@@ -11,9 +11,11 @@ interface Props {
 }
 
 const { title, description, canonical, ogImage } = Astro.props;
-const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? 'http://localhost:4321';
+// Single source of truth: Astro.site (resolved in astro.config from
+// PUBLIC_SITE_URL, else the Vercel production domain, else localhost).
+const siteUrl = Astro.site ?? new URL('http://localhost:4321');
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteUrl).toString();
-const ogImageUrl = ogImage ?? `${siteUrl}/og/default.png`;
+const ogImageUrl = ogImage ?? new URL('/og/default.png', siteUrl).toString();
 ---
 <!doctype html>
 <html lang="en">

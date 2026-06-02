@@ -10,7 +10,9 @@ import StackGrid from '@/components/sections/StackGrid.astro';
 import HireMe from '@/components/sections/HireMe.astro';
 import { profile } from '@/data/profile';
 
-const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? 'http://localhost:4321';
+// Mirror BaseLayout's source of truth: Astro.site (PUBLIC_SITE_URL → Vercel
+// prod domain → localhost), trailing slash stripped for clean JSON-LD URLs.
+const siteUrl = (Astro.site ?? new URL('http://localhost:4321')).href.replace(/\/$/, '');
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
