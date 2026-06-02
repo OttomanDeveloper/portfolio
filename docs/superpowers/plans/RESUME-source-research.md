@@ -111,15 +111,19 @@ CSS selector groups + GROUPS together).
 `D:/ClientProjects/arslan_saudia/Copy of homy/homy` → new `homy` (grid). Team of 2 (backend + me).
 HomyKSA exp tie. 3 real screenshots (homy_services/order/map.avif). Committed.
 
-### Batch 2 — Experience-tied commerce & logistics (NEW + enrich couriergo)
-- `D:/ClientProjects/rossdonaldson/youshopper_app` (customer_app_source / seller_app_source /
-  delivery_app_source) → NEW `youshopper`. Tie: **SD Cold Logistics · YouShopper** exp (3 apps live,
-  coin monetisation, OneSignal, YouTube V3). Remove "YouShopper"/"YouShopper Seller" from moreApps.ts.
-- `D:/ClientProjects/VeignLaos` (courier_pro/courier_pro, shipox, ecommerce, Customer/CustomerApp) →
-  **enrich existing `couriergo`** (Fulfil Supply Chain; ShipOX; cross-border China/Laos/Thailand).
-  Add screens if any real ones; else SVG mockups in ShipOX colours.
-- `D:/ClientProjects/nakoda_urban_services/customer` → NEW `nakoda` (India home services). Remove
-  "Nakoda Urban" from moreApps.ts. 5 repo imgs — check if real screenshots.
+### Batch 2 ✅ DONE — Experience-tied commerce & logistics (NEW + enrich couriergo)
+- `youshopper_app` → NEW `youshopper` (grid, 'other'). Real source = 3 Flutter apps (Customer
+  `com.warehousesheriff.ssPlatform` / Seller / Delivery `YouShopper PickUp`), all live. Code shows
+  **Firebase Messaging** (not OneSignal), **club points + wallet** (not "coin"), Google Maps, 10+
+  payment gateways, Provider+GetIt — entry written to code, not exp blurb. 5 SVG mockups (purple
+  #7D04E7 + orange-red #E62E04; seller dark #2E294E). Removed YouShopper + Seller from moreApps.
+- `VeignLaos/shipox` → **enriched `couriergo`** — android:label confirmed "Fulfil Supply Chain",
+  pkg `com.jinniu.shipox` ✓, teal **#1B685B** ✓, GetX + Firebase Auth/FCM + OpenCart REST (fulfils.co).
+  Existing 7 teal mockups kept (already correct colour); refined techStack/description/features only.
+- `nakoda_urban_services/customer` → NEW `nakoda` (grid, 'other'). android:label "Nakoda",
+  `com.nakoda.customer`, blue **#0E2C79** + orange **#FE9701**. WebView shell over m.nakodadcs.com +
+  OneSignal/Firebase/in-app-updates. 3 SVG mockups (cleaning/AC/pest booking flow). Removed Nakoda
+  Urban from moreApps. (Generator: `scripts/gen-batch2-mockups.mjs`.)
 
 ### Batch 3 — New consumer apps
 - `D:/ClientProjects/muhammad_arab/daghta` → NEW `daghta` (4 imgs — inspect). Research what it is.
