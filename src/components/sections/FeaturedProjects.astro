@@ -336,6 +336,8 @@ const { n = 3, viewAllHref, viewAllCount } = Astro.props;
     min-block-size: 96px;
   }
   .card.web .content { flex: 0 0 auto; }
+  /* Smaller title on web cards → leaves more room for the image */
+  .card.web .title { font-size: var(--fs-h3); line-height: 1.15; }
   .body code { font: 400 0.92em var(--font-mono); color: var(--fg); }
 
   .chips {
