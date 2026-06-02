@@ -609,16 +609,19 @@ function stLibrary() {
 }
 
 // ---- run --------------------------------------------------------------------
-await render('daghta_search', dgSearch());
-await render('daghta_files', dgFiles());
-await render('daghta_settings', dgSettings());
+// NOTE: daghta + blood-donors now ship REAL device screenshots (replaced these
+// mockups). Their render calls are disabled so a rerun can't clobber the real
+// images; the dgSearch/dgFiles/dgSettings + bd* functions are kept for reference.
+// await render('daghta_search', dgSearch());
+// await render('daghta_files', dgFiles());
+// await render('daghta_settings', dgSettings());
 await render('puzzleur_home', pzHome());
 await render('puzzleur_game', pzGame());
 await render('puzzleur_drawer', pzDrawer());
-await render('blooddonors_home', bdHome());
-await render('blooddonors_search', bdSearch());
-await render('blooddonors_register', bdRegister());
+// await render('blooddonors_home', bdHome());
+// await render('blooddonors_search', bdSearch());
+// await render('blooddonors_register', bdRegister());
 await render('snaptok_home', stHome());
 await render('snaptok_download', stDownload());
 await render('snaptok_library', stLibrary());
-console.log('done — batch 3 mockups');
+console.log('done — batch 3 mockups (daghta + blood-donors now use real screenshots)');

@@ -897,7 +897,7 @@ export const showcaseProjects: ShowcaseProject[] = [
     status: 'shipped',
     storeLink: null,
     githubLink: null,
-    screens: ['daghta_search.avif', 'daghta_files.avif', 'daghta_settings.avif'],
+    screens: ['daghta_home.avif', 'daghta_files.avif', 'daghta_settings.avif'],
     featured: false,
   },
   {
@@ -957,7 +957,7 @@ export const showcaseProjects: ShowcaseProject[] = [
     status: 'live',
     storeLink: 'https://play.google.com/store/apps/details?id=com.kalyanpur.blooddonation',
     githubLink: null,
-    screens: ['blooddonors_home.avif', 'blooddonors_search.avif', 'blooddonors_register.avif'],
+    screens: ['blooddonors_home.avif', 'blooddonors_sidebar.avif', 'blooddonors_register.avif'],
     featured: false,
   },
   {
