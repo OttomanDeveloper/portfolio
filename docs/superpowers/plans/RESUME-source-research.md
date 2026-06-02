@@ -157,11 +157,22 @@ HomyKSA exp tie. 3 real screenshots (homy_services/order/map.avif). Committed.
   in this build (honest — described as a marketplace, not social-commerce). 3 mockups (home, product,
   admin). (Generator: `scripts/gen-batch4-mockups.mjs`.)
 
-### Batch 5 — Enrich rewards/earning (existing) + admins
-- `D:/ClientProjects/tech_gayan_vishal_india/three_lucky_spin_mining` → enrich `lucky-spin`
-  (**label "Egg Network"** + mining mechanic — verify/correct the entry).
-- `D:/FlutterProject/wish_coin` (+ `D:/FlutterProject/wishadmin`) → enrich `wisbig` (+admin panel).
-- `D:/FlutterProject/probooster` (+ `D:/FlutterProject/adminpanelprobooster`) → enrich `yt-master`.
+### Batch 5 ✅ DONE — Enrich rewards/earning (existing) + admins
+- `three_lucky_spin_mining` → **corrected `lucky-spin` → `egg-network`** (slug renamed). Source verdict:
+  android:label **"Egg Network"**, pkg **com.luckyminer.eggnetwork** — the archive's "3 Lucky Spin /
+  spin-scratch-watch-visit" was WRONG. Real primary mechanic = **passive Network Mining** (hourly
+  sessions, ₱ coins); secondary spin/scratch/visit; **no Watch & Earn**. BLoC+HydratedBloc, Firebase,
+  flutter_fortune_wheel+scratcher, AdMob+AppLovin MAX, OneSignal. Purple #5e35b1/indigo #3f51b5.
+  **Re-mocked 6 screens** (home, mining hero, spin, scratch, visit, withdraw); deleted 10 old
+  lucky_spin_* files. Updated GROUPS key lucky-spin→egg-network.
+- `wish_coin` (+ `wishadmin`) → **enriched `wisbig`** (data only). Corrections: admin label is
+  **"Wish Admin"** (not "Wish ControlPanel"); WIS is **off-chain** (no web3/BEP-20 on-chain) → softened
+  the BEP-20 claim; **no push lib** → dropped "Push Notifications". Real stack: GetX+Provider, Firebase
+  (Firestore+Storage), REST (wisbig.xyz), youtube_player_flutter, flutter_fortune_wheel. 11 screens kept.
+- `probooster` (+ `adminpanelprobooster`) → **enriched `yt-master`** (data only). Confirmed "YT Master" /
+  "YT Master Admin", set packageId **com.subforsub.ytmaster**. **No YouTube Data API v3** (channel data
+  is manual in Firestore; youtube_player_flutter for playback) → fixed techStack + softened "analytics".
+  11 screens kept. (Generator: `scripts/gen-batch5-mockups.mjs`.)
 
 ### Batch 6 — Enrich downloaders/media (existing)
 - `D:/FlutterProject/saveit` → enrich `saveit` (17 repo imgs — likely real screenshots to add).
