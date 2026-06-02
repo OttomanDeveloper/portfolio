@@ -136,13 +136,13 @@ const moreLive = [...liveApps, ...moreApps.map((a) => ({ name: a.name, sub: a.ca
         <h3 class="m-title" id={`m-${p.slug}-title`}>{p.name}</h3>
         <p class="m-tagline">{p.tagline}</p>
 
-        <div class="gallery" tabindex="0" aria-label={`${p.name} screenshots`}>
+        <div class={`gallery${p.web ? ' web' : ''}`} tabindex="0" aria-label={`${p.name} screenshots`}>
           {p.screens.map((s, i) => (
             <img
               class="shot"
               src={withBase(`/screens/${s}`)}
               alt={`${p.name} screen ${i + 1}`}
-              width="540" height="1200" loading="lazy" decoding="async"
+              width={p.web ? 1280 : 540} height={p.web ? 620 : 1200} loading="lazy" decoding="async"
             />
           ))}
         </div>
@@ -419,6 +419,22 @@ const moreLive = [...liveApps, ...moreApps.map((a) => ({ name: a.name, sub: a.ca
   .gallery::-webkit-scrollbar-track { background: transparent; }
   .gallery::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
   .gallery::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+  /* Web projects: landscape shots fill the modal's available width (no scroller),
+     capped in height so the modal never grows beyond its existing limits. */
+  .gallery.web {
+    display: grid;
+    gap: var(--s-3);
+    overflow-x: visible;
+    scroll-snap-type: none;
+  }
+  .gallery.web .shot {
+    inline-size: 100%;
+    block-size: auto;
+    max-block-size: 50svh;
+    object-fit: contain;
+    object-position: center;
+  }
 
   .m-grid { display: grid; grid-template-columns: 1fr; gap: var(--s-5); }
   @media (min-width: 720px) { .m-grid { grid-template-columns: 1.1fr 1fr; gap: var(--s-6); } }
