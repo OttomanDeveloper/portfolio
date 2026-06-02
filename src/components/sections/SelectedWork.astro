@@ -42,9 +42,18 @@ const { n = 2, includeFeatured = false } = Astro.props;
 // On the home page the featured trio lives in the big carousel, so the grid drops
 // them. On /projects (includeFeatured) every project renders as a normal card.
 const FEATURED_SLUGS = ['legend-tv', 'udownload', 'lifelink', 'alcopass', 'chronos', 'babypig', 'icare'];
+
+// Pinned order for the top of the grid; everything else keeps its showcase order below.
+const TOP_ORDER = [
+  'legend-tv', 'alcopass', 'icare', 'blood-donors', 'lifelink', 'grouper', 'couriergo',
+  'youshopper', 'homy', 'status-saver', 'football-wallpaper', 'yt-master', 'quiz-news-rewards',
+];
+const rank = (slug: string) => { const i = TOP_ORDER.indexOf(slug); return i === -1 ? TOP_ORDER.length : i; };
+
 const items = showcaseProjects
   .filter((p) => includeFeatured || !FEATURED_SLUGS.includes(p.slug))
-  .map((p) => ({ ...p, group: GROUPS[p.slug] ?? 'other' }));
+  .map((p, idx) => ({ ...p, group: GROUPS[p.slug] ?? 'other', _idx: idx }))
+  .sort((a, b) => rank(a.slug) - rank(b.slug) || a._idx - b._idx);
 
 const counts = Object.fromEntries(
   FILTERS.map((f) => [f.id, f.id === 'all' ? items.length : items.filter((i) => i.group === f.id).length]),
