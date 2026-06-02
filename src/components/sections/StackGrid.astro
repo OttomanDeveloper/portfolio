@@ -8,12 +8,12 @@ import { stack } from '@/data/stack';
     <SectionLabel n={6} name="stack · day-to-day" />
     <dl class="grid">
       {stack.map((g) => (
-        <>
+        <div class="group">
           <dt class="k">{g.category}</dt>
           <dd class="v">
             {g.chips.map((c) => <span class="chip">{c}</span>)}
           </dd>
-        </>
+        </div>
       ))}
     </dl>
   </div>
@@ -21,9 +21,25 @@ import { stack } from '@/data/stack';
 
 <style>
   #stack { padding-block: clamp(var(--s-8), 8vw, var(--s-10)); }
-  .grid { display: grid; grid-template-columns: 140px 1fr; gap: var(--s-3) var(--s-5); margin: 0; }
-  @media (max-width: 479px) { .grid { grid-template-columns: 1fr; gap: var(--s-1); } .k { padding-block: var(--s-3) 0; } }
-  .k { color: var(--accent); font: 400 var(--fs-micro) var(--font-mono); text-transform: uppercase; letter-spacing: 0.12em; align-self: baseline; padding-block-start: 6px; }
+
+  /* Single column of category rows on phones/portrait tablets; two balanced
+     columns from ~landscape-tablet up so the chips fill the width instead of
+     hugging the left half. */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: start;
+    row-gap: var(--s-4);
+    column-gap: clamp(var(--s-6), 5vw, var(--s-9));
+    margin: 0;
+  }
+  @media (min-width: 1024px) { .grid { grid-template-columns: 1fr 1fr; } }
+
+  /* Each category keeps the original "label | chips" row layout. */
+  .group { display: grid; grid-template-columns: 140px 1fr; gap: var(--s-2) var(--s-5); align-items: baseline; }
+  @media (max-width: 479px) { .group { grid-template-columns: 1fr; gap: var(--s-1); } .k { padding-block-start: var(--s-3); } }
+
+  .k { color: var(--accent); font: 400 var(--fs-micro) var(--font-mono); text-transform: uppercase; letter-spacing: 0.12em; align-self: baseline; padding-block-start: 6px; margin: 0; }
   .v { margin: 0; display: flex; flex-wrap: wrap; gap: var(--s-2); }
   .chip { display: inline-block; padding: 4px 10px; background: color-mix(in oklab, var(--fg) 5%, transparent); border: 1px solid var(--border); border-radius: var(--r-pill); font: 400 var(--fs-small) var(--font-sans); color: var(--fg); }
 </style>
