@@ -1,0 +1,36 @@
+---
+title: UDownload
+tagline: An open-source video client that revives the abandoned SongTube — on a NewPipe Extractor I ported to Dart.
+stack: [Flutter, BLoC, newpipeextractor_dart, Native ExoPlayer, go_router]
+stats:
+  - { num: 'GPL-3', desc: 'open source on GitHub' }
+  - { num: 'Dart', desc: 'NewPipe Extractor port' }
+  - { num: '0', unit: ' keys', desc: 'no API key needed' }
+  - { num: 'Native', desc: 'ExoPlayer + downloads' }
+sourceUrl: https://github.com/OttomanDeveloper/u_downloader
+order: 4
+---
+
+## The gap
+
+**SongTube** was a beloved Flutter app — a NewPipe-powered video browser and downloader with thousands of GitHub stars and forks — and it had been abandoned for about two years. A client wanted something like it, and the community still asked for it constantly. So instead of cloning a dead app, I rebuilt the idea on a foundation I could actually maintain — including the piece SongTube depended on that no longer existed in good shape for Dart.
+
+## Porting NewPipe to Dart
+
+UDownload runs on `newpipeextractor_dart` — my Dart port of NewPipe Extractor — so the whole app needs **no API key and no official client**. The extractor does the real work: `SearchExtractor.searchYoutube` (and a Music mode), `TrendingExtractor` for the home feed and its kiosks, plus channels, playlists, related videos, comments and chapter segments — each call wrapped in a 60-second timeout. Because NewPipe Extractor is GPL-3, the port and the app are too; the license is inherited, not bolted on.
+
+## A real player, not a webview
+
+Wrapping playback in a webview is the lazy path and it always feels wrong. UDownload drives a **native Android ExoPlayer** through a platform channel — `native_video_player/method_*` for commands, an event channel for `position`, `duration` and buffering state. That buys real controls: quality switching, playback speed, seeking, volume, source swaps between separate video/audio streams, and proper picture-in-picture over its own channel. Video should feel native, so it is.
+
+## Downloads from what the extractor exposes
+
+Downloading means resolving streams, not scraping a page. The extractor returns video-only, muxed video, and audio-only tracks; the app surfaces a quality picker (`1080p`, `128 kbps`, `… (muxed)`) and hands the chosen stream to the native layer to fetch — audio-only saves included, for the people who only ever wanted the music SongTube gave them.
+
+## Why open source, why GPL-3
+
+Two reasons. First, GPL-3 isn't a choice here — it's what building on NewPipe Extractor requires, and I'd rather honour that cleanly than fight it. Second, the people still asking "is there a SongTube replacement?" deserve a real answer they can run themselves, so the whole thing is on GitHub. It stays free with AppLovin ads and OneSignal for updates; the `NOTICE` file is explicit that those proprietary SDKs sit outside the GPL core.
+
+## Honest status
+
+UDownload was published only days ago — no stars or installs to point at yet, and I'd rather say that than dress it up. What's solid is the foundation: a maintained Dart NewPipe port, a native player, and a license that lets it outlive me the way SongTube couldn't.

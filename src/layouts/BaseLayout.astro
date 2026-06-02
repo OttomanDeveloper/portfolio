@@ -1,0 +1,55 @@
+---
+// src/layouts/BaseLayout.astro
+import '@/styles/global.css';
+import StatusBanner from '@/components/molecules/StatusBanner.astro';
+import { withBase } from '@/lib/paths';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+}
+
+const { title, description, canonical, ogImage } = Astro.props;
+// Single source of truth: Astro.site (resolved in astro.config from
+// PUBLIC_SITE_URL, else the Vercel production domain, else localhost).
+const siteUrl = Astro.site ?? new URL('http://localhost:4321');
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteUrl).toString();
+const ogImageUrl = ogImage ?? new URL(withBase('/og/default.png'), siteUrl).toString();
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0d0d12" />
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link rel="icon" type="image/png" sizes="32x32" href={withBase('/favicon-32.png')} />
+    <link rel="icon" href={withBase('/favicon.ico')} sizes="any" />
+    <link rel="apple-touch-icon" sizes="180x180" href={withBase('/apple-touch-icon.png')} />
+    <link rel="preload" href={withBase('/fonts/JetBrainsMono-SemiBold.woff2')} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={withBase('/fonts/Inter-Regular.woff2')}           as="font" type="font/woff2" crossorigin />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    {/* Open Graph */}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImageUrl} />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <StatusBanner />
+    <main id="main"><slot /></main>
+    <slot name="footer" />
+  </body>
+</html>

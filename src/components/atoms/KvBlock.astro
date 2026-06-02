@@ -1,0 +1,37 @@
+---
+// src/components/atoms/KvBlock.astro
+interface Pair { key: string; value: string; valueHtml?: boolean; }
+interface Props { pairs: Pair[]; }
+const { pairs } = Astro.props;
+---
+<dl class="kv">
+  {pairs.map((p) => (
+    <>
+      <dt class="k">{p.key}</dt>
+      {p.valueHtml ? <dd class="v" set:html={p.value} /> : <dd class="v">{p.value}</dd>}
+    </>
+  ))}
+</dl>
+
+<style>
+  .kv {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: var(--s-3) var(--s-5);
+    margin: 0;
+  }
+  .k {
+    color: var(--accent);
+    font: 400 var(--fs-micro) var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    align-self: baseline;
+    padding-block-start: 4px;
+  }
+  .v { color: var(--fg); margin: 0; font-size: var(--fs-body); }
+  @media (max-width: 479px) {
+    .kv { grid-template-columns: 1fr; gap: var(--s-1); }
+    .k { padding-block: var(--s-3) 0; }
+    .k:first-child { padding-block-start: 0; }
+  }
+</style>

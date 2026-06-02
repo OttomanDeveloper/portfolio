@@ -1,0 +1,42 @@
+---
+title: AlcoPass
+tagline: A connected breathalyzer station built around the C1 device — raw BLE bytes turned into a trustworthy blood-alcohol reading.
+stack: [Flutter, BLoC, universal_ble, Firebase, easy_localization]
+stats:
+  - { num: 'C1', desc: 'physical breathalyzer paired' }
+  - { num: 'BAC', desc: 'g/L blood · mg/L air' }
+  - { num: '16', unit: ' bytes', desc: 'parsed per reading' }
+  - { num: '5', desc: 'languages · FR/EN/DE/ES/IT' }
+order: 3
+---
+
+## The brief
+
+A client in France posted me an actual breathalyzer — the **AlcoPass C1** — and asked for an app that turns it into a self-test station for venues: pair, blow, get a blood-alcohol reading before you decide to drive. The stock device firmware was fixed and minimal; he wanted more on top of it — a guided experience, multi-language for EU venues, and settings he could change from a server without shipping a new build.
+
+The screens were never the interesting part. The interesting part was trusting bytes coming off a sensor.
+
+## Only talk to the right device
+
+A breathalyzer kiosk can't show you a list of every phone, watch and earbud in Bluetooth range. Built on `universal_ble`, the scanner filters by device name — `_deviceName = "ALCOPASS"`, matched with `d.name.customContains(...)` — so only AlcoPass hardware ever appears to pair. Connection opens the service `0000ffe0-…`, subscribes to the status characteristic (`0000da01-…`), and writes the warm-up command `[0x05, 0x05]` to the control characteristic to start a test.
+
+## The test is a state machine
+
+The C1 reports its state one byte at a time, and the app mirrors it as a phase machine — `5 → warming up`, `6 → ready to blow`, `7 → blowing`, `8 → analyzing`, `9 → complete` — with a 54-second guard so a stalled device fails cleanly instead of hanging the kiosk. The error byte is just as important as the result: `blow too weak`, `blow too strong`, `warm-up timeout`, `out of battery` each map to a clear instruction, because a confusing failure at a bar is a useless test.
+
+## Parsing the breath
+
+Every reading is a 16-byte frame, and getting the math exactly right *is* the product. The blood-alcohol density lives in bytes 13–14 as a 16-bit value; concatenate them, divide by `10000` for a percentage, then:
+
+- **Blood** — `g/L = density × 10`
+- **Exhaled air** — `mg/L = g/L × coefficient`
+
+Other bytes carry battery level, test count, the unit's calibration date and a warm-up timer — all surfaced so the station stays honest about whether it's fit to measure. There's no rounding-away of the hard cases; a reading is only shown when the device says the blow was valid.
+
+## Server-controlled, multi-country
+
+Configuration and content are driven from Firestore, so the operator can tune the station without an app update, and every blow is written to a `logs` collection — phase, BAC, device id, raw frame, server timestamp — for traceability. The UI is fully localized with `easy_localization` across **five languages** (French, English, German, Spanish, Italian) for cross-border venue use.
+
+## Where it stands
+
+I built and delivered the app around the hardware the client provided; he rebranded it before its public launch. The takeaway I carry from it: hardware integration is a discipline of distrust — you assume the bytes are wrong until the protocol proves them right, and you never paper over an invalid reading to make a nicer screen.

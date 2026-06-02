@@ -1,0 +1,121 @@
+---
+// src/components/sections/ExperienceTimeline.astro
+import SectionLabel from '@/components/atoms/SectionLabel.astro';
+import { withBase } from '@/lib/paths';
+import { experience } from '@/data/experience';
+---
+<section id="experience">
+  <div class="container">
+    <SectionLabel n={5} name="experience" />
+    <ol class="timeline">
+      {experience.map((e) => (
+        <li class="entry">
+          <span class="dot" aria-hidden="true"></span>
+          <p class="period">{e.period}</p>
+          <h3 class="role">
+            {e.role}{' '}
+            <span class="at">@</span>{' '}
+            {e.companyHref
+              ? <a href={e.companyHref} target="_blank" rel="noopener noreferrer">{e.company}</a>
+              : <span>{e.company}</span>}
+          </h3>
+          <p class="body">{e.body}</p>
+
+          {e.projects && e.projects.length > 0 && (
+            <div class="work">
+              <span class="work-k">Shipped</span>
+              <ul class="work-list">
+                {e.projects.map((p) => (
+                  <li>
+                    {p.slug
+                      ? <a class="work-chip" href={withBase(`/projects#proj-${p.slug}`)}>{p.name}<span class="arr" aria-hidden="true">↗</span></a>
+                      : <span class="work-chip is-static">{p.name}</span>}
+                  </li>
+                ))}
+                {e.allLink && (
+                  <li><a class="work-chip is-all" href={withBase('/projects')}>All projects<span class="arr" aria-hidden="true">→</span></a></li>
+                )}
+              </ul>
+            </div>
+          )}
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  #experience { padding-block: clamp(var(--s-8), 8vw, var(--s-10)); }
+  .timeline {
+    list-style: none; padding: 0; margin: 0;
+    position: relative;
+    padding-inline-start: var(--s-6);
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    inset-block: 6px;
+    inset-inline-start: 5px;
+    inline-size: 1px;
+    background: var(--border-soft);
+  }
+  .entry { position: relative; padding-block: var(--s-5); }
+  .entry:first-child { padding-block-start: 0; }
+  .dot {
+    position: absolute;
+    inset-block-start: var(--s-5);
+    inset-inline-start: calc(-1 * var(--s-6) + 1px);
+    inline-size: 11px; block-size: 11px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--bg);
+  }
+  .entry:first-child .dot { inset-block-start: 0; }
+  .period {
+    color: var(--accent);
+    font: 400 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0 0 var(--s-2);
+  }
+  .role {
+    color: var(--fg);
+    font: 700 var(--fs-h3) var(--font-sans);
+    margin: 0 0 var(--s-2);
+  }
+  .at { color: var(--fg-dim); font-weight: 400; }
+  .role a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--border-soft); }
+  .role a:hover { border-bottom-color: var(--accent); color: var(--fg); }
+  .body { color: var(--fg-dim); margin: 0; max-inline-size: 65ch; line-height: var(--lh-default); }
+
+  /* Projects shipped during the role — compact chip row */
+  .work {
+    display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2);
+    margin-block-start: var(--s-3);
+  }
+  .work-k {
+    color: var(--fg-dim);
+    font: 400 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-inline-end: var(--s-1);
+  }
+  .work-list { list-style: none; padding: 0; margin: 0; display: contents; }
+  .work-chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 11px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    background: var(--bg-elev);
+    color: var(--fg);
+    font: 600 var(--fs-small) var(--font-sans);
+    text-decoration: none;
+    transition: border-color var(--t-fast) var(--ease-out), color var(--t-fast) var(--ease-out), background var(--t-fast) var(--ease-out);
+  }
+  .work-chip .arr { color: var(--accent); font-size: 0.85em; }
+  a.work-chip:hover { border-color: var(--accent); color: var(--accent); background: color-mix(in oklab, var(--accent) 8%, var(--bg-elev)); }
+  a.work-chip:hover .arr { color: inherit; }
+  a.work-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .work-chip.is-static { color: var(--fg-dim); cursor: default; }
+  .work-chip.is-all { color: var(--accent); border-style: dashed; }
+  .work-chip.is-all:hover { border-style: solid; }
+</style>

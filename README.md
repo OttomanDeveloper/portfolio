@@ -1,89 +1,113 @@
-# Ottoman Portfolio
+# Ottoman Coder — Portfolio
 
-A full-stack, production-grade developer portfolio built with **Next.js 16**, **Supabase**, **Tailwind CSS v4**, and **Framer Motion**. 
-Designed to be fast, beautiful, and fully manageable without touching a single line of code.
+Personal portfolio for **Muhammad Usman** (Ottoman Coder), Senior Mobile Engineer.
+Built with [Astro](https://astro.build) as a fully static, zero-runtime-JS site:
+project showcase, in-depth case studies, experience, tech stack and open-source work.
 
-## ✨ Features
+**Live:** https://ottomandeveloper.github.io/portfolio/
 
-- 🎨 **Premium visitor site** — animated Hero, Projects grid, Experience timeline, Reviews carousel, Contact form
-- 🔧 **Full Admin Panel** at `/admin/` — manage all content in real time without code changes
-- 📱 **Fully responsive** — optimized for desktop, tablet, and mobile
-- ⚡ **Performance first** — mobile-optimized animations, no unnecessary backdrop-blur, buttery smooth UI
-- 🗄️ **Supabase-powered** — PostgreSQL database, file storage, and optional authentication
-- 🔍 **SEO ready** — dynamic `<title>`, meta descriptions, Open Graph, JSON-LD Person schema, sitemap, robots.txt — all driven from the database
-- 🖼️ **Dynamic branding** — change the browser tab title and favicon directly from the Admin Panel
-- 📝 **Markdown case studies** — write rich project deep-dives with GitHub Flavored Markdown
-- 🔒 **Secure by design** — Row Level Security on all tables, service role key server-side only
+## Stack
 
-## 🚀 Quick Start
+- **Astro 6** (`output: 'static'`) — no client-side framework, ships zero JS by default
+- **MDX** content collections for case studies
+- **`@astrojs/sitemap`** for sitemap generation
+- **lightningcss** for CSS minification
+- **sharp** for image/asset generation (AVIF screenshots, favicons, OG image)
+- Plain CSS with design tokens (`src/styles/tokens.css`), no UI library
 
-```bash
-# 1. Install dependencies
-npm install
+## Project structure
 
-# 2. Configure environment
-copy .env.example .env.local    # Windows
-cp .env.example .env.local      # Mac/Linux
-# Fill in your Supabase credentials (see deployment guide)
+```
+src/
+├── components/
+│   ├── atoms/        # smallest building blocks (cards, pills, labels)
+│   ├── molecules/    # composed UI (status banner, etc.)
+│   └── sections/     # full page sections (Hero, FeaturedProjects, StackGrid, HireMe…)
+├── content/
+│   └── projects/     # case studies as .mdx (legend-tv, lifelink, alcopass, udownload, icare)
+├── data/             # typed data the site renders from
+│   ├── profile.ts    # name, headline, stats, "now"
+│   ├── showcase.ts   # full project catalogue (34 projects)
+│   ├── experience.ts # roles + projects per role
+│   ├── stack.ts      # tech stack by category
+│   ├── openSource.ts # pub.dev packages
+│   └── contact.ts    # links (LinkedIn, Medium, YouTube…)
+├── layouts/          # BaseLayout (head/SEO), CaseStudyLayout
+├── lib/paths.ts      # withBase() — base-path helper for GitHub Pages subpaths
+├── pages/            # index, projects, projects/[...slug] (case studies)
+└── styles/           # tokens, global, fonts
 
-# 3. Import the database schema
-# Open deployment_guide/schema.sql -> paste into Supabase SQL Editor -> Run
-
-# 4. Seed with demo data
-npm run seed
-
-# 5. Start development server
-npm run dev
+public/               # static assets served as-is (screens/, fonts/, og/, favicons, cv.pdf)
+scripts/              # one-off Node asset-generation scripts (sharp)
 ```
 
-- **Visitor Site**: http://localhost:3000
-- **Admin Panel**: http://localhost:3000/admin/dashboard
+The site is **data-driven**: most content lives in `src/data/*.ts` and
+`src/content/projects/*.mdx`, not hardcoded in components.
 
-## 📖 Full Deployment Guide
+## Local development
 
-All setup, deployment, and maintenance instructions are in a single file:
+Requires **Node >= 22.12.0**.
 
-**[deployment_guide/DEPLOYMENT_GUIDE.md](./deployment_guide/DEPLOYMENT_GUIDE.md)**
+```bash
+npm install        # install dependencies
+npm run dev        # start dev server at http://localhost:4321
+npm run build      # production build to ./dist
+npm run preview    # preview the production build locally
+```
 
-Covers everything:
-- Prerequisites & step-by-step installation
-- Supabase database setup (schema, storage, RLS)
-- Environment variable configuration
-- Deploying to Vercel, Netlify, VPS, or Docker
-- SEO, branding, and Markdown case studies
-- Troubleshooting, security, and maintenance
+## Environment variables
 
-## 🛠️ Tech Stack
+Copy `.env.example` to `.env` and fill in as needed. All are optional for local dev.
 
-| Layer | Technology |
-|---|---|
-| Framework | Next.js 16 (App Router) |
-| Language | TypeScript 5 |
-| Styling | Tailwind CSS v4 |
-| Animations | Framer Motion |
-| Database & Storage | Supabase (PostgreSQL) |
-| Forms | React Hook Form + Zod |
-| Icons | Lucide React |
-| Toasts | Sonner |
-| Analytics | @vercel/speed-insights |
-| Deployment | Vercel (recommended) |
+| Variable | Purpose | Default |
+|---|---|---|
+| `PUBLIC_SITE_URL` | Canonical, sitemap and OG base URL | `http://localhost:4321` |
+| `PUBLIC_BASE_PATH` | Base path for project-repo deploys (e.g. `/portfolio`) | `/` |
+| `PUBLIC_FORMSPREE_ID` | Formspree form ID for the contact form (falls back to `mailto:` if empty) | empty |
 
-## 📜 NPM Scripts
+On Vercel, `PUBLIC_SITE_URL` auto-resolves to the production domain when unset.
+On GitHub Pages, the deploy workflow injects both `PUBLIC_SITE_URL` and
+`PUBLIC_BASE_PATH` automatically.
 
-| Command | Description |
-|---|---|
-| `npm run dev` | Start development server on port 3000 |
-| `npm run build` | Build for production |
-| `npm start` | Start production server |
-| `npm run lint` | Run ESLint |
-| `npm run seed` | Import demo data into Supabase |
-| `npm run seed:reset` | Clear all database content |
+## Adding a case study
 
-## 📁 Key Files
+1. Create `src/content/projects/<slug>.mdx` with frontmatter:
 
-| File | Purpose |
-|---|---|
-| `deployment_guide/DEPLOYMENT_GUIDE.md` | Complete setup & deployment guide |
-| `deployment_guide/schema.sql` | Full PostgreSQL database schema |
-| `deployment_guide/seeds_import.sql` | SQL seed data (alternative to npm run seed) |
-| `.env.example` | Template for required environment variables |
+   ```yaml
+   ---
+   title: My Project
+   tagline: One-line summary.
+   stack: [Flutter, BLoC, Firebase]
+   stats:
+     - { num: '600K', unit: '+', desc: 'peak users' }
+   order: 6
+   liveUrl: https://...      # optional → "Open live" CTA
+   sourceUrl: https://...    # optional → "Source on GitHub" CTA
+   ---
+
+   ## The brief
+   First-person prose, code refs in `backticks`.
+   ```
+
+2. Link it from the catalogue by adding `caseHref: '/projects/<slug>'` to the
+   matching entry in `src/data/showcase.ts`.
+
+The route is generated automatically by `src/pages/projects/[...slug].astro`.
+
+## Deployment
+
+### GitHub Pages
+`.github/workflows/deploy-pages.yml` builds and deploys on every push to `main`.
+It uses `actions/configure-pages` to detect the Pages origin and base path, so it
+works for both user pages and project repos with no manual config. To enable:
+**Settings → Pages → Source: GitHub Actions**, then push to `main`.
+
+### Vercel
+`vercel.json` is preconfigured (`npm ci` install, `dist` output, Astro framework).
+Import the repo in Vercel and it builds on push. Set `PUBLIC_SITE_URL` to a custom
+domain if you use one.
+
+## License
+
+Personal project. Source is published for reference. The brand ("Ottoman Coder"),
+profile content, screenshots and case-study text are **not** licensed for reuse.

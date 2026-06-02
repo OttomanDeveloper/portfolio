@@ -1,0 +1,46 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/sections/Hero.astro';
+import FeaturedProjects from '@/components/sections/FeaturedProjects.astro';
+import { withBase } from '@/lib/paths';
+import { showcaseProjects } from '@/data/showcase';
+import OssGrid from '@/components/sections/OssGrid.astro';
+import ExperienceTimeline from '@/components/sections/ExperienceTimeline.astro';
+import StackGrid from '@/components/sections/StackGrid.astro';
+import HireMe from '@/components/sections/HireMe.astro';
+import { profile } from '@/data/profile';
+
+// Mirror BaseLayout's source of truth: Astro.site (PUBLIC_SITE_URL → Vercel
+// prod domain → localhost), trailing slash stripped for clean JSON-LD URLs.
+const siteUrl = (Astro.site ?? new URL('http://localhost:4321')).href.replace(/\/$/, '');
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: profile.name,
+  alternateName: profile.alias,
+  jobTitle: profile.tagline,
+  url: siteUrl,
+  image: `${siteUrl}/og/default.png`,
+  email: `mailto:${profile.email}`,
+  address: { '@type': 'PostalAddress', addressLocality: 'Islamabad', addressCountry: 'PK' },
+  sameAs: [
+    'https://github.com/OttomanDeveloper',
+    'https://www.linkedin.com/in/ottomancoder/',
+    'https://pub.dev/publishers/ottomancoder.com/packages',
+    'https://www.youtube.com/@OttomanCoder',
+    'https://stackoverflow.com/users/15117215',
+  ],
+};
+---
+<BaseLayout
+  title={`${profile.name} — ${profile.tagline}`}
+  description={`${profile.alias}. ${profile.tagline}. ${profile.basedIn}. 50+ apps shipped. 9 open-source packages.`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <Hero />
+  <FeaturedProjects viewAllHref={withBase('/projects')} viewAllCount={showcaseProjects.length} />
+  <OssGrid />
+  <ExperienceTimeline />
+  <StackGrid />
+  <HireMe />
+</BaseLayout>

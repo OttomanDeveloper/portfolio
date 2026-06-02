@@ -1,0 +1,440 @@
+---
+// src/components/sections/FeaturedProjects.astro
+import SectionLabel from '@/components/atoms/SectionLabel.astro';
+import { withBase } from '@/lib/paths';
+
+interface Props { n?: number; viewAllHref?: string; viewAllCount?: number; }
+const { n = 3, viewAllHref, viewAllCount } = Astro.props;
+---
+<section id="featured">
+  <div class="container">
+    <SectionLabel n={n} name="featured projects" />
+    <p class="intro">A handful of projects that show the range — commercial hits, a live flagship, open-source tools and Flutter Web demos. <span class="swipe" aria-hidden="true">swipe →</span></p>
+  </div>
+
+  <div class="grid">
+      <article class="card legend">
+        <p class="badge"><span class="dot" aria-hidden="true"></span>COMMERCIAL · 600K USERS</p>
+
+        <div class="row">
+          <figure class="shot">
+            <img src={withBase('/screens/legend_home.avif')} alt="Legend TV home feed — Turkish-Urdu dubbed series catalog" width="540" height="1200" loading="lazy" decoding="async" />
+          </figure>
+
+          <div class="content">
+            <h3 class="title" style="view-transition-name: case-title-legend-tv;">Legend TV</h3>
+            <p class="sub">A streaming platform built solo — Urdu-first dubs for PK · IN · SA.</p>
+
+            <ul class="stats" aria-label="Legend TV stats">
+              <li><span class="n">600K<span class="u">+</span></span><span class="d">peak users</span></li>
+              <li><span class="n">$20K<span class="u">+</span></span><span class="d">year-1 rev</span></li>
+              <li><span class="n">#1</span><span class="d">PS · 5 mo</span></li>
+              <li><span class="n">3</span><span class="d">countries</span></li>
+            </ul>
+
+            <ul class="chips" aria-hidden="true">
+              <li>Flutter</li><li>Firebase</li><li>AdMob</li><li>Razorpay</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <a class="cta primary" href={withBase('/projects/legend-tv')}>Read case study →</a>
+        </div>
+      </article>
+
+      <article class="card lifelink">
+        <p class="badge tone-cyan"><span class="dot" aria-hidden="true"></span>FLAGSHIP · LIVE ON PLAY STORE</p>
+
+        <div class="row">
+          <figure class="shot">
+            <img src={withBase('/screens/lifelink_support.avif')} alt="LifeLink — nearby crisis-line support directory" width="540" height="1144" loading="lazy" decoding="async" />
+          </figure>
+
+          <div class="content">
+            <h3 class="title">LifeLink</h3>
+            <p class="sub">Crisis support, self-tracking & AI poetry — built with Google Gemini Pro.</p>
+
+            <p class="body">
+              A province-aware crisis-line directory, sleep / diet / stressor tracking with charts,
+              calming artwork galleries, and AI-generated supportive poetry. Flutter + BLoC, synced over Firebase.
+            </p>
+
+            <ul class="chips" aria-hidden="true">
+              <li>Flutter</li><li>Gemini Pro</li><li>BLoC</li><li>Firebase</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <a class="cta primary" href={withBase('/projects/lifelink')}>Read case study →</a>
+          <a class="cta ghost" href="https://play.google.com/store/apps/details?id=com.helper.lifelink" target="_blank" rel="noopener noreferrer">Play Store ↗</a>
+        </div>
+      </article>
+
+      <article class="card alcopass">
+        <p class="badge tone-lime"><span class="dot" aria-hidden="true"></span>CONNECTED HARDWARE · BLE BREATHALYZER</p>
+
+        <div class="row">
+          <figure class="shot">
+            <img src={withBase('/screens/alcopass_result.avif')} alt="AlcoPass — blood-alcohol result gauge in g/L" width="540" height="1200" loading="lazy" decoding="async" />
+          </figure>
+
+          <div class="content">
+            <h3 class="title">AlcoPass</h3>
+            <p class="sub">A connected breathalyzer station — blow, get your BAC.</p>
+
+            <p class="body">
+              Built around the AlcoPass C1 breathalyzer — pairs over BLE, refines blood-alcohol from
+              age / weight / sex / licence, and reads g/L blood + mg/L air against the legal limit.
+              Flutter + BLoC, 5 languages, synced to Firestore.
+            </p>
+
+            <ul class="chips" aria-hidden="true">
+              <li>Flutter</li><li>BLoC</li><li>BLE</li><li>Firebase</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <a class="cta primary" href={withBase('/projects/alcopass')}>Read case study →</a>
+        </div>
+      </article>
+
+      <article class="card udl">
+        <p class="badge tone-lime"><span class="dot" aria-hidden="true"></span>OPEN SOURCE · GPL-3</p>
+
+        <div class="row">
+          <figure class="shot">
+            <img src={withBase('/screens/u_download_1.avif')} alt="UDownload home screen" width="280" height="600" loading="lazy" decoding="async" />
+          </figure>
+
+          <div class="content">
+            <h3 class="title">UDownload</h3>
+            <p class="sub">A YouTube-style video browser & downloader — no API key.</p>
+
+            <p class="body">
+              Built on my own <a class="inline-link" href="https://pub.dev/packages/newpipeextractor_dart" target="_blank" rel="noopener noreferrer">newpipeextractor_dart</a>.
+              Search, channels, playlists, native ExoPlayer playback, and offline downloads.
+            </p>
+
+            <ul class="chips" aria-hidden="true">
+              <li>Flutter</li><li>BLoC</li><li>ExoPlayer</li><li>NewPipe</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <a class="cta primary" href={withBase('/projects/udownload')}>Read case study →</a>
+          <a class="cta ghost"   href="https://github.com/OttomanDeveloper/u_downloader" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        </div>
+      </article>
+
+      <article class="card icare">
+        <p class="badge tone-cyan"><span class="dot" aria-hidden="true"></span>SELF-CARE · PRIVACY-FIRST</p>
+
+        <div class="row">
+          <figure class="shot">
+            <img src={withBase('/screens/icare_home.avif')} alt="iCare — private self-care dashboard" width="540" height="1200" loading="lazy" decoding="async" />
+          </figure>
+
+          <div class="content">
+            <h3 class="title">iCare</h3>
+            <p class="sub">A private, judgement-free self-care companion.</p>
+
+            <p class="body">
+              Meditation & breathing, an emoji mood tracker, private diary, hobby timer and to-dos —
+              secured with a fingerprint lock and screenshot blocking.
+            </p>
+
+            <ul class="chips" aria-hidden="true">
+              <li>Flutter</li><li>Firebase</li><li>Fingerprint</li><li>Notifications</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <a class="cta primary" href={withBase('/projects/icare')}>Read case study →</a>
+          <a class="cta ghost" href={`${withBase('/projects')}#proj-icare`}>Screenshots →</a>
+        </div>
+      </article>
+
+      <article class="card web">
+        <p class="badge tone-cyan"><span class="dot" aria-hidden="true"></span>FLUTTER WEB · LIVE DEMO</p>
+
+        <div class="row">
+          <figure class="shot">
+            <img src={withBase('/screens/chronos.avif')} alt="Chronos — scroll-driven cosmos web demo" width="1280" height="622" loading="lazy" decoding="async" />
+          </figure>
+
+          <div class="content">
+            <h3 class="title">Chronos</h3>
+            <p class="sub">A scroll-driven journey through the universe.</p>
+
+            <p class="body">
+              30+ <code>CustomPainter</code> scenes on a single Ticker, zero image assets, locked at 60 fps.
+              Scroll position is the timeline.
+            </p>
+
+            <ul class="chips" aria-hidden="true">
+              <li>Flutter Web</li><li>CustomPainter</li><li>Provider</li><li>60 fps</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <a class="cta primary" href="https://ottomandeveloper.github.io/andro_meda/" target="_blank" rel="noopener noreferrer">▶ Open live ↗</a>
+          <a class="cta ghost"   href="https://github.com/OttomanDeveloper/andro_meda" target="_blank" rel="noopener noreferrer">GitHub →</a>
+        </div>
+      </article>
+
+      <article class="card web">
+        <p class="badge tone-cyan"><span class="dot" aria-hidden="true"></span>FLUTTER WEB · LIVE DEMO</p>
+
+        <div class="row">
+          <figure class="shot">
+            <img src={withBase('/screens/babypig.avif')} alt="BabyPig — animated crypto landing page web demo" width="1280" height="620" loading="lazy" decoding="async" />
+          </figure>
+
+          <div class="content">
+            <h3 class="title">BabyPig</h3>
+            <p class="sub">Animated crypto landing page — zero animation packages.</p>
+
+            <p class="body">
+              Scroll-triggered reveals, glassmorphism nav, animated counters and staggered cards —
+              a marketing site built entirely in Flutter Web.
+            </p>
+
+            <ul class="chips" aria-hidden="true">
+              <li>Flutter Web</li><li>Provider</li><li>flutter_svg</li><li>Glassmorphism</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <a class="cta primary" href="https://ottomandeveloper.github.io/piggyToken/" target="_blank" rel="noopener noreferrer">▶ Open live ↗</a>
+          <a class="cta ghost"   href="https://github.com/OttomanDeveloper/piggyToken" target="_blank" rel="noopener noreferrer">GitHub →</a>
+        </div>
+      </article>
+    </div>
+
+    {viewAllHref && (
+      <div class="container">
+        <div class="view-all">
+          <a class="va-btn" href={viewAllHref}>
+            View all{viewAllCount ? ` ${viewAllCount}` : ''} projects
+            <span class="va-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    )}
+</section>
+
+<style>
+  #featured { padding-block: clamp(var(--s-8), 8vw, var(--s-10)); }
+
+  /* View all CTA */
+  .view-all { margin-block-start: var(--s-6); display: flex; justify-content: center; }
+  .va-btn {
+    display: inline-flex; align-items: center; gap: var(--s-3);
+    padding: var(--s-3) var(--s-6);
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    background: var(--bg-elev);
+    color: var(--fg);
+    font: 600 var(--fs-small) var(--font-sans);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    min-block-size: 48px;
+    transition: border-color var(--t-base) var(--ease-out), color var(--t-base) var(--ease-out), background var(--t-base) var(--ease-out);
+  }
+  .va-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .va-arrow { transition: transform var(--t-base) var(--ease-out); }
+  .va-btn:hover .va-arrow { transform: translateX(4px); }
+  @media (prefers-reduced-motion: reduce) { .va-btn:hover .va-arrow { transform: none; } }
+  .intro { color: var(--fg-dim); max-inline-size: 62ch; margin: 0 0 var(--s-7); }
+  .intro .swipe {
+    color: var(--accent);
+    font: 600 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-inline-start: var(--s-2);
+  }
+  @media (min-width: 1280px) { .intro .swipe { display: none; } }
+
+  /* Full-bleed horizontal carousel — track spans the whole viewport width,
+     first/last card stays aligned with the container heading. */
+  .grid {
+    display: flex;
+    gap: var(--s-5);
+    align-items: stretch;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-block: 6px var(--s-3);
+    padding-inline: calc(max(0px, (100% - var(--container)) / 2) + clamp(1rem, 4vw, 2rem));
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+  .grid > .card {
+    flex: 0 0 auto;
+    inline-size: min(90vw, 480px);
+    scroll-snap-align: start;
+  }
+  .grid::-webkit-scrollbar { block-size: 8px; }
+  .grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-4);
+    padding: var(--s-5);
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+    isolation: isolate;
+    overflow: hidden;
+    transition: transform var(--t-base) var(--ease-out),
+                border-color var(--t-base) var(--ease-out),
+                box-shadow var(--t-base) var(--ease-out);
+  }
+
+  /* Horizontal row inside each card: shot on the left, content on the right */
+  .row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--s-5);
+    align-items: start;
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+    min-inline-size: 0;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+      box-shadow: 0 24px 48px -20px oklch(20% 0.02 80 / 0.5);
+    }
+  }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: var(--s-2);
+    align-self: flex-start;
+    margin: 0 0 var(--s-1);
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    background: oklch(15% 0.02 80 / 0.5);
+    color: var(--accent);
+    font: 400 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .badge.tone-lime { color: var(--lime); }
+  .badge.tone-cyan { color: var(--cyan); }
+  .badge .dot {
+    inline-size: 6px; block-size: 6px; border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 8px currentColor;
+  }
+
+  .title {
+    color: var(--fg);
+    font: 700 var(--fs-section) var(--font-sans);
+    margin: 0;
+    line-height: 1.05;
+  }
+  .sub { color: var(--accent); margin: 0; font: 600 var(--fs-body) var(--font-sans); }
+  .body { color: var(--fg-dim); margin: 0; line-height: var(--lh-default); max-inline-size: 50ch; }
+  .inline-link { color: var(--accent); text-decoration: none; border-bottom: 1px solid color-mix(in oklab, var(--accent) 35%, transparent); }
+  .inline-link:hover { border-bottom-color: var(--accent); color: var(--fg); }
+
+  /* Stats inside Legend card */
+  .stats {
+    list-style: none; padding: 0; margin: var(--s-3) 0 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-3);
+  }
+  .stats li {
+    display: flex; flex-direction: column; gap: 2px;
+    padding: var(--s-3);
+    background: oklch(15% 0.02 80 / 0.4);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--r-pkg);
+  }
+  .stats .n { color: var(--fg); font: 700 var(--fs-h3) var(--font-mono); }
+  .stats .n .u { color: var(--accent); font-size: 0.7em; margin-inline-start: 2px; }
+  .stats .d { color: var(--fg-dim); font: 400 var(--fs-micro) var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* Phone screenshot — slim & fixed-width on the left of the row */
+  .shot {
+    margin: 0;
+    inline-size: 130px;
+    aspect-ratio: 9 / 19.5;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    box-shadow: 0 16px 32px -18px oklch(20% 0.02 80 / 0.55);
+  }
+  .shot img { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
+
+  /* Web demos: stack vertically — landscape image on top, details below.
+     Image flex-fills so the card matches the app cards' height (never taller). */
+  .card.web .row { display: flex; flex-direction: column; gap: var(--s-4); flex: 1 1 auto; }
+  .card.web .shot {
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: auto;
+    flex: 1 1 0;
+    min-block-size: 168px;
+  }
+  .card.web .content { flex: 0 0 auto; }
+  /* Smaller title on web cards → leaves more room for the image */
+  .card.web .title { font-size: var(--fs-h3); line-height: 1.15; }
+  .body code { font: 400 0.92em var(--font-mono); color: var(--fg); }
+
+  .chips {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-wrap: wrap; gap: var(--s-2);
+  }
+  .chips li {
+    padding: 3px 10px;
+    color: var(--fg);
+    background: color-mix(in oklab, var(--fg) 5%, transparent);
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    font: 400 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.04em;
+  }
+
+  .cta-row {
+    margin-block-start: auto;
+    padding-block-start: var(--s-3);
+    display: flex; flex-wrap: wrap; gap: var(--s-2);
+  }
+  .cta {
+    display: inline-flex; align-items: center;
+    padding: var(--s-3) var(--s-5);
+    border-radius: var(--r-pill);
+    font: 600 var(--fs-small) var(--font-sans);
+    text-decoration: none;
+    min-block-size: 44px;
+    transition: background var(--t-fast) var(--ease-out), color var(--t-fast) var(--ease-out), border-color var(--t-fast) var(--ease-out);
+  }
+  .cta.primary { background: var(--accent); color: var(--bg); }
+  .cta.primary:hover { background: color-mix(in oklab, var(--accent) 80%, white); }
+  .cta.ghost { background: transparent; color: var(--fg); border: 1px solid var(--border); }
+  .cta.ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  @media (max-width: 639px) {
+    .row { grid-template-columns: 1fr; gap: var(--s-4); }
+    .shot { inline-size: min(45%, 160px); justify-self: center; }
+    .stats { grid-template-columns: 1fr 1fr; }
+  }
+</style>

@@ -1,0 +1,17 @@
+---
+// src/components/atoms/SectionLabel.astro
+interface Props { eyebrow?: string; n?: number; name: string; }
+const { eyebrow = '▸', n, name } = Astro.props;
+const label = n != null ? `${eyebrow} ${String(n).padStart(2, '0')} · ${name}` : `${eyebrow} ${name}`;
+---
+<p class="label" aria-hidden="true">{label}</p>
+
+<style>
+  .label {
+    color: var(--accent);
+    font: 400 var(--fs-micro) var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    margin-block-end: var(--s-4);
+  }
+</style>

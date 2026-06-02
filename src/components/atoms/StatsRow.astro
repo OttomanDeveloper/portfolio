@@ -1,0 +1,35 @@
+---
+// src/components/atoms/StatsRow.astro
+interface Stat { num: string; unit?: string; desc: string; }
+interface Props { stats: Stat[]; compact?: boolean; }
+const { stats, compact = false } = Astro.props;
+---
+<ul class:list={['stats', compact && 'compact']}>
+  {stats.map((s) => (
+    <li>
+      <div class="num">{s.num}{s.unit && <span class="unit">{s.unit}</span>}</div>
+      <div class="desc">{s.desc}</div>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .stats {
+    list-style: none; padding: 0; margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--s-5);
+  }
+  @media (min-width: 640px) { .stats { grid-template-columns: repeat(2, 1fr); gap: var(--s-6); } }
+  @media (min-width: 1024px) { .stats { grid-template-columns: repeat(4, 1fr); } }
+
+  .compact { grid-template-columns: repeat(2, 1fr) !important; gap: var(--s-4) !important; }
+  @media (min-width: 1024px) { .compact { grid-template-columns: repeat(4, 1fr) !important; } }
+
+  .num {
+    color: var(--fg);
+    font: 700 clamp(1.5rem, 2vw + 0.5rem, 2rem) / 1 var(--font-mono);
+  }
+  .unit { color: var(--fg-dim); font-size: var(--fs-small); margin-inline-start: 2px; font-weight: 400; }
+  .desc { color: var(--fg-dim); margin-block-start: var(--s-2); font-size: var(--fs-small); line-height: 1.5; }
+</style>

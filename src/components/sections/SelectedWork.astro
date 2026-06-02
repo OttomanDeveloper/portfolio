@@ -1,0 +1,438 @@
+---
+// src/components/sections/SelectedWork.astro
+// Rich showcase grid driven by src/data/showcase.ts.
+// Zero JS: CSS-only category filter (radio :checked) + per-project lightbox (:target).
+import SectionLabel from '@/components/atoms/SectionLabel.astro';
+import { withBase } from '@/lib/paths';
+import { showcaseProjects } from '@/data/showcase';
+
+// Granular categories collapse into a few broad filter buckets.
+const GROUPS: Record<string, string> = {
+  wisbig: 'rewards', rewardpay: 'rewards', 'egg-network': 'rewards',
+  'yt-master': 'rewards', 'trust-earning': 'rewards', 'quiz-news-rewards': 'rewards',
+  'profit-hub': 'rewards',
+  saveit: 'media', tfpdl: 'media', 'movo-downloader': 'media', 'football-wallpaper': 'media',
+  'status-saver': 'media', 'legend-tv': 'media', udownload: 'media', daghta: 'media', snaptok: 'media',
+  icare: 'health', lifelink: 'health', 'blood-donors': 'health', alcopass: 'health',
+  meetbook: 'social', 'hostel-finder': 'social', grouper: 'social',
+  couriergo: 'other', 'allinone-game': 'other', 'bill-checker': 'other', homy: 'other',
+  youshopper: 'other', nakoda: 'other', puzzleur: 'other',
+  calculator: 'other', 'meesho-clone': 'other',
+  chronos: 'web', babypig: 'web',
+};
+
+const FILTERS = [
+  { id: 'all', label: 'All' },
+  { id: 'rewards', label: 'Rewards & Earning' },
+  { id: 'media', label: 'Media & Downloads' },
+  { id: 'web', label: 'Web' },
+  { id: 'health', label: 'Health' },
+  { id: 'social', label: 'Social & Directory' },
+  { id: 'other', label: 'Commerce & More' },
+];
+
+const STATUS_LABEL: Record<string, string> = {
+  live: 'Live', shipped: 'Shipped', shelved: 'Client delivery',
+  prototype: 'Prototype', nda: 'Under NDA',
+};
+
+interface Props { n?: number; includeFeatured?: boolean; }
+const { n = 2, includeFeatured = false } = Astro.props;
+
+// On the home page the featured trio lives in the big carousel, so the grid drops
+// them. On /projects (includeFeatured) every project renders as a normal card.
+const FEATURED_SLUGS = ['legend-tv', 'udownload', 'lifelink', 'alcopass', 'chronos', 'babypig', 'icare'];
+
+// Pinned order for the top of the grid; everything else keeps its showcase order below.
+const TOP_ORDER = [
+  'legend-tv', 'alcopass', 'icare', 'blood-donors', 'lifelink', 'grouper', 'couriergo',
+  'youshopper', 'homy', 'status-saver', 'football-wallpaper', 'yt-master', 'quiz-news-rewards',
+  'udownload',
+];
+const rank = (slug: string) => { const i = TOP_ORDER.indexOf(slug); return i === -1 ? TOP_ORDER.length : i; };
+
+const items = showcaseProjects
+  .filter((p) => includeFeatured || !FEATURED_SLUGS.includes(p.slug))
+  .map((p, idx) => ({ ...p, group: GROUPS[p.slug] ?? 'other', _idx: idx }))
+  .sort((a, b) => rank(a.slug) - rank(b.slug) || a._idx - b._idx);
+
+const counts = Object.fromEntries(
+  FILTERS.map((f) => [f.id, f.id === 'all' ? items.length : items.filter((i) => i.group === f.id).length]),
+);
+
+const pickThumb = (screens: readonly string[]) =>
+  screens.find((s) => /home|grid|dashboard|listings|market|feed|main/.test(s)) ?? screens[1] ?? screens[0];
+---
+<section id="selected-work">
+  <div class="container">
+    <SectionLabel n={n} name="selected work" />
+    <p class="intro">
+      A slice of <strong>50+ apps</strong> shipped for clients worldwide — across rewards, media,
+      health, logistics and more. Tap any card to open its full screenshot gallery.
+    </p>
+
+    {/* CSS-only filter state (visually hidden radios) */}
+    {FILTERS.map((f) => (
+      <input
+        type="radio"
+        name="sw-filter"
+        id={`sw-${f.id}`}
+        class="sw-radio"
+        checked={f.id === 'all'}
+      />
+    ))}
+
+    <div class="filters" role="group" aria-label="Filter projects by category">
+      {FILTERS.map((f) => (
+        <label for={`sw-${f.id}`} class="chip">
+          {f.label}<span class="ct">{counts[f.id]}</span>
+        </label>
+      ))}
+    </div>
+
+    <div class="grid">
+      {items.map((p) => (
+        <a class={`card g-${p.group}${p.web ? ' web' : ''}`} href={`#proj-${p.slug}`} aria-label={`Open ${p.name} details`}>
+          <figure class="shot">
+            <img
+              src={withBase(`/screens/${pickThumb(p.screens)}`)}
+              alt={`${p.name} screenshot`}
+              width="540" height="1200" loading="lazy" decoding="async"
+            />
+          </figure>
+          <div class="content">
+            <p class="meta"><span class="cat">{p.category}</span><span class="dot">·</span><span>{p.year}</span></p>
+            <h3 class="name">{p.name}</h3>
+            <p class="tagline">{p.tagline}</p>
+            <ul class="chips" aria-hidden="true">
+              {p.techStack.slice(0, 3).map((t) => <li>{t}</li>)}
+            </ul>
+            <p class="count" aria-hidden="true">{p.screens.length} screens · view gallery →</p>
+          </div>
+        </a>
+      ))}
+    </div>
+
+  </div>
+
+  {/* Lightbox modals (CSS :target) — galleries lazy-load only when opened */}
+  {items.map((p) => (
+    <div class="modal" id={`proj-${p.slug}`} role="dialog" aria-modal="true" aria-labelledby={`m-${p.slug}-title`}>
+      <a class="modal-backdrop" href="#selected-work" aria-label="Close" tabindex="-1"></a>
+      <div class="modal-card">
+        <a class="modal-close" href="#selected-work" aria-label="Close">×</a>
+
+        <p class="m-eyebrow">{p.category} · {p.year} · {STATUS_LABEL[p.status]}</p>
+        <h3 class="m-title" id={`m-${p.slug}-title`}>{p.name}</h3>
+        <p class="m-tagline">{p.tagline}</p>
+
+        <div class={`gallery${p.web ? ' web' : ''}`} tabindex="0" aria-label={`${p.name} screenshots`}>
+          {p.screens.map((s, i) => (
+            <img
+              class="shot"
+              src={withBase(`/screens/${s}`)}
+              alt={`${p.name} screen ${i + 1}`}
+              width={p.web ? 1280 : 540} height={p.web ? 620 : 1200} loading="lazy" decoding="async"
+            />
+          ))}
+        </div>
+
+        <div class="m-grid">
+          <div class="m-col">
+            <p class="m-desc">{p.description}</p>
+            <p class="m-motive"><span class="m-k">Why</span> {p.motive}</p>
+          </div>
+          <div class="m-col">
+            <p class="m-k">Built with</p>
+            <ul class="m-stack">{p.techStack.map((t) => <li>{t}</li>)}</ul>
+            <p class="m-k">Features</p>
+            <ul class="m-features">{p.features.map((f) => <li>{f}</li>)}</ul>
+          </div>
+        </div>
+
+        <div class="m-foot">
+          <p class="m-role">{p.role} · {p.client}</p>
+          <div class="m-links">
+            {p.caseHref && <a href={withBase(p.caseHref)}>Read case study →</a>}
+            {p.liveLink && <a href={p.liveLink} target="_blank" rel="noopener noreferrer">Open live ↗</a>}
+            {p.githubLink && <a href={p.githubLink} target="_blank" rel="noopener noreferrer">GitHub ↗</a>}
+            {p.storeLink && <a href={p.storeLink} target="_blank" rel="noopener noreferrer">Get the app ↗</a>}
+          </div>
+        </div>
+      </div>
+    </div>
+  ))}
+</section>
+
+<style>
+  #selected-work { padding-block: clamp(var(--s-8), 8vw, var(--s-10)); }
+  .intro { color: var(--fg-dim); max-inline-size: 62ch; margin: 0 0 var(--s-6); line-height: var(--lh-default); }
+  .intro strong { color: var(--fg); }
+
+  /* Filter radios — hidden but keyboard-reachable */
+  .sw-radio {
+    position: absolute;
+    inline-size: 1px; block-size: 1px;
+    opacity: 0; pointer-events: none;
+  }
+
+  .filters {
+    display: flex; flex-wrap: wrap; gap: var(--s-2);
+    margin-block-end: var(--s-6);
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: var(--s-2);
+    padding: var(--s-2) var(--s-4);
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    background: var(--bg-elev);
+    color: var(--fg-dim);
+    font: 600 var(--fs-small) var(--font-sans);
+    cursor: pointer;
+    user-select: none;
+    min-block-size: 40px;
+    transition: border-color var(--t-fast) var(--ease-out), color var(--t-fast) var(--ease-out), background var(--t-fast) var(--ease-out);
+  }
+  .chip .ct {
+    color: var(--fg-dim);
+    font: 400 var(--fs-micro) var(--font-mono);
+  }
+  .chip:hover { border-color: var(--accent); color: var(--fg); }
+
+  /* Active chip + matching grid filter (one rule pair per bucket) */
+  #sw-all:checked      ~ .filters label[for="sw-all"],
+  #sw-rewards:checked  ~ .filters label[for="sw-rewards"],
+  #sw-media:checked    ~ .filters label[for="sw-media"],
+  #sw-web:checked      ~ .filters label[for="sw-web"],
+  #sw-health:checked   ~ .filters label[for="sw-health"],
+  #sw-social:checked   ~ .filters label[for="sw-social"],
+  #sw-other:checked    ~ .filters label[for="sw-other"] {
+    background: var(--accent); color: var(--bg); border-color: var(--accent);
+  }
+  #sw-all:checked      ~ .filters label[for="sw-all"] .ct,
+  #sw-rewards:checked  ~ .filters label[for="sw-rewards"] .ct,
+  #sw-media:checked    ~ .filters label[for="sw-media"] .ct,
+  #sw-web:checked      ~ .filters label[for="sw-web"] .ct,
+  #sw-health:checked   ~ .filters label[for="sw-health"] .ct,
+  #sw-social:checked   ~ .filters label[for="sw-social"] .ct,
+  #sw-other:checked    ~ .filters label[for="sw-other"] .ct { color: var(--bg); }
+
+  #sw-rewards:checked ~ .grid .card:not(.g-rewards),
+  #sw-media:checked   ~ .grid .card:not(.g-media),
+  #sw-web:checked     ~ .grid .card:not(.g-web),
+  #sw-health:checked  ~ .grid .card:not(.g-health),
+  #sw-social:checked  ~ .grid .card:not(.g-social),
+  #sw-other:checked   ~ .grid .card:not(.g-other) { display: none; }
+
+  /* keyboard focus signal */
+  .sw-radio:focus-visible ~ .filters { outline: 2px solid var(--accent); outline-offset: 6px; border-radius: var(--r-card); }
+
+  /* GRID — horizontal Featured-style cards (phone shot + content) */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--s-4);
+  }
+  @media (min-width: 768px) { .grid { grid-template-columns: 1fr 1fr; } }
+
+  .card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--s-5);
+    align-items: center;
+    padding: var(--s-4);
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+    text-decoration: none;
+    color: inherit;
+    isolation: isolate;
+    transition: transform var(--t-base) var(--ease-out),
+                border-color var(--t-base) var(--ease-out),
+                box-shadow var(--t-base) var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 22px 44px -22px oklch(20% 0.02 80 / 0.55);
+    }
+    .card:hover .shot img { transform: scale(1.05); }
+  }
+  .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .shot {
+    margin: 0;
+    inline-size: clamp(100px, 26vw, 124px);
+    aspect-ratio: 9 / 19.5;
+    overflow: hidden;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    box-shadow: 0 14px 28px -16px oklch(20% 0.02 80 / 0.5);
+  }
+  .shot img {
+    inline-size: 100%; block-size: 100%;
+    object-fit: cover; object-position: 50% 0;
+    display: block;
+    transition: transform var(--t-base) var(--ease-out);
+  }
+  /* Web projects are landscape — wider, shorter thumbnail */
+  .card.web .shot { inline-size: clamp(150px, 42vw, 200px); aspect-ratio: 16 / 10; }
+  .card.web .shot img { object-position: 50% 50%; }
+
+  .content { display: flex; flex-direction: column; gap: var(--s-2); min-inline-size: 0; }
+  .meta {
+    display: flex; flex-wrap: wrap; gap: var(--s-2); align-items: center;
+    margin: 0; color: var(--fg-dim);
+    font: 400 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .meta .cat { color: var(--accent); }
+  .meta .dot { opacity: 0.4; }
+  .name { margin: 0; color: var(--fg); font: 700 var(--fs-h3) var(--font-sans); line-height: 1.1; }
+  .tagline { margin: 0; color: var(--fg-dim); font-size: var(--fs-small); line-height: 1.5; }
+  .chips { list-style: none; padding: 0; margin: var(--s-1) 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .chips li {
+    padding: 2px 8px;
+    color: var(--fg);
+    background: color-mix(in oklab, var(--fg) 5%, transparent);
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    font: 400 var(--fs-micro) var(--font-mono);
+  }
+  .count {
+    margin: var(--s-2) 0 0;
+    color: var(--accent);
+    font: 600 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+
+  /* Very narrow phones: stack shot above content */
+  @media (max-width: 380px) {
+    .card { grid-template-columns: 1fr; gap: var(--s-3); }
+    .shot { inline-size: min(42%, 116px); justify-self: start; }
+  }
+
+  /* MODAL (CSS :target) */
+  .modal {
+    position: fixed; inset: 0; z-index: 100;
+    display: none;
+    place-items: center;
+    padding: var(--s-4);
+  }
+  .modal:target { display: grid; }
+  .modal-backdrop {
+    position: absolute; inset: 0;
+    background: oklch(8% 0.01 80 / 0.72);
+    backdrop-filter: blur(4px);
+  }
+  .modal-card {
+    position: relative;
+    inline-size: min(920px, 100%);
+    max-block-size: 90svh;
+    overflow-y: auto;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+    padding: clamp(var(--s-5), 4vw, var(--s-7));
+    box-shadow: 0 40px 80px -24px oklch(8% 0.01 80 / 0.7);
+  }
+  .modal:target .modal-card { animation: m-rise var(--t-base) var(--ease-out); }
+  @keyframes m-rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce) { .modal:target .modal-card { animation: none; } }
+
+  .modal-close {
+    position: absolute; inset-block-start: var(--s-3); inset-inline-end: var(--s-3);
+    inline-size: 40px; block-size: 40px;
+    display: grid; place-items: center;
+    border: 1px solid var(--border); border-radius: 50%;
+    background: var(--bg);
+    color: var(--fg); text-decoration: none;
+    font: 400 1.4rem/1 var(--font-sans);
+    transition: border-color var(--t-fast) var(--ease-out), color var(--t-fast) var(--ease-out);
+  }
+  .modal-close:hover { border-color: var(--accent); color: var(--accent); }
+
+  .m-eyebrow { margin: 0 var(--s-7) 0 0; color: var(--accent); font: 400 var(--fs-micro) var(--font-mono); letter-spacing: 0.16em; text-transform: uppercase; }
+  .m-title { margin: var(--s-2) 0 var(--s-1); color: var(--fg); font: 700 var(--fs-section) var(--font-sans); line-height: 1.05; }
+  .m-tagline { margin: 0 0 var(--s-5); color: var(--accent); font: 600 var(--fs-body) var(--font-sans); }
+
+  .gallery {
+    display: flex; gap: var(--s-3);
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    padding-block-end: var(--s-3);
+    margin-block-end: var(--s-5);
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+  .gallery:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: var(--r-pkg); }
+  .gallery .shot {
+    flex: 0 0 auto;
+    block-size: clamp(220px, 38svh, 300px);
+    inline-size: auto;
+    object-fit: contain;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg);
+    scroll-snap-align: start;
+  }
+  .gallery::-webkit-scrollbar { block-size: 8px; }
+  .gallery::-webkit-scrollbar-track { background: transparent; }
+  .gallery::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+  .gallery::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+  /* Web projects: landscape shots fill the modal's available width (no scroller),
+     capped in height so the modal never grows beyond its existing limits. */
+  .gallery.web {
+    display: grid;
+    gap: var(--s-3);
+    overflow-x: visible;
+    scroll-snap-type: none;
+  }
+  .gallery.web .shot {
+    inline-size: 100%;
+    block-size: auto;
+    max-block-size: 50svh;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .m-grid { display: grid; grid-template-columns: 1fr; gap: var(--s-5); }
+  @media (min-width: 720px) { .m-grid { grid-template-columns: 1.1fr 1fr; gap: var(--s-6); } }
+  .m-col { display: flex; flex-direction: column; gap: var(--s-3); min-inline-size: 0; }
+  .m-desc { margin: 0; color: var(--fg-dim); line-height: var(--lh-default); }
+  .m-motive { margin: 0; color: var(--fg-dim); line-height: var(--lh-default); }
+  .m-k { color: var(--accent); font: 600 var(--fs-micro) var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; margin: 0; }
+  .m-stack, .m-features { list-style: none; padding: 0; margin: 0; }
+  .m-stack { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+  .m-stack li {
+    padding: 3px 10px; color: var(--fg);
+    background: color-mix(in oklab, var(--fg) 5%, transparent);
+    border: 1px solid var(--border); border-radius: var(--r-pill);
+    font: 400 var(--fs-micro) var(--font-mono);
+  }
+  .m-features { display: grid; gap: var(--s-2); }
+  .m-features li {
+    position: relative; padding-inline-start: var(--s-4);
+    color: var(--fg-dim); font-size: var(--fs-small); line-height: 1.45;
+  }
+  .m-features li::before { content: '✓'; position: absolute; inset-inline-start: 0; color: var(--accent); }
+
+  .m-foot {
+    display: flex; flex-wrap: wrap; gap: var(--s-3); justify-content: space-between; align-items: center;
+    margin-block-start: var(--s-6); padding-block-start: var(--s-4);
+    border-block-start: 1px solid var(--border);
+  }
+  .m-role { margin: 0; color: var(--fg-dim); font: 400 var(--fs-micro) var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; }
+  .m-links { display: flex; gap: var(--s-3); }
+  .m-links a {
+    color: var(--accent); text-decoration: none;
+    font: 600 var(--fs-small) var(--font-sans);
+    border-bottom: 1px solid color-mix(in oklab, var(--accent) 35%, transparent);
+  }
+  .m-links a:hover { color: var(--fg); border-bottom-color: var(--accent); }
+</style>

@@ -1,0 +1,36 @@
+---
+title: iCare
+tagline: A private self-care suite for a Canadian psychologist's clients — meditation, mood and activity, designed so no one sees your inner state.
+stack: [Flutter, GetX, Firebase, local_auth, just_audio + flutter_sound]
+stats:
+  - { num: '13', desc: 'self-care modules' }
+  - { num: '4', desc: 'mood states tracked' }
+  - { num: 'Fingerprint', desc: 'biometric lock at open' }
+  - { num: 'Private', desc: 'no real name required' }
+order: 5
+---
+
+## The brief
+
+A Canadian psychologist wanted one app her clients could live in between sessions: somewhere to meditate, breathe, and quietly record how they actually spend their time and how they feel. The clinical value isn't the meditation alone — it's the trail. Over weeks, the logged activity and mood become something a client and a clinician can sit down and talk about, instead of relying on "how was your week?"
+
+## Privacy was the product, not a setting
+
+For an app holding someone's mental state, privacy can't be a toggle buried in settings — it has to be the default the moment you open it. Two decisions set the tone:
+
+- **No real name.** Signup literally suggests against it: *"Suggestion: Do not enter real name."* Your wellbeing data isn't tied to your identity.
+- **A lock at the door.** A `local_auth` biometric gate runs at app open (`'Scan your fingerprint (or Face) to authenticate'`, sticky auth on), so someone holding your unlocked phone still can't see your diary or your moods.
+
+One honest note: I did **not** add screenshot-blocking (`FLAG_SECURE`) — so I won't claim the app prevents screenshots. It doesn't, and saying otherwise would be the opposite of the trust the whole thing is built on.
+
+## Thirteen tools, one calm app
+
+iCare is wide on purpose — **13 modules**: meditation music (`just_audio`), a breathe exercise with multiple guided voices and looping nature sounds, a four-state mood tracker (`angry / sad / happy / calm`), a diary, gratitude and self-awareness corners, a hobby timer, voice memos (`flutter_sound`), a priority to-do, reminders, and a small community. The risk with that much surface area is bloat, so each feature is its own GetX binding, wired up only when you open it — the home screen stays light, and the app doesn't pay for tools you're not using.
+
+## Recording the everyday
+
+Activity and mood log to Firestore per user and per day, and `get_storage` caches everything locally so the journaling that matters most still works with no signal. Local notifications handle the gentle nudges — a reminder to breathe, to check in — without nagging. None of it leaves the device unencrypted-by-accident; it syncs under the user's own authenticated account.
+
+## Where it stands
+
+I built and delivered iCare to the client, who took it to launch under her own branding. It's the project that taught me privacy is an architecture decision, not a copy decision — you make the safe thing the easy thing, at the front door, or you haven't really made it at all.

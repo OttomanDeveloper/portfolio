@@ -1,0 +1,36 @@
+---
+title: Legend TV
+tagline: A streaming platform I built solo — 600K users, #1 in category for 5 months.
+stack: [Flutter, Firebase, REST APIs, AdMob]
+stats:
+  - { num: '600K', unit: '+', desc: 'peak active users' }
+  - { num: '$20K', unit: '+', desc: 'year-1 revenue' }
+  - { num: '#1', desc: 'PS category · 5 mo' }
+  - { num: '3', desc: 'countries · PK · IN · SA' }
+order: 1
+---
+
+## The bet
+
+Urdu-speaking audiences in Pakistan, India, and Saudi Arabia had access to a flood of foreign streaming content, but very little dubbed in their own language. The bet was simple: ship a streaming experience that prioritised Urdu dubs first, and most users would never need anything else.
+
+## Building solo
+
+The whole stack was Flutter on the client and Firebase on the server. I built the content ingestion pipeline, the player, the recommendation surface, the ad mediation, and the subscription flow myself.
+
+The hardest call was sticking with AdMob mediation early instead of negotiating direct ad deals — it paid off when scale hit and CPM tuning could happen automatically.
+
+## What scale taught me
+
+- Cold-start latency on low-end Androids was the difference between #6 and #1 in category — every `100ms` shaved off the splash mattered.
+- Caching *thumbnails*, not just video segments, cut perceived browsing time in half.
+- Firebase costs at 600K users teach you fast which reads can be denormalised.
+- Ad mediation tuning is its own discipline — the highest-CPM network isn't always the highest-revenue for *your* fill rate.
+
+## The numbers
+
+`600,000+` peak users. `$20,000+` revenue in year one from ad mediation + subscriptions. `#1` in the Play Store entertainment category for 5 consecutive months across Pakistan, India, and Saudi Arabia.
+
+## Retirement
+
+Legend TV is retired — content licensing got prohibitively expensive at scale and the unit economics stopped working. But every architectural lesson from it is alive in the apps I've shipped since: how to design a Flutter app that holds up on low-end hardware, how to instrument for product decisions, how to run a single-person product team.

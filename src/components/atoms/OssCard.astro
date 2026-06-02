@@ -1,0 +1,218 @@
+---
+// src/components/atoms/OssCard.astro
+interface Props {
+  name: string;
+  tagline: string;
+  href: string;
+  badge?: { label: string; tone?: 'gold' | 'cyan' | 'lime' | 'dim' };
+  meta?: string;
+  pubAdd?: string;
+  featured?: boolean;
+}
+const { name, tagline, href, badge, meta, pubAdd, featured = false } = Astro.props;
+---
+<article class:list={['oss', featured && 'featured']}>
+  {featured && <span class="ribbon" aria-hidden="true">★ G</span>}
+
+  <a class="head" href={href} target="_blank" rel="noopener noreferrer">
+    {badge && <p class={`badge tone-${badge.tone ?? 'gold'}`}>{badge.label}</p>}
+    <h3 class="name">{name}</h3>
+    <p class="tagline">{tagline}</p>
+  </a>
+
+  {pubAdd && (
+    <button
+      class="snippet"
+      type="button"
+      data-copy={pubAdd}
+      aria-label={`copy install command: ${pubAdd}`}
+    >
+      <span class="prompt" aria-hidden="true">$</span>
+      <span class="cmd">{pubAdd}</span>
+      <span class="copy-hint" aria-hidden="true">copy</span>
+    </button>
+  )}
+
+  <div class="foot">
+    <a class="link" href={href} target="_blank" rel="noopener noreferrer">pub.dev →</a>
+    {meta && <span class="meta">{meta}</span>}
+  </div>
+</article>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.oss .snippet[data-copy]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const txt = btn.dataset.copy;
+      if (!txt) return;
+      try {
+        await navigator.clipboard.writeText(txt);
+        const hint = btn.querySelector('.copy-hint');
+        if (hint) {
+          const orig = hint.textContent ?? 'copy';
+          hint.textContent = '✓ copied';
+          btn.classList.add('copied');
+          setTimeout(() => {
+            if (hint) hint.textContent = orig;
+            btn.classList.remove('copied');
+          }, 1800);
+        }
+      } catch { /* clipboard denied — no-op */ }
+    });
+  });
+</script>
+
+<style>
+  .oss {
+    --angle: 0deg;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+    padding: var(--s-5);
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--r-pkg);
+    isolation: isolate;
+    transition: transform var(--t-base) var(--ease-out),
+                border-color var(--t-base) var(--ease-out),
+                box-shadow var(--t-base) var(--ease-out);
+    /* scroll-reveal */
+    animation: oss-rise linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+    animation-duration: 1ms;
+  }
+  @keyframes oss-rise {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .oss { animation: none; }
+  }
+
+  /* Featured — gold glow + rotating conic border */
+  .featured {
+    border-color: var(--accent);
+    background:
+      radial-gradient(130% 90% at 0% 0%, var(--accent-glow), transparent 55%),
+      linear-gradient(180deg, var(--bg-elev), color-mix(in oklab, var(--bg-elev) 65%, var(--bg)));
+  }
+  .featured::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(from var(--angle), transparent 0deg, var(--accent) 90deg, transparent 180deg);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    animation: oss-spin 8s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+  }
+  @property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+  @keyframes oss-spin { to { --angle: 360deg; } }
+  @media (prefers-reduced-motion: reduce) { .featured::before { animation: none; } }
+
+  .ribbon {
+    position: absolute;
+    inset-block-start: -10px;
+    inset-inline-end: -8px;
+    z-index: 1;
+    background: var(--accent);
+    color: var(--bg);
+    font: 700 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border-radius: var(--r-pill);
+    box-shadow: 0 6px 14px -4px oklch(76% 0.13 80 / 0.6);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .oss:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+      box-shadow: 0 16px 36px -16px oklch(20% 0.02 80 / 0.55);
+    }
+    .featured:hover { box-shadow: 0 16px 40px -12px oklch(76% 0.13 80 / 0.35); }
+  }
+
+  /* HEAD */
+  .head { text-decoration: none; color: inherit; display: block; }
+  .badge {
+    font: 400 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 0 0 var(--s-2);
+  }
+  .tone-gold { color: var(--accent); }
+  .tone-cyan { color: var(--cyan); }
+  .tone-lime { color: var(--lime); }
+  .tone-dim  { color: var(--fg-dim); }
+
+  .name {
+    font: 600 var(--fs-h3) var(--font-mono);
+    color: var(--fg);
+    margin: 0 0 var(--s-2);
+    overflow-wrap: anywhere;
+    transition: color var(--t-base) var(--ease-out);
+  }
+  .head:hover .name { color: var(--accent); }
+  .tagline { color: var(--fg-dim); font-size: var(--fs-small); line-height: 1.55; margin: 0; }
+
+  /* INSTALL SNIPPET */
+  .snippet {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--s-2);
+    align-items: center;
+    padding: var(--s-2) var(--s-3);
+    background: var(--bg);
+    border: 1px dashed var(--border-soft);
+    border-radius: var(--r-pkg);
+    cursor: pointer;
+    text-align: start;
+    font: 400 var(--fs-small) var(--font-mono);
+    color: var(--fg);
+    transition: border-color var(--t-fast) var(--ease-out), background var(--t-fast) var(--ease-out);
+    min-block-size: 36px;
+  }
+  .snippet:hover, .snippet:focus-visible {
+    border-color: var(--accent);
+    background: color-mix(in oklab, var(--bg) 80%, var(--accent) 6%);
+  }
+  .snippet.copied {
+    border-color: var(--lime);
+    background: color-mix(in oklab, var(--bg) 80%, var(--lime) 8%);
+  }
+  .snippet .prompt { color: var(--accent); }
+  .snippet .cmd { color: var(--fg); overflow-wrap: anywhere; }
+  .snippet .copy-hint {
+    color: var(--fg-dim);
+    font-size: var(--fs-micro);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    justify-self: end;
+  }
+  .snippet.copied .copy-hint { color: var(--lime); }
+
+  /* FOOT */
+  .foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-block-start: auto;
+    padding-block-start: var(--s-2);
+    font: 400 var(--fs-micro) var(--font-mono);
+  }
+  .link {
+    color: var(--accent);
+    text-decoration: none;
+    position: relative;
+    transition: padding-inline-end var(--t-base) var(--ease-out);
+  }
+  .link:hover { padding-inline-end: 4px; }
+  .meta { color: var(--fg-dim); }
+</style>

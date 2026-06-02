@@ -1,0 +1,41 @@
+---
+// src/components/atoms/PhoneFrame.astro
+interface Props {
+  src: string;          // /screens/<file>.avif
+  alt: string;
+  variant?: 'front' | 'mid' | 'back';
+}
+const { src, alt, variant = 'front' } = Astro.props;
+---
+<div class:list={['phone', `phone--${variant}`]} style={`--i:${variant === 'front' ? 0 : variant === 'mid' ? 1 : 2};`}>
+  <svg viewBox="0 0 200 410" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="frame">
+    <rect x="2" y="2" width="196" height="406" rx="32" fill="#0a0a0a" stroke="#222" stroke-width="2" />
+    <rect x="14" y="14" width="172" height="382" rx="22" fill="#111" />
+    <rect x="74" y="18" width="52" height="14" rx="7" fill="#0a0a0a" />
+  </svg>
+  <img class="shot" src={src} alt={alt} loading="lazy" decoding="async" />
+</div>
+
+<style>
+  .phone {
+    position: relative;
+    inline-size: min(280px, 60vw);
+    aspect-ratio: 9 / 19.5;
+    margin-inline: auto;
+    border-radius: 44px;
+    overflow: hidden;
+    isolation: isolate;
+    background: #0a0a0a;
+    box-shadow: 0 30px 60px -20px rgb(0 0 0 / .45);
+  }
+  .frame { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; }
+  .shot {
+    position: absolute;
+    inset-block-start: 14px; inset-inline-start: 14px;
+    inline-size: calc(100% - 28px);
+    block-size: calc(100% - 28px);
+    border-radius: 22px;
+    object-fit: cover;
+    object-position: top center;
+  }
+</style>

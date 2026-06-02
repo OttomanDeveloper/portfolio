@@ -1,43 +1,25 @@
 {
   "name": "portfolio",
-  "version": "0.1.0",
+  "type": "module",
+  "version": "3.0.0",
   "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint",
-    "seed": "node seeds/import-seeds.mjs",
-    "seed:reset": "node seeds/reset-seeds.mjs"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-    "@hookform/resolvers": "^5.2.2",
-    "@radix-ui/react-slot": "^1.2.4",
-    "@supabase/ssr": "^0.9.0",
-    "@supabase/supabase-js": "^2.98.0",
-    "@vercel/speed-insights": "^1.3.1",
-    "clsx": "^2.1.1",
-    "dotenv": "^17.3.1",
-    "framer-motion": "^12.35.0",
-    "lucide-react": "^0.577.0",
-    "next": "16.1.6",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "react-hook-form": "^7.71.2",
-    "react-markdown": "^10.1.0",
-    "sonner": "^2.0.7",
-    "tailwind-merge": "^3.5.0",
-    "zod": "^4.3.6"
+    "@astrojs/mdx": "^6.0.1",
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^6.4.2"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.1.6",
-    "playwright": "^1.58.2",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "@types/node": "^25.9.1",
+    "lightningcss": "^1.32.0",
+    "sharp": "^0.34.5"
   }
 }

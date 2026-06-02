@@ -1,0 +1,22 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { withBase } from '@/lib/paths';
+---
+<BaseLayout title="404 — not found" description="That path does not exist.">
+  <div class="container">
+    <p class="eyebrow">▸ ERROR · 404</p>
+    <h1 class="title">That page doesn't exist.</h1>
+    <p class="sub">The URL <code>{Astro.url.pathname}</code> couldn't be found.</p>
+    <a class="cta" href={withBase('/')}>← Back to home</a>
+  </div>
+</BaseLayout>
+
+<style>
+  .container { padding-block: var(--s-10); }
+  .eyebrow { color: var(--accent); font: 400 var(--fs-micro) var(--font-mono); letter-spacing: 0.22em; text-transform: uppercase; margin: 0 0 var(--s-4); }
+  .title { color: var(--fg); font: 700 clamp(2rem, 4vw + 0.5rem, 3.5rem) / var(--lh-tight) var(--font-mono); margin: 0 0 var(--s-4); letter-spacing: -0.02em; }
+  .sub { color: var(--fg-dim); margin: 0 0 var(--s-7); }
+  .sub code { background: var(--bg-elev); padding: 2px 6px; border-radius: 4px; color: var(--accent); font: 400 var(--fs-small) var(--font-mono); }
+  .cta { padding: var(--s-3) var(--s-5); background: var(--accent); color: var(--bg); border-radius: var(--r-pill); font: 600 var(--fs-small) var(--font-sans); text-decoration: none; display: inline-block; min-block-size: 44px; }
+  .cta:hover { background: color-mix(in oklab, var(--accent) 80%, white); color: var(--bg); }
+</style>

@@ -1,0 +1,261 @@
+---
+// src/components/sections/Hero.astro
+import StatusPill from '@/components/atoms/StatusPill.astro';
+import StatsRow from '@/components/atoms/StatsRow.astro';
+import { profile } from '@/data/profile';
+import { withBase } from '@/lib/paths';
+---
+<section id="hero" aria-labelledby="hero-name">
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <div class="container row">
+    <div class="copy">
+      <p class="eyebrow" aria-hidden="true">
+        <span class="dot"></span>
+        <span>▸ ISLAMABAD</span>
+        <span class="sep">·</span>
+        <span class="live"><span id="ist-clock">IST</span></span>
+      </p>
+
+      <h1 id="hero-name" class="wordmark">{profile.name}<span class="dot-period">.</span></h1>
+      <p class="alias">{profile.alias} · {profile.tagline}</p>
+
+      <p class="tagline">{profile.taglineLong}</p>
+
+      <div class="pill-row">
+        <StatusPill label={profile.available} />
+      </div>
+
+      <div class="stats">
+        <StatsRow stats={[...profile.stats]} compact />
+      </div>
+
+      <a class="scroll" href="#featured" aria-label="scroll to next section">
+        <span>scroll to explore</span>
+        <span class="arrow" aria-hidden="true">↓</span>
+      </a>
+    </div>
+
+    <aside class="side" aria-label="Portrait and current focus">
+      <div class="portrait-wrap">
+        <img class="portrait" src={withBase('/profile.avif')} alt={profile.name} width="280" height="280" loading="eager" fetchpriority="high" />
+        <span class="arabic" lang="ar" dir="rtl">{profile.aliasArabic}</span>
+      </div>
+
+      <article class="now" aria-label={`Now — ${profile.now.month}`}>
+        <p class="now-eyebrow" aria-hidden="true">
+          <span>▸ NOW</span>
+          <span class="sep">·</span>
+          <span class="month">{profile.now.month}</span>
+        </p>
+        <ul class="now-list">
+          {profile.now.items.map((it) => (
+            <li>
+              <span class="k">{it.key}</span>
+              <span class="arr" aria-hidden="true">→</span>
+              <span class="v">{it.text}</span>
+            </li>
+          ))}
+        </ul>
+      </article>
+    </aside>
+  </div>
+</section>
+
+<script>
+  // Live IST clock (Asia/Karachi)
+  function tickClock() {
+    const el = document.getElementById('ist-clock');
+    if (!el) return;
+    try {
+      const time = new Intl.DateTimeFormat('en-GB', {
+        hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Karachi',
+      }).format(new Date());
+      el.textContent = `IST ${time}`;
+    } catch {
+      el.textContent = 'IST';
+    }
+  }
+  tickClock();
+  setInterval(tickClock, 60_000);
+</script>
+
+<style>
+  #hero {
+    position: relative;
+    min-block-size: 100svh;
+    padding-block: var(--s-9);
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  /* Background flair — single layer: subtle dotted grid */
+  .bg-grid {
+    position: absolute; inset: 0; z-index: -1;
+    background-image:
+      linear-gradient(to right, oklch(100% 0 0 / 0.025) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(100% 0 0 / 0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 0%, transparent 90%);
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--s-8);
+    align-items: start;
+    position: relative;
+  }
+  @media (min-width: 1024px) {
+    .row { grid-template-columns: 1.3fr 1fr; align-items: center; }
+  }
+
+  /* LEFT */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    color: var(--fg-dim);
+    font: 400 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-block-end: var(--s-4);
+    padding: var(--s-2) var(--s-3);
+    background: oklch(15% 0.02 80 / 0.5);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--r-pill);
+    backdrop-filter: blur(8px);
+  }
+  .eyebrow .sep { color: var(--fg-dim); opacity: 0.5; }
+  .eyebrow .dot {
+    inline-size: 7px; block-size: 7px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+  @media (prefers-reduced-motion: reduce) { .eyebrow .dot { animation: none; } }
+
+  .wordmark {
+    color: var(--fg);
+    font: 700 var(--fs-hero) / var(--lh-tight) var(--font-mono);
+    letter-spacing: -0.02em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .dot-period { color: var(--accent); }
+
+  .alias {
+    color: var(--accent);
+    font: 600 var(--fs-body) var(--font-sans);
+    margin: var(--s-4) 0 var(--s-3);
+  }
+
+  .tagline {
+    color: var(--fg-dim);
+    font: 400 var(--fs-body) var(--font-sans);
+    max-inline-size: 52ch;
+    margin: 0;
+  }
+  .pill-row { margin: var(--s-6) 0; }
+  .stats { margin-block: var(--s-7) var(--s-5); }
+  .scroll {
+    display: inline-flex; align-items: center; gap: var(--s-2);
+    color: var(--fg-dim);
+    font: 400 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.18em; text-transform: uppercase;
+    margin-block-start: var(--s-7);
+    text-decoration: none;
+    padding-block: var(--s-2);
+    min-block-size: 44px;
+    transition: color var(--t-base) var(--ease-out);
+    width: max-content;
+  }
+  .scroll:hover, .scroll:focus-visible { color: var(--accent); }
+  .scroll .arrow {
+    display: inline-block;
+    animation: hero-bounce 1.6s ease-in-out infinite;
+  }
+  .scroll:hover .arrow, .scroll:focus-visible .arrow { animation-duration: 0.9s; }
+  @keyframes hero-bounce {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(5px); }
+  }
+  @media (prefers-reduced-motion: reduce) { .scroll .arrow { animation: none; } }
+
+  /* RIGHT */
+  .side {
+    display: grid;
+    gap: var(--s-6);
+    align-self: stretch;
+    align-content: center;
+  }
+
+  .portrait-wrap {
+    position: relative;
+    justify-self: center;
+    inline-size: clamp(180px, 28vw, 280px);
+  }
+  .portrait {
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent);
+    box-shadow:
+      0 0 0 6px var(--bg-elev),
+      0 0 0 7px var(--border-soft),
+      0 24px 48px -16px oklch(20% 0.02 80 / 0.55);
+  }
+  .arabic {
+    position: absolute;
+    inset-block-start: -8px;
+    inset-inline-end: -16px;
+    color: var(--accent);
+    font: 700 var(--fs-arabic) / 1 var(--font-arabic);
+    pointer-events: none;
+    background: var(--bg);
+    padding: 0 var(--s-2);
+    border-radius: var(--r-pill);
+  }
+
+  .now {
+    padding: var(--s-5);
+    background: var(--bg-elev);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--r-card);
+  }
+  .now-eyebrow {
+    display: flex; align-items: center; gap: var(--s-2);
+    color: var(--accent);
+    font: 400 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 0 0 var(--s-4);
+  }
+  .now-eyebrow .sep { color: var(--fg-dim); opacity: 0.5; }
+  .now-eyebrow .month { color: var(--fg-dim); }
+  .now-list { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--s-3); }
+  .now-list li {
+    display: grid;
+    grid-template-columns: 64px auto 1fr;
+    align-items: baseline;
+    gap: var(--s-3);
+    font: 400 var(--fs-small) var(--font-sans);
+    line-height: 1.4;
+  }
+  .now-list .k {
+    color: var(--fg-dim);
+    font: 400 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .now-list .arr { color: var(--accent); font-family: var(--font-mono); }
+  .now-list .v { color: var(--fg); }
+
+  @media (max-width: 639px) {
+    .arabic { font-size: clamp(1.5rem, 1.5vw + 0.5rem, 2rem); inset-inline-end: -8px; }
+    .eyebrow { flex-wrap: wrap; }
+  }
+</style>

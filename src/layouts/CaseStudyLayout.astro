@@ -1,0 +1,67 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import StatsRow from '@/components/atoms/StatsRow.astro';
+import { withBase } from '@/lib/paths';
+
+interface Props {
+  title: string;
+  slug: string;
+  tagline: string;
+  stack: string[];
+  stats: { num: string; unit?: string; desc: string }[];
+  liveUrl?: string;
+  sourceUrl?: string;
+}
+const { title, slug, tagline, stack, stats, liveUrl, sourceUrl } = Astro.props;
+---
+<BaseLayout title={`${title} — case study`} description={tagline}>
+  <div class="progress" aria-hidden="true"></div>
+  <article class="container">
+    <p class="crumb">
+      <a href={withBase('/')}>~</a> / <a href={withBase('/projects')}>projects</a> / <span>{slug}</span>
+    </p>
+    <h1 class="title" style={`view-transition-name: case-title-${slug};`}>{title}</h1>
+    <p class="tagline">{tagline}</p>
+    <div class="meta">
+      <p class="stack">{stack.join(' · ')}</p>
+      <div class="ctas">
+        {liveUrl && <a class="cta primary" href={liveUrl} target="_blank" rel="noopener noreferrer">▶ Open live ↗</a>}
+        {sourceUrl && <a class="cta secondary" href={sourceUrl} target="_blank" rel="noopener noreferrer">Source on GitHub →</a>}
+      </div>
+    </div>
+    <StatsRow stats={stats} compact />
+    <div class="prose"><slot /></div>
+    <p class="back"><a href={withBase('/projects')}>← back to projects</a></p>
+  </article>
+</BaseLayout>
+
+<style>
+  .progress { position: fixed; inset-block-start: 0; inset-inline: 0; block-size: 3px; background: var(--accent); transform-origin: 0 50%; animation: progress linear both; animation-timeline: scroll(root block); animation-range: 0% 100%; animation-duration: 1ms; z-index: 100; }
+  @keyframes progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @media (prefers-reduced-motion: reduce) { .progress { display: none; } }
+  .container { padding-block: var(--s-9); max-inline-size: 720px; }
+  .crumb { color: var(--fg-dim); font: 400 var(--fs-micro) var(--font-mono); letter-spacing: 0.12em; }
+  .crumb a { color: var(--accent); }
+  .crumb span { color: var(--fg); }
+  .title { color: var(--fg); font: 700 clamp(2rem, 3vw + 0.5rem, 3rem) / var(--lh-tight) var(--font-sans); margin-block: var(--s-3) var(--s-2); }
+  .tagline { color: var(--accent); font: 600 var(--fs-body) var(--font-sans); margin: 0 0 var(--s-5); }
+  .meta { display: flex; flex-direction: column; gap: var(--s-3); padding-block: var(--s-4); border-block: 1px solid var(--border); margin-block-end: var(--s-6); }
+  .stack { color: var(--fg-dim); margin: 0; font: 400 var(--fs-small) var(--font-mono); }
+  .ctas { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+  .cta { padding: var(--s-2) var(--s-4); border-radius: var(--r-pill); font: 600 var(--fs-small) var(--font-sans); text-decoration: none; min-block-size: 36px; display: inline-flex; align-items: center; }
+  .primary { background: var(--accent); color: var(--bg); }
+  .secondary { color: var(--accent); border: 1px solid var(--border-soft); }
+  .primary:hover { background: color-mix(in oklab, var(--accent) 80%, white); color: var(--bg); }
+  .secondary:hover { border-color: var(--accent); color: var(--fg); }
+  .prose { font-family: var(--font-sans); font-size: var(--fs-prose); line-height: var(--lh-prose); color: var(--fg-dim); }
+  .prose :global(h2) { color: var(--fg); font: 700 var(--fs-section) var(--font-sans); margin: var(--s-7) 0 var(--s-3); }
+  .prose :global(h3) { color: var(--fg); font: 700 var(--fs-h3) var(--font-sans); margin: var(--s-6) 0 var(--s-3); }
+  .prose :global(p) { margin: 0 0 var(--s-4); }
+  .prose :global(ul) { margin: 0 0 var(--s-4); padding-inline-start: var(--s-5); }
+  .prose :global(li) { margin-block-end: var(--s-2); }
+  .prose :global(strong) { color: var(--fg); font-weight: 600; }
+  .prose :global(code) { background: var(--bg-elev); color: var(--accent); padding: 2px 6px; border-radius: 4px; font: 400 0.9em var(--font-mono); }
+  .prose :global(iframe) { inline-size: 100%; aspect-ratio: 16 / 9; border: 1px solid var(--border-soft); border-radius: var(--r-featured); margin-block: var(--s-5); }
+  .back { margin-block-start: var(--s-8); font: 600 var(--fs-small) var(--font-mono); }
+  .back a { color: var(--accent); }
+</style>
