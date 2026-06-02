@@ -324,8 +324,18 @@ const { n = 3, viewAllHref, viewAllCount } = Astro.props;
     box-shadow: 0 16px 32px -18px oklch(20% 0.02 80 / 0.55);
   }
   .shot img { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
-  /* Web demos are landscape — wider, shorter shot */
-  .card.web .shot { inline-size: clamp(190px, 34vw, 240px); aspect-ratio: 16 / 10; }
+
+  /* Web demos: stack vertically — landscape image on top, details below.
+     Image flex-fills so the card matches the app cards' height (never taller). */
+  .card.web .row { display: flex; flex-direction: column; gap: var(--s-4); flex: 1 1 auto; }
+  .card.web .shot {
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: auto;
+    flex: 1 1 0;
+    min-block-size: 96px;
+  }
+  .card.web .content { flex: 0 0 auto; }
   .body code { font: 400 0.92em var(--font-mono); color: var(--fg); }
 
   .chips {
