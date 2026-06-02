@@ -1,5 +1,10 @@
 # Resume: Source-code project research (deep enrichment + new projects)
 
+> ✅ **ALL 8 BATCHES COMPLETE** (Batches 1–8 done). 9 new projects added (homy, youshopper, nakoda,
+> daghta, puzzleur, blood-donors, snaptok, profit-hub, calculator, meesho-clone) and every existing
+> entry verified/corrected against real source. Status Getter got real cropped screenshots; lucky-spin
+> was corrected to "Egg Network". Nothing left in the batch plan — this doc is now an archive/record.
+
 Big multi-session task: research the user's actual Flutter source repos to (a) enrich existing
 showcase entries with accurate data and (b) add new projects. Some tie to the Experience section.
 
@@ -210,11 +215,17 @@ HomyKSA exp tie. 3 real screenshots (homy_services/order/map.avif). Committed.
   video upload and online/offline presence (neither implemented). Clarified admin block via **Firebase
   Admin SDK** + FCM broadcast. Provider. #c7e9ff/#18a0f5. (Scanner: `scripts/scan-batch7-assets.mjs`.)
 
-### Batch 8 — Enrich health/web (existing)
-- `D:/ClientProjects/icare` → enrich `icare` (39 repo imgs — inspect for real screenshots).
-- `D:/ClientProjects/smriit_canada/lifelink` → light pass on `lifelink` (already enriched).
-- `D:/ClientProjects/safeandromeda` → enrich `chronos`.
-- `D:/ClientProjects/PiggyProject/piggytoken` → enrich `babypig`.
+### Batch 8 ✅ DONE — Enrich health/web (existing) — data only, all verified
+- `icare` → enriched `icare`. The 49 repo imgs are app backgrounds/avatars (no real screenshots).
+  All features + "don't use real name" + fingerprint (local_auth) confirmed. **One correction:
+  screenshot blocking (FLAG_SECURE) is NOT implemented** — removed the claim. Refined techStack
+  (GetX, just_audio + flutter_sound). #003DE5.
+- `lifelink` → **verified, no change**. All claims substantiated: Gemini Pro (`gemini-pro` via
+  google_generative_ai), BLoC, Firebase, go_router, fl_chart, 988/Hope-for-Wellness/BC crisis lines.
+- `safeandromeda` → **verified `chronos`, no change**. Exceeds claims: **33 CustomPainters** (entry
+  says 30+), single Ticker via AnimationProvider, EraScope gating, 9 eras, zero image assets — all real.
+- `piggytoken` → **verified `babypig`, no change**. 9 sections, glassmorphism nav, animated counters,
+  staggered cards, FAQ accordion, 3 breakpoints, Provider + flutter_svg, no animation libs — all confirmed.
 
 ## Schema reminder
 Use the `ShowcaseProject` type in showcase.ts (slug, name, packageId, year, role, client, category,

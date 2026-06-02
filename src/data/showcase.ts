@@ -1059,18 +1059,18 @@ export const showcaseProjects: ShowcaseProject[] = [
     category: 'Health / Mental Wellness',
     tagline: 'Private self-care suite: meditation, mood, journaling & habits',
     description:
-      'A comprehensive self-care app bundling meditation music, a Breathe exercise with nature sounds and a timer, an emoji mood tracker, a private diary, a hobby timer (Art, Yoga and more), gratitude and self-awareness corners, voice memos, a priority to-do list, reminders and a social community. Built privacy-first: a "don\'t use your real name" signup, fingerprint lock, screenshot blocking (FLAG_SECURE), and light/dark theming.',
+      'A comprehensive self-care app bundling meditation music, a Breathe exercise with nature sounds and a timer, an emoji mood tracker, a private diary, a hobby timer (Art, Yoga and more), gratitude and self-awareness corners, voice memos, a priority to-do list, reminders and a social community. Built privacy-first: a "don\'t use your real name" signup, a fingerprint/biometric lock (local_auth), and light/dark theming.',
     motive:
       'Give people one private, judgement-free space to look after their mental wellbeing — reflect, track mood and build healthy habits.',
-    techStack: ['Flutter', 'Firebase', 'Local auth (fingerprint)', 'Audio playback', 'Local notifications'],
+    techStack: ['Flutter', 'GetX', 'Firebase (Auth + Firestore)', 'local_auth (fingerprint)', 'just_audio + flutter_sound', 'Local notifications'],
     features: [
       'Meditation music & Breathe (nature sounds + timer)',
       'Emoji mood tracker',
       'Private diary & gratitude corner',
       'Hobby timer (Art / Yoga / custom)',
       'Priority to-do list & reminders',
-      'Voice memos & social community',
-      'Fingerprint lock + screenshot blocking, light/dark theme',
+      'Voice memos (flutter_sound) & social community',
+      'Fingerprint/biometric lock + light/dark theme',
     ],
     status: 'shelved',
     storeLink: null,
