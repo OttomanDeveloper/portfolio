@@ -3,11 +3,39 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import SelectedWork from '@/components/sections/SelectedWork.astro';
 import { withBase } from '@/lib/paths';
 import { profile } from '@/data/profile';
+import { showcaseProjects } from '@/data/showcase';
+
+const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? 'http://localhost:4321';
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: `Projects — ${profile.name}`,
+  url: `${siteUrl}/projects`,
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: showcaseProjects.map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'SoftwareApplication',
+        name: p.name,
+        description: p.tagline,
+        applicationCategory: p.category,
+        operatingSystem: p.web ? 'Web' : 'Android',
+        author: { '@type': 'Person', name: profile.name },
+        ...(p.storeLink || p.liveLink || p.githubLink
+          ? { url: p.storeLink ?? p.liveLink ?? p.githubLink }
+          : {}),
+      },
+    })),
+  },
+};
 ---
 <BaseLayout
   title={`Projects — ${profile.name}`}
   description={`Selected work by ${profile.name} (${profile.alias}). 50+ apps shipped — streaming, rewards, downloaders, health, logistics and more. Tap any project for its full screenshot gallery.`}
 >
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <header class="page-head">
     <div class="container">
       <p class="crumb"><a href={withBase('/')}>~</a> / <span>projects</span></p>
