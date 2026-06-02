@@ -191,12 +191,24 @@ HomyKSA exp tie. 3 real screenshots (homy_services/order/map.avif). Committed.
   (added PiP/chapters/comments); BLoC + native ExoPlayer. (#129B3B/#143AC1)
   (Asset scanner: `scripts/scan-batch6-assets.mjs`.)
 
-### Batch 7 — Enrich social/utility (existing) + admins
-- `D:/FlutterProject/grouper` (+ `grouper_admin`) → enrich `grouper`.
-- `D:/FlutterProject/footballwallpaper` (+ `WallpaperAdmin`) → enrich `football-wallpaper`.
-- `D:/FlutterProject/bill_checker` → enrich `bill-checker`.
-- `D:/ClientProjects/hostelfinder` (+ `D:/ClientProjects/adminhostelfinder`) → enrich `hostel-finder`.
-- `D:/ClientProjects/fahad_hanif/meetbook` (dating_app + meetbook_admin) → enrich `meetbook`.
+### Batch 7 ✅ DONE — Enrich social/utility (existing) + admins (data only — no real shots)
+- `grouper` (+ `grouper_admin`) → enriched `grouper`. Renamed display **"WA Grouper" → "Social Groups"**
+  (real label), packageId **com.linkjoiner.grouper**. Documented the **Grouper Admin** app (approves
+  group/scammer submissions, manages categories/ads). Stack: BLoC+HydratedBloc, Firebase, **AdMob +
+  AppLovin** (dual). #6633FF/#0C5392.
+- `footballwallpaper` (+ `WallpaperAdmin`) → enriched `football-wallpaper`. **Removed false Firebase
+  claim** — backend is a **custom PHP API (appwall.zamanalisandhu.co) via Dio**. AdMob (deprecated
+  firebase_admob) + Facebook Audience Network + OneSignal. WallpaperAdmin is a stub → not surfaced.
+  Provider, wallpaper_manager. (old SDK 2.7 → genuinely 2021.)
+- `bill_checker` → enriched `bill-checker`. packageId **com.allbillchecker.pk**; WebView lib is
+  **webview_flutter** (not InAppWebView); AdMob + AppLovin + Firestore ad config. Switched storeLink to
+  the **Play Store** link and **removed "All Bill Checker" from moreApps** (dedup). #075E54/#00CD40.
+- `hostelfinder` (+ `adminhostelfinder`) → enriched `hostel-finder`. Backend is **Firebase Realtime DB**
+  (not Firestore/REST); auth is **custom phone+password in RTDB** (not Firebase Auth); maps via
+  **map_launcher** (not google_maps_flutter). Admin label "Hostel Admin". GetX + geolocator. No ads.
+- `meetbook` (dating_app + meetbook_admin) → enriched `meetbook`. **Removed non-existent features**:
+  video upload and online/offline presence (neither implemented). Clarified admin block via **Firebase
+  Admin SDK** + FCM broadcast. Provider. #c7e9ff/#18a0f5. (Scanner: `scripts/scan-batch7-assets.mjs`.)
 
 ### Batch 8 — Enrich health/web (existing)
 - `D:/ClientProjects/icare` → enrich `icare` (39 repo imgs — inspect for real screenshots).
