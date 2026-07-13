@@ -155,6 +155,7 @@ const pickThumb = (screens: readonly string[]) =>
           <div class="m-links">
             {p.caseHref && <a href={withBase(p.caseHref)}>Read case study →</a>}
             {p.liveLink && <a href={p.liveLink} target="_blank" rel="noopener noreferrer">Open live ↗</a>}
+            {p.videoLink && <a href={p.videoLink} target="_blank" rel="noopener noreferrer">Watch demo ↗</a>}
             {p.githubLink && <a href={p.githubLink} target="_blank" rel="noopener noreferrer">GitHub ↗</a>}
             {p.storeLink && <a href={p.storeLink} target="_blank" rel="noopener noreferrer">Get the app ↗</a>}
           </div>

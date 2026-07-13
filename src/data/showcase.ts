@@ -21,6 +21,7 @@ export type ShowcaseProject = {
   storeLink: string | null;
   githubLink: string | null;
   liveLink?: string;
+  videoLink?: string;
   caseHref?: string;
   web?: boolean;
   screens: string[];
@@ -1021,6 +1022,7 @@ export const showcaseProjects: ShowcaseProject[] = [
     status: 'live',
     storeLink: null,
     githubLink: null,
+    videoLink: 'https://youtu.be/yXMHwt1AIUE',
     screens: ['asandigital_home.avif'],
     featured: false,
   },
