@@ -992,33 +992,36 @@ export const showcaseProjects: ShowcaseProject[] = [
     featured: false,
   },
   {
-    // Two-app earning/rewards platform (repo folder "globalnetwork"): user app "Profit Hub"
-    // + "Profit Hub Admin". Product concept confirmed from the repo's spec PDF.
-    slug: 'profit-hub',
-    name: 'Profit Hub',
-    packageId: 'com.profit.hub',
-    year: 2025,
+    // Two-app investment/earning platform (repo folder "globalnetwork"). Originally
+    // shipped 2025 as "Profit Hub" (com.profit.hub); rebranded and relaunched as
+    // "Asan Digital" (com.asan.digital) on the live asandigital.online backend —
+    // user app "Asan Digital" v1.0.4 + companion "Admin Panel". Old profithub_*.avif
+    // screens kept on disk but no longer referenced (pre-rebrand UI).
+    slug: 'asan-digital',
+    name: 'Asan Digital',
+    packageId: 'com.asan.digital',
+    year: 2026,
     role: 'sole developer',
     client: 'Client project',
-    category: 'Rewards / Earning',
-    tagline: 'Wallet-based earning platform with a full admin panel',
+    category: 'Investment / Earning',
+    tagline: 'Halal-positioned investment & earning platform with a full admin panel',
     description:
-      'A two-app earning/rewards platform built end-to-end. The user app runs a wallet members top up to activate earning packages, then grow through daily tasks, a referral network, spin-to-win, watch-and-earn ads and a profit calculator; deposits and withdrawals flow through local rails (JazzCash, Easypaisa, bank, BTC, Perfect Money). A companion admin app manages users, packages, deposit/withdraw requests, ads and content. The user app is GetX over a custom-encrypted REST backend with OneSignal push, Cloudinary media and AdMob + Facebook Audience Network + StartApp mediation; the admin is a clean BLoC + HydratedBloc build. Multi-country, Urdu / English.',
+      'A two-app investment/earning platform ("Asan Digital Invest — Daily Halal Profit"), rebranded and relaunched from the original Profit Hub build and running live on the asandigital.online backend. Members top up a PKR wallet through admin-configured deposit methods, buy investment packages with daily profit rates, and grow through daily check-ins, tasks, Spin & Win, scratch cards, referrals with a team view and a leaderboard — rounded out by a live withdrawal ticker, achievements & tiers, guides, news/blogs, a profit calculator and PDF account statements. The companion Admin Panel runs the whole operation: users, packages, deposit/withdraw methods and requests, banners, campaigns, flash events, tickers, tiers, announcements, guides, news and support. The user app is GetX over a custom-encrypted REST API with OneSignal push, Firebase Analytics + Crashlytics and AdMob + Facebook Audience Network + StartApp mediation; the admin is a responsive BLoC + HydratedBloc build on go_router.',
     motive:
-      'Give the operator a complete owned earning platform — the member-facing earning loop plus the admin tooling to run packages, payouts and content — instead of stitching together third-party tools.',
-    techStack: ['Flutter', 'GetX (user) + BLoC (admin)', 'Encrypted REST API', 'OneSignal', 'AdMob + FAN + StartApp', 'Cloudinary'],
+      'Relaunch the operator\'s earning platform under a stronger halal-investment brand — one owned stack covering the member earning loop plus the admin tooling to run packages, payouts and promotions.',
+    techStack: ['Flutter', 'GetX (user) + BLoC (admin)', 'Encrypted REST API', 'OneSignal', 'AdMob + FAN + StartApp', 'Firebase Analytics + Crashlytics'],
     features: [
-      'Wallet — deposit / withdraw (JazzCash, Easypaisa, BTC, bank)',
-      'Earning packages with daily returns',
-      'Daily tasks, spin-to-win, watch-&-earn, profit calculator',
-      'Referral network with commissions',
-      'Admin app: users, packages, payout requests, ads & content',
-      'Multi-country, Urdu / English, custom-encrypted API',
+      'PKR wallet — admin-configured deposit & withdrawal methods',
+      'Investment packages with daily profit rates + profit calculator',
+      'Daily check-in, tasks, Spin & Win, scratch cards',
+      'Referral team, leaderboard, achievements & tiers',
+      'Live withdrawal ticker, guides, news & PDF statements',
+      'Admin Panel: users, packages, payout requests, banners, campaigns & flash events',
     ],
-    status: 'shipped',
+    status: 'live',
     storeLink: null,
     githubLink: null,
-    screens: ['profithub_home.avif', 'profithub_packages.avif', 'profithub_admin.avif'],
+    screens: ['asandigital_home.avif'],
     featured: false,
   },
   {
