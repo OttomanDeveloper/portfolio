@@ -1028,6 +1028,9 @@ export const showcaseProjects: ShowcaseProject[] = [
   },
   {
     // Calculator (com.aliraza.calculator) + a Firebase-backed payout admin panel.
+    // Open-sourced 2026 (MIT) after a GetX → Riverpod 3 modernisation: scientific
+    // mode, Material You, cross-platform (Android / iOS / desktop / web). Live on
+    // GitHub Pages with APK releases; the payout admin companion stays private.
     slug: 'calculator',
     name: 'Calculator',
     packageId: 'com.aliraza.calculator',
@@ -1035,23 +1038,24 @@ export const showcaseProjects: ShowcaseProject[] = [
     role: 'sole developer',
     client: 'Client project',
     category: 'Utility',
-    tagline: 'A polished calculator with a Firebase-managed payout backend',
+    tagline: 'Open-source Material You calculator — scientific mode, every platform',
     description:
-      'A clean, fast calculator with a real expression engine (it parses and evaluates full expressions), calculation history, light/dark themes and haptics — paired with a Firebase backend that does more than it looks. Ad units (banner, interstitial, reward) are configured remotely from Firestore, so monetisation changes without an app release, and a companion admin app manages users, balances and withdrawal payouts — approve or reject each with a transaction ID. Built on GetX + Cloud Firestore.',
+      'A polished cross-platform calculator, now open-source (MIT) and live on the web. Standard and scientific modes ride a real expression engine (math_expressions) with Samsung-style percent semantics (200 + 10% = 220), smart thousands-grouped formatting, and a persistent day-grouped history with undo. Material You dynamic theming, adaptive phone / tablet / desktop layouts, full keyboard support and haptics round out the front end — rebuilt from GetX to Riverpod 3 for the public release. The original client build pairs it with a Firebase backend: ad units configured remotely from Firestore and a companion admin app that manages users, balances and withdrawal payouts (mobile-only, cleanly gated out of desktop/web builds).',
     motive:
-      'Ship a genuinely useful calculator whose ads and reward payouts are fully controllable from a backend — no redeploys to tune monetisation.',
-    techStack: ['Flutter', 'GetX', 'Cloud Firestore', 'math_expressions', 'AdMob (remote config)', 'get_storage'],
+      'Ship a genuinely useful calculator whose ads and reward payouts are fully controllable from a backend — then open-source the modernised app as a portfolio-grade Flutter showcase.',
+    techStack: ['Flutter', 'Riverpod 3', 'math_expressions', 'Material You (dynamic_color)', 'Cloud Firestore', 'AdMob (remote config)'],
     features: [
-      'Full expression engine with calculation history',
-      'Light / dark theme + haptic feedback',
-      'Remotely-configured AdMob units (Firestore)',
-      'Admin app: users, balances & withdrawal payouts',
-      'Approve / reject payouts with transaction IDs',
-      'Offline-capable local storage',
+      'Standard + scientific modes (trig, logs)',
+      'Samsung-style percent semantics & smart formatting',
+      'Day-grouped persistent history with undo',
+      'Material You theming, adaptive layouts, keyboard support',
+      'Runs on Android / iOS / Windows / macOS / Linux / Web',
+      'Client build: Firestore-configured ads + payout admin app',
     ],
-    status: 'shipped',
-    storeLink: null,
-    githubLink: null,
+    status: 'live',
+    storeLink: 'https://github.com/OttomanDeveloper/flutter-calculator/releases/latest',
+    githubLink: 'https://github.com/OttomanDeveloper/flutter-calculator',
+    liveLink: 'https://ottomandeveloper.github.io/flutter-calculator/',
     screens: ['calc_keypad.avif', 'calc_history.avif', 'calc_admin.avif'],
     featured: false,
   },
