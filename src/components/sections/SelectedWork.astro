@@ -36,8 +36,17 @@ const STATUS_LABEL: Record<string, string> = {
   prototype: 'Prototype', nda: 'Under NDA',
 };
 
-interface Props { n?: number; includeFeatured?: boolean; }
-const { n = 2, includeFeatured = false } = Astro.props;
+interface Props {
+  n?: number;
+  includeFeatured?: boolean;
+  /* Teaser mode (home page): cap the grid at `limit` cards and hide the
+     category filters — counts would mislead on a sliced set. */
+  limit?: number;
+  label?: string;
+  viewAllHref?: string;
+  viewAllCount?: number;
+}
+const { n = 2, includeFeatured = false, limit, label = 'selected work', viewAllHref, viewAllCount } = Astro.props;
 
 // On the home page the featured trio lives in the big carousel, so the grid drops
 // them. On /projects (includeFeatured) every project renders as a normal card.
@@ -51,10 +60,11 @@ const TOP_ORDER = [
 ];
 const rank = (slug: string) => { const i = TOP_ORDER.indexOf(slug); return i === -1 ? TOP_ORDER.length : i; };
 
-const items = showcaseProjects
+const all = showcaseProjects
   .filter((p) => includeFeatured || !FEATURED_SLUGS.includes(p.slug))
   .map((p, idx) => ({ ...p, group: GROUPS[p.slug] ?? 'other', _idx: idx }))
   .sort((a, b) => rank(a.slug) - rank(b.slug) || a._idx - b._idx);
+const items = limit ? all.slice(0, limit) : all;
 
 const counts = Object.fromEntries(
   FILTERS.map((f) => [f.id, f.id === 'all' ? items.length : items.filter((i) => i.group === f.id).length]),
@@ -65,30 +75,34 @@ const pickThumb = (screens: readonly string[]) =>
 ---
 <section id="selected-work">
   <div class="container">
-    <SectionLabel n={n} name="selected work" />
+    <SectionLabel n={n} name={label} />
     <p class="intro">
       A slice of <strong>50+ apps</strong> shipped for clients worldwide — across rewards, media,
       health, logistics and more. Tap any card to open its full screenshot gallery.
     </p>
 
-    {/* CSS-only filter state (visually hidden radios) */}
-    {FILTERS.map((f) => (
-      <input
-        type="radio"
-        name="sw-filter"
-        id={`sw-${f.id}`}
-        class="sw-radio"
-        checked={f.id === 'all'}
-      />
-    ))}
+    {!limit && (
+      <>
+        {/* CSS-only filter state (visually hidden radios) */}
+        {FILTERS.map((f) => (
+          <input
+            type="radio"
+            name="sw-filter"
+            id={`sw-${f.id}`}
+            class="sw-radio"
+            checked={f.id === 'all'}
+          />
+        ))}
 
-    <div class="filters" role="group" aria-label="Filter projects by category">
-      {FILTERS.map((f) => (
-        <label for={`sw-${f.id}`} class="chip">
-          {f.label}<span class="ct">{counts[f.id]}</span>
-        </label>
-      ))}
-    </div>
+        <div class="filters" role="group" aria-label="Filter projects by category">
+          {FILTERS.map((f) => (
+            <label for={`sw-${f.id}`} class="chip">
+              {f.label}<span class="ct">{counts[f.id]}</span>
+            </label>
+          ))}
+        </div>
+      </>
+    )}
 
     <div class="grid">
       {items.map((p) => (
@@ -112,6 +126,15 @@ const pickThumb = (screens: readonly string[]) =>
         </a>
       ))}
     </div>
+
+    {viewAllHref && (
+      <div class="view-all">
+        <a class="va-btn" href={viewAllHref}>
+          View all{viewAllCount ? ` ${viewAllCount}` : ''} projects
+          <span class="va-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    )}
 
   </div>
 
@@ -366,6 +389,26 @@ const pickThumb = (screens: readonly string[]) =>
   .m-eyebrow { margin: 0 var(--s-7) 0 0; color: var(--accent); font: 400 var(--fs-micro) var(--font-mono); letter-spacing: 0.16em; text-transform: uppercase; }
   .m-title { margin: var(--s-2) 0 var(--s-1); color: var(--fg); font: 700 var(--fs-section) var(--font-sans); line-height: 1.05; }
   .m-tagline { margin: 0 0 var(--s-5); color: var(--accent); font: 600 var(--fs-body) var(--font-sans); }
+
+  /* Teaser-mode CTA (home page) — mirrors the featured section's view-all pill */
+  .view-all { margin-block-start: var(--s-7); display: flex; justify-content: center; }
+  .va-btn {
+    display: inline-flex; align-items: center; gap: var(--s-3);
+    padding: var(--s-3) var(--s-6);
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    background: var(--bg-elev);
+    color: var(--fg);
+    font: 600 var(--fs-small) var(--font-sans);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    min-block-size: 48px;
+    transition: border-color var(--t-base) var(--ease-out), color var(--t-base) var(--ease-out);
+  }
+  .va-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .va-arrow { transition: transform var(--t-base) var(--ease-out); }
+  .va-btn:hover .va-arrow { transform: translateX(4px); }
+  @media (prefers-reduced-motion: reduce) { .va-btn:hover .va-arrow { transform: none; } }
 
   .gallery {
     display: flex; gap: var(--s-3);

@@ -26,6 +26,20 @@ import { withBase } from '@/lib/paths';
         <StatusPill label={profile.available} />
       </div>
 
+      <div class="cta-row">
+        <a class="cta primary" href="#featured">View my work <span aria-hidden="true">→</span></a>
+        <a class="cta ghost" href="#contact">Hire me <span aria-hidden="true">→</span></a>
+        <a class="cta ghost" href={withBase('/cv.pdf')} target="_blank" rel="noopener noreferrer">Resume PDF <span aria-hidden="true">↗</span></a>
+      </div>
+
+      <ul class="proof" aria-label="Profiles & proof">
+        <li><a href="https://github.com/OttomanDeveloper" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        <li><a href="https://pub.dev/publishers/ottomancoder.com/packages" target="_blank" rel="noopener noreferrer">pub.dev · 9 pkgs</a></li>
+        <li><a href="https://www.youtube.com/@OttomanCoder" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+        <li><a href="https://stackoverflow.com/users/15117215" target="_blank" rel="noopener noreferrer">Stack Overflow</a></li>
+        <li><a href="https://ottomancoder.medium.com/" target="_blank" rel="noopener noreferrer">Medium</a></li>
+      </ul>
+
       <div class="stats">
         <StatsRow stats={[...profile.stats]} compact />
       </div>
@@ -158,7 +172,44 @@ import { withBase } from '@/lib/paths';
     margin: 0;
   }
   .pill-row { margin: var(--s-6) 0; }
-  .stats { margin-block: var(--s-7) var(--s-5); }
+
+  /* CTA row — the hero's primary actions */
+  .cta-row { display: flex; flex-wrap: wrap; gap: var(--s-3); margin: 0 0 var(--s-5); }
+  .cta {
+    display: inline-flex; align-items: center; gap: var(--s-2);
+    padding: var(--s-3) var(--s-5);
+    border-radius: var(--r-pill);
+    font: 600 var(--fs-small) var(--font-sans);
+    text-decoration: none;
+    min-block-size: 44px;
+    transition: border-color var(--t-base) var(--ease-out), color var(--t-base) var(--ease-out),
+                background var(--t-base) var(--ease-out), transform var(--t-base) var(--ease-out);
+  }
+  .cta.primary { background: var(--accent); border: 1px solid var(--accent); color: var(--bg); }
+  .cta.primary:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -12px var(--accent); }
+  .cta.ghost { background: var(--bg-elev); border: 1px solid var(--border); color: var(--fg); }
+  .cta.ghost:hover { border-color: var(--accent); color: var(--accent); }
+  @media (prefers-reduced-motion: reduce) { .cta.primary:hover { transform: none; } }
+
+  /* Proof strip — quick clickable credibility links */
+  .proof {
+    list-style: none; padding: 0;
+    margin: 0 0 var(--s-2);
+    display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-5);
+  }
+  .proof a {
+    display: inline-block;
+    color: var(--fg-dim);
+    font: 400 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    text-decoration: none;
+    padding-block: var(--s-2);
+    transition: color var(--t-base) var(--ease-out);
+  }
+  .proof a::before { content: '▸ '; color: var(--accent); }
+  .proof a:hover, .proof a:focus-visible { color: var(--accent); }
+
+  .stats { margin-block: var(--s-6) var(--s-5); }
   .scroll {
     display: inline-flex; align-items: center; gap: var(--s-2);
     color: var(--fg-dim);

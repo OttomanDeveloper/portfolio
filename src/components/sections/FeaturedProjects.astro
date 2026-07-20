@@ -284,6 +284,28 @@ const { n = 3, viewAllHref, viewAllCount } = Astro.props;
   .grid::-webkit-scrollbar { block-size: 8px; }
   .grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
 
+  /* Desktop bento — the carousel becomes a 2-col mosaic with Legend TV spanning
+     the full row as the hero card. Below 1280px the swipe strip stays. */
+  @media (min-width: 1280px) {
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      overflow-x: visible;
+      scroll-snap-type: none;
+      padding-block: 0;
+    }
+    .grid > .card { inline-size: auto; }
+    .card.legend { grid-column: 1 / -1; }
+    .card.legend .row {
+      grid-template-columns: auto 1fr;
+      column-gap: var(--s-7);
+      align-items: center;
+    }
+    .card.legend .shot { inline-size: 190px; }
+    .card.legend .stats { grid-template-columns: repeat(4, 1fr); max-inline-size: 720px; }
+    .card.legend .body, .card.legend .sub { max-inline-size: 62ch; }
+  }
+
   .card {
     position: relative;
     display: flex;
