@@ -1056,7 +1056,7 @@ export const showcaseProjects: ShowcaseProject[] = [
     storeLink: 'https://github.com/OttomanDeveloper/flutter-calculator/releases/latest',
     githubLink: 'https://github.com/OttomanDeveloper/flutter-calculator',
     liveLink: 'https://ottomandeveloper.github.io/flutter-calculator/',
-    screens: ['calc_keypad.avif', 'calc_history.avif', 'calc_admin.avif'],
+    screens: ['calc_main_dark.avif', 'calc_desktop_light.avif', 'calc_desktop_scientific.avif'],
     featured: false,
   },
   {
