@@ -21,6 +21,8 @@ const mediumHref = 'https://ottomancoder.medium.com/';
   <div class="container">
     <SectionLabel n={8} name="why hire me" />
 
+    <div class="layout">
+    <div class="sell">
     <div class="pitch">
       <h2 class="head">Hire one engineer.<br /><span class="accent">Ship the whole app.</span></h2>
       <p class="lead">
@@ -53,6 +55,9 @@ const mediumHref = 'https://ottomancoder.medium.com/';
       </a>
     </div>
 
+    </div>
+
+    <aside class="panel" aria-label="Contact">
     <h3 class="ch-head">Reach me — pick a channel.</h3>
     <ul class="channels">
       {contact.map((c) => (
@@ -95,6 +100,8 @@ const mediumHref = 'https://ottomancoder.medium.com/';
         <br /><span class="dim">(Contact form is disabled until <code>PUBLIC_FORMSPREE_ID</code> is set.)</span>
       </p>
     )}
+    </aside>
+    </div>
   </div>
 </section>
 
@@ -155,6 +162,12 @@ const mediumHref = 'https://ottomancoder.medium.com/';
 <style>
   #contact { padding-block: clamp(var(--s-8), 8vw, var(--s-10)); }
 
+  /* Two-column closer on desktop: sell on the left, contact panel on the right. */
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s-7); }
+  @media (min-width: 1024px) {
+    .layout { grid-template-columns: minmax(0, 1.15fr) minmax(380px, 1fr); column-gap: var(--s-9); align-items: start; }
+  }
+
   /* Pitch — the bold closing statement */
   .pitch { max-inline-size: 62ch; }
   .head {
@@ -185,6 +198,15 @@ const mediumHref = 'https://ottomancoder.medium.com/';
     color: var(--accent);
     font: 700 var(--fs-small) var(--font-sans);
     letter-spacing: 0.01em;
+  }
+  .r-k::before { content: '▸ '; font-family: var(--font-mono); font-weight: 400; }
+  /* Inside the desktop split the left column is narrower — stack the value
+     props as key | text rows so they stay readable. (After the base rules so
+     these overrides win the cascade.) */
+  @media (min-width: 1024px) {
+    .reasons { grid-template-columns: 1fr; gap: var(--s-3); }
+    .reasons li { flex-direction: row; align-items: baseline; gap: var(--s-4); }
+    .reasons .r-k { flex: 0 0 130px; }
   }
   .r-t { color: var(--fg-dim); font-size: var(--fs-small); line-height: 1.5; }
 
@@ -230,20 +252,27 @@ const mediumHref = 'https://ottomancoder.medium.com/';
   }
   .avail-write:hover { color: var(--fg); border-bottom-color: var(--cyan); }
 
-  /* Contact */
-  .ch-head { color: var(--fg); font: 700 var(--fs-h3) var(--font-sans); margin: var(--s-8) 0 var(--s-5); }
-  .channels { list-style: none; padding: 0; margin: 0 0 var(--s-7); display: grid; grid-template-columns: 1fr; gap: var(--s-3); }
-  @media (min-width: 640px)  { .channels { grid-template-columns: 1fr 1fr; } }
-  @media (min-width: 1024px) { .channels { grid-template-columns: 1fr 1fr 1fr; } }
-  .channel { display: grid; grid-template-columns: 40px 1fr auto; gap: var(--s-3); align-items: center; padding: var(--s-4); background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--r-pkg); color: var(--fg); text-decoration: none; font: 600 var(--fs-body) var(--font-sans); transition: border-color var(--t-base) var(--ease-out); min-block-size: 64px; }
+  /* Contact panel — one card holding channels + the message form */
+  .panel {
+    padding: var(--s-6);
+    background:
+      radial-gradient(120% 90% at 100% 0%, var(--accent-glow), transparent 55%),
+      var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+  }
+  .ch-head { color: var(--fg); font: 700 var(--fs-h3) var(--font-sans); margin: 0 0 var(--s-5); }
+  .channels { list-style: none; padding: 0; margin: 0 0 var(--s-6); display: grid; grid-template-columns: 1fr; gap: var(--s-3); }
+  @media (min-width: 480px) { .channels { grid-template-columns: 1fr 1fr; } }
+  .channel { display: grid; grid-template-columns: 40px 1fr auto; gap: var(--s-3); align-items: center; padding: var(--s-3) var(--s-4); background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-pkg); color: var(--fg); text-decoration: none; font: 600 var(--fs-small) var(--font-sans); transition: border-color var(--t-base) var(--ease-out); min-block-size: 56px; }
   .channel:hover, .channel:focus-visible { border-color: var(--accent); color: var(--fg); }
   .glyph { inline-size: 40px; block-size: 40px; display: grid; place-items: center; background: color-mix(in oklab, var(--accent) 12%, transparent); color: var(--accent); border-radius: var(--r-icon); font: 700 var(--fs-small) var(--font-mono); }
   .tone-cyan .glyph { background: color-mix(in oklab, var(--cyan) 12%, transparent); color: var(--cyan); }
   .tone-lime .glyph { background: color-mix(in oklab, var(--lime) 12%, transparent); color: var(--lime); }
   .arrow { color: var(--accent); }
 
-  .form { display: grid; gap: var(--s-3); max-inline-size: 500px; padding: var(--s-5); background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--r-card); }
-  .form-head { color: var(--fg-dim); margin: 0 0 var(--s-3); font-size: var(--fs-small); }
+  .form { display: grid; gap: var(--s-3); padding-block-start: var(--s-5); border-block-start: 1px solid var(--border-soft); }
+  .form-head { color: var(--fg-dim); margin: 0 0 var(--s-2); font-size: var(--fs-small); }
   .row { display: grid; grid-template-columns: 80px 1fr; gap: var(--s-3); align-items: start; }
   .k { color: var(--accent); font: 400 var(--fs-micro) var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; padding-block-start: 8px; }
   .form input, .form textarea { inline-size: 100%; padding: var(--s-3); background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-pkg); color: var(--fg); font: 400 var(--fs-body) var(--font-sans); }
