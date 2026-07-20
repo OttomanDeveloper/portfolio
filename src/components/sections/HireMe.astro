@@ -288,5 +288,8 @@ const mediumHref = 'https://ottomancoder.medium.com/';
   .fallback .dim { color: var(--fg-dim); font-size: var(--fs-small); }
   .fallback code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font: 400 var(--fs-small) var(--font-mono); color: var(--accent); }
 
-  @media (max-width: 479px) { .row { grid-template-columns: 1fr; } .channel { grid-template-columns: 40px 1fr; } .channel .arrow { grid-column: 2; justify-self: end; } }
+  /* Tiny screens: stack form labels above inputs. Channel tiles keep their
+     single-row 40px | label | arrow grid — wrapping the arrow to a second
+     row left tall tiles with dead space. */
+  @media (max-width: 479px) { .row { grid-template-columns: 1fr; } }
 </style>
