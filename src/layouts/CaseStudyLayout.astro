@@ -100,7 +100,7 @@ const isWide = (s: string) => !!proj?.web || /desktop|landscape|wide/.test(s);
   @media (min-width: 1024px) {
     .container { max-inline-size: 1140px; }
     .layout {
-      grid-template-columns: minmax(0, 1fr) 320px;
+      grid-template-columns: minmax(0, 1fr) 260px;
       column-gap: var(--s-8);
       align-items: start;
     }
@@ -141,7 +141,7 @@ const isWide = (s: string) => !!proj?.web || /desktop|landscape|wide/.test(s);
   .shots::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
   /* Gallery grows with the viewport (kept after the base rule so it wins the cascade) */
   @media (min-width: 768px) { .shots img { block-size: clamp(280px, 38svh, 340px); } }
-  @media (min-width: 1024px) { .shots img { block-size: clamp(300px, 36svh, 380px); } }
+  @media (min-width: 1024px) { .shots img { block-size: clamp(360px, 48svh, 500px); } }
 
   .prose { font-family: var(--font-sans); font-size: var(--fs-prose); line-height: var(--lh-prose); color: var(--fg-dim); max-inline-size: 68ch; }
   .prose :global(h2) { color: var(--fg); font: 700 var(--fs-section) var(--font-sans); margin: var(--s-7) 0 var(--s-3); }
