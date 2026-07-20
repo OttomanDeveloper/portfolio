@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import StatsRow from '@/components/atoms/StatsRow.astro';
 import { withBase } from '@/lib/paths';
+import { showcaseProjects } from '@/data/showcase';
 
 interface Props {
   title: string;
@@ -13,6 +14,12 @@ interface Props {
   sourceUrl?: string;
 }
 const { title, slug, tagline, stack, stats, liveUrl, sourceUrl } = Astro.props;
+
+// Screenshot gallery — sourced from the matching showcase entry so case
+// studies stay in sync with the project data without repeating file lists.
+const proj = showcaseProjects.find((p) => p.slug === slug);
+const screens = proj?.screens ?? [];
+const isWide = (s: string) => !!proj?.web || /desktop|landscape|wide/.test(s);
 ---
 <BaseLayout title={`${title} — case study`} description={tagline}>
   <div class="progress" aria-hidden="true"></div>
@@ -30,6 +37,20 @@ const { title, slug, tagline, stack, stats, liveUrl, sourceUrl } = Astro.props;
       </div>
     </div>
     <StatsRow stats={stats} compact />
+    {screens.length > 0 && (
+      <div class="shots" tabindex="0" aria-label={`${title} screenshots`}>
+        {screens.map((s, i) => (
+          <img
+            src={withBase(`/screens/${s}`)}
+            alt={`${title} screen ${i + 1}`}
+            width={isWide(s) ? 1080 : 540}
+            height={isWide(s) ? 692 : 1200}
+            loading={i < 3 ? 'eager' : 'lazy'}
+            decoding="async"
+          />
+        ))}
+      </div>
+    )}
     <div class="prose"><slot /></div>
     <p class="back"><a href={withBase('/projects')}>← back to projects</a></p>
   </article>
@@ -53,6 +74,31 @@ const { title, slug, tagline, stack, stats, liveUrl, sourceUrl } = Astro.props;
   .secondary { color: var(--accent); border: 1px solid var(--border-soft); }
   .primary:hover { background: color-mix(in oklab, var(--accent) 80%, white); color: var(--bg); }
   .secondary:hover { border-color: var(--accent); color: var(--fg); }
+  /* Screenshot strip — fixed height, natural widths, horizontal scroll */
+  .shots {
+    display: flex; gap: var(--s-3);
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    padding-block: var(--s-2) var(--s-3);
+    margin-block: var(--s-6) var(--s-4);
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+    -webkit-overflow-scrolling: touch;
+  }
+  .shots:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: var(--r-pkg); }
+  .shots img {
+    flex: 0 0 auto;
+    block-size: clamp(240px, 38svh, 320px);
+    inline-size: auto;
+    object-fit: contain;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg-elev);
+    scroll-snap-align: start;
+  }
+  .shots::-webkit-scrollbar { block-size: 8px; }
+  .shots::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
   .prose { font-family: var(--font-sans); font-size: var(--fs-prose); line-height: var(--lh-prose); color: var(--fg-dim); }
   .prose :global(h2) { color: var(--fg); font: 700 var(--fs-section) var(--font-sans); margin: var(--s-7) 0 var(--s-3); }
   .prose :global(h3) { color: var(--fg); font: 700 var(--fs-h3) var(--font-sans); margin: var(--s-6) 0 var(--s-3); }
