@@ -127,14 +127,22 @@ const pickThumb = (screens: readonly string[]) =>
         <p class="m-tagline">{p.tagline}</p>
 
         <div class={`gallery${p.web ? ' web' : ''}`} tabindex="0" aria-label={`${p.name} screenshots`}>
-          {p.screens.map((s, i) => (
-            <img
-              class="shot"
-              src={withBase(`/screens/${s}`)}
-              alt={`${p.name} screen ${i + 1}`}
-              width={p.web ? 1280 : 540} height={p.web ? 620 : 1200} loading="lazy" decoding="async"
-            />
-          ))}
+          {p.screens.map((s, i) => {
+            {/* Landscape shots (desktop/web captures) carry landscape width/height
+                attrs so the browser's aspect-ratio hint doesn't letterbox them
+                into a phone-shaped box (inline-size is auto in the gallery). */}
+            const wide = /desktop|landscape|wide/.test(s);
+            return (
+              <img
+                class="shot"
+                src={withBase(`/screens/${s}`)}
+                alt={`${p.name} screen ${i + 1}`}
+                width={p.web ? 1280 : wide ? 1080 : 540}
+                height={p.web ? 620 : wide ? 692 : 1200}
+                loading="lazy" decoding="async"
+              />
+            );
+          })}
         </div>
 
         <div class="m-grid">
