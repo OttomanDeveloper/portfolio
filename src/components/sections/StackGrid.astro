@@ -2,44 +2,128 @@
 // src/components/sections/StackGrid.astro
 import SectionLabel from '@/components/atoms/SectionLabel.astro';
 import { stack } from '@/data/stack';
+
+// Chips highlighted as everyday drivers — rendered in the card's tone color.
+const CORE = new Set([
+  'Dart',
+  'Flutter (Android, iOS, Web, Desktop)',
+  'BLoC / Cubit',
+  'Firebase',
+  'Supabase',
+  'REST',
+  'Gemini AI',
+  'Bluetooth Low Energy (BLE)',
+]);
+
+// Per-category tone accents (defaults to gold) — mirrors the featured badges.
+const TONE: Record<string, string> = {
+  Backend: 'lime',
+  Hardware: 'lime',
+  'AI/ML': 'cyan',
+  Vision: 'cyan',
+};
 ---
 <section id="stack">
   <div class="container">
     <SectionLabel n={7} name="stack · day-to-day" />
-    <dl class="grid">
-      {stack.map((g) => (
-        <div class="group">
-          <dt class="k">{g.category}</dt>
-          <dd class="v">
-            {g.chips.map((c) => <span class="chip">{c}</span>)}
-          </dd>
-        </div>
+    <p class="intro">
+      The tools I reach for every day — <strong>Flutter-first</strong>, backed by real backend,
+      hardware and on-device AI work. <span class="hint">▸ tinted chips = on most projects</span>
+    </p>
+
+    <div class="grid">
+      {stack.map((g, i) => (
+        <article class={`card${TONE[g.category] ? ` tone-${TONE[g.category]}` : ''}`}>
+          <header class="head">
+            <span class="idx" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="cat">{g.category}</h3>
+            <span class="count" aria-label={`${g.chips.length} tools`}>{g.chips.length}</span>
+          </header>
+          <ul class="chips">
+            {g.chips.map((c) => <li class={`chip${CORE.has(c) ? ' core' : ''}`}>{c}</li>)}
+          </ul>
+        </article>
       ))}
-    </dl>
+    </div>
   </div>
 </section>
 
 <style>
   #stack { padding-block: clamp(var(--s-8), 8vw, var(--s-10)); }
 
-  /* Single column of category rows on phones/portrait tablets; two balanced
-     columns from ~landscape-tablet up so the chips fill the width instead of
-     hugging the left half. */
+  .intro { color: var(--fg-dim); max-inline-size: 62ch; margin: 0 0 var(--s-7); }
+  .intro .hint {
+    display: inline-block;
+    color: var(--accent);
+    font: 400 var(--fs-micro) var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-inline-start: var(--s-2);
+  }
+
+  /* 1 → 2 → 3 columns; 9 categories tile into three clean rows on desktop. */
   .grid {
     display: grid;
     grid-template-columns: 1fr;
-    align-items: start;
-    row-gap: var(--s-4);
-    column-gap: clamp(var(--s-6), 5vw, var(--s-9));
-    margin: 0;
+    gap: var(--s-4);
   }
-  @media (min-width: 1024px) { .grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 640px)  { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); } }
 
-  /* Each category keeps the original "label | chips" row layout. */
-  .group { display: grid; grid-template-columns: 140px 1fr; gap: var(--s-2) var(--s-5); align-items: baseline; }
-  @media (max-width: 479px) { .group { grid-template-columns: 1fr; gap: var(--s-1); } .k { padding-block-start: var(--s-3); } }
+  .card {
+    --tone: var(--accent);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-4);
+    padding: var(--s-5);
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+    transition: transform var(--t-base) var(--ease-out),
+                border-color var(--t-base) var(--ease-out),
+                box-shadow var(--t-base) var(--ease-out);
+  }
+  .card.tone-lime { --tone: var(--lime); }
+  .card.tone-cyan { --tone: var(--cyan); }
+  @media (hover: hover) and (pointer: fine) {
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: color-mix(in oklab, var(--tone) 55%, var(--border));
+      box-shadow: 0 20px 40px -20px oklch(20% 0.02 80 / 0.5);
+    }
+  }
 
-  .k { color: var(--accent); font: 400 var(--fs-micro) var(--font-mono); text-transform: uppercase; letter-spacing: 0.12em; align-self: baseline; padding-block-start: 6px; margin: 0; }
-  .v { margin: 0; display: flex; flex-wrap: wrap; gap: var(--s-2); }
-  .chip { display: inline-block; padding: 4px 10px; background: color-mix(in oklab, var(--fg) 5%, transparent); border: 1px solid var(--border); border-radius: var(--r-pill); font: 400 var(--fs-small) var(--font-sans); color: var(--fg); }
+  .head { display: flex; align-items: baseline; gap: var(--s-3); }
+  .idx { color: var(--tone); font: 400 var(--fs-micro) var(--font-mono); letter-spacing: 0.12em; }
+  .cat {
+    margin: 0;
+    color: var(--fg);
+    font: 600 var(--fs-small) var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .count {
+    margin-inline-start: auto;
+    padding: 1px 9px;
+    color: var(--fg-dim);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--r-pill);
+    font: 400 var(--fs-micro) var(--font-mono);
+  }
+
+  .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--s-2); }
+  .chip {
+    padding: 4px 10px;
+    background: color-mix(in oklab, var(--fg) 5%, transparent);
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    font: 400 var(--fs-small) var(--font-sans);
+    color: var(--fg);
+  }
+  .chip.core {
+    color: var(--tone);
+    font-weight: 600;
+    border-color: color-mix(in oklab, var(--tone) 45%, transparent);
+    background: color-mix(in oklab, var(--tone) 9%, transparent);
+  }
 </style>
