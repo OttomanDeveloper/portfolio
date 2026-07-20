@@ -3,41 +3,54 @@
 import SectionLabel from '@/components/atoms/SectionLabel.astro';
 import { withBase } from '@/lib/paths';
 import { experience } from '@/data/experience';
+
+const isCurrent = (period: string) => /present/i.test(period);
 ---
 <section id="experience">
   <div class="container">
     <SectionLabel n={6} name="experience" />
+    <p class="intro">
+      Five years, five roles — <strong>freelance and embedded</strong> — from solo-shipping
+      50+ client apps to senior mobile work on international product teams.
+    </p>
+
     <ol class="timeline">
       {experience.map((e) => (
-        <li class="entry">
+        <li class={`entry${isCurrent(e.period) ? ' is-now' : ''}`}>
+          <p class="period">
+            {e.period}
+            {isCurrent(e.period) && <span class="ongoing"><span class="odot" aria-hidden="true"></span>now</span>}
+          </p>
           <span class="dot" aria-hidden="true"></span>
-          <p class="period">{e.period}</p>
-          <h3 class="role">
-            {e.role}{' '}
-            <span class="at">@</span>{' '}
-            {e.companyHref
-              ? <a href={e.companyHref} target="_blank" rel="noopener noreferrer">{e.company}</a>
-              : <span>{e.company}</span>}
-          </h3>
-          <p class="body">{e.body}</p>
 
-          {e.projects && e.projects.length > 0 && (
-            <div class="work">
-              <span class="work-k">Shipped</span>
-              <ul class="work-list">
-                {e.projects.map((p) => (
-                  <li>
-                    {p.slug
-                      ? <a class="work-chip" href={withBase(`/projects#proj-${p.slug}`)}>{p.name}<span class="arr" aria-hidden="true">↗</span></a>
-                      : <span class="work-chip is-static">{p.name}</span>}
-                  </li>
-                ))}
-                {e.allLink && (
-                  <li><a class="work-chip is-all" href={withBase('/projects')}>All projects<span class="arr" aria-hidden="true">→</span></a></li>
-                )}
-              </ul>
-            </div>
-          )}
+          <div class="card">
+            <h3 class="role">
+              {e.role}{' '}
+              <span class="at">@</span>{' '}
+              {e.companyHref
+                ? <a href={e.companyHref} target="_blank" rel="noopener noreferrer">{e.company}</a>
+                : <span class="co">{e.company}</span>}
+            </h3>
+            <p class="body">{e.body}</p>
+
+            {e.projects && e.projects.length > 0 && (
+              <div class="work">
+                <span class="work-k">Shipped</span>
+                <ul class="work-list">
+                  {e.projects.map((p) => (
+                    <li>
+                      {p.slug
+                        ? <a class="work-chip" href={withBase(`/projects#proj-${p.slug}`)}>{p.name}<span class="arr" aria-hidden="true">↗</span></a>
+                        : <span class="work-chip is-static">{p.name}</span>}
+                    </li>
+                  ))}
+                  {e.allLink && (
+                    <li><a class="work-chip is-all" href={withBase('/projects')}>All projects<span class="arr" aria-hidden="true">→</span></a></li>
+                  )}
+                </ul>
+              </div>
+            )}
+          </div>
         </li>
       ))}
     </ol>
@@ -46,10 +59,17 @@ import { experience } from '@/data/experience';
 
 <style>
   #experience { padding-block: clamp(var(--s-8), 8vw, var(--s-10)); }
+
+  .intro { color: var(--fg-dim); max-inline-size: 62ch; margin: 0 0 var(--s-7); }
+  .intro strong { color: var(--fg); font-weight: 600; }
+
+  /* Mobile-first: rail on the left, period above each card. */
   .timeline {
     list-style: none; padding: 0; margin: 0;
     position: relative;
     padding-inline-start: var(--s-6);
+    display: grid;
+    gap: var(--s-5);
   }
   .timeline::before {
     content: '';
@@ -57,33 +77,71 @@ import { experience } from '@/data/experience';
     inset-block: 6px;
     inset-inline-start: 5px;
     inline-size: 1px;
-    background: var(--border-soft);
+    background: linear-gradient(to bottom, var(--accent) 0%, var(--border-soft) 22%, var(--border-soft) 100%);
   }
-  .entry { position: relative; padding-block: var(--s-5); }
-  .entry:first-child { padding-block-start: 0; }
+  .entry { position: relative; }
   .dot {
     position: absolute;
-    inset-block-start: var(--s-5);
+    inset-block-start: 4px;
     inset-inline-start: calc(-1 * var(--s-6) + 1px);
     inline-size: 11px; block-size: 11px;
     border-radius: 50%;
     background: var(--accent);
     box-shadow: 0 0 0 4px var(--bg);
   }
-  .entry:first-child .dot { inset-block-start: 0; }
+  .is-now .dot { background: var(--lime); box-shadow: 0 0 0 4px var(--bg), 0 0 12px var(--lime); }
+
   .period {
     color: var(--accent);
     font: 400 var(--fs-micro) var(--font-mono);
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    margin: 0 0 var(--s-2);
+    margin: 0 0 var(--s-3);
+    display: inline-flex; align-items: center; gap: var(--s-3);
   }
+  .ongoing {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 2px 9px;
+    border: 1px solid color-mix(in oklab, var(--lime) 40%, transparent);
+    border-radius: var(--r-pill);
+    background: color-mix(in oklab, var(--lime) 9%, transparent);
+    color: var(--lime);
+    letter-spacing: 0.1em;
+  }
+  .ongoing .odot {
+    inline-size: 6px; block-size: 6px; border-radius: 50%;
+    background: var(--lime); box-shadow: 0 0 6px var(--lime);
+    animation: xp-pulse 2s ease-in-out infinite;
+  }
+  @keyframes xp-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+  @media (prefers-reduced-motion: reduce) { .ongoing .odot { animation: none; } }
+
+  /* Entry card — same hover language as the featured / stack cards */
+  .card {
+    padding: var(--s-5);
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+    transition: transform var(--t-base) var(--ease-out),
+                border-color var(--t-base) var(--ease-out),
+                box-shadow var(--t-base) var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .entry:hover .card {
+      transform: translateY(-2px);
+      border-color: color-mix(in oklab, var(--accent) 45%, var(--border));
+      box-shadow: 0 18px 36px -20px oklch(20% 0.02 80 / 0.5);
+    }
+    .is-now:hover .card { border-color: color-mix(in oklab, var(--lime) 45%, var(--border)); }
+  }
+
   .role {
     color: var(--fg);
     font: 700 var(--fs-h3) var(--font-sans);
     margin: 0 0 var(--s-2);
   }
   .at { color: var(--fg-dim); font-weight: 400; }
+  .co { color: var(--accent); }
   .role a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--border-soft); }
   .role a:hover { border-bottom-color: var(--accent); color: var(--fg); }
   .body { color: var(--fg-dim); margin: 0; max-inline-size: 65ch; line-height: var(--lh-default); }
@@ -91,7 +149,9 @@ import { experience } from '@/data/experience';
   /* Projects shipped during the role — compact chip row */
   .work {
     display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2);
-    margin-block-start: var(--s-3);
+    margin-block-start: var(--s-4);
+    padding-block-start: var(--s-4);
+    border-block-start: 1px solid var(--border-soft);
   }
   .work-k {
     color: var(--fg-dim);
@@ -105,17 +165,39 @@ import { experience } from '@/data/experience';
     padding: 4px 11px;
     border: 1px solid var(--border);
     border-radius: var(--r-pill);
-    background: var(--bg-elev);
+    background: var(--bg);
     color: var(--fg);
     font: 600 var(--fs-small) var(--font-sans);
     text-decoration: none;
     transition: border-color var(--t-fast) var(--ease-out), color var(--t-fast) var(--ease-out), background var(--t-fast) var(--ease-out);
   }
   .work-chip .arr { color: var(--accent); font-size: 0.85em; }
-  a.work-chip:hover { border-color: var(--accent); color: var(--accent); background: color-mix(in oklab, var(--accent) 8%, var(--bg-elev)); }
+  a.work-chip:hover { border-color: var(--accent); color: var(--accent); background: color-mix(in oklab, var(--accent) 8%, var(--bg)); }
   a.work-chip:hover .arr { color: inherit; }
   a.work-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .work-chip.is-static { color: var(--fg-dim); cursor: default; }
   .work-chip.is-all { color: var(--accent); border-style: dashed; }
   .work-chip.is-all:hover { border-style: solid; }
+
+  /* Desktop: resume split — right-aligned dates in a left gutter, rail between
+     gutter and cards. (Overrides after base rules win the cascade.) */
+  @media (min-width: 1024px) {
+    .timeline { padding-inline-start: 0; }
+    .timeline::before { inset-inline-start: 200px; }
+    .entry {
+      display: grid;
+      grid-template-columns: 176px minmax(0, 1fr);
+      column-gap: var(--s-8);
+    }
+    .period {
+      grid-column: 1;
+      justify-self: end;
+      text-align: end;
+      flex-direction: column; align-items: flex-end; gap: var(--s-2);
+      margin: 0;
+      padding-block-start: var(--s-5);
+    }
+    .dot { inset-inline-start: 195px; inset-block-start: calc(var(--s-5) + 2px); }
+    .card { grid-column: 2; }
+  }
 </style>
