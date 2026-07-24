@@ -658,31 +658,35 @@ export const showcaseProjects: ShowcaseProject[] = [
   },
   {
     // Cross-matches the existing minimal `yt-master` entry in projects.ts.
-    // Shipped under the in-app brand "ProBooster"; spans a user app + admin panel.
+    // Shipped 2021 under the in-app brand "ProBooster" (user app + admin panel);
+    // major modernization & security overhaul 2026, now live as Flutter web
+    // demos (landing + user app + view-only admin) on GitHub Pages. Source repos
+    // stay private; the public ytmaster-showcase repo holds the compiled builds.
     slug: 'yt-master',
     name: 'YT Master',
     packageId: 'com.subforsub.ytmaster',
-    year: 2021,
+    year: 2026,
     role: 'sole developer',
     client: 'Client project',
     category: 'YouTube Marketing / Coin Economy',
-    tagline: 'YouTube growth marketplace with a coin economy + admin panel',
+    tagline: 'Two-sided YouTube growth marketplace — API-verified earning, live demo',
     description:
-      'A YouTube growth platform spanning a user app ("YT Master") and an admin panel ("YT Master Admin"). Users buy coins via manual Bank/Easypaisa/JazzCash payments, spend them on view/subscriber/watch-time campaigns, earn coins by watching videos and through referrals, and buy or sell monetized YouTube channels in a marketplace that lists each channel\'s subscribers, monetization status and price. The admin app manages coin packages, channel listings, order requests, users and app settings.',
+      'A two-sided YouTube growth marketplace spanning a user app ("YT Master", in-app brand "ProBooster") and a claim-gated admin panel — shipped in 2021, then given a major 2026 modernization and security overhaul, now live as Flutter web demos. Members earn coins by genuinely watching (anti-cheat playback-position tracking — seeking, stalling, backgrounding or 2x speed earns nothing) and subscribing, with every claim verified against the member\'s own YouTube account via the YouTube Data API — no honor system. Coins fund view / subscriber / watch-time campaigns that settle in atomic Firestore transactions, top up through local rails (Easypaisa / JazzCash / bank) with admin approval, and flow through a channel marketplace and referral codes. The admin panel adds a live-KPI dashboard, order review, user management and catalog editors behind a Firebase admin claim — including a public view-only demo login — all on a deliberately zero-paid-backend architecture with deployed Firestore rules smoke-tested by 46 automated assertions.',
     motive:
-      'Give creators a one-stop marketplace to grow their channels and trade them, with the owner able to run the whole economy from a phone.',
-    techStack: ['Flutter', 'Provider', 'Firebase (Auth + Firestore)', 'youtube_player_flutter', 'AdMob', 'Manual payment workflow'],
+      'Give creators a one-stop marketplace to grow their channels — rebuilt so every reward is verifiably earned and the whole economy runs without a paid backend.',
+    techStack: ['Flutter', 'Provider + go_router', 'Firebase (Auth + Firestore + Rules)', 'YouTube Data API v3', 'youtube_player_iframe', 'ThemeExtension design tokens'],
     features: [
-      'Coin economy with manual top-up (Bank / Easypaisa / JazzCash)',
-      'View / subscriber / watch-time campaigns',
-      'Earn coins by watching videos',
-      'Channel marketplace (subscribers, monetization, price)',
-      'Referral rewards (+coins per invite)',
-      'Admin: manage coin packs, listings, orders, users',
+      'Watch & Earn with anti-cheat playback-position tracking',
+      'Subscribe & Earn verified via YouTube Data API — no honor system',
+      'Campaigns settle in atomic Firestore transactions',
+      'Coin store via Easypaisa / JazzCash / bank + admin approval',
+      'Channel marketplace & referral codes',
+      'Admin: live KPIs, orders, users, catalogs — public view-only demo',
     ],
-    status: 'shelved',
+    status: 'live',
     storeLink: null,
-    githubLink: null,
+    githubLink: 'https://github.com/OttomanDeveloper/ytmaster-showcase',
+    liveLink: 'https://ottomandeveloper.github.io/ytmaster-showcase/',
     screens: [
       'yt_master_home.avif',
       'yt_master_referral.avif',
