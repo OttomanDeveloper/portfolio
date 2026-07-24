@@ -115,26 +115,43 @@ const pickThumb = (screens: readonly string[]) =>
     )}
 
     <div class="grid">
-      {items.map((p) => (
-        <a class={`card g-${p.group}${p.web ? ' web' : ''}`} href={`#proj-${p.slug}`} aria-label={`Open ${p.name} details`}>
-          <figure class="shot">
-            <img
-              src={withBase(`/screens/${pickThumb(p.screens)}`)}
-              alt={`${p.name} screenshot`}
-              width="540" height="1200" loading="lazy" decoding="async"
-            />
-          </figure>
-          <div class="content">
-            <p class="meta"><span class="cat">{p.category}</span><span class="dot">·</span><span>{p.year}</span></p>
-            <h3 class="name">{p.name}</h3>
-            <p class="tagline">{p.tagline}</p>
-            <ul class="chips" aria-hidden="true">
-              {p.techStack.slice(0, 3).map((t) => <li>{t}</li>)}
-            </ul>
-            <p class="count" aria-hidden="true">{p.screens.length} screens · view gallery →</p>
-          </div>
-        </a>
-      ))}
+      {items.map((p) => {
+        {/* The card is no longer one big <a> — a stretched overlay link opens the
+            gallery, and try-buttons sit above it (z-index) so testable projects
+            are one tap away without opening the modal. */}
+        const apkHref = p.storeLink ?? (p.githubLink && /\/releases/.test(p.githubLink) ? p.githubLink : null);
+        return (
+          <article class={`card g-${p.group}${p.web ? ' web' : ''}`}>
+            <a class="card-link" href={`#proj-${p.slug}`} aria-label={`Open ${p.name} details`}></a>
+            <figure class="shot">
+              <img
+                src={withBase(`/screens/${pickThumb(p.screens)}`)}
+                alt={`${p.name} screenshot`}
+                width="540" height="1200" loading="lazy" decoding="async"
+              />
+            </figure>
+            <div class="content">
+              <p class="meta"><span class="cat">{p.category}</span><span class="dot">·</span><span>{p.year}</span></p>
+              <h3 class="name">{p.name}</h3>
+              <p class="tagline">{p.tagline}</p>
+              <ul class="chips" aria-hidden="true">
+                {p.techStack.slice(0, 3).map((t) => <li>{t}</li>)}
+              </ul>
+              <p class="count" aria-hidden="true">{p.screens.length} screens · view gallery →</p>
+              {(p.liveLink || apkHref) && (
+                <div class="try">
+                  {p.liveLink && <a class="try-btn" href={p.liveLink} target="_blank" rel="noopener noreferrer">▶ Try live ↗</a>}
+                  {apkHref && (
+                    <a class={`try-btn${p.liveLink ? ' alt' : ''}`} href={apkHref} target="_blank" rel="noopener noreferrer">
+                      {/play\.google/.test(apkHref) ? 'Play Store ↗' : 'Get APK ↗'}
+                    </a>
+                  )}
+                </div>
+              )}
+            </div>
+          </article>
+        );
+      })}
     </div>
 
     {viewAllHref && (
@@ -278,6 +295,7 @@ const pickThumb = (screens: readonly string[]) =>
   @media (min-width: 768px) { .grid { grid-template-columns: 1fr 1fr; } }
 
   .card {
+    position: relative;
     display: grid;
     grid-template-columns: auto 1fr;
     gap: var(--s-5);
@@ -293,6 +311,9 @@ const pickThumb = (screens: readonly string[]) =>
                 border-color var(--t-base) var(--ease-out),
                 box-shadow var(--t-base) var(--ease-out);
   }
+  /* Stretched link: covers the card to open the gallery; try-buttons layer above. */
+  .card-link { position: absolute; inset: 0; z-index: 1; border-radius: var(--r-card); }
+  .card-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   @media (hover: hover) and (pointer: fine) {
     .card:hover {
       transform: translateY(-4px);
@@ -301,7 +322,7 @@ const pickThumb = (screens: readonly string[]) =>
     }
     .card:hover .shot img { transform: scale(1.05); }
   }
-  .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .card:has(.card-link:hover) { cursor: pointer; }
 
   .shot {
     margin: 0;
@@ -349,6 +370,31 @@ const pickThumb = (screens: readonly string[]) =>
     font: 600 var(--fs-micro) var(--font-mono);
     letter-spacing: 0.08em; text-transform: uppercase;
   }
+
+  /* Try-buttons — above the stretched link, 40px tap targets on every viewport */
+  .try { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-block-start: var(--s-3); position: relative; z-index: 2; }
+  .try-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: var(--s-2) var(--s-4);
+    min-block-size: 40px;
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: var(--r-pill);
+    color: var(--bg);
+    font: 600 var(--fs-micro) var(--font-sans);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: filter var(--t-fast) var(--ease-out), border-color var(--t-fast) var(--ease-out),
+                color var(--t-fast) var(--ease-out), background var(--t-fast) var(--ease-out);
+  }
+  .try-btn:hover { filter: brightness(1.12); }
+  .try-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .try-btn.alt {
+    background: color-mix(in oklab, var(--accent) 9%, transparent);
+    color: var(--accent);
+    border-color: color-mix(in oklab, var(--accent) 45%, transparent);
+  }
+  .try-btn.alt:hover { filter: none; border-color: var(--accent); }
 
   /* Very narrow phones: stack shot above content */
   @media (max-width: 380px) {
