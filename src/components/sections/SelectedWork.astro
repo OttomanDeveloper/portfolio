@@ -60,10 +60,20 @@ const TOP_ORDER = [
 ];
 const rank = (slug: string) => { const i = TOP_ORDER.indexOf(slug); return i === -1 ? TOP_ORDER.length : i; };
 
+// Projects a visitor can actually try — live web demo or a downloadable/store
+// app — sort ahead of everything else; TOP_ORDER breaks ties within each group.
+const testable = (p: (typeof showcaseProjects)[number]) =>
+  !!(p.liveLink || p.storeLink || (p.githubLink && /\/releases/.test(p.githubLink)));
+
 const all = showcaseProjects
   .filter((p) => includeFeatured || !FEATURED_SLUGS.includes(p.slug))
   .map((p, idx) => ({ ...p, group: GROUPS[p.slug] ?? 'other', _idx: idx }))
-  .sort((a, b) => rank(a.slug) - rank(b.slug) || a._idx - b._idx);
+  .sort(
+    (a, b) =>
+      Number(testable(b)) - Number(testable(a)) ||
+      rank(a.slug) - rank(b.slug) ||
+      a._idx - b._idx,
+  );
 const items = limit ? all.slice(0, limit) : all;
 
 const counts = Object.fromEntries(
