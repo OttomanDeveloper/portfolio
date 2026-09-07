@@ -30,6 +30,7 @@ const isCurrent = (period: string) => /present/i.test(period);
               {e.companyHref
                 ? <a href={e.companyHref} target="_blank" rel="noopener noreferrer">{e.company}</a>
                 : <span class="co">{e.company}</span>}
+              {e.location && <span class="loc"> · {e.location}</span>}
             </h3>
             <p class="body">{e.body}</p>
 
@@ -141,6 +142,7 @@ const isCurrent = (period: string) => /present/i.test(period);
     margin: 0 0 var(--s-2);
   }
   .at { color: var(--fg-dim); font-weight: 400; }
+  .loc { color: var(--fg-dim); font-weight: 400; font-size: 0.72em; }
   .co { color: var(--accent); }
   .role a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--border-soft); }
   .role a:hover { border-bottom-color: var(--accent); color: var(--fg); }

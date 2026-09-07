@@ -29,6 +29,6 @@ export const profile = {
     { num: '600K', unit: '+', desc: 'peak users on Legend TV' },
     { num: '50',   unit: '+', desc: 'production apps shipped' },
     { num: '#1',              desc: 'Play Store category, 5 months' },
-    { num: '9',    unit: ' pkgs', desc: 'open-source on pub.dev' },
+    { num: '13',   unit: ' pkgs', desc: 'open-source on pub.dev' },
   ],
 } as const;

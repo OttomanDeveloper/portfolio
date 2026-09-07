@@ -133,6 +133,7 @@ export const showcaseProjects: ShowcaseProject[] = [
       'Give Saudi households one trusted app to book and pay home-service professionals, with real-time order matching and location tracking.',
     techStack: ['Flutter', 'GetX', 'Firebase', 'Google Maps', 'STC Pay', 'OneSignal'],
     features: [
+      '~21-day MVP · shipped to App Store + Play',
       'Service catalogue (carpentry / AC / electrician / plumber / …)',
       'Order with job details + Cash or STC Pay',
       'Live map tracking (Google Maps + geolocator)',

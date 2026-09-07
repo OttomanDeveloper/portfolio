@@ -5,6 +5,7 @@ export type Experience = {
   role: string;
   company: string;
   companyHref: string | null;
+  location?: string;
   body: string;
   // Projects shipped during this role. `slug` links to the project's gallery on
   // /projects (#proj-<slug>); a chip with no slug is shown as plain text.
@@ -19,6 +20,7 @@ export const experience: Experience[] = [
     role: 'Senior Mobile App Developer',
     company: 'BeInMedia · Nmo AI',
     companyHref: 'https://www.beinmedia.com/',
+    location: 'Remote · Kuwait',
     body: 'AI-powered fitness app — BLE health-device sync, Gemini AI coaching, Flutter architecture for a cross-functional international team.',
     projects: [{ name: 'Nmo AI · BLE fitness' }],
   },
@@ -50,6 +52,7 @@ export const experience: Experience[] = [
     role: 'Senior Flutter Developer',
     company: 'Fulfil Supply Chain',
     companyHref: null,
+    location: 'Remote · Vientiane, Laos',
     body: 'Cross-border e-commerce — OpenCart API, real-time inventory sync across countries. Firebase Auth + FCM. Measurable startup-time gains.',
     projects: [{ name: 'CourierGo', slug: 'couriergo' }],
   },
@@ -58,7 +61,8 @@ export const experience: Experience[] = [
     role: 'Senior Flutter Developer',
     company: 'HomyKSA',
     companyHref: null,
-    body: 'Home services marketplace for Saudi Arabia — real-time order matching, payments, worker management.',
+    location: 'Remote · Saudi Arabia',
+    body: 'Home services marketplace for Saudi Arabia — real-time order matching, payments, worker management. Shipped ~21-day MVP · App Store + Play.',
     projects: [{ name: 'Homy', slug: 'homy' }],
   },
 ];
