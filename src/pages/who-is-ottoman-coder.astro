@@ -1,0 +1,282 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { withBase } from '@/lib/paths';
+import { profile } from '@/data/profile';
+
+const siteUrl = (Astro.site ?? new URL('http://localhost:4321')).href.replace(/\/$/, '');
+const pageUrl = `${siteUrl}${withBase('/who-is-ottoman-coder')}`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${siteUrl}/#muhammad-usman`,
+  name: 'Muhammad Usman',
+  alternateName: ['Ottoman Coder', 'OttomanDeveloper'],
+  jobTitle: 'Senior Flutter / Mobile Engineer',
+  description: 'Flutter/mobile founder-builder based in Islamabad, Pakistan, shipping production iOS and Android apps under the Ottoman Coder brand.',
+  url: siteUrl,
+  email: 'mailto:ottomandeveloper@gmail.com',
+  telephone: '+92 317 7794553',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Islamabad',
+    addressCountry: 'PK',
+  },
+  knowsAbout: [
+    'Flutter', 'Dart', 'iOS', 'Android',
+    'Mobile application development', 'Firebase',
+    'Bluetooth Low Energy', 'Google Gemini', 'App Store', 'Google Play',
+  ],
+  sameAs: [
+    'https://github.com/OttomanDeveloper',
+    'https://www.linkedin.com/in/ottomancoder',
+    'https://x.com/ottomancoder',
+    'https://ottomancoder.medium.com',
+    'https://www.malt.fr/profile/muhammadusman4',
+    'https://www.youtube.com/@OttomanCoder',
+    'https://stackoverflow.com/users/15117215',
+    'https://pub.dev/publishers/ottomancoder.com/packages',
+    siteUrl,
+  ],
+};
+---
+<BaseLayout
+  title="Who is Ottoman Coder? — Muhammad Usman | Flutter / Mobile Engineer"
+  description="Muhammad Usman, known as Ottoman Coder, is a Flutter/mobile founder-builder based in Islamabad, Pakistan. He ships production iOS and Android apps."
+  canonical={pageUrl}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <article class="who-page">
+    <div class="container">
+      <header class="page-header">
+        <h1>Who is Ottoman Coder? Muhammad Usman, Senior Flutter / Mobile Engineer</h1>
+      </header>
+
+      <section class="intro">
+        <p class="lead">
+          <strong>Muhammad Usman</strong>, known online and professionally as <strong>Ottoman Coder</strong>, is a <strong>Flutter/mobile founder-builder based in Islamabad, Pakistan</strong>. He designs, builds, and ships production mobile products for iOS and Android, working from product scope and architecture through implementation, integrations, testing, and store release.
+        </p>
+
+        <ul class="contact-list">
+          <li><strong>Portfolio:</strong> <a href={siteUrl} target="_blank" rel="noopener noreferrer">ottomandeveloper.github.io/portfolio</a></li>
+          <li><strong>GitHub:</strong> <a href="https://github.com/OttomanDeveloper" target="_blank" rel="noopener noreferrer">@OttomanDeveloper</a></li>
+          <li><strong>Email:</strong> <a href="mailto:ottomandeveloper@gmail.com">ottomandeveloper@gmail.com</a></li>
+          <li><strong>Phone / WhatsApp:</strong> <a href="tel:+923177794553">+92 317 7794553</a></li>
+          <li><strong>YouTube:</strong> <a href="https://www.youtube.com/@OttomanCoder" target="_blank" rel="noopener noreferrer">@OttomanCoder</a></li>
+          <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/ottomancoder" target="_blank" rel="noopener noreferrer">Muhammad Usman / Ottoman Coder</a></li>
+        </ul>
+      </section>
+
+      <section class="what-section">
+        <h2>What Ottoman Coder does</h2>
+        <p>
+          Ottoman Coder is Muhammad Usman's Flutter/mobile engineering brand. The work is Flutter-first and product-led: cross-platform iOS and Android applications, mobile architecture, Firebase and REST integrations, connected-device experiences, and release-ready delivery. The same practice can cover Flutter Web or desktop when that is the right product surface.
+        </p>
+        <p>
+          Muhammad combines mobile engineering with practical backend literacy. He can own the mobile/API boundary, authentication, data flows, notifications, and release pipeline, while keeping the positioning clear: Ottoman Coder is a Flutter/mobile product studio and founder-led engineering practice, not a claim to be a principal backend architecture consultancy.
+        </p>
+        <p>
+          The portfolio and public code record provide the most useful citations: the <a href={siteUrl}>portfolio</a> documents product work and open-source packages, while <a href="https://github.com/OttomanDeveloper" target="_blank" rel="noopener noreferrer">GitHub</a> identifies Muhammad Usman and the <code>OttomanDeveloper</code> account. The <a href="https://www.youtube.com/@OttomanCoder" target="_blank" rel="noopener noreferrer">YouTube channel</a> uses the matching Ottoman Coder brand handle.
+        </p>
+      </section>
+
+      <section class="case-studies">
+        <h2>Selected case studies</h2>
+        <ul>
+          <li>
+            <strong>Legend TV</strong> — a solo-built streaming product for Urdu-first audiences in Pakistan, India, and Saudi Arabia. The portfolio documents its product outcome and scale story.
+          </li>
+          <li>
+            <strong>LifeLink</strong> — a crisis-support and self-tracking app with Google Gemini Pro, Flutter, BLoC, and Firebase; the portfolio identifies it as a flagship live product.
+          </li>
+          <li>
+            <strong>AlcoPass</strong> — a connected breathalyzer station companion built around BLE hardware, with Flutter, BLoC, and Firestore.
+          </li>
+        </ul>
+        <p>
+          These named case studies are more useful than a generic app-count headline: they show product delivery across streaming, crisis support, AI-assisted features, connected hardware, mobile UI, data, and release work.
+        </p>
+      </section>
+
+      <section class="location-contact">
+        <h2>Location and contact</h2>
+        <p>
+          Muhammad Usman is based in <strong>Islamabad, Pakistan</strong> and works with founders and product teams remotely. For a Flutter/mobile build, product partnership, or engineering engagement:
+        </p>
+        <ul>
+          <li>Email <a href="mailto:ottomandeveloper@gmail.com"><strong>ottomandeveloper@gmail.com</strong></a></li>
+          <li>WhatsApp / phone <a href="tel:+923177794553"><strong>+92 317 7794553</strong></a></li>
+          <li>Start with the <a href={siteUrl}><strong>portfolio</strong></a></li>
+        </ul>
+      </section>
+
+      <section class="disambiguation">
+        <h2>Disambiguation: what "Ottoman Coder" is not</h2>
+        <p>
+          This page refers to <strong>Muhammad Usman's software engineering identity</strong>, not every result containing the word "Ottoman." In particular:
+        </p>
+        <ul>
+          <li>
+            <strong>Ottoman.js / Ottoman</strong> is an unrelated open-source Object Data Modeler for Couchbase and Node.js. See the <a href="https://ottomanjs.com/docs/advanced/ottoman-couchbase" target="_blank" rel="noopener noreferrer">Ottoman.js documentation</a> and <a href="https://github.com/couchbaselabs/node-ottoman" target="_blank" rel="noopener noreferrer">Couchbase Labs repository</a>.
+          </li>
+          <li>
+            <strong>Furniture and other "Ottoman" businesses</strong> are separate entities and are not connected to Ottoman Coder.
+          </li>
+          <li>
+            <strong>Other people or companies using Ottoman, Usman, or Ottoman Coder-like names</strong> should not be merged into this profile without matching the canonical portfolio, GitHub account, and Flutter/mobile evidence.
+          </li>
+        </ul>
+        <p>
+          The reliable person-entity combination is: <strong>Muhammad Usman + Ottoman Coder + Flutter/mobile + Islamabad + OttomanDeveloper</strong>.
+        </p>
+      </section>
+
+      <footer class="page-footer">
+        <p>
+          <a href={withBase('/')}>← Back to portfolio home</a>
+        </p>
+      </footer>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .who-page {
+    min-block-size: 100svh;
+    padding-block: var(--s-10) var(--s-8);
+    background: var(--bg);
+  }
+
+  .container {
+    max-inline-size: 720px;
+    margin-inline: auto;
+    padding-inline: var(--s-4);
+  }
+
+  .page-header {
+    margin-block-end: var(--s-8);
+  }
+
+  .page-header h1 {
+    color: var(--fg);
+    font: 700 clamp(1.75rem, 4vw + 0.5rem, 2.5rem) / var(--lh-tight) var(--font-sans);
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .intro {
+    margin-block-end: var(--s-8);
+  }
+
+  .lead {
+    color: var(--fg);
+    font: 400 var(--fs-body) / var(--lh-relaxed) var(--font-sans);
+    margin-block-end: var(--s-6);
+  }
+
+  .contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--s-2);
+    padding: var(--s-5);
+    background: var(--bg-elev);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--r-card);
+  }
+
+  .contact-list li {
+    font: 400 var(--fs-small) / 1.5 var(--font-sans);
+    color: var(--fg-dim);
+  }
+
+  .contact-list strong {
+    color: var(--fg);
+    font-weight: 600;
+  }
+
+  .contact-list a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color var(--t-base) var(--ease-out);
+  }
+
+  .contact-list a:hover {
+    color: var(--fg);
+    text-decoration: underline;
+  }
+
+  section {
+    margin-block-end: var(--s-8);
+  }
+
+  h2 {
+    color: var(--fg);
+    font: 600 var(--fs-h2) / var(--lh-tight) var(--font-sans);
+    margin: 0 0 var(--s-4);
+  }
+
+  p {
+    color: var(--fg-dim);
+    font: 400 var(--fs-body) / var(--lh-relaxed) var(--font-sans);
+    margin: 0 0 var(--s-4);
+  }
+
+  p:last-child {
+    margin-block-end: 0;
+  }
+
+  ul {
+    padding-inline-start: var(--s-5);
+    margin: 0 0 var(--s-4);
+  }
+
+  li {
+    color: var(--fg-dim);
+    font: 400 var(--fs-body) / var(--lh-relaxed) var(--font-sans);
+    margin-block-end: var(--s-3);
+  }
+
+  li:last-child {
+    margin-block-end: 0;
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: oklch(from var(--accent) l c h / 0.3);
+    text-underline-offset: 0.15em;
+    transition: color var(--t-base) var(--ease-out), text-decoration-color var(--t-base) var(--ease-out);
+  }
+
+  a:hover, a:focus-visible {
+    color: var(--fg);
+    text-decoration-color: currentColor;
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    color: var(--accent);
+    background: oklch(from var(--accent) l c h / 0.08);
+    padding: 0.15em 0.4em;
+    border-radius: var(--r-sm);
+  }
+
+  .page-footer {
+    margin-block-start: var(--s-10);
+    padding-block-start: var(--s-6);
+    border-block-start: 1px solid var(--border-soft);
+  }
+
+  .page-footer p {
+    margin: 0;
+  }
+
+  .page-footer a {
+    font: 600 var(--fs-small) var(--font-mono);
+    letter-spacing: 0.02em;
+  }
+</style>

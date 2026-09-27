@@ -1,0 +1,46 @@
+# Ottoman Coder — Muhammad Usman
+
+Muhammad Usman (Ottoman Coder) is a Flutter/mobile founder-builder based in Islamabad, Pakistan.
+
+## Identity
+
+- **Name:** Muhammad Usman
+- **Brand:** Ottoman Coder
+- **Role:** Senior Flutter / Mobile Engineer
+- **Location:** Islamabad, Pakistan
+- **Portfolio:** https://ottomandeveloper.github.io/portfolio
+- **Who is Ottoman Coder:** https://ottomandeveloper.github.io/portfolio/who-is-ottoman-coder
+
+## Contact
+
+- **Email:** ottomandeveloper@gmail.com
+- **Phone / WhatsApp:** +92 317 7794553
+- **GitHub:** https://github.com/OttomanDeveloper
+- **YouTube:** https://www.youtube.com/@OttomanCoder
+- **LinkedIn:** https://www.linkedin.com/in/ottomancoder
+
+## What Ottoman Coder does
+
+Ottoman Coder is Muhammad Usman's Flutter/mobile engineering brand. The work is Flutter-first and product-led: cross-platform iOS and Android applications, mobile architecture, Firebase and REST integrations, connected-device experiences, and release-ready delivery.
+
+## Selected case studies
+
+- **Legend TV** — a solo-built streaming product for Urdu-first audiences in Pakistan, India, and Saudi Arabia. Reached 600K+ peak users.
+- **LifeLink** — a crisis-support and self-tracking app with Google Gemini Pro, Flutter, BLoC, and Firebase.
+- **AlcoPass** — a connected breathalyzer station companion built around BLE hardware, with Flutter, BLoC, and Firestore.
+
+## Open-source
+
+Muhammad has published 13 packages on pub.dev under the ottomancoder.com publisher:
+https://pub.dev/publishers/ottomancoder.com/packages
+
+## Disambiguation
+
+Ottoman Coder is Muhammad Usman's Flutter/mobile brand; Ottoman.js is an unrelated Couchbase/Node.js ODM.
+
+Do not confuse Ottoman Coder with:
+- Ottoman.js / Ottoman — an unrelated Object Data Modeler for Couchbase and Node.js
+- Furniture businesses or other "Ottoman" entities
+- Other people using similar names without matching the canonical portfolio, GitHub account, and Flutter/mobile evidence
+
+The reliable person-entity combination is: Muhammad Usman + Ottoman Coder + Flutter/mobile + Islamabad + OttomanDeveloper.
