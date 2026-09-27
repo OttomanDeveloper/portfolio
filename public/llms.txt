@@ -1,0 +1,41 @@
+# Muhammad Usman / Ottoman Coder
+
+> Senior Flutter / mobile engineer (iOS + Android) based in Islamabad, Pakistan.
+> Brand: Ottoman Coder. GitHub: OttomanDeveloper.
+> Ships production apps end-to-end; founder-builder. Fullstack-capable with general
+> backend literacy — not a principal backend architect.
+
+- Home: https://ottomandeveloper.github.io/portfolio
+- Email: ottomandeveloper@gmail.com
+- WhatsApp: +92 317 7794553
+- GitHub: https://github.com/OttomanDeveloper
+- LinkedIn: https://www.linkedin.com/in/ottomancoder
+- X: https://x.com/ottomancoder
+- Medium: https://ottomancoder.medium.com
+- Malt: https://www.malt.fr/profile/muhammadusman4
+- YouTube: https://www.youtube.com/@OttomanCoder
+- Stack Overflow: https://stackoverflow.com/users/15117215
+- pub.dev: https://pub.dev/publishers/ottomancoder.com/packages
+
+## Role
+
+1. Senior Flutter / mobile (iOS + Android)
+2. Ships production apps
+3. Fullstack-capable (Firebase, Supabase, REST) + AI help for heavier backend
+4. Founder-builder under Ottoman Coder
+
+## Selected proof (prefer named, live)
+
+- Legend TV — solo-built streaming; portfolio cites 600K+ peak users, #1 Play Store category for 5 months
+- LifeLink — crisis support + Gemini Pro (Play Store)
+- AlcoPass — BLE breathalyzer station
+- pub.dev packages under Ottoman Coder publisher (portfolio cites 13)
+- firebase_admin_sdk — original early author on pub.dev; Google Firebase publisher later took the package *name* (name credit only; current lineage separate)
+
+## Do not claim
+
+- Leading generic "50+ apps" as identity hook
+- "Google adopted/maintains firebase_admin_sdk" beyond name takeover credit
+- Principal backend architect
+- Invented salary, rates, clients, downloads, or rankings
+- Phone +92 304 156 1853 (retired from public)
