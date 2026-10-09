@@ -8,7 +8,8 @@ const isCurrent = (period: string) => /present/i.test(period);
 ---
 <section id="experience">
   <div class="container">
-    <SectionLabel n={6} name="experience" />
+    <SectionLabel n={4} name="The journey so far" />
+    <h2>Independent spirit.<br /><em>Team-player experience.</em></h2>
     <p class="intro">
       Five years, five roles — <strong>freelance and embedded</strong> — from solo-shipping
       50+ client apps to senior mobile work on international product teams.
@@ -60,6 +61,8 @@ const isCurrent = (period: string) => /present/i.test(period);
 
 <style>
   #experience { padding-block: clamp(var(--s-8), 8vw, var(--s-10)); }
+  h2 { font:600 clamp(2.5rem,4.5vw,4rem)/1.06 var(--font-display); letter-spacing:-.035em; margin-bottom:var(--s-5); }
+  h2 em { color:var(--accent); font-weight:600; font-style:normal; }
 
   .intro { color: var(--fg-dim); max-inline-size: 62ch; margin: 0 0 var(--s-7); }
   .intro strong { color: var(--fg); font-weight: 600; }
@@ -120,18 +123,19 @@ const isCurrent = (period: string) => /present/i.test(period);
   /* Entry card — same hover language as the featured / stack cards */
   .card {
     padding: var(--s-5);
-    background: var(--bg-elev);
-    border: 1px solid var(--border);
-    border-radius: var(--r-card);
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--border);
+    border-radius: 0;
     transition: transform var(--t-base) var(--ease-out),
                 border-color var(--t-base) var(--ease-out),
                 box-shadow var(--t-base) var(--ease-out);
   }
   @media (hover: hover) and (pointer: fine) {
     .entry:hover .card {
-      transform: translateY(-2px);
+      transform: none;
       border-color: color-mix(in oklab, var(--accent) 45%, var(--border));
-      box-shadow: 0 18px 36px -20px oklch(20% 0.02 80 / 0.5);
+      box-shadow: none;
     }
     .is-now:hover .card { border-color: color-mix(in oklab, var(--lime) 45%, var(--border)); }
   }

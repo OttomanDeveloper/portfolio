@@ -16,7 +16,7 @@ export type Experience = {
 
 export const experience: Experience[] = [
   {
-    period: 'Jul 2024 → present',
+    period: 'Jul 2024 → Sep 2026',
     role: 'Senior Mobile App Developer',
     company: 'BeInMedia · Nmo AI',
     companyHref: 'https://www.beinmedia.com/',

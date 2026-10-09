@@ -1,0 +1,94 @@
+<div class="journey-trail" data-journey>
+  <nav class="container journey-inner" aria-label="Your journey through the portfolio">
+    <a href="#hero" aria-current="location"><span>01</span> Meet me</a>
+    <a href="#approach"><span>02</span> The approach</a>
+    <a href="#featured"><span>03</span> The work</a>
+    <a href="#contact"><span>04</span> Your idea</a>
+  </nav>
+  <div class="reading-track" aria-hidden="true"><span></span></div>
+</div>
+
+<script>
+  const trail = document.querySelector<HTMLElement>('[data-journey]');
+  if (trail) {
+    const links = Array.from(trail.querySelectorAll<HTMLAnchorElement>('a'));
+    const chapters = links.map(link => document.querySelector<HTMLElement>(link.hash));
+    const process = document.querySelector<HTMLElement>('[data-journey-process]');
+    const readingBar = trail.querySelector<HTMLElement>('.reading-track span');
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const targets = Array.from(document.querySelectorAll<HTMLElement>(
+      '[data-reveal], .section-heading, .feature, .oss, .timeline > li, #stack article, #contact .pitch, #contact .panel'
+    ));
+    let observer: IntersectionObserver | undefined;
+
+    // Visible by default: the page stays readable without JavaScript or motion.
+    const revealAll = () => {
+      observer?.disconnect();
+      targets.forEach(el => el.classList.remove('reveal-ready'));
+    };
+    const setupReveals = () => {
+      revealAll();
+      if (motion.matches || !('IntersectionObserver' in window)) return;
+      observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-revealed');
+          observer?.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px -32px 0px', threshold: 0 });
+      targets.forEach((el, index) => {
+        if (el.getBoundingClientRect().top < window.innerHeight - 32) {
+          el.classList.add('is-revealed');
+          return;
+        }
+        el.style.setProperty('--reveal-delay', `${Math.min(index % 3, 2) * 70}ms`);
+        el.classList.add('reveal-ready');
+        observer?.observe(el);
+      });
+    };
+    setupReveals();
+    motion.addEventListener('change', setupReveals);
+
+    let queued = false;
+    const updateJourney = () => {
+      queued = false;
+      const marker = Math.min(window.innerHeight * .32, 220);
+      let active = 0;
+      chapters.forEach((chapter, index) => {
+        if (chapter && chapter.getBoundingClientRect().top <= marker) active = index;
+      });
+      links.forEach((link, index) => {
+        if (index === active) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (readingBar) readingBar.style.transform = `scaleX(${max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 1})`;
+      if (process) {
+        const rect = process.getBoundingClientRect();
+        const progress = Math.min(1, Math.max(0, (window.innerHeight * .75 - rect.top) / Math.max(1, rect.height * .65)));
+        process.style.setProperty('--process-progress', `${motion.matches ? 1 : progress}`);
+      }
+    };
+    const scheduleUpdate = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(updateJourney);
+    };
+    window.addEventListener('scroll', scheduleUpdate, { passive: true });
+    window.addEventListener('resize', scheduleUpdate);
+    window.addEventListener('pageshow', scheduleUpdate);
+    updateJourney();
+  }
+</script>
+
+<style>
+  .journey-trail { position:sticky; top:0; z-index:20; background:var(--bg); border-bottom:1px solid var(--border); }
+  .journey-inner { display:flex; justify-content:space-between; gap:1rem; }
+  .journey-inner a { display:flex; align-items:center; gap:.7rem; min-height:54px; color:var(--fg-dim); font-size:.8rem; font-weight:500; transition:color .2s; }
+  .journey-inner a span { font:400 .65rem var(--font-mono); opacity:.6; }
+  .journey-inner a[aria-current], .journey-inner a:hover { color:var(--accent); }
+  .journey-inner a[aria-current] span { opacity:1; }
+  .reading-track { height:2px; overflow:hidden; }
+  .reading-track span { display:block; width:100%; height:100%; background:var(--accent); transform:scaleX(0); transform-origin:left; }
+  @media(max-width:639px) { .journey-inner { gap:.5rem; } .journey-inner a { font-size:.75rem; min-height:46px; gap:.3rem; } .journey-inner a span { display:none; } }
+</style>

@@ -1,0 +1,65 @@
+---
+import type { ShowcaseProject } from '@/data/showcase';
+import { projectCovers } from '@/data/projectCovers';
+import { withBase } from '@/lib/paths';
+
+interface Props { project: ShowcaseProject; wide?: boolean; }
+const { project: p, wide = false } = Astro.props;
+const cover = projectCovers[p.slug] ?? { scene: 'utility', headline: p.name, summary: p.tagline, proof: p.category, accent: '#e5c181' };
+const primary = cover.screen ?? p.screens.find(s => /home|grid|dashboard|listings|main/.test(s)) ?? p.screens[0];
+const secondary = p.screens.find(s => s !== primary && !/splash|auth|login|signup|admin/.test(s));
+const layout = cover.layout ?? 'single';
+const scene = p.web ? `/screens/${p.screens[0]}` : `/covers/scenes/${cover.scene}.webp`;
+---
+<div class:list={['project-cover', `layout-${layout}`, { wide }]} style={`--cover-accent: ${cover.accent};`}>
+  <img class="scene" src={withBase(scene)} alt="" width="1536" height="1024" loading="lazy" decoding="async" />
+  <div class="shade"></div>
+  <div class="cover-copy">
+    <p class="cover-brand">{p.name}</p>
+    <p class="cover-headline">{cover.headline}</p>
+    <p class="cover-summary">{cover.summary}</p>
+    <p class="cover-proof">{cover.proof}</p>
+  </div>
+  <div class="product">
+    {layout === 'duo' && secondary && <img class="screen companion" src={withBase(`/screens/${secondary}`)} alt="" width="540" height="1200" loading="lazy" decoding="async" />}
+    <img class="screen principal" src={withBase(`/screens/${primary}`)} alt={`${p.name} — actual ${p.web ? 'website' : 'app'} interface`} width={p.web ? 1280 : 540} height={p.web ? 620 : 1200} loading="lazy" decoding="async" />
+  </div>
+</div>
+
+<style>
+  .project-cover { position: relative; isolation: isolate; overflow: hidden; aspect-ratio: 3 / 2; background: #10232a; color: #fff; container-type: inline-size; }
+  .scene, .shade { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .scene { object-fit: cover; }
+  .shade { background: linear-gradient(90deg, rgb(5 14 21 / .94) 0%, rgb(5 14 21 / .8) 35%, rgb(5 14 21 / .18) 78%), linear-gradient(0deg, rgb(5 14 21 / .35), transparent 40%); }
+  .cover-copy { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: flex-start; width: 55%; padding: 7% 0 7% 6%; box-sizing: border-box; min-height: 100%; }
+  .cover-brand { margin: 0 0 7cqw; font: 650 clamp(.75rem, 2.6cqw, 1.5rem)/1.15 var(--font-sans); letter-spacing: -.035em; color: var(--cover-accent); }
+  .cover-headline { margin: 0; font: 700 clamp(1.25rem, 6.1cqw, 3.8rem)/1.04 var(--font-sans); letter-spacing: -.045em; text-wrap: balance; }
+  .cover-summary { margin: 3.2cqw 0 0; font: 400 clamp(.7rem, 2.55cqw, 1.2rem)/1.5 var(--font-sans); color: #e1e5e8; text-wrap: pretty; }
+  .cover-proof { margin: auto 0 0; padding-top: 4cqw; color: var(--cover-accent); font: 600 clamp(.6rem, 1.85cqw, .85rem)/1.4 var(--font-sans); }
+  .product { position: absolute; z-index: 1; inset: 0 0 0 55%; }
+  .screen { position: absolute; display: block; height: 78%; width: auto; max-width: 88%; object-fit: contain; border-radius: 2.4cqw; box-shadow: 1.5cqw 2.5cqw 5cqw rgb(0 0 0 / .5); border: .45cqw solid #282e33; background: #15191d; }
+  .principal { bottom: 8%; right: 12%; transform: rotate(7deg); }
+  .companion { height: 65%; bottom: 15%; right: 43%; transform: rotate(-9deg); opacity: .88; }
+  .layout-duo .principal { right: 5%; height: 76%; }
+  .layout-flat .principal { transform: rotate(-5deg); right: 13%; bottom: 5%; border-radius: 1.2cqw; }
+  .layout-web .scene { filter: blur(10px) brightness(.45); transform: scale(1.1); }
+  .layout-web .product { inset: 0 0 0 51%; }
+  .layout-web .principal { width: 115%; max-width: none; height: auto; bottom: 19%; right: -21%; transform: perspective(700px) rotateY(-12deg) rotate(-4deg); border-radius: 1cqw; border-width: .6cqw; }
+  .wide { aspect-ratio: 2.4 / 1; }
+  .wide .cover-copy { width: 52%; padding-top: 4%; padding-bottom: 4%; }
+  .wide .cover-brand { margin-bottom: 3cqw; }
+  .wide .cover-headline { font-size: clamp(1.7rem, 5.2cqw, 4rem); }
+  .wide .cover-summary { font-size: clamp(.8rem, 1.8cqw, 1.2rem); max-width: 32ch; margin-top: 1.7cqw; }
+  .wide .cover-proof { padding-top: 2cqw; font-size: clamp(.65rem, 1.3cqw, .9rem); }
+  @media (max-width: 639px) { .wide { aspect-ratio: 3 / 2; } .wide .cover-copy { width: 55%; padding: 7% 0 7% 6%; } .wide .cover-brand { margin-bottom: 7cqw; } .wide .cover-headline { font-size: clamp(1.25rem, 6.1cqw, 3.8rem); } .wide .cover-summary { font-size: clamp(.7rem, 2.55cqw, 1.2rem); margin-top: 3.2cqw; } .wide .cover-proof { font-size: clamp(.6rem, 1.85cqw, .85rem); padding-top: 4cqw; } }
+  @container (max-width: 380px) {
+    .cover-copy, .wide .cover-copy { padding-top: 5%; padding-bottom: 5%; }
+    .cover-brand, .wide .cover-brand { margin-bottom: 4.5cqw; }
+    .cover-headline, .wide .cover-headline { font-size: clamp(1.2rem, 5.8cqw, 3rem); }
+    .cover-summary, .wide .cover-summary { margin-top: 2cqw; }
+    .cover-proof, .wide .cover-proof { padding-top: 2cqw; }
+  }
+  @media (max-width: 399px) {
+    .project-cover, .wide { aspect-ratio: 1 / 1; }
+  }
+</style>

@@ -19,12 +19,12 @@ const mediumHref = 'https://ottomancoder.medium.com/';
 ---
 <section id="contact">
   <div class="container">
-    <SectionLabel n={8} name="why hire me" />
+    <SectionLabel n={6} name="The next chapter" />
 
     <div class="layout">
     <div class="sell">
     <div class="pitch">
-      <h2 class="head">Hire one engineer.<br /><span class="accent">Ship the whole app.</span></h2>
+      <h2 class="head">Have something<br /><span class="accent">in mind?</span></h2>
       <p class="lead">
         I design, build and release production Flutter apps end-to-end — one scaled to <strong>600K users</strong> and held <strong>#1</strong> in its Play Store
         category for five months. Product-led, straight with founders, and I reply within ~24 hours.
@@ -45,8 +45,8 @@ const mediumHref = 'https://ottomancoder.medium.com/';
         <span class="badge"><span class="dot" aria-hidden="true"></span>{profile.available}</span>
         <p class="avail-text">
           {profile.availableLong}{' '}
-          Currently shipping <strong>{profile.currentlyShipping.text}</strong> at{' '}
-          <a href={profile.currentlyShipping.href} target="_blank" rel="noopener noreferrer">{profile.currentlyShipping.at}</a>.
+          Previously built an <strong>{profile.previousWork.text}</strong> at{' '}
+          <a href={profile.previousWork.href} target="_blank" rel="noopener noreferrer">{profile.previousWork.at}</a>, through {profile.previousWork.ended}.
         </p>
       </div>
       <a class="avail-write" href={mediumHref} target="_blank" rel="noopener noreferrer">
@@ -96,7 +96,6 @@ const mediumHref = 'https://ottomancoder.medium.com/';
     ) : (
       <p class="fallback">
         Or write a direct message: <a href={`mailto:${profile.email}`}>{profile.email}</a>
-        <br /><span class="dim">(Contact form is disabled until <code>PUBLIC_FORMSPREE_ID</code> is set.)</span>
       </p>
     )}
     </aside>
@@ -172,8 +171,8 @@ const mediumHref = 'https://ottomancoder.medium.com/';
   .head {
     margin: 0;
     color: var(--fg);
-    font: 700 var(--fs-section) / 1.05 var(--font-sans);
-    letter-spacing: -0.01em;
+    font: 600 clamp(3rem,5vw,4.5rem) / 1.05 var(--font-display);
+    letter-spacing: -0.035em;
     text-wrap: balance;
   }
   .head .accent { color: var(--accent); }
@@ -189,9 +188,10 @@ const mediumHref = 'https://ottomancoder.medium.com/';
   .reasons li {
     display: flex; flex-direction: column; gap: var(--s-2);
     padding: var(--s-4) var(--s-5);
-    background: var(--bg-elev);
-    border: 1px solid var(--border);
-    border-radius: var(--r-card);
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--border);
+    border-radius: 0;
   }
   .r-k {
     color: var(--accent);
@@ -207,15 +207,13 @@ const mediumHref = 'https://ottomancoder.medium.com/';
     .reasons li { flex-direction: row; align-items: baseline; gap: var(--s-4); }
     .reasons .r-k { flex: 0 0 130px; }
   }
-  .r-t { color: var(--fg-dim); font-size: var(--fs-small); line-height: 1.5; }
+  .r-t { color: var(--fg-dim); font-size: .9375rem; line-height: 1.7; }
 
   /* Availability strip */
   .avail {
     margin-block-start: var(--s-5);
     padding: var(--s-5);
-    background:
-      radial-gradient(120% 100% at 0% 0%, var(--accent-glow), transparent 60%),
-      var(--bg-elev);
+    background: var(--bg-elev);
     border: 1px solid var(--border-soft);
     border-radius: var(--r-card);
     display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
@@ -245,7 +243,11 @@ const mediumHref = 'https://ottomancoder.medium.com/';
   .avail-text a { color: var(--accent); text-decoration: none; border-bottom: 1px solid color-mix(in oklab, var(--accent) 35%, transparent); }
   .avail-text a:hover { color: var(--fg); border-bottom-color: var(--accent); }
   .avail-write {
-    color: var(--cyan); text-decoration: none; white-space: nowrap;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    flex-wrap: wrap;
+    overflow-wrap: anywhere;
+    color: var(--cyan); text-decoration: none; white-space: normal;
     font: 600 var(--fs-small) var(--font-sans);
     border-bottom: 1px solid color-mix(in oklab, var(--cyan) 35%, transparent);
   }
@@ -253,16 +255,16 @@ const mediumHref = 'https://ottomancoder.medium.com/';
 
   /* Contact panel — one card holding channels + the message form */
   .panel {
+    container-type: inline-size;
+    min-inline-size: 0;
     padding: var(--s-6);
-    background:
-      radial-gradient(120% 90% at 100% 0%, var(--accent-glow), transparent 55%),
-      var(--bg-elev);
+    background: var(--bg-elev);
     border: 1px solid var(--border);
     border-radius: var(--r-card);
   }
   .ch-head { color: var(--fg); font: 700 var(--fs-h3) var(--font-sans); margin: 0 0 var(--s-5); }
   .channels { list-style: none; padding: 0; margin: 0 0 var(--s-6); display: grid; grid-template-columns: 1fr; gap: var(--s-3); }
-  @media (min-width: 480px) { .channels { grid-template-columns: 1fr 1fr; } }
+  @container (min-width: 460px) { .channels { grid-template-columns: 1fr 1fr; } }
   .channel { display: grid; grid-template-columns: 40px 1fr auto; gap: var(--s-3); align-items: center; padding: var(--s-3) var(--s-4); background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-pkg); color: var(--fg); text-decoration: none; font: 600 var(--fs-small) var(--font-sans); transition: border-color var(--t-base) var(--ease-out); min-block-size: 56px; }
   .channel:hover, .channel:focus-visible { border-color: var(--accent); color: var(--fg); }
   .glyph { inline-size: 40px; block-size: 40px; display: grid; place-items: center; background: color-mix(in oklab, var(--accent) 12%, transparent); color: var(--accent); border-radius: var(--r-icon); font: 700 var(--fs-small) var(--font-mono); }
@@ -282,10 +284,8 @@ const mediumHref = 'https://ottomancoder.medium.com/';
   .form button:disabled { opacity: 0.6; cursor: not-allowed; }
   .status { margin: var(--s-2) 0 0; font: 600 var(--fs-small) var(--font-sans); }
 
-  .fallback { padding: var(--s-5); background: var(--bg-elev); border: 1px dashed var(--border-soft); border-radius: var(--r-card); color: var(--fg-dim); line-height: var(--lh-default); }
-  .fallback a { color: var(--accent); }
-  .fallback .dim { color: var(--fg-dim); font-size: var(--fs-small); }
-  .fallback code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font: 400 var(--fs-small) var(--font-mono); color: var(--accent); }
+  .fallback { padding-block: var(--s-4); border-top: 1px solid var(--border); color: var(--fg-dim); font-size:var(--fs-small); line-height: var(--lh-default); }
+  .fallback a { color: var(--accent); overflow-wrap:anywhere; }
 
   /* Tiny screens: stack form labels above inputs. Channel tiles keep their
      single-row 40px | label | arrow grid — wrapping the arrow to a second

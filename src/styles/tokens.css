@@ -1,23 +1,26 @@
 /* src/styles/tokens.css — palette, type, spacing, radii, motion */
 
 :root {
-  /* palette — dark only in v1 */
-  --bg: #0d0d12;
-  --bg-elev: #1a1a22;
-  --bg-bar: #161620;
-  --fg: #fafafa;
-  --fg-dim: #a0a0a8;
-  --accent: #d4a558;
-  --accent-glow: oklch(76% 0.13 80 / 0.35);
-  --cyan: #67e8f9;
-  --lime: #a3e635;
-  --alert: #fca5a5;
-  --border: oklch(100% 0 0 / 0.08);
-  --border-soft: oklch(76% 0.13 80 / 0.18);
+  /* Warm charcoal, ivory type, and brushed gold accents. */
+  color-scheme: dark;
+  --bg: #151412;
+  --bg-elev: #211f1a;
+  --bg-bar: #151412;
+  --fg: #f1ecdf;
+  --fg-dim: #aaa495;
+  --accent: #d7b671;
+  --accent-glow: rgb(215 182 113 / 0.08);
+  --cyan: #d7b671;
+  --lime: #d7b671;
+  --alert: #e28c7d;
+  --border: #3c372e;
+  --border-soft: #302c25;
 
   /* type families */
   --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
-  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-brand: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
   --font-arabic: 'Noto Naskh Arabic', serif;
 
   /* fluid type scale */
@@ -50,14 +53,14 @@
   --s-10: 8rem;
 
   /* radii */
-  --r-card: 14px;
-  --r-featured: 16px;
-  --r-pkg: 12px;
+  --r-card: 5px;
+  --r-featured: 5px;
+  --r-pkg: 4px;
   --r-icon: 18px;
-  --r-pill: 999px;
+  --r-pill: 4px;
 
   /* layout */
-  --container: 1200px;
+  --container: 1280px;
   --prose-measure: 68ch;
 
   /* timings */

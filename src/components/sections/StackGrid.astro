@@ -25,7 +25,8 @@ const TONE: Record<string, string> = {
 ---
 <section id="stack">
   <div class="container">
-    <SectionLabel n={7} name="stack · day-to-day" />
+    <SectionLabel n={5} name="The toolkit" />
+    <h2>Built on solid ground.</h2>
     <p class="intro">
       The tools I reach for every day — <strong>Flutter-first</strong>, backed by real backend,
       hardware and on-device AI work. <span class="hint">▸ tinted chips = on most projects</span>
@@ -50,6 +51,7 @@ const TONE: Record<string, string> = {
 
 <style>
   #stack { padding-block: clamp(var(--s-8), 8vw, var(--s-10)); }
+  h2 { font:600 clamp(2.5rem,4.5vw,4rem)/1.06 var(--font-display); letter-spacing:-.035em; margin-bottom:var(--s-5); }
 
   .intro { color: var(--fg-dim); max-inline-size: 62ch; margin: 0 0 var(--s-7); }
   .intro .hint {
@@ -65,7 +67,7 @@ const TONE: Record<string, string> = {
   .grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--s-4);
+    gap: 0;
   }
   @media (min-width: 640px)  { .grid { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); } }
@@ -76,9 +78,9 @@ const TONE: Record<string, string> = {
     flex-direction: column;
     gap: var(--s-4);
     padding: var(--s-5);
-    background: var(--bg-elev);
+    background: transparent;
     border: 1px solid var(--border);
-    border-radius: var(--r-card);
+    border-radius: 0;
     transition: transform var(--t-base) var(--ease-out),
                 border-color var(--t-base) var(--ease-out),
                 box-shadow var(--t-base) var(--ease-out);
@@ -87,9 +89,9 @@ const TONE: Record<string, string> = {
   .card.tone-cyan { --tone: var(--cyan); }
   @media (hover: hover) and (pointer: fine) {
     .card:hover {
-      transform: translateY(-3px);
+      transform: none;
       border-color: color-mix(in oklab, var(--tone) 55%, var(--border));
-      box-shadow: 0 20px 40px -20px oklch(20% 0.02 80 / 0.5);
+      box-shadow: none;
     }
   }
 

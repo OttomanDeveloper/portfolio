@@ -1,0 +1,31 @@
+---
+import { withBase } from '@/lib/paths';
+import { profile } from '@/data/profile';
+const isProjects = Astro.url.pathname.includes('/projects');
+---
+<header class="site-nav">
+  <nav class="container nav-inner" aria-label="Main navigation">
+    <a class="brand" href={withBase('/')} aria-label={`${profile.name} — home`}>
+      <span class="monogram" aria-hidden="true">u.</span>
+      <span>{profile.alias}<small>Independent mobile engineer</small></span>
+    </a>
+    <div class="nav-links">
+      <a href={withBase('/projects')} aria-current={isProjects ? 'page' : undefined}>Work</a>
+      <a href={withBase('/#opensource')}>Open source</a>
+      <a href={withBase('/#experience')}>About</a>
+      <a class="nav-contact" href={withBase('/#contact')}>Let’s talk <span aria-hidden="true">↗</span></a>
+    </div>
+  </nav>
+</header>
+<style>
+  .site-nav { border-bottom: 1px solid var(--border); }
+  .nav-inner { display:flex; justify-content:space-between; align-items:center; gap:2rem; padding-block:1.5rem; }
+  .brand { display:flex; gap: .85rem; align-items:center; color:var(--fg); font-size:.9rem; font-weight:600; line-height:1.4; }
+  .monogram { font:italic 3rem/.9 var(--font-brand); letter-spacing:-.1em; padding-right:.25rem; color:var(--accent); }
+  .brand small { display:block; font-size:.67rem; color:var(--fg-dim); font-weight:400; }
+  .nav-links { display:flex; align-items:center; gap:2rem; font-size:.875rem; font-weight:500; }
+  .nav-links a { color:var(--fg); transition:color .2s; min-height:44px; display:flex; align-items:center; white-space:nowrap; }
+  .nav-links a:hover, .nav-links a[aria-current] { color:var(--accent); text-decoration:underline; text-underline-offset:5px; }
+  .nav-contact { display:flex; gap:1.5rem; border:1px solid var(--border); padding:.65rem 1rem; }
+  @media(max-width:639px) { .nav-inner { padding-block:1rem; gap:.7rem; } .brand small { display:none; } .nav-links { gap:.7rem; } .nav-links > a:nth-child(2), .nav-links > a:nth-child(3) { display:none; } .nav-contact { padding:.5rem .7rem; gap:.7rem; } .brand { font-size:.72rem; white-space:nowrap; } .monogram { font-size:2.4rem; } }
+</style>

@@ -1,0 +1,37 @@
+---
+const steps = [
+  { title: 'Understand the idea', description: 'We define the people, the problem, and what your first release needs to do.', detail: 'A clear direction' },
+  { title: 'Build the experience', description: 'Design, Flutter development, and the integrations that make your product work.', detail: 'Something you can try' },
+  { title: 'Ship it with care', description: 'Test on real devices, prepare the store release, and keep improving from feedback.', detail: 'Ready for real users' },
+];
+---
+<section id="approach" data-journey-process>
+  <div class="container">
+    <div class="approach-heading" data-reveal><p class="approach-label">How we get there</p><h2>From your first idea<br />to <span>daily use.</span></h2><p>A clear path, with you involved at every step.</p></div>
+    <ol class="process-grid">
+      {steps.map((step, index) => <li data-reveal>
+        <span class="step-number" aria-hidden="true">0{index + 1}</span>
+        <h3>{step.title}</h3><p>{step.description}</p><small>{step.detail}</small>
+      </li>)}
+    </ol>
+    <a class="approach-next" href="#featured">See what that looks like in practice <span aria-hidden="true">↓</span></a>
+  </div>
+</section>
+<style>
+  #approach { padding-block:clamp(3rem,7vw,6rem); --process-progress:0; }
+  .approach-heading { max-width:680px; }
+  .approach-label { font-size:.75rem; color:var(--accent); margin-bottom:1rem; }
+  h2 { font:600 clamp(2rem,4vw,3.5rem)/1.12 var(--font-display); letter-spacing:-.035em; }
+  h2 span { color:var(--accent); }
+  .approach-heading > p:last-child { color:var(--fg-dim); margin-top:1.2rem; font-size:1rem; }
+  .process-grid { position:relative; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:3rem; list-style:none; padding:0; margin-top:3rem; isolation:isolate; }
+  .process-grid::before, .process-grid::after { content:''; position:absolute; left:24px; right:24px; top:23px; height:1px; background:var(--border); z-index:-1; }
+  .process-grid::after { background:var(--accent); transform:scaleX(var(--process-progress)); transform-origin:left; }
+  .step-number { display:grid; place-items:center; width:48px; height:48px; border:1px solid var(--border); background:var(--bg); border-radius:50%; color:var(--accent); font:500 .8rem var(--font-mono); margin-bottom:1.5rem; }
+  .is-revealed .step-number { border-color:var(--accent); }
+  h3 { font-size:1.15rem; font-weight:600; letter-spacing:-.02em; }
+  li p { color:var(--fg-dim); font-size:.9375rem; line-height:1.8; margin-top:.8rem; max-width:35ch; }
+  li small { display:block; color:var(--accent); font-size:.75rem; margin-top:1.4rem; }
+  .approach-next { display:flex; justify-content:space-between; align-items:center; gap:1rem; border-top:1px solid var(--border); margin-top:2.5rem; padding-top:1.3rem; font-size:.875rem; min-height:44px; }
+  @media(max-width:767px) { .process-grid { grid-template-columns:1fr; gap:2rem; margin-top:2.2rem; } .process-grid li { padding-left:4rem; position:relative; } .step-number { position:absolute; left:0; top:0; width:40px; height:40px; margin:0; } .process-grid::before, .process-grid::after { left:19px; top:20px; bottom:20px; right:auto; height:auto; width:1px; } .process-grid::after { transform:scaleY(var(--process-progress)); transform-origin:top; } li small { margin-top:.7rem; } .approach-next { font-size:.8rem; } }
+</style>

@@ -8,10 +8,11 @@ interface Props {
   meta?: string;
   pubAdd?: string;
   featured?: boolean;
+  mobileHidden?: boolean;
 }
-const { name, tagline, href, badge, meta, pubAdd, featured = false } = Astro.props;
+const { name, tagline, href, badge, meta, pubAdd, featured = false, mobileHidden = false } = Astro.props;
 ---
-<article class:list={['oss', featured && 'featured']}>
+<article class:list={['oss', featured && 'featured', mobileHidden && 'mobile-hidden']}>
   {featured && <span class="ribbon" aria-hidden="true">★ G</span>}
 
   <a class="head" href={href} target="_blank" rel="noopener noreferrer">
@@ -62,157 +63,25 @@ const { name, tagline, href, badge, meta, pubAdd, featured = false } = Astro.pro
 </script>
 
 <style>
-  .oss {
-    --angle: 0deg;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-3);
-    padding: var(--s-5);
-    background: var(--bg-elev);
-    border: 1px solid var(--border);
-    border-radius: var(--r-pkg);
-    isolation: isolate;
-    transition: transform var(--t-base) var(--ease-out),
-                border-color var(--t-base) var(--ease-out),
-                box-shadow var(--t-base) var(--ease-out);
-    /* scroll-reveal */
-    animation: oss-rise linear both;
-    animation-timeline: view();
-    animation-range: entry 0% cover 30%;
-    animation-duration: 1ms;
-  }
-  @keyframes oss-rise {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .oss { animation: none; }
-  }
-
-  /* Featured — gold glow + rotating conic border */
-  .featured {
-    border-color: var(--accent);
-    background:
-      radial-gradient(130% 90% at 0% 0%, var(--accent-glow), transparent 55%),
-      linear-gradient(180deg, var(--bg-elev), color-mix(in oklab, var(--bg-elev) 65%, var(--bg)));
-  }
-  .featured::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    padding: 1px;
-    background: conic-gradient(from var(--angle), transparent 0deg, var(--accent) 90deg, transparent 180deg);
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-            mask-composite: exclude;
-    animation: oss-spin 8s linear infinite;
-    pointer-events: none;
-    z-index: -1;
-  }
-  @property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
-  @keyframes oss-spin { to { --angle: 360deg; } }
-  @media (prefers-reduced-motion: reduce) { .featured::before { animation: none; } }
-
-  .ribbon {
-    position: absolute;
-    inset-block-start: -10px;
-    inset-inline-end: -8px;
-    z-index: 1;
-    background: var(--accent);
-    color: var(--bg);
-    font: 700 var(--fs-micro) var(--font-mono);
-    letter-spacing: 0.06em;
-    padding: 4px 10px;
-    border-radius: var(--r-pill);
-    box-shadow: 0 6px 14px -4px oklch(76% 0.13 80 / 0.6);
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .oss:hover {
-      transform: translateY(-3px);
-      border-color: var(--accent);
-      box-shadow: 0 16px 36px -16px oklch(20% 0.02 80 / 0.55);
-    }
-    .featured:hover { box-shadow: 0 16px 40px -12px oklch(76% 0.13 80 / 0.35); }
-  }
-
-  /* HEAD */
-  .head { text-decoration: none; color: inherit; display: block; }
-  .badge {
-    font: 400 var(--fs-micro) var(--font-mono);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    margin: 0 0 var(--s-2);
-  }
-  .tone-gold { color: var(--accent); }
-  .tone-cyan { color: var(--cyan); }
-  .tone-lime { color: var(--lime); }
-  .tone-dim  { color: var(--fg-dim); }
-
-  .name {
-    font: 600 var(--fs-h3) var(--font-mono);
-    color: var(--fg);
-    margin: 0 0 var(--s-2);
-    overflow-wrap: anywhere;
-    transition: color var(--t-base) var(--ease-out);
-  }
-  .head:hover .name { color: var(--accent); }
-  .tagline { color: var(--fg-dim); font-size: var(--fs-small); line-height: 1.55; margin: 0; }
-
-  /* INSTALL SNIPPET */
-  .snippet {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: var(--s-2);
-    align-items: center;
-    padding: var(--s-2) var(--s-3);
-    background: var(--bg);
-    border: 1px dashed var(--border-soft);
-    border-radius: var(--r-pkg);
-    cursor: pointer;
-    text-align: start;
-    font: 400 var(--fs-small) var(--font-mono);
-    color: var(--fg);
-    transition: border-color var(--t-fast) var(--ease-out), background var(--t-fast) var(--ease-out);
-    min-block-size: 36px;
-  }
-  .snippet:hover, .snippet:focus-visible {
-    border-color: var(--accent);
-    background: color-mix(in oklab, var(--bg) 80%, var(--accent) 6%);
-  }
-  .snippet.copied {
-    border-color: var(--lime);
-    background: color-mix(in oklab, var(--bg) 80%, var(--lime) 8%);
-  }
-  .snippet .prompt { color: var(--accent); }
-  .snippet .cmd { color: var(--fg); overflow-wrap: anywhere; }
-  .snippet .copy-hint {
-    color: var(--fg-dim);
-    font-size: var(--fs-micro);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    justify-self: end;
-  }
-  .snippet.copied .copy-hint { color: var(--lime); }
-
-  /* FOOT */
-  .foot {
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    margin-block-start: auto;
-    padding-block-start: var(--s-2);
-    font: 400 var(--fs-micro) var(--font-mono);
-  }
-  .link {
-    color: var(--accent);
-    text-decoration: none;
-    position: relative;
-    transition: padding-inline-end var(--t-base) var(--ease-out);
-  }
-  .link:hover { padding-inline-end: 4px; }
-  .meta { color: var(--fg-dim); }
+  @media(max-width:767px) { .oss.mobile-hidden { display:none; } }
+  .oss { position:relative; display:flex; flex-direction:column; gap:1rem; padding:1.7rem; border:1px solid var(--border); background:transparent; transition:background .2s; }
+  .oss:hover { background:var(--bg-elev); }
+  .featured { background:var(--bg-elev); }
+  .ribbon { position:absolute; right:1rem; top:1rem; color:var(--accent); font-size:.7rem; }
+  .head { color:inherit; text-decoration:none; }
+  .badge { color:var(--accent); font:500 .63rem/1.5 var(--font-sans); letter-spacing:.04em; padding-right:1.5rem; margin-bottom:.7rem; }
+  .name { font:600 .98rem/1.4 var(--font-sans); color:var(--fg); margin-bottom:.65rem; overflow-wrap:anywhere; }
+  .head:hover .name { color:var(--accent); }
+  .tagline { font-size:.8rem; color:var(--fg-dim); line-height:1.75; }
+  .snippet { display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:.5rem; padding:.65rem; min-height:44px; background:var(--bg); color:var(--fg); border:1px solid var(--border); border-radius:3px; cursor:pointer; text-align:start; font:400 .68rem/1.5 var(--font-mono); margin-top:auto; }
+  .snippet:hover { border-color:var(--accent); }
+  .prompt { color:var(--accent); }
+  .cmd { overflow-wrap:anywhere; }
+  .copy-hint { color:var(--fg-dim); font:400 .6rem var(--font-sans); }
+  .copied .copy-hint { color:var(--accent); }
+  .foot { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:.5rem; font-size:.65rem; }
+  .meta { color:var(--fg-dim); }
+  .link { color:var(--accent); }
+  .link:hover { text-decoration:underline; text-underline-offset:3px; }
+  @media(max-width:639px) { .oss { padding:1.3rem; } }
 </style>

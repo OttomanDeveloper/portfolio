@@ -1,462 +1,65 @@
 ---
-// src/components/sections/FeaturedProjects.astro
 import SectionLabel from '@/components/atoms/SectionLabel.astro';
+import ProjectCover from '@/components/ProjectCover.astro';
+import { showcaseProjects } from '@/data/showcase';
 import { withBase } from '@/lib/paths';
-
 interface Props { n?: number; viewAllHref?: string; viewAllCount?: number; }
-const { n = 3, viewAllHref, viewAllCount } = Astro.props;
+const { n = 1, viewAllHref, viewAllCount } = Astro.props;
+const order = ['legend-tv', 'lifelink', 'chronos', 'babypig', 'alcopass', 'udownload', 'icare'];
+const featured = order.map(slug => showcaseProjects.find(p => p.slug === slug)!);
+const caseSlugs = new Set(['legend-tv', 'lifelink', 'alcopass', 'udownload', 'icare']);
 ---
 <section id="featured">
   <div class="container">
-    <SectionLabel n={n} name="featured projects" />
-    <p class="intro">A handful of projects that show the range — commercial hits, a live flagship, open-source tools and Flutter Web demos. <span class="swipe" aria-hidden="true">swipe →</span></p>
-  </div>
-
-  <div class="grid">
-      <article class="card legend">
-        <p class="badge"><span class="dot" aria-hidden="true"></span>COMMERCIAL · 600K USERS</p>
-
-        <div class="row">
-          <figure class="shot">
-            <img src={withBase('/screens/legend_home.avif')} alt="Legend TV home feed — Turkish-Urdu dubbed series catalog" width="540" height="1200" loading="lazy" decoding="async" />
-          </figure>
-
-          <div class="content">
-            <h3 class="title" style="view-transition-name: case-title-legend-tv;">Legend TV</h3>
-            <p class="sub">A streaming platform built solo — Urdu-first dubs for PK · IN · SA.</p>
-
-            <ul class="stats" aria-label="Legend TV stats">
-              <li><span class="n">600K<span class="u">+</span></span><span class="d">peak users</span></li>
-              <li><span class="n">$20K<span class="u">+</span></span><span class="d">year-1 rev</span></li>
-              <li><span class="n">#1</span><span class="d">PS · 5 mo</span></li>
-              <li><span class="n">3</span><span class="d">countries</span></li>
-            </ul>
-
-            <ul class="chips" aria-hidden="true">
-              <li>Flutter</li><li>Firebase</li><li>AdMob</li><li>Razorpay</li>
-            </ul>
+    <SectionLabel n={n} name="Selected projects" />
+    <div class="section-heading"><h2>A few ideas,<br /><em>out in the world.</em></h2><p>Streaming, wellbeing, connected hardware, and a little curiosity. A selection of things I’ve designed, built, and shipped.</p></div>
+    <div class="featured-grid">
+      {featured.map((p, i) => (
+        <article class:list={['feature', {marquee:i === 0}]}>
+          <ProjectCover project={p} wide={i === 0} />
+          <div class="project-meta"><span>{String(i+1).padStart(2,'0')} / {p.category}</span><span>{p.year}</span></div>
+          <div class="project-info">
+            <div><h3 style={p.slug === 'legend-tv' ? 'view-transition-name: case-title-legend-tv;' : undefined}>{p.name}</h3><p>{p.tagline}</p></div>
+            <div class="project-actions">
+              {caseSlugs.has(p.slug) && <a href={withBase('/projects/'+p.slug)}>The story <span aria-hidden="true">↗</span></a>}
+              {p.liveLink && <a href={p.liveLink} target="_blank" rel="noopener noreferrer">Try it live <span aria-hidden="true">↗</span></a>}
+              {p.githubLink && <a href={p.githubLink} target="_blank" rel="noopener noreferrer">Source code <span aria-hidden="true">↗</span></a>}
+              {p.storeLink && <a href={p.storeLink} target="_blank" rel="noopener noreferrer">{/play\.google/.test(p.storeLink) ? 'Play Store' : 'Get app'} <span aria-hidden="true">↗</span></a>}
+            </div>
           </div>
-        </div>
-
-        <div class="cta-row">
-          <a class="cta primary" href={withBase('/projects/legend-tv')}>Read case study →</a>
-        </div>
-      </article>
-
-      <article class="card lifelink">
-        <p class="badge tone-cyan"><span class="dot" aria-hidden="true"></span>FLAGSHIP · LIVE ON PLAY STORE</p>
-
-        <div class="row">
-          <figure class="shot">
-            <img src={withBase('/screens/lifelink_support.avif')} alt="LifeLink — nearby crisis-line support directory" width="540" height="1144" loading="lazy" decoding="async" />
-          </figure>
-
-          <div class="content">
-            <h3 class="title">LifeLink</h3>
-            <p class="sub">Crisis support, self-tracking & AI poetry — built with Google Gemini Pro.</p>
-
-            <p class="body">
-              A province-aware crisis-line directory, sleep / diet / stressor tracking with charts,
-              calming artwork galleries, and AI-generated supportive poetry. Flutter + BLoC, synced over Firebase.
-            </p>
-
-            <ul class="chips" aria-hidden="true">
-              <li>Flutter</li><li>Gemini Pro</li><li>BLoC</li><li>Firebase</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="cta-row">
-          <a class="cta primary" href={withBase('/projects/lifelink')}>Read case study →</a>
-          <a class="cta ghost" href="https://play.google.com/store/apps/details?id=com.helper.lifelink" target="_blank" rel="noopener noreferrer">Play Store ↗</a>
-        </div>
-      </article>
-
-      <article class="card web">
-        <p class="badge tone-cyan"><span class="dot" aria-hidden="true"></span>FLUTTER WEB · LIVE DEMO</p>
-
-        <div class="row">
-          <figure class="shot">
-            <img src={withBase('/screens/chronos.avif')} alt="Chronos — scroll-driven cosmos web demo" width="1280" height="622" loading="lazy" decoding="async" />
-          </figure>
-
-          <div class="content">
-            <h3 class="title">Chronos</h3>
-            <p class="sub">A scroll-driven journey through the universe.</p>
-
-            <p class="body">
-              30+ <code>CustomPainter</code> scenes on a single Ticker, zero image assets, locked at 60 fps.
-              Scroll position is the timeline.
-            </p>
-
-            <ul class="chips" aria-hidden="true">
-              <li>Flutter Web</li><li>CustomPainter</li><li>Provider</li><li>60 fps</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="cta-row">
-          <a class="cta primary" href="https://ottomandeveloper.github.io/andro_meda/" target="_blank" rel="noopener noreferrer">▶ Open live ↗</a>
-          <a class="cta ghost"   href="https://github.com/OttomanDeveloper/andro_meda" target="_blank" rel="noopener noreferrer">GitHub →</a>
-        </div>
-      </article>
-
-      <article class="card web">
-        <p class="badge tone-cyan"><span class="dot" aria-hidden="true"></span>FLUTTER WEB · LIVE DEMO</p>
-
-        <div class="row">
-          <figure class="shot">
-            <img src={withBase('/screens/babypig.avif')} alt="BabyPig — animated crypto landing page web demo" width="1280" height="620" loading="lazy" decoding="async" />
-          </figure>
-
-          <div class="content">
-            <h3 class="title">BabyPig</h3>
-            <p class="sub">Animated crypto landing page — zero animation packages.</p>
-
-            <p class="body">
-              Scroll-triggered reveals, glassmorphism nav, animated counters and staggered cards —
-              a marketing site built entirely in Flutter Web.
-            </p>
-
-            <ul class="chips" aria-hidden="true">
-              <li>Flutter Web</li><li>Provider</li><li>flutter_svg</li><li>Glassmorphism</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="cta-row">
-          <a class="cta primary" href="https://ottomandeveloper.github.io/piggyToken/" target="_blank" rel="noopener noreferrer">▶ Open live ↗</a>
-          <a class="cta ghost"   href="https://github.com/OttomanDeveloper/piggyToken" target="_blank" rel="noopener noreferrer">GitHub →</a>
-        </div>
-      </article>
-
-      <article class="card alcopass">
-        <p class="badge tone-lime"><span class="dot" aria-hidden="true"></span>CONNECTED HARDWARE · BLE BREATHALYZER</p>
-
-        <div class="row">
-          <figure class="shot">
-            <img src={withBase('/screens/alcopass_result.avif')} alt="AlcoPass — blood-alcohol result gauge in g/L" width="540" height="1200" loading="lazy" decoding="async" />
-          </figure>
-
-          <div class="content">
-            <h3 class="title">AlcoPass</h3>
-            <p class="sub">A connected breathalyzer station — blow, get your BAC.</p>
-
-            <p class="body">
-              Built around the AlcoPass C1 breathalyzer — pairs over BLE, refines blood-alcohol from
-              age / weight / sex / licence, and reads g/L blood + mg/L air against the legal limit.
-              Flutter + BLoC, 5 languages, synced to Firestore.
-            </p>
-
-            <ul class="chips" aria-hidden="true">
-              <li>Flutter</li><li>BLoC</li><li>BLE</li><li>Firebase</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="cta-row">
-          <a class="cta primary" href={withBase('/projects/alcopass')}>Read case study →</a>
-        </div>
-      </article>
-
-      <article class="card udl">
-        <p class="badge tone-lime"><span class="dot" aria-hidden="true"></span>OPEN SOURCE · GPL-3</p>
-
-        <div class="row">
-          <figure class="shot">
-            <img src={withBase('/screens/u_download_1.avif')} alt="UDownload home screen" width="280" height="600" loading="lazy" decoding="async" />
-          </figure>
-
-          <div class="content">
-            <h3 class="title">UDownload</h3>
-            <p class="sub">A YouTube-style video browser & downloader — no API key.</p>
-
-            <p class="body">
-              Built on my own <a class="inline-link" href="https://pub.dev/packages/newpipeextractor_dart" target="_blank" rel="noopener noreferrer">newpipeextractor_dart</a>.
-              Search, channels, playlists, native ExoPlayer playback, and offline downloads.
-            </p>
-
-            <ul class="chips" aria-hidden="true">
-              <li>Flutter</li><li>BLoC</li><li>ExoPlayer</li><li>NewPipe</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="cta-row">
-          <a class="cta primary" href={withBase('/projects/udownload')}>Read case study →</a>
-          <a class="cta ghost"   href="https://github.com/OttomanDeveloper/u_downloader" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-        </div>
-      </article>
-
-      <article class="card icare">
-        <p class="badge tone-cyan"><span class="dot" aria-hidden="true"></span>SELF-CARE · PRIVACY-FIRST</p>
-
-        <div class="row">
-          <figure class="shot">
-            <img src={withBase('/screens/icare_home.avif')} alt="iCare — private self-care dashboard" width="540" height="1200" loading="lazy" decoding="async" />
-          </figure>
-
-          <div class="content">
-            <h3 class="title">iCare</h3>
-            <p class="sub">A private, judgement-free self-care companion.</p>
-
-            <p class="body">
-              Meditation & breathing, an emoji mood tracker, private diary, hobby timer and to-dos —
-              secured with a fingerprint lock and screenshot blocking.
-            </p>
-
-            <ul class="chips" aria-hidden="true">
-              <li>Flutter</li><li>Firebase</li><li>Fingerprint</li><li>Notifications</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="cta-row">
-          <a class="cta primary" href={withBase('/projects/icare')}>Read case study →</a>
-          <a class="cta ghost" href={`${withBase('/projects')}#proj-icare`}>Screenshots →</a>
-        </div>
-      </article>
+          {i === 0 && <p class="project-proof"><span>600K+ peak users</span><span>$20K+ year-one revenue</span><span>#1 in category for 5 months</span></p>}
+        </article>
+      ))}
     </div>
-
-    {viewAllHref && (
-      <div class="container">
-        <div class="view-all">
-          <a class="va-btn" href={viewAllHref}>
-            View all{viewAllCount ? ` ${viewAllCount}` : ''} projects
-            <span class="va-arrow" aria-hidden="true">→</span>
-          </a>
-        </div>
-      </div>
-    )}
+    <div class="all-work"><p>There’s more where these came from.</p><a href={viewAllHref ?? withBase('/projects')}>Explore all {viewAllCount ?? showcaseProjects.length} projects <span aria-hidden="true">↗</span></a></div>
+  </div>
 </section>
-
 <style>
-  #featured { padding-block: clamp(var(--s-8), 8vw, var(--s-10)); }
-
-  /* View all CTA */
-  .view-all { margin-block-start: var(--s-6); display: flex; justify-content: center; }
-  .va-btn {
-    display: inline-flex; align-items: center; gap: var(--s-3);
-    padding: var(--s-3) var(--s-6);
-    border: 1px solid var(--border);
-    border-radius: var(--r-pill);
-    background: var(--bg-elev);
-    color: var(--fg);
-    font: 600 var(--fs-small) var(--font-sans);
-    letter-spacing: 0.02em;
-    text-decoration: none;
-    min-block-size: 48px;
-    transition: border-color var(--t-base) var(--ease-out), color var(--t-base) var(--ease-out), background var(--t-base) var(--ease-out);
+  #featured { padding-block:clamp(3rem,7vw,6rem); }
+  .section-heading { display:grid; grid-template-columns:1.3fr 1fr; gap:3rem; align-items:end; margin-bottom:3rem; }
+  h2 { font:600 clamp(2.5rem,4.5vw,4rem)/1.06 var(--font-display); letter-spacing:-.035em; }
+  h2 em { color:var(--accent); font-weight:600; font-style:normal; }
+  .section-heading > p { max-width:40ch; color:var(--fg-dim); font-size:1rem; line-height:1.75; padding-bottom:.3rem; }
+  .featured-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:3.5rem 2rem; }
+  .feature { min-width:0; }
+  .marquee { grid-column:1/-1; }
+  .feature :global(.project-cover) { border-radius:var(--r-featured); }
+  .project-meta { display:flex; justify-content:space-between; gap:1rem; font:400 .65rem var(--font-mono); color:var(--fg-dim); margin-top:1.2rem; }
+  .project-info { display:flex; justify-content:space-between; gap:1.3rem; margin-top:.55rem; }
+  .project-info h3 { font:600 clamp(1.65rem,2.5vw,2.15rem)/1.2 var(--font-display); letter-spacing:-.04em; }
+  .project-info p { font-size:.9375rem; line-height:1.7; color:var(--fg-dim); margin-top:.5rem; max-width:52ch; }
+  .project-actions { display:flex; align-items:start; flex-direction:column; gap:.55rem; flex-shrink:0; padding-top:.5rem; font-size:.875rem; font-weight:500; }
+  .project-actions a { display:flex; align-items:center; gap:1.3rem; border-bottom:1px solid var(--border); padding-block:.4rem; min-height:44px; }
+  .project-actions a:hover { border-color:var(--accent); }
+  .project-proof { display:flex; flex-wrap:wrap; gap:.8rem 2rem; margin-top:1rem; font-size:.7rem; color:var(--accent); }
+  .project-proof span { padding-left:.75rem; border-left:1px solid var(--border); }
+  .all-work { display:flex; justify-content:space-between; align-items:center; gap:1.5rem; margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--border); font-size:.8rem; }
+  .all-work p { color:var(--fg-dim); }
+  .all-work a { display:flex; align-items:center; gap:2rem; }
+  @media(prefers-reduced-motion:no-preference) {
+    .feature.reveal-ready :global(.product) { transform:translateY(20px); transition:transform .9s var(--ease-out); }
+    .feature.is-revealed :global(.product) { transform:translateY(0); }
   }
-  .va-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .va-arrow { transition: transform var(--t-base) var(--ease-out); }
-  .va-btn:hover .va-arrow { transform: translateX(4px); }
-  @media (prefers-reduced-motion: reduce) { .va-btn:hover .va-arrow { transform: none; } }
-  .intro { color: var(--fg-dim); max-inline-size: 62ch; margin: 0 0 var(--s-7); }
-  .intro .swipe {
-    color: var(--accent);
-    font: 600 var(--fs-micro) var(--font-mono);
-    letter-spacing: 0.12em; text-transform: uppercase;
-    margin-inline-start: var(--s-2);
-  }
-  @media (min-width: 1280px) { .intro .swipe { display: none; } }
-
-  /* Full-bleed horizontal carousel — track spans the whole viewport width,
-     first/last card stays aligned with the container heading. */
-  .grid {
-    display: flex;
-    gap: var(--s-5);
-    align-items: stretch;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding-block: 6px var(--s-3);
-    padding-inline: calc(max(0px, (100% - var(--container)) / 2) + clamp(1rem, 4vw, 2rem));
-    scrollbar-width: thin;
-    scrollbar-color: var(--border) transparent;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
-  }
-  .grid > .card {
-    flex: 0 0 auto;
-    inline-size: min(90vw, 480px);
-    scroll-snap-align: start;
-  }
-  .grid::-webkit-scrollbar { block-size: 8px; }
-  .grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
-
-  /* Desktop bento — the carousel becomes a 2-col mosaic with Legend TV spanning
-     the full row as the hero card. Below 1280px the swipe strip stays. */
-  @media (min-width: 1280px) {
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      overflow-x: visible;
-      scroll-snap-type: none;
-      padding-block: 0;
-    }
-    .grid > .card { inline-size: auto; }
-    .card.legend { grid-column: 1 / -1; }
-    .card.legend .row {
-      grid-template-columns: auto 1fr;
-      column-gap: var(--s-7);
-      align-items: center;
-    }
-    .card.legend .shot { inline-size: 190px; }
-    .card.legend .stats { grid-template-columns: repeat(4, 1fr); max-inline-size: 720px; }
-    .card.legend .body, .card.legend .sub { max-inline-size: 62ch; }
-  }
-
-  .card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-4);
-    padding: var(--s-5);
-    background: var(--bg-elev);
-    border: 1px solid var(--border);
-    border-radius: var(--r-card);
-    isolation: isolate;
-    overflow: hidden;
-    transition: transform var(--t-base) var(--ease-out),
-                border-color var(--t-base) var(--ease-out),
-                box-shadow var(--t-base) var(--ease-out);
-  }
-
-  /* Horizontal row inside each card: shot on the left, content on the right */
-  .row {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: var(--s-5);
-    align-items: start;
-  }
-  .content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-3);
-    min-inline-size: 0;
-  }
-  @media (hover: hover) and (pointer: fine) {
-    .card:hover {
-      transform: translateY(-3px);
-      border-color: var(--accent);
-      box-shadow: 0 24px 48px -20px oklch(20% 0.02 80 / 0.5);
-    }
-  }
-
-  .badge {
-    display: inline-flex; align-items: center; gap: var(--s-2);
-    align-self: flex-start;
-    margin: 0 0 var(--s-1);
-    padding: 4px 10px;
-    border: 1px solid var(--border);
-    border-radius: var(--r-pill);
-    background: oklch(15% 0.02 80 / 0.5);
-    color: var(--accent);
-    font: 400 var(--fs-micro) var(--font-mono);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-  }
-  .badge.tone-lime { color: var(--lime); }
-  .badge.tone-cyan { color: var(--cyan); }
-  .badge .dot {
-    inline-size: 6px; block-size: 6px; border-radius: 50%;
-    background: currentColor;
-    box-shadow: 0 0 8px currentColor;
-  }
-
-  .title {
-    color: var(--fg);
-    font: 700 var(--fs-section) var(--font-sans);
-    margin: 0;
-    line-height: 1.05;
-  }
-  .sub { color: var(--accent); margin: 0; font: 600 var(--fs-body) var(--font-sans); }
-  .body { color: var(--fg-dim); margin: 0; line-height: var(--lh-default); max-inline-size: 50ch; }
-  .inline-link { color: var(--accent); text-decoration: none; border-bottom: 1px solid color-mix(in oklab, var(--accent) 35%, transparent); }
-  .inline-link:hover { border-bottom-color: var(--accent); color: var(--fg); }
-
-  /* Stats inside Legend card */
-  .stats {
-    list-style: none; padding: 0; margin: var(--s-3) 0 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--s-3);
-  }
-  .stats li {
-    display: flex; flex-direction: column; gap: 2px;
-    padding: var(--s-3);
-    background: oklch(15% 0.02 80 / 0.4);
-    border: 1px solid var(--border-soft);
-    border-radius: var(--r-pkg);
-  }
-  .stats .n { color: var(--fg); font: 700 var(--fs-h3) var(--font-mono); }
-  .stats .n .u { color: var(--accent); font-size: 0.7em; margin-inline-start: 2px; }
-  .stats .d { color: var(--fg-dim); font: 400 var(--fs-micro) var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; }
-
-  /* Phone screenshot — slim & fixed-width on the left of the row */
-  .shot {
-    margin: 0;
-    inline-size: 130px;
-    aspect-ratio: 9 / 19.5;
-    border-radius: 14px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    background: var(--bg);
-    box-shadow: 0 16px 32px -18px oklch(20% 0.02 80 / 0.55);
-  }
-  .shot img { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
-
-  /* Web demos: stack vertically — landscape image on top, details below.
-     Image flex-fills so the card matches the app cards' height (never taller). */
-  .card.web .row { display: flex; flex-direction: column; gap: var(--s-4); flex: 1 1 auto; }
-  .card.web .shot {
-    inline-size: 100%;
-    block-size: auto;
-    aspect-ratio: auto;
-    flex: 1 1 0;
-    min-block-size: 168px;
-  }
-  .card.web .content { flex: 0 0 auto; }
-  /* Smaller title on web cards → leaves more room for the image */
-  .card.web .title { font-size: var(--fs-h3); line-height: 1.15; }
-  .body code { font: 400 0.92em var(--font-mono); color: var(--fg); }
-
-  .chips {
-    list-style: none; padding: 0; margin: 0;
-    display: flex; flex-wrap: wrap; gap: var(--s-2);
-  }
-  .chips li {
-    padding: 3px 10px;
-    color: var(--fg);
-    background: color-mix(in oklab, var(--fg) 5%, transparent);
-    border: 1px solid var(--border);
-    border-radius: var(--r-pill);
-    font: 400 var(--fs-micro) var(--font-mono);
-    letter-spacing: 0.04em;
-  }
-
-  .cta-row {
-    margin-block-start: auto;
-    padding-block-start: var(--s-3);
-    display: flex; flex-wrap: wrap; gap: var(--s-2);
-  }
-  .cta {
-    display: inline-flex; align-items: center;
-    padding: var(--s-3) var(--s-5);
-    border-radius: var(--r-pill);
-    font: 600 var(--fs-small) var(--font-sans);
-    text-decoration: none;
-    min-block-size: 44px;
-    transition: background var(--t-fast) var(--ease-out), color var(--t-fast) var(--ease-out), border-color var(--t-fast) var(--ease-out);
-  }
-  .cta.primary { background: var(--accent); color: var(--bg); }
-  .cta.primary:hover { background: color-mix(in oklab, var(--accent) 80%, white); }
-  .cta.ghost { background: transparent; color: var(--fg); border: 1px solid var(--border); }
-  .cta.ghost:hover { border-color: var(--accent); color: var(--accent); }
-
-  @media (max-width: 639px) {
-    .row { grid-template-columns: 1fr; gap: var(--s-4); }
-    .shot { inline-size: min(45%, 160px); justify-self: center; }
-    .stats { grid-template-columns: 1fr 1fr; }
-  }
+  @media(max-width:767px) { .featured-grid > .feature:nth-child(n+3) { display:none; } }
+  @media(max-width:767px) { .section-heading { grid-template-columns:1fr; gap:1rem; margin-bottom:2rem; } .featured-grid { grid-template-columns:1fr; gap:2.5rem; } .project-info { flex-direction:column; gap:.5rem; } .project-actions { flex-direction:row; gap:1rem; flex-wrap:wrap; } .all-work { align-items:start; flex-direction:column; } }
 </style>

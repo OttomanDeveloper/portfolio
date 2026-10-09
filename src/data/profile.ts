@@ -11,10 +11,11 @@ export const profile = {
   resumeHref: '/cv.pdf',
   available: 'Available for new work',
   availableLong: 'Open to remote work, long-term contracts, and partnership opportunities.',
-  currentlyShipping: {
+  previousWork: {
     text: 'AI fitness app w/ BLE',
-    at: 'Nmo AI',
+    at: 'BeInMedia · Nmo AI',
     href: 'https://www.beinmedia.com/',
+    ended: 'September 2026',
   },
   now: {
     month: "JUN '26",

@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/sections/Hero.astro';
+import JourneyTrail from '@/components/JourneyTrail.astro';
+import Approach from '@/components/sections/Approach.astro';
 import FeaturedProjects from '@/components/sections/FeaturedProjects.astro';
 import { withBase } from '@/lib/paths';
 import { showcaseProjects } from '@/data/showcase';
@@ -59,9 +61,11 @@ const jsonLd = {
   <!-- TODO: Generate new OG image (1200x630) with headshot + name/title text for stronger branded SERP/chat previews.
        Source headshot exists but needs composite generation. Current og/default.png is valid fallback. -->
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <JourneyTrail />
   <Hero />
+  <Approach />
   <FeaturedProjects />
-  <SelectedWork n={4} label="more projects" limit={8} viewAllHref={withBase('/projects')} viewAllCount={showcaseProjects.length} />
+  <SelectedWork n={2} label="From the archive" limit={4} viewAllHref={withBase('/projects')} viewAllCount={showcaseProjects.length} />
   <OssGrid />
   <ExperienceTimeline />
   <StackGrid />

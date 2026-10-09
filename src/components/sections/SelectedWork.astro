@@ -5,6 +5,7 @@
 import SectionLabel from '@/components/atoms/SectionLabel.astro';
 import { withBase } from '@/lib/paths';
 import { showcaseProjects } from '@/data/showcase';
+import ProjectCover from '@/components/ProjectCover.astro';
 
 // Granular categories collapse into a few broad filter buckets.
 const GROUPS: Record<string, string> = {
@@ -80,12 +81,11 @@ const counts = Object.fromEntries(
   FILTERS.map((f) => [f.id, f.id === 'all' ? items.length : items.filter((i) => i.group === f.id).length]),
 );
 
-const pickThumb = (screens: readonly string[]) =>
-  screens.find((s) => /home|grid|dashboard|listings|market|feed|main/.test(s)) ?? screens[1] ?? screens[0];
 ---
-<section id="selected-work">
+<section id="selected-work" class:list={{ 'homepage-teaser': !!limit }}>
   <div class="container">
     <SectionLabel n={n} name={label} />
+    <h2 class="section-title">{limit ? 'More things, made with care.' : 'An app for every idea.'}</h2>
     <p class="intro">
       A slice of <strong>50+ apps</strong> shipped for clients worldwide — across rewards, media,
       health, logistics and more. Tap any card to open its full screenshot gallery.
@@ -123,13 +123,7 @@ const pickThumb = (screens: readonly string[]) =>
         return (
           <article class={`card g-${p.group}${p.web ? ' web' : ''}`}>
             <a class="card-link" href={`#proj-${p.slug}`} aria-label={`Open ${p.name} details`}></a>
-            <figure class="shot">
-              <img
-                src={withBase(`/screens/${pickThumb(p.screens)}`)}
-                alt={`${p.name} screenshot`}
-                width="540" height="1200" loading="lazy" decoding="async"
-              />
-            </figure>
+            <ProjectCover project={p} />
             <div class="content">
               <p class="meta"><span class="cat">{p.category}</span><span class="dot">·</span><span>{p.year}</span></p>
               <h3 class="name">{p.name}</h3>
@@ -224,6 +218,7 @@ const pickThumb = (screens: readonly string[]) =>
 </section>
 
 <style>
+  @media(max-width:767px) { .homepage-teaser .grid > article:nth-child(n+4) { display:none; } }
   #selected-work { padding-block: clamp(var(--s-8), 8vw, var(--s-10)); }
   .intro { color: var(--fg-dim); max-inline-size: 62ch; margin: 0 0 var(--s-6); line-height: var(--lh-default); }
   .intro strong { color: var(--fg); }
@@ -286,7 +281,8 @@ const pickThumb = (screens: readonly string[]) =>
   /* keyboard focus signal */
   .sw-radio:focus-visible ~ .filters { outline: 2px solid var(--accent); outline-offset: 6px; border-radius: var(--r-card); }
 
-  /* GRID — horizontal Featured-style cards (phone shot + content) */
+  .section-title { font:600 clamp(2rem,3.5vw,3rem)/1.1 var(--font-display); letter-spacing:-.045em; margin-bottom:var(--s-4); }
+  /* Image-led archive cards. */
   .grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -297,12 +293,13 @@ const pickThumb = (screens: readonly string[]) =>
   .card {
     position: relative;
     display: grid;
-    grid-template-columns: auto 1fr;
-    gap: var(--s-5);
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
     align-items: center;
-    padding: var(--s-4);
+    padding: 0;
+    overflow: hidden;
     background: var(--bg-elev);
-    border: 1px solid var(--border);
+    border: 0;
     border-radius: var(--r-card);
     text-decoration: none;
     color: inherit;
@@ -318,9 +315,8 @@ const pickThumb = (screens: readonly string[]) =>
     .card:hover {
       transform: translateY(-4px);
       border-color: var(--accent);
-      box-shadow: 0 22px 44px -22px oklch(20% 0.02 80 / 0.55);
+      box-shadow: 0 16px 30px -24px rgb(215 182 113 / .2);
     }
-    .card:hover .shot img { transform: scale(1.05); }
   }
   .card:has(.card-link:hover) { cursor: pointer; }
 
@@ -344,7 +340,7 @@ const pickThumb = (screens: readonly string[]) =>
   .card.web .shot { inline-size: clamp(150px, 42vw, 200px); aspect-ratio: 16 / 10; }
   .card.web .shot img { object-position: 50% 50%; }
 
-  .content { display: flex; flex-direction: column; gap: var(--s-2); min-inline-size: 0; }
+  .content { display: flex; flex-direction: column; gap: var(--s-2); min-inline-size: 0; padding: var(--s-5); }
   .meta {
     display: flex; flex-wrap: wrap; gap: var(--s-2); align-items: center;
     margin: 0; color: var(--fg-dim);
@@ -398,8 +394,7 @@ const pickThumb = (screens: readonly string[]) =>
 
   /* Very narrow phones: stack shot above content */
   @media (max-width: 380px) {
-    .card { grid-template-columns: 1fr; gap: var(--s-3); }
-    .shot { inline-size: min(42%, 116px); justify-self: start; }
+    .content { padding: var(--s-4); }
   }
 
   /* MODAL (CSS :target) */
