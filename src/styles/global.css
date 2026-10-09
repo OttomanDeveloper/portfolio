@@ -18,7 +18,7 @@ body {
   padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
 }
 img, svg, video { display: block; max-width: 100%; }
-h1, h2, h3 { text-wrap: balance; }
+h1, h2, h3 { text-wrap: balance; font-optical-sizing:auto; }
 p { text-wrap: pretty; }
 input, button, textarea, select { font: inherit; color: inherit; }
 a { color: var(--accent); text-decoration: none; }

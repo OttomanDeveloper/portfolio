@@ -37,17 +37,17 @@ const caseSlugs = new Set(['legend-tv', 'lifelink', 'alcopass', 'udownload', 'ic
 <style>
   #featured { padding-block:clamp(3rem,7vw,6rem); }
   .section-heading { display:grid; grid-template-columns:1.3fr 1fr; gap:3rem; align-items:end; margin-bottom:3rem; }
-  h2 { font:600 clamp(2.5rem,4.5vw,4rem)/1.06 var(--font-display); letter-spacing:-.035em; }
-  h2 em { color:var(--accent); font-weight:600; font-style:normal; }
+  h2 { font:700 clamp(2.5rem,4.5vw,4rem)/1.06 var(--font-display); letter-spacing:-.035em; }
+  h2 em { color:var(--accent); font-weight:700; font-style:normal; }
   .section-heading > p { max-width:40ch; color:var(--fg-dim); font-size:1rem; line-height:1.75; padding-bottom:.3rem; }
   .featured-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:3.5rem 2rem; }
   .feature { min-width:0; }
   .marquee { grid-column:1/-1; }
   .feature :global(.project-cover) { border-radius:var(--r-featured); }
-  .project-meta { display:flex; justify-content:space-between; gap:1rem; font:400 .65rem var(--font-mono); color:var(--fg-dim); margin-top:1.2rem; }
+  .project-meta { display:flex; justify-content:space-between; gap:1rem; font:500 .75rem var(--font-sans); letter-spacing:.02em; color:var(--fg-dim); margin-top:1.2rem; }
   .project-info { display:flex; justify-content:space-between; gap:1.3rem; margin-top:.55rem; }
-  .project-info h3 { font:600 clamp(1.65rem,2.5vw,2.15rem)/1.2 var(--font-display); letter-spacing:-.04em; }
-  .project-info p { font-size:.9375rem; line-height:1.7; color:var(--fg-dim); margin-top:.5rem; max-width:52ch; }
+  .project-info h3 { font:700 clamp(1.65rem,2.5vw,2.15rem)/1.2 var(--font-display); letter-spacing:-.04em; }
+  .project-info p { font-size:1rem; line-height:1.7; color:var(--fg-dim); margin-top:.5rem; max-width:52ch; }
   .project-actions { display:flex; align-items:start; flex-direction:column; gap:.55rem; flex-shrink:0; padding-top:.5rem; font-size:.875rem; font-weight:500; }
   .project-actions a { display:flex; align-items:center; gap:1.3rem; border-bottom:1px solid var(--border); padding-block:.4rem; min-height:44px; }
   .project-actions a:hover { border-color:var(--accent); }
