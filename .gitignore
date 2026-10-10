@@ -1,5 +1,7 @@
 # build output
 dist/
+public/screens/previews/
+public/covers/scenes/previews/
 .vercel/
 
 # astro generated types

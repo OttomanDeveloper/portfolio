@@ -10,9 +10,14 @@ const primary = cover.screen ?? p.screens.find(s => /home|grid|dashboard|listing
 const secondary = p.screens.find(s => s !== primary && !/splash|auth|login|signup|admin/.test(s));
 const layout = cover.layout ?? 'single';
 const scene = p.web ? `/screens/${p.screens[0]}` : `/covers/scenes/${cover.scene}.webp`;
+const preview = (path: string, width: number) => withBase(path.replace(/\/([^/]+)$/, `/previews/$1-${width}.webp`));
+const screenWidths = p.web ? [480, 960] : [240, 480];
+const screenSizes = p.web ? '(max-width: 639px) 60vw, 640px' : wide ? '(max-width: 639px) 25vw, 280px' : '(max-width: 767px) 25vw, 160px';
+const sceneWidths = p.web ? [480, 960] : [480, 960, 1440];
+const sceneSizes = wide ? '(max-width: 639px) 100vw, 1280px' : '(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 640px';
 ---
 <div class:list={['project-cover', `layout-${layout}`, { wide }]} style={`--cover-accent: ${cover.accent};`}>
-  <img class="scene" src={withBase(scene)} alt="" width="1536" height="1024" loading="lazy" decoding="async" />
+  <img class="scene" src={preview(scene, sceneWidths[0])} srcset={sceneWidths.map(w => `${preview(scene, w)} ${w}w`).join(', ')} sizes={sceneSizes} alt="" width="1536" height="1024" loading="lazy" decoding="async" />
   <div class="shade"></div>
   <div class="cover-copy">
     <p class="cover-brand">{p.name}</p>
@@ -21,8 +26,8 @@ const scene = p.web ? `/screens/${p.screens[0]}` : `/covers/scenes/${cover.scene
     <p class="cover-proof">{cover.proof}</p>
   </div>
   <div class="product">
-    {layout === 'duo' && secondary && <img class="screen companion" src={withBase(`/screens/${secondary}`)} alt="" width="540" height="1200" loading="lazy" decoding="async" />}
-    <img class="screen principal" src={withBase(`/screens/${primary}`)} alt={`${p.name} — actual ${p.web ? 'website' : 'app'} interface`} width={p.web ? 1280 : 540} height={p.web ? 620 : 1200} loading="lazy" decoding="async" />
+    {layout === 'duo' && secondary && <img class="screen companion" src={preview(`/screens/${secondary}`, screenWidths[0])} srcset={screenWidths.map(w => `${preview(`/screens/${secondary}`, w)} ${w}w`).join(', ')} sizes={screenSizes} alt="" width="540" height="1200" loading="lazy" decoding="async" />}
+    <img class="screen principal" src={preview(`/screens/${primary}`, screenWidths[0])} srcset={screenWidths.map(w => `${preview(`/screens/${primary}`, w)} ${w}w`).join(', ')} sizes={screenSizes} alt={`${p.name} — actual ${p.web ? 'website' : 'app'} interface`} width={p.web ? 1280 : 540} height={p.web ? 620 : 1200} loading="lazy" decoding="async" />
   </div>
 </div>
 

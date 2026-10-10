@@ -1,7 +1,7 @@
 ---
 // src/components/sections/SelectedWork.astro
 // Rich showcase grid driven by src/data/showcase.ts.
-// Zero JS: CSS-only category filter (radio :checked) + per-project lightbox (:target).
+// CSS category filters and lightboxes, with small intent-based image warming.
 import SectionLabel from '@/components/atoms/SectionLabel.astro';
 import { withBase } from '@/lib/paths';
 import { showcaseProjects } from '@/data/showcase';
@@ -216,6 +216,30 @@ const counts = Object.fromEntries(
     </div>
   ))}
 </section>
+
+<script>
+  const warmGallery = (hash: string) => {
+    const gallery = document.getElementById(hash.slice(1));
+    if (!gallery?.classList.contains('modal')) return;
+    // Only the first two images of the chosen project; never preload all galleries.
+    gallery.querySelectorAll<HTMLImageElement>('.gallery img').forEach((image, index) => {
+      if (index < 2) image.loading = 'eager';
+    });
+  };
+  const constrainedConnection = () => {
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+    return connection?.saveData || /(^|-)2g$/.test(connection?.effectiveType ?? '');
+  };
+  document.querySelectorAll<HTMLAnchorElement>('.card-link').forEach(link => {
+    const anticipate = () => { if (!constrainedConnection()) warmGallery(link.hash); };
+    link.addEventListener('pointerenter', anticipate, { once: true });
+    link.addEventListener('focus', anticipate, { once: true });
+    link.addEventListener('pointerdown', () => warmGallery(link.hash), { once: true });
+  });
+  const warmOpenGallery = () => warmGallery(window.location.hash);
+  window.addEventListener('hashchange', warmOpenGallery);
+  warmOpenGallery();
+</script>
 
 <style>
   @media(max-width:767px) { .homepage-teaser .grid > article:nth-child(n+4) { display:none; } }
