@@ -1,25 +1,25 @@
 /* src/styles/tokens.css — palette, type, spacing, radii, motion */
 
 :root {
-  /* Warm charcoal, ivory type, and brushed gold accents. */
+  /* Neutral graphite, clear white type, and restrained gold details. */
   color-scheme: dark;
-  --bg: #151412;
-  --bg-elev: #211f1a;
-  --bg-bar: #151412;
-  --fg: #f1ecdf;
-  --fg-dim: #aaa495;
-  --accent: #d7b671;
-  --accent-glow: rgb(215 182 113 / 0.08);
-  --cyan: #d7b671;
-  --lime: #d7b671;
+  --bg: #0e1013;
+  --bg-elev: #171a1f;
+  --bg-bar: #0e1013;
+  --fg: #eff1f4;
+  --fg-dim: #a2a8b2;
+  --accent: #c9a65b;
+  --accent-glow: rgb(201 166 91 / 0.08);
+  --cyan: #c9a65b;
+  --lime: #c9a65b;
   --alert: #e28c7d;
-  --border: #3c372e;
-  --border-soft: #302c25;
+  --border: #2e333c;
+  --border-soft: #232830;
 
   /* type families */
   --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
-  --font-sans: 'Source Sans 3', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-display: 'Bricolage Grotesque', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-brand: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
   --font-arabic: 'Noto Naskh Arabic', serif;
 

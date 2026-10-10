@@ -1,19 +1,19 @@
 /* src/styles/fonts.css — self-hosted, Latin + Arabic subsets */
 
 @font-face {
-  font-family: 'Bricolage Grotesque';
+  font-family: 'Space Grotesk';
   font-style: normal;
-  font-weight: 200 800;
+  font-weight: 400 700;
   font-display: swap;
-  src: url('/fonts/BricolageGrotesque-Latin.woff2') format('woff2');
+  src: url('/fonts/SpaceGrotesk-Latin.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Source Sans 3';
+  font-family: 'IBM Plex Sans';
   font-style: normal;
-  font-weight: 200 900;
+  font-weight: 400 700;
   font-display: swap;
-  src: url('/fonts/SourceSans3-Latin.woff2') format('woff2');
+  src: url('/fonts/IBMPlexSans-Latin.woff2') format('woff2');
 }
 
 @font-face {
