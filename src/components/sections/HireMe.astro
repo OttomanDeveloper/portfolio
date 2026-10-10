@@ -177,7 +177,7 @@ const mediumHref = 'https://ottomancoder.medium.com/';
   }
   .head .accent { color: var(--fg); }
   .lead { margin: var(--s-4) 0 0; color: var(--fg-dim); font-size: var(--fs-body); line-height: var(--lh-default); }
-  .lead strong { color: var(--fg); font-weight: 600; }
+  .lead strong { color: var(--accent); font-weight: 700; }
 
   /* Reasons — three value props */
   .reasons {
@@ -195,7 +195,7 @@ const mediumHref = 'https://ottomancoder.medium.com/';
   }
   .r-k {
     color: var(--accent);
-    font: 700 var(--fs-small) var(--font-sans);
+    font: 700 1rem var(--font-sans);
     letter-spacing: 0.01em;
   }
   .r-k::before { content: '▸ '; font-family: var(--font-mono); font-weight: 400; }
@@ -205,9 +205,9 @@ const mediumHref = 'https://ottomancoder.medium.com/';
   @media (min-width: 1024px) {
     .reasons { grid-template-columns: 1fr; gap: var(--s-3); }
     .reasons li { flex-direction: row; align-items: baseline; gap: var(--s-4); }
-    .reasons .r-k { flex: 0 0 130px; }
+    .reasons .r-k { flex: 0 0 145px; }
   }
-  .r-t { color: var(--fg-dim); font-size: .9375rem; line-height: 1.7; }
+  .r-t { color: var(--fg-dim); font-size: 1rem; line-height: 1.7; }
 
   /* Availability strip */
   .avail {

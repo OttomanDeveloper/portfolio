@@ -9,7 +9,7 @@ import { withBase } from '@/lib/paths';
       <div class="hero-copy">
         <p class="eyebrow">Hello, I’m Muhammad Usman.</p>
         <h1 id="hero-name"><span>Small screens.</span><br /><em>Big possibilities.</em></h1>
-        <p class="hero-description">I build thoughtful mobile experiences that work in the real world. From the first sketch to the app store — Flutter, hardware, AI, and everything in between.</p>
+        <p class="hero-description">I build <strong>thoughtful mobile experiences</strong> that work in the real world. From the first sketch to the app store — <strong>Flutter, hardware, AI</strong>, and everything in between.</p>
         <div class="hero-actions">
           <a class="work-button" href="#featured">Explore my work <span aria-hidden="true">↗</span></a>
           <a class="text-link" href={withBase('/cv.pdf')} target="_blank" rel="noopener noreferrer">A little more about me <span aria-hidden="true">↗</span></a>
@@ -41,8 +41,9 @@ import { withBase } from '@/lib/paths';
   .availability i { width:6px; height:6px; background:var(--accent); border-radius:50%; }
   .hero-layout { display:grid; grid-template-columns:1.2fr 1fr; gap:4rem; align-items:center; }
   .eyebrow { color:var(--fg-dim); font-size:.85rem; margin-bottom:1.4rem; }
-  h1 { font:600 clamp(2.2rem,5.2vw,4.75rem)/1.04 var(--font-display); letter-spacing:-.035em; margin:0; }
-  h1 em { color:var(--fg); font-weight:600; font-style:normal; }
+  h1 { font:700 clamp(2.2rem,5.2vw,4.75rem)/1.04 var(--font-display); letter-spacing:-.035em; margin:0; }
+  h1 em { color:var(--fg); font-weight:700; font-style:normal; }
+  .hero-description strong { color:var(--fg); font-weight:600; }
   .hero-description { margin-top:1.9rem; max-width:43ch; font-size:1.125rem; line-height:1.7; color:var(--fg-dim); }
   .hero-actions { display:flex; align-items:center; flex-wrap:wrap; gap:1.5rem; margin-top:2rem; font-size:.875rem; font-weight:600; }
   .work-button { display:inline-flex; align-items:center; gap:2.3rem; padding:.9rem 1.2rem; background:transparent; color:var(--fg); border:1px solid var(--accent); border-radius:3px; transition:background .2s,transform .2s; min-height:44px; }
